@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@id/fragment_search">
+
+    <fragment
+        android:id="@+id/fragment_search"
+        android:name="ssu.ssu.huncheckwhatssu.SearchFragment"
+        android:label="@string/title_search"
+        tools:layout="@layout/fragment_search" />
+
+    <fragment
+        android:id="@+id/fragment_sell"
+        android:name="ssu.ssu.huncheckwhatssu.SellFragment"
+        android:label="@string/title_sell"
+        tools:layout="@layout/fragment_sell"/>
+
+    <fragment
+        android:id="@+id/fragment_trade"
+        android:name="ssu.ssu.huncheckwhatssu.TradeFragment"
+        android:label="@string/title_trade"
+        tools:layout="@layout/fragment_trade"/>
+
+    <fragment
+        android:id="@+id/fragment_option"
+        android:name="ssu.ssu.huncheckwhatssu.OptionFragment"
+        android:label="@string/title_option"
+        tools:layout="@layout/fragment_option"/>
+</navigation>
