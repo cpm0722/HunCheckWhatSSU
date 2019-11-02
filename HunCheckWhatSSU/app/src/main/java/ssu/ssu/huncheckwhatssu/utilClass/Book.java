@@ -1,4 +1,4 @@
-package ssu.ssu.huncheckwhatssu.bookClass;
+package ssu.ssu.huncheckwhatssu.utilClass;
 
 import android.media.Image;
 
