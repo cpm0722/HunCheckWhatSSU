@@ -27,10 +27,7 @@ public class TradeFragment extends Fragment {
         Menu menu = navView.getMenu();
         menu.getItem(2).setChecked(true);
 
-        /* ArrayList<String> list = new ArrayList<>();
-        for (int i=0; i<100; i++) {
-            list.add(String.format("TEXT %d", i)) ;
-        } */
+
 
         ArrayList<Book>list =new ArrayList<Book>();
         list.add(new Book("git","10000","dms"));
@@ -38,13 +35,29 @@ public class TradeFragment extends Fragment {
         list.add(new Book("123hi","4300","dagajdfa"));
         list.add(new Book("dgfhi","2300","dagajdfdfa"));
         list.add(new Book("sfshi","2323300","dagajdfdfa"));
-        // 리사이클러뷰에 LinearLayoutManager 객체 지정.
-        RecyclerView recyclerView = root.findViewById(R.id.list) ;
+        // 리사이클러뷰(done)에 LinearLayoutManager 객체 지정.
+        RecyclerView recyclerView = root.findViewById(R.id.trade_done_list) ;
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext())) ;
 
-        // 리사이클러뷰에 SimpleTextAdapter 객체 지정.
+        // 리사이클러뷰(done)에 SimpleTextAdapter 객체 지정.
         RecyclerViewAdapter adapter = new RecyclerViewAdapter(list) ;
         recyclerView.setAdapter(adapter) ;
+
+
+        ArrayList<Book>list2 =new ArrayList<Book>();
+        list2.add(new Book("hello","87","nnn"));
+        list2.add(new Book("hi","54","aaa"));
+        list2.add(new Book("bonjure","430","dxxxxfa"));
+        list2.add(new Book("mosi","2300","dagadddddddddddddddddddddddddddddjdfdfa"));
+        list2.add(new Book("asdf","23300","kdrefdfa"));
+        // 리사이클러뷰에 LinearLayoutManager 객체 지정.
+        RecyclerView recyclerView2 = root.findViewById(R.id.trade_done_list) ;
+        recyclerView2.setLayoutManager(new LinearLayoutManager(getContext())) ;
+
+        // 리사이클러뷰에 SimpleTextAdapter 객체 지정.
+        RecyclerViewAdapter2 adapter2 = new RecyclerViewAdapter2(list2) ;
+        recyclerView2.setAdapter(adapter2) ;
+
 
         return root;
     }
