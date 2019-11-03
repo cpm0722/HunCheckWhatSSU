@@ -1,21 +1,21 @@
 {
   "project_info": {
-    "project_number": "580454951838",
-    "firebase_url": "https://huncheckwhatssu.firebaseio.com",
-    "project_id": "huncheckwhatssu",
-    "storage_bucket": "huncheckwhatssu.appspot.com"
+    "project_number": "856101908692",
+    "firebase_url": "https://huncheckwhatssu-42ebd.firebaseio.com",
+    "project_id": "huncheckwhatssu-42ebd",
+    "storage_bucket": "huncheckwhatssu-42ebd.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:580454951838:android:81781bac5e27a312c6848f",
+        "mobilesdk_app_id": "1:856101908692:android:708051ea284da7d37b8b41",
         "android_client_info": {
           "package_name": "ssu.ssu.huncheckwhatssu"
         }
       },
       "oauth_client": [
         {
-          "client_id": "580454951838-ub3c6k1gg267vh0ol79flq451madh68l.apps.googleusercontent.com",
+          "client_id": "856101908692-s1hs6hnfu7a6tnkgndmhlmhbpt0m3v3t.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "ssu.ssu.huncheckwhatssu",
@@ -23,20 +23,20 @@
           }
         },
         {
-          "client_id": "580454951838-r0u46vl7e7ina5h19ip6u8is8a7coart.apps.googleusercontent.com",
+          "client_id": "856101908692-rpan5gk8gk1813gjrk8kqvejj0kst4ju.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyADV2QLQwX5N4CkyfTnpAXULPwsP-nKWCo"
+          "current_key": "AIzaSyAjOzpytf8Go6L5Q6qNLAH4t2NJSt7NzjM"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "580454951838-r0u46vl7e7ina5h19ip6u8is8a7coart.apps.googleusercontent.com",
+              "client_id": "856101908692-rpan5gk8gk1813gjrk8kqvejj0kst4ju.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
