@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "580454951838",
+    "firebase_url": "https://huncheckwhatssu.firebaseio.com",
+    "project_id": "huncheckwhatssu",
+    "storage_bucket": "huncheckwhatssu.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:580454951838:android:81781bac5e27a312c6848f",
+        "android_client_info": {
+          "package_name": "ssu.ssu.huncheckwhatssu"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "580454951838-ub3c6k1gg267vh0ol79flq451madh68l.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ssu.ssu.huncheckwhatssu",
+            "certificate_hash": "34b4cc9b419e16ad18cc5039e39d125dda1d7e8e"
+          }
+        },
+        {
+          "client_id": "580454951838-r0u46vl7e7ina5h19ip6u8is8a7coart.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyADV2QLQwX5N4CkyfTnpAXULPwsP-nKWCo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "580454951838-r0u46vl7e7ina5h19ip6u8is8a7coart.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
