@@ -35,11 +35,11 @@ public class TradeFragment extends Fragment {
         list.add(new Book("123hi","4300","dagajdfa"));
         list.add(new Book("dgfhi","2300","dagajdfdfa"));
         list.add(new Book("sfshi","2323300","dagajdfdfa"));
-        // 리사이클러뷰(done)에 LinearLayoutManager 객체 지정.
-        RecyclerView recyclerView = root.findViewById(R.id.trade_done_list) ;
+        // 리사이클러뷰에 LinearLayoutManager 객체 지정.
+        RecyclerView recyclerView = root.findViewById(R.id.trade_ongoing_list) ;
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext())) ;
 
-        // 리사이클러뷰(done)에 SimpleTextAdapter 객체 지정.
+        // 리사이클러뷰에 RecyclerViewAdapter1 객체 지정.
         RecyclerViewAdapter adapter = new RecyclerViewAdapter(list) ;
         recyclerView.setAdapter(adapter) ;
 
