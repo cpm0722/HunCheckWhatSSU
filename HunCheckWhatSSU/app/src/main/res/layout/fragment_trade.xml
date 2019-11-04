@@ -11,30 +11,36 @@
         android:text="TradeFragment"
         android:textAlignment="center"
         android:textSize="20dp" />
-
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="거래 진행 중" />
+        android:layout_marginStart="3dp"
+        android:layout_marginTop="3dp"
+        android:layout_marginEnd="3dp"
+        android:text="거래 진행 중"
+        android:textStyle="bold"
+        android:textAlignment="center"
+        android:textSize="20dp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/trade_ongoing_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1" >
-
-    </androidx.recyclerview.widget.RecyclerView>
-
+        android:layout_weight="1" />
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="거래 완료" />
+        android:layout_marginStart="3dp"
+        android:layout_marginTop="3dp"
+        android:layout_marginEnd="3dp"
+        android:text="거래 완료"
+        android:textStyle="bold"
+        android:textAlignment="center"
+        android:textSize="20dp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/trade_done_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1">
-
-    </androidx.recyclerview.widget.RecyclerView>
+        android:layout_weight="1" />
 </LinearLayout>
