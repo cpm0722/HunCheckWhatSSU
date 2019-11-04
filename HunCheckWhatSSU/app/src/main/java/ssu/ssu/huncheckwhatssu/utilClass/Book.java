@@ -5,36 +5,68 @@ import android.media.Image;
 import java.util.Calendar;
 
 public class Book {
-    // 책의 고유번호
-    long ISBN;
-    long key;
-    // --
-    String name;
+    String isbn;
+    String title;
+    String image;
     String author;
-    Calendar publicationDate;
-    long original_price;
-    long sellPrice;
-    Image bookCoverImg;
+    int price;
+    String publisher;
+    String pubdate;
+    String description;
     BookState bookState;
 
-    public Book(long ISBN, long key, String name, String author, Calendar publicationDate, long original_price, long sellPrice, Image bookCoverImg, BookState bookState) {
-        this.ISBN = ISBN;
-        this.key = key;
-        this.name = name;
+    public Book(String isbn, String title, String image, String author, int price, String publisher, String pubdate, String description) {
+        this.isbn = isbn;
+        this.title = title;
+        this.image = image;
         this.author = author;
-        this.publicationDate = publicationDate;
-        this.original_price = original_price;
-        this.sellPrice = sellPrice;
-        this.bookCoverImg = bookCoverImg;
+        this.price = price;
+        this.publisher = publisher;
+        this.pubdate = pubdate;
+        this.description = description;
+    }
+
+    @Override
+    public String toString() {
+        return "Book{" +
+                "isbn='" + isbn + '\'' +
+                ", title='" + title + '\'' +
+                ", image='" + image + '\'' +
+                ", author='" + author + '\'' +
+                ", price=" + price +
+                ", publisher='" + publisher + '\'' +
+                ", pubdate='" + pubdate + '\'' +
+                ", description='" + description + '\'' +
+                ", bookState=" + bookState +
+                '}';
+    }
+
+    public void setBookState(BookState bookState) {
         this.bookState = bookState;
     }
 
-    public String getName() {
-        return name;
+    public String getIsbn() {
+        return isbn;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setIsbn(String isbn) {
+        this.isbn = isbn;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public String getAuthor() {
@@ -45,36 +77,40 @@ public class Book {
         this.author = author;
     }
 
-    public Calendar getPublicationDate() {
-        return publicationDate;
+    public long getPrice() {
+        return price;
     }
 
-    public void setPublicationDate(Calendar publicationDate) {
-        this.publicationDate = publicationDate;
+    public void setPrice(int price) {
+        this.price = price;
     }
 
-    public long getOriginal_price() {
-        return original_price;
+    public String getPublisher() {
+        return publisher;
     }
 
-    public void setOriginal_price(long original_price) {
-        this.original_price = original_price;
+    public void setPublisher(String publisher) {
+        this.publisher = publisher;
     }
 
-    public long getSellPrice() {
-        return sellPrice;
+    public String getPubdate() {
+        return pubdate;
     }
 
-    public void setSellPrice(long sellPrice) {
-        this.sellPrice = sellPrice;
+    public void setPubdate(String pubdate) {
+        this.pubdate = pubdate;
     }
 
-    public Image getBookCoverImg() {
-        return bookCoverImg;
+    public String getDescription() {
+        return description;
     }
 
-    public void setBookCoverImg(Image bookCoverImg) {
-        this.bookCoverImg = bookCoverImg;
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public BookState getBookState() {
+        return bookState;
     }
 }
 
