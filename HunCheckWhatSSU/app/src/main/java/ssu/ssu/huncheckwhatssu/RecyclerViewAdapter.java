@@ -24,7 +24,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             // 뷰 객체에 대한 참조. (hold strong reference)
             textView1 = itemView.findViewById(R.id.text1) ;
             textView2 = itemView.findViewById(R.id.text2) ;
-            textView3 = itemView.findViewById(R.id.tv_seller) ;
+            textView3 = itemView.findViewById(R.id.text3) ;
         }
     }
 
