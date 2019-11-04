@@ -2,6 +2,7 @@ package ssu.ssu.huncheckwhatssu;
 
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.Button;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -13,7 +14,6 @@ import androidx.navigation.Navigation;
 
 public class MainActivity extends AppCompatActivity {
     NavController navController;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
