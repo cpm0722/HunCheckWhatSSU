@@ -54,7 +54,7 @@ public class TradeFragment extends Fragment {
         RecyclerView recyclerView2 = root.findViewById(R.id.trade_done_list) ;
         recyclerView2.setLayoutManager(new LinearLayoutManager(getContext())) ;
 
-        // 리사이클러뷰에 SimpleTextAdapter 객체 지정.
+        // 리사이클러뷰에 RecyclerViewAdapter2 객체 지정.
         RecyclerViewAdapter2 adapter2 = new RecyclerViewAdapter2(list2) ;
         recyclerView2.setAdapter(adapter2) ;
 
