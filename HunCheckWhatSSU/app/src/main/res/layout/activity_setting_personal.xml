@@ -7,7 +7,7 @@
 
     <ImageView
         android:layout_width="match_parent"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="8dp"
         android:layout_height="2dp"
         android:layout_marginBottom="5dp"
         android:background="#000"></ImageView>
@@ -19,7 +19,7 @@
         android:text="개인정보 수정"
         android:textStyle="bold"
         android:textAlignment="center"
-        android:textSize="30sp"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
