@@ -85,6 +85,7 @@
             android:src="@drawable/ic_setting_button_18dp"
             ></ImageView>
         <Button
+            android:id="@+id/setting_Personal_Info_Btn"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="4"
