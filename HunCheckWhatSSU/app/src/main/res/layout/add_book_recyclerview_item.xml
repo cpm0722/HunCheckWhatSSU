@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="16dp">
+
+
+    <ImageView
+        android:id="@+id/add_book_item_image"
+        android:layout_width="110dp"
+        android:layout_height="0dp"
+        android:layout_alignTop="@id/add_book_item_title"
+        android:layout_alignParentRight="true"
+        android:layout_alignBottom="@id/add_book_item_label_group"
+        />
+
+    <TextView
+        android:id="@+id/add_book_item_title"
+        android:text="정보처리기사"
+        android:textSize="16dp"
+        android:textStyle="bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <LinearLayout
+        android:id="@+id/add_book_item_label_group"
+        android:orientation="vertical"
+        android:layout_below="@id/add_book_item_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/add_book_item_ISBN_label"
+            android:text="ISBN"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_toRightOf="@id/add_book_item_image"
+            android:layout_alignTop="@id/add_book_item_image"/>
+
+        <TextView
+            android:id="@+id/add_book_item_author_label"
+            android:text="저자"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_toRightOf="@id/add_book_item_ISBN_label"
+            android:layout_alignTop="@id/add_book_item_image"/>
+
+        <TextView
+            android:id="@+id/add_book_item_publisher_label"
+            android:text="출판사"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_toRightOf="@id/add_book_item_ISBN_label"
+            android:layout_alignTop="@id/add_book_item_image"/>
+
+        <TextView
+            android:id="@+id/add_book_item_pubdate_label"
+            android:text="출판일"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_toRightOf="@id/add_book_item_ISBN_label"
+            android:layout_alignTop="@id/add_book_item_image"/>
+
+        <TextView
+            android:id="@+id/add_book_item_price_label"
+            android:text="정"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_toRightOf="@id/add_book_item_ISBN_label"
+            android:layout_alignTop="@id/add_book_item_image"/>자
+    </LinearLayout>
+
+</RelativeLayout>

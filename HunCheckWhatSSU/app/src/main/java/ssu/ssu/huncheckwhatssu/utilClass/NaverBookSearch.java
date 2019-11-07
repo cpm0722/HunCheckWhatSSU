@@ -44,7 +44,7 @@ public class NaverBookSearch {
 
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject item = jsonArray.getJSONObject(i);
-                        searchedBookList.add(new Book(item.getString("isbn"), item.getString("title"),
+                        searchedBookList.add(new Book(item.getString("isbn").split(" ")[0], item.getString("isbn").split(" ")[1], item.getString("title"),
                                 item.getString("image"), item.getString("author"), item.getInt("price"),
                                 item.getString("publisher"), item.getString("pubdate"), item.getString("description")));
                     }

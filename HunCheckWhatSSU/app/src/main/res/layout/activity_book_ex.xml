@@ -47,11 +47,9 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"/>
 
-    <ListView
-        android:id="@+id/add_book_bookList"
-        android:choiceMode="singleChoice"
-        android:dividerHeight="1dp"
-        android:divider="#EEE"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/add_book_recyclerView"
+        android:scrollbars="vertical"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"/>

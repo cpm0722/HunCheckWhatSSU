@@ -5,7 +5,8 @@ import android.media.Image;
 import java.util.Calendar;
 
 public class Book {
-    String isbn;
+    String isbn10;
+    String isbn13;
     String title;
     String image;
     String author;
@@ -15,8 +16,9 @@ public class Book {
     String description;
     BookState bookState;
 
-    public Book(String isbn, String title, String image, String author, int price, String publisher, String pubdate, String description) {
-        this.isbn = isbn;
+    public Book(String isbn10, String isbn13, String title, String image, String author, int price, String publisher, String pubdate, String description) {
+        this.isbn10 = isbn10;
+        this.isbn13 = isbn13;
         this.title = title;
         this.image = image;
         this.author = author;
@@ -29,7 +31,8 @@ public class Book {
     @Override
     public String toString() {
         return "Book{" +
-                "isbn='" + isbn + '\'' +
+                "isbn10='" + isbn10 + '\'' +
+                ", isbn13='" + isbn13 + '\'' +
                 ", title='" + title + '\'' +
                 ", image='" + image + '\'' +
                 ", author='" + author + '\'' +
@@ -41,16 +44,20 @@ public class Book {
                 '}';
     }
 
-    public void setBookState(BookState bookState) {
-        this.bookState = bookState;
+    public String getIsbn10() {
+        return isbn10;
     }
 
-    public String getIsbn() {
-        return isbn;
+    public void setIsbn10(String isbn10) {
+        this.isbn10 = isbn10;
     }
 
-    public void setIsbn(String isbn) {
-        this.isbn = isbn;
+    public String getIsbn13() {
+        return isbn13;
+    }
+
+    public void setIsbn13(String isbn13) {
+        this.isbn13 = isbn13;
     }
 
     public String getTitle() {
@@ -77,7 +84,7 @@ public class Book {
         this.author = author;
     }
 
-    public long getPrice() {
+    public int getPrice() {
         return price;
     }
 
@@ -111,6 +118,10 @@ public class Book {
 
     public BookState getBookState() {
         return bookState;
+    }
+
+    public void setBookState(BookState bookState) {
+        this.bookState = bookState;
     }
 }
 

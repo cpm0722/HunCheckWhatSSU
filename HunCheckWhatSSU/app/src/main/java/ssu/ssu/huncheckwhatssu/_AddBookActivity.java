@@ -1,6 +1,8 @@
 package ssu.ssu.huncheckwhatssu;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -26,11 +28,19 @@ public class _AddBookActivity extends AppCompatActivity {
     SearchView searchView;
     NaverBookSearch naverBookSearch;
     ArrayList<Book> searchedBookList;
+    RecyclerView recyclerView;
+    RecyclerView.Adapter adapter;
+    RecyclerView.LayoutManager layoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_ex);
+
+        recyclerView = findViewById(R.id.add_book_recyclerView);
+
+        layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
 
         naverBookSearch = new NaverBookSearch();
 
