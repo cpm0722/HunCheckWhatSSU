@@ -1,10 +1,12 @@
 package ssu.ssu.huncheckwhatssu;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -39,9 +41,18 @@ public class TradeFragment extends Fragment {
         RecyclerView recyclerView = root.findViewById(R.id.trade_ongoing_list) ;
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext())) ;
 
+
+
         // 리사이클러뷰에 RecyclerViewAdapter1 객체 지정.
         RecyclerViewAdapter adapter = new RecyclerViewAdapter(list) ;
         recyclerView.setAdapter(adapter) ;
+        //리사이클러뷰 클릭 이벤트 처리_fragment에 정의된 함수중 oncreate와 같은 역할을 하는함수를 오버라이딩하고, 거기에
+        adapter.setOnItemClickListener(new RecyclerViewAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View v, int pos) {
+
+            }
+        });
 
 
         ArrayList<Book>list2 =new ArrayList<Book>();
@@ -61,4 +72,7 @@ public class TradeFragment extends Fragment {
 
         return root;
     }
+
+
+
 }
