@@ -44,9 +44,10 @@ public class NaverBookSearch {
 
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject item = jsonArray.getJSONObject(i);
-                        searchedBookList.add(new Book(item.getString("isbn").split(" ")[0], item.getString("isbn").split(" ")[1], item.getString("title"),
-                                item.getString("image"), item.getString("author"), item.getInt("price"),
-                                item.getString("publisher"), item.getString("pubdate"), item.getString("description")));
+                        searchedBookList.add(new Book(item.getString("isbn").split(" ")[0], item.getString("isbn").split(" ")[1],
+                                item.getString("title").replaceAll("[<>a-zA-Z/]",""),
+                                item.getString("image"), item.getString("author").replaceAll("[<>a-zA-Z/]",""), item.getInt("price"),
+                                item.getString("publisher").replaceAll("[<>a-zA-Z/]",""), item.getString("pubdate"), item.getString("description")));
                     }
                 }
             } catch (Exception e) {

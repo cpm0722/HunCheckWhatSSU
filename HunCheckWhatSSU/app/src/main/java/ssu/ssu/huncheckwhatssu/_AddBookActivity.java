@@ -50,11 +50,13 @@ public class _AddBookActivity extends AppCompatActivity {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 final String keyword = query;
+                recyclerView.removeAllViews();
 
                 new Thread() {
                     @Override
                     public void run() {
                         searchedBookList = naverBookSearch.searchBook(keyword);
+
                         Log.d("book_js", "onQueryTextSubmit: " + keyword);
 
                         if (searchedBookList != null) {
@@ -64,13 +66,20 @@ public class _AddBookActivity extends AppCompatActivity {
                                 for (int i = 0; i < searchedBookList.size(); i++) {
                                     Log.d("book_js_search", searchedBookList.get(i).toString());
                                 }
+                                adapter = new AddBookAdapter(searchedBookList, getApplicationContext());
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        recyclerView.setAdapter(adapter);
+                                    }
+                                });
+
                             }
                         } else {
                             Log.d("book_js", "onQueryTextSubmit: API ERROR");
                         }
                     }
                 }.start();
-
                 return false;
             }
 
