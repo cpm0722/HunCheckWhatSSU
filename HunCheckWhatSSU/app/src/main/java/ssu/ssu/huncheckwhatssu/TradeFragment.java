@@ -1,23 +1,26 @@
 package ssu.ssu.huncheckwhatssu;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
+
+import static androidx.constraintlayout.widget.Constraints.TAG;
 
 public class TradeFragment extends Fragment {
 
@@ -43,8 +46,6 @@ public class TradeFragment extends Fragment {
         RecyclerView recyclerView = root.findViewById(R.id.trade_ongoing_list) ;
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext())) ;
 
-
-
         // 리사이클러뷰에 RecyclerViewAdapter1 객체 지정.
         RecyclerViewAdapter adapter = new RecyclerViewAdapter(list) ;
         recyclerView.setAdapter(adapter) ;
@@ -57,6 +58,23 @@ public class TradeFragment extends Fragment {
                 startActivity(new Intent(getContext(),BookInfoActivity.class));
             }
         });
+        //리사이클러뷰1 당겨서 새로 고침
+        final SwipeRefreshLayout swipeRefreshLayout=(SwipeRefreshLayout)root.findViewById(R.id.swipe);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                //새로 고침할 작업 나중에 추가하기
+                swipeRefreshLayout.setRefreshing(false);
+                Log.d(TAG, "recyclerview1: swipe&Refresh");
+
+            }
+        });
+
+        TextView counttrade=root.findViewById(R.id.counttrade);
+        counttrade.setText(""+adapter.getItemCount()+" 건");
+
+
+
 
 
         ArrayList<Book>list2 =new ArrayList<Book>();
@@ -82,6 +100,25 @@ public class TradeFragment extends Fragment {
                 startActivity(new Intent(getContext(),BookInfoActivity.class));
             }
         });
+        //리사이클러뷰2 당겨서 새로 고침
+        final SwipeRefreshLayout swipeRefreshLayout2=(SwipeRefreshLayout)root.findViewById(R.id.swipe2);
+        swipeRefreshLayout2.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                //새로 고침할 작업 나중에 추가하기
+                swipeRefreshLayout2.setRefreshing(false);
+                Log.d(TAG, "recyclerview2: swipe&Refresh");
+
+            }
+        });
+
+
+
+        /*리사이클러뷰에 구분선 넣기*/
+        DividerItemDecoration dividerItemDecoration=new DividerItemDecoration(getContext(),new LinearLayoutManager(getContext()).getOrientation());
+        dividerItemDecoration.setDrawable(getResources().getDrawable(R.drawable.recyleritem_line));
+        recyclerView.addItemDecoration(dividerItemDecoration);
+        recyclerView2.addItemDecoration(dividerItemDecoration);
         return root;
     }
 
