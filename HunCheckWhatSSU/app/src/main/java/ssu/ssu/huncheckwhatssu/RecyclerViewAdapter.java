@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
+import static androidx.constraintlayout.widget.Constraints.TAG;
+
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
     private ArrayList<Book> mData = null ;
     public interface OnItemClickListener{
@@ -21,6 +23,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public void setOnItemClickListener(OnItemClickListener listener){
         this.mListener=listener;
     }
+
     // 아이템 뷰를 저장하는 뷰홀더 클래스.
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView textView1 ;
@@ -40,6 +43,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 public void onClick(View v) {
                     int pos = getAdapterPosition() ;
                     if(pos!=RecyclerView.NO_POSITION){
+                        Log.d(TAG, "Element " + getAdapterPosition() + " clicked.");
                         if(mListener!=null){mListener.onItemClick(v,pos);}
                     }
                 }

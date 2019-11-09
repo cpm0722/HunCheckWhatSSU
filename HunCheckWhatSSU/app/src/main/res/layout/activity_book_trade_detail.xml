@@ -546,7 +546,9 @@
         <Button
             android:text="뒤로가기"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:id="@+id/back2TradeOverview"
+            />
     </LinearLayout>
 
 </LinearLayout>

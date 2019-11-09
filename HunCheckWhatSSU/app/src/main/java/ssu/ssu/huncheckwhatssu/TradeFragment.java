@@ -1,5 +1,6 @@
 package ssu.ssu.huncheckwhatssu;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -7,6 +8,7 @@ import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -46,11 +48,13 @@ public class TradeFragment extends Fragment {
         // 리사이클러뷰에 RecyclerViewAdapter1 객체 지정.
         RecyclerViewAdapter adapter = new RecyclerViewAdapter(list) ;
         recyclerView.setAdapter(adapter) ;
-        //리사이클러뷰 클릭 이벤트 처리_fragment에 정의된 함수중 oncreate와 같은 역할을 하는함수를 오버라이딩하고, 거기에
+        //리사이클러뷰 클릭 이벤트 처리
         adapter.setOnItemClickListener(new RecyclerViewAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(View v, int pos) {
-
+            public void onItemClick(View view, int pos) {
+                //객체 해당되는 부분을 DB에서 가져와야함
+                //자세한 책 정보보기로 정보가 넘어가야함
+                startActivity(new Intent(getContext(),BookInfoActivity.class));
             }
         });
 
@@ -69,7 +73,15 @@ public class TradeFragment extends Fragment {
         RecyclerViewAdapter2 adapter2 = new RecyclerViewAdapter2(list2) ;
         recyclerView2.setAdapter(adapter2) ;
 
-
+        //리사이클러뷰 클릭 이벤트 처리
+        adapter2.setOnItemClickListener(new RecyclerViewAdapter2.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int pos) {
+                //객체 해당되는 부분을 DB에서 가져와야함
+                //자세한 책 정보보기로 정보가 넘어가야함
+                startActivity(new Intent(getContext(),BookInfoActivity.class));
+            }
+        });
         return root;
     }
 

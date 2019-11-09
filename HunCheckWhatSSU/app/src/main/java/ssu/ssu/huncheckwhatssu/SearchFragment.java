@@ -20,17 +20,22 @@ public class SearchFragment extends Fragment implements View.OnClickListener{
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_search, container, false);
 
+
         //BackButton Pressed 시 NavigationBottom Menu Selected 변경
         Fragment navHostFragment = this.getActivity().getSupportFragmentManager().getFragments().get(0);
         BottomNavigationView navView = navHostFragment.getActivity().findViewById(R.id.nav_view);
         Menu menu = navView.getMenu();
         menu.getItem(0).setChecked(true);
 
+        bookInfoBtn = root.findViewById(R.id.book_info_btn);
+        bookInfoBtn.setOnClickListener(this);
 
         return root;
     }
 
     @Override
     public void onClick(View view) {
+        Intent intent = new Intent(this.getActivity(), BookInfoActivity.class);
+        this.getActivity().startActivity(intent);
     }
 }
