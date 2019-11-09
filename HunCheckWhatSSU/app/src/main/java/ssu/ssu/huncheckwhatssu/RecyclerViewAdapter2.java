@@ -2,7 +2,10 @@ package ssu.ssu.huncheckwhatssu;
 
 import android.content.Context;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -16,6 +19,9 @@ import static androidx.constraintlayout.widget.Constraints.TAG;
 
 public class RecyclerViewAdapter2 extends RecyclerView.Adapter<RecyclerViewAdapter2.ViewHolder> {
     private ArrayList<Book> mData = null ;
+
+
+
     public interface OnItemClickListener{
         void onItemClick(View v,int pos);
     }
@@ -24,7 +30,7 @@ public class RecyclerViewAdapter2 extends RecyclerView.Adapter<RecyclerViewAdapt
         this.mListener=listener;
     }
     // 아이템 뷰를 저장하는 뷰홀더 클래스.
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener {
         TextView textView1 ;
         TextView textView2;
         TextView textView3;
@@ -46,7 +52,30 @@ public class RecyclerViewAdapter2 extends RecyclerView.Adapter<RecyclerViewAdapt
                     }
                 }
             });
+            /*아이템 꾸욱 누루면 삭제 가능하도록 */
+            itemView.setOnCreateContextMenuListener(this);
         }
+
+        /*아이템 길게 누르면 삭제 가능하도록*/
+        @Override
+        public void onCreateContextMenu(ContextMenu contextMenu, View view, ContextMenu.ContextMenuInfo contextMenuInfo) {
+            MenuItem Delete=contextMenu.add(Menu.NONE,1,1,"삭제");
+            Delete.setOnMenuItemClickListener(onEditList);
+        }
+        private final MenuItem.OnMenuItemClickListener onEditList= new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                switch (menuItem.getItemId()) {
+                    case 1:
+                        mData.remove(getAdapterPosition());
+
+                        notifyItemRemoved(getAdapterPosition());
+                        notifyItemRangeChanged(getAdapterPosition(), mData.size());
+                        break;
+                }
+                return true;
+            }
+        };
     }
 
     // 생성자에서 데이터 리스트 객체를 전달받음.

@@ -26,17 +26,17 @@ public class TradeFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_trade, container, false);
+        final View root = inflater.inflate(R.layout.fragment_trade, container, false);
 
         //BackButton Pressed 시 NavigationBottom Menu Selected 변경
-        Fragment navHostFragment = this.getActivity().getSupportFragmentManager().getFragments().get(0);
+        final Fragment navHostFragment = this.getActivity().getSupportFragmentManager().getFragments().get(0);
         BottomNavigationView navView = navHostFragment.getActivity().findViewById(R.id.nav_view);
         Menu menu = navView.getMenu();
         menu.getItem(2).setChecked(true);
 
 
 
-        ArrayList<Book>list =new ArrayList<Book>();
+        final ArrayList<Book>list =new ArrayList<Book>();
         list.add(new Book("git","10000","dms"));
         list.add(new Book("hi","300","dagaja"));
         list.add(new Book("123hi","4300","dagajdfa"));
@@ -47,7 +47,7 @@ public class TradeFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext())) ;
 
         // 리사이클러뷰에 RecyclerViewAdapter1 객체 지정.
-        RecyclerViewAdapter adapter = new RecyclerViewAdapter(list) ;
+        final RecyclerViewAdapter adapter = new RecyclerViewAdapter(list) ;
         recyclerView.setAdapter(adapter) ;
         //리사이클러뷰 클릭 이벤트 처리
         adapter.setOnItemClickListener(new RecyclerViewAdapter.OnItemClickListener() {
@@ -58,21 +58,26 @@ public class TradeFragment extends Fragment {
                 startActivity(new Intent(getContext(),BookInfoActivity.class));
             }
         });
-        //리사이클러뷰1 당겨서 새로 고침
+        /*거래진행중인 아이템개수 보여주기 위해서*/
+        final TextView counttrade=root.findViewById(R.id.counttrade);
+        counttrade.setText(""+adapter.getItemCount()+" 건");
+
+        /*리사이클러뷰1 당겨서 새로 고침*/
         final SwipeRefreshLayout swipeRefreshLayout=(SwipeRefreshLayout)root.findViewById(R.id.swipe);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                //새로 고침할 작업 나중에 추가하기
+                /*새로 고침할 작업 나중에 추가하기*/
+
                 swipeRefreshLayout.setRefreshing(false);
                 Log.d(TAG, "recyclerview1: swipe&Refresh");
 
+                /*새로 고침한 결과, 거래진행중인 건 수가 변화 한 부분을(아이템 추가 혹은 삭제) 반영하기 위한 코드  */
+                counttrade.setText(""+adapter.getItemCount()+" 건");
             }
+
+
         });
-
-        TextView counttrade=root.findViewById(R.id.counttrade);
-        counttrade.setText(""+adapter.getItemCount()+" 건");
-
 
 
 
