@@ -57,7 +57,7 @@ public class AddBookAdapter extends RecyclerView.Adapter<AddBookAdapter.MyViewHo
         Book book = bookList.get(position);
         holder.title.setText(book.getTitle());
         holder.price.setText(String.valueOf(book.getPrice()));
-        holder.pubdate.setText(book.getPubdate());
+        holder.pubdate.setText(book.getPubDate());
         holder.publisher.setText(book.getPublisher());
         holder.isbn10.setText(book.getIsbn10());
         holder.author.setText(book.getAuthor());

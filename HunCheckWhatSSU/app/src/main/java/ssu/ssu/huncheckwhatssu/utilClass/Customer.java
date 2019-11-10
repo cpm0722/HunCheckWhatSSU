@@ -10,6 +10,8 @@ public class Customer {
     String phoneNumber;
     String address;
 
+    public Customer(){}
+
     public Customer(String id, String name, String phoneNumber, String address) {
         this.id = id;
         this.name = name;
@@ -49,12 +51,11 @@ public class Customer {
         this.address = address;
     }
 
-    public Map<String, Object> toMap(){
-        HashMap<String, Object> result = new HashMap<>();
+    public void toMap(Map<String, Object> result){
         result.put("id", this.id);
         result.put("name", this.name);
         result.put("phoneNumber", this.phoneNumber);
         result.put("address", this.address);
-        return result;
+        return;
     }
 }

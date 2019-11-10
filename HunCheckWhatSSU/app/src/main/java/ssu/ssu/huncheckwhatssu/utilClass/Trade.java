@@ -17,7 +17,11 @@ public class Trade {
         WAIT, PRECONTRACT, COMPLETE
     }
 
-    Trade(Book book, Customer customer){
+    public Trade(){
+
+    }
+
+    public Trade(Book book, Customer customer){
         this.book = book;
         this.seller = customer;
         this.state = TradeState.WAIT;

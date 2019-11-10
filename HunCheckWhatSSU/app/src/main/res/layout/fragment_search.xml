@@ -23,4 +23,15 @@
         android:layout_height="wrap_content"
         android:text="bookinfo"
         android:id="@+id/book_info_btn"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Add"
+        android:id="@+id/test_add_btn"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/search_fragment_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 </android.widget.LinearLayout>

@@ -2,6 +2,7 @@ package ssu.ssu.huncheckwhatssu;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -10,11 +11,26 @@ import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.nikhilpanju.recyclerviewenhanced.OnActivityTouchListener;
 
-public class SearchFragment extends Fragment implements View.OnClickListener{
+import java.util.ArrayList;
+import java.util.List;
+
+import ssu.ssu.huncheckwhatssu.utilClass.Book;
+import ssu.ssu.huncheckwhatssu.utilClass.Customer;
+import ssu.ssu.huncheckwhatssu.utilClass.Trade;
+
+public class SearchFragment extends Fragment implements View.OnClickListener {
     Button bookInfoBtn;
+    Button addBtn;
+    FirebaseCommunicator firebase;
+
+    private RecyclerView recyclerView;
+    private RecyclerViewTradeAdapter adapter;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -27,15 +43,38 @@ public class SearchFragment extends Fragment implements View.OnClickListener{
         Menu menu = navView.getMenu();
         menu.getItem(0).setChecked(true);
 
+        //RecyclerView
+        recyclerView = root.findViewById(R.id.search_fragment_recycler_view);
+        adapter = new RecyclerViewTradeAdapter(this.getContext(), new ArrayList<Trade>());
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
+        RecyclerViewTradeAdapter.setTouchListener(this.getContext(), this.getActivity(), recyclerView);
+
+
+        firebase = new FirebaseCommunicator(this.getContext(), this.getActivity());
+        firebase.setRecyclerView(recyclerView);
         bookInfoBtn = root.findViewById(R.id.book_info_btn);
         bookInfoBtn.setOnClickListener(this);
+
+        //TEST용 Firebase 추가 버튼
+        addBtn = root.findViewById(R.id.test_add_btn);
+        addBtn.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                Book book = new Book("testISBN10", "testISBN13", "testTitle", "testImage", "testAuthor", 15000, "testPublisher", "testPubDate", "testDescription");
+                Customer seller = new Customer("testId", "testName", "testPhoneNumber", "testAdress");
+                Trade trade = new Trade(book, seller);
+                firebase.uploadTrade(trade);
+            }
+        });
 
         return root;
     }
 
     @Override
     public void onClick(View view) {
-        if(view == bookInfoBtn) {
+        if (view == bookInfoBtn) {
             Intent intent = new Intent(this.getActivity(), BookInfoActivity.class);
             this.getActivity().startActivity(intent);
         }

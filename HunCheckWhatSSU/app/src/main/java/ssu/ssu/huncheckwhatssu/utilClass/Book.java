@@ -14,11 +14,13 @@ public class Book {
     String author;
     int price;
     String publisher;
-    String pubdate;
+    String pubDate;
     String description;
     BookState bookState;
 
-    public Book(String isbn10, String isbn13, String title, String image, String author, int price, String publisher, String pubdate, String description) {
+    public Book(){}
+
+    public Book(String isbn10, String isbn13, String title, String image, String author, int price, String publisher, String pubDate, String description) {
         this.isbn10 = isbn10;
         this.isbn13 = isbn13;
         this.title = title;
@@ -26,7 +28,7 @@ public class Book {
         this.author = author;
         this.price = price;
         this.publisher = publisher;
-        this.pubdate = pubdate;
+        this.pubDate = pubDate;
         this.description = description;
     }
 
@@ -40,7 +42,7 @@ public class Book {
                 ", author='" + author + '\'' +
                 ", price=" + price +
                 ", publisher='" + publisher + '\'' +
-                ", pubdate='" + pubdate + '\'' +
+                ", pubDate='" + pubDate + '\'' +
                 ", description='" + description + '\'' +
                 ", bookState=" + bookState +
                 '}';
@@ -102,12 +104,12 @@ public class Book {
         this.publisher = publisher;
     }
 
-    public String getPubdate() {
-        return pubdate;
+    public String getPubDate() {
+        return pubDate;
     }
 
-    public void setPubdate(String pubdate) {
-        this.pubdate = pubdate;
+    public void setPubDate(String pubDate) {
+        this.pubDate = pubDate;
     }
 
     public String getDescription() {
@@ -126,17 +128,16 @@ public class Book {
         this.bookState = bookState;
     }
 
-    public Map<String, Object> toMap(){
-        HashMap<String, Object> result = new HashMap<>();
-        result.put("ISBN", this.ISBN);
-        result.put("key", this.key);
-        result.put("name", this.name);
+    public void toMap(Map<String, Object> result){
+        result.put("isbn10", this.isbn10);
+        result.put("isbn13", this.isbn13);
+        result.put("title", this.title);
         result.put("author", this.author);
-        result.put("publicationDate", this.publicationDate);
-        result.put("original_price", this.original_price);
-        result.put("sellPrice", this.sellPrice);
+        result.put("price", this.price);
+        result.put("publisher", this.publisher);
+        result.put("pubDate", this.pubDate);
+        result.put("description", this.description);
         result.put("bookState", this.bookState);
-        return result;
     }
 }
 
