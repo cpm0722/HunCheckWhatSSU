@@ -1,7 +1,11 @@
 package ssu.ssu.huncheckwhatssu;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -13,7 +17,14 @@ import androidx.fragment.app.Fragment;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class OptionFragment extends Fragment {
+public class OptionFragment extends Fragment implements View.OnClickListener {
+
+    private Button setPersonalInfoBtn;
+    private Button setNotificationBtn;
+    private Button customerContactAddressBtn;
+
+    private AlertDialog setNotificationDialog;
+    private AlertDialog showCustomerSupportContactDialog;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -27,15 +38,57 @@ public class OptionFragment extends Fragment {
         Menu menu = navView.getMenu();
         menu.getItem(3).setChecked(true);
 
-        Button setting_Personal_Info_Btn = (Button)root.findViewById(R.id.setting_Personal_Info_Btn);
-        setting_Personal_Info_Btn.setOnClickListener(new Button.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                Intent in = new Intent(getActivity(),SettingPersonalInfo.class);
-                startActivity(in);
-            }
-        });
+
+        setPersonalInfoBtn = (Button)root.findViewById(R.id.setting_Personal_Info_Btn);
+        setNotificationBtn = (Button)root.findViewById(R.id.setting_notification_btn);
+        customerContactAddressBtn= (Button)root.findViewById(R.id.customer_support_center_btn);
+        setPersonalInfoBtn.setOnClickListener(this);
+        setNotificationBtn.setOnClickListener(this);
+        customerContactAddressBtn.setOnClickListener(this);
+
+
 
         return root;
     }
+
+    @Override
+    public void onClick(View view) {
+        if(view == setPersonalInfoBtn){
+            startActivity(new Intent(getActivity().getApplicationContext(),SettingPersonalInfo.class));
+
+        }
+        else if(view == setNotificationBtn){
+            setNotification();
+        }
+        else if(view == customerContactAddressBtn){
+            showCustomerSupportContactAddress();
+        }
+    }
+    private void setNotification(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        LayoutInflater inflater = (LayoutInflater)getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View notificationDialogView = inflater.inflate(R.layout.dialog_setting_notification,null);
+        builder.setTitle("알림 설정");
+        builder.setView(notificationDialogView);
+        builder.setNegativeButton("취소",null);
+        builder.setPositiveButton("저장",dialogListner);
+        setNotificationDialog = builder.create();
+        setNotificationDialog.show();
+    }
+    private void showCustomerSupportContactAddress(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle("고객센터 연락처");
+        builder.setMessage("010-0000-0000");
+        builder.setNeutralButton("확인",null);
+        showCustomerSupportContactDialog = builder.create();
+        showCustomerSupportContactDialog.show();
+    }
+    DialogInterface.OnClickListener dialogListner = new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick(DialogInterface dialogInterface, int i) {
+            if(dialogInterface == setNotificationDialog&&i==DialogInterface.BUTTON_POSITIVE){
+
+            }
+        }
+    };
 }
