@@ -1,5 +1,8 @@
 package ssu.ssu.huncheckwhatssu.utilClass;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Customer {
     // 사용자 고유 번호
     String id;
@@ -44,5 +47,14 @@ public class Customer {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public Map<String, Object> toMap(){
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("id", this.id);
+        result.put("name", this.name);
+        result.put("phoneNumber", this.phoneNumber);
+        result.put("address", this.address);
+        return result;
     }
 }

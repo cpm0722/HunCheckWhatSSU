@@ -3,6 +3,8 @@ package ssu.ssu.huncheckwhatssu.utilClass;
 import android.media.Image;
 
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Book {
     // 책의 고유번호
@@ -75,6 +77,19 @@ public class Book {
 
     public void setBookCoverImg(Image bookCoverImg) {
         this.bookCoverImg = bookCoverImg;
+    }
+
+    public Map<String, Object> toMap(){
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("ISBN", this.ISBN);
+        result.put("key", this.key);
+        result.put("name", this.name);
+        result.put("author", this.author);
+        result.put("publicationDate", this.publicationDate);
+        result.put("original_price", this.original_price);
+        result.put("sellPrice", this.sellPrice);
+        result.put("bookState", this.bookState);
+        return result;
     }
 }
 

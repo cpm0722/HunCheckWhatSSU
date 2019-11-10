@@ -35,7 +35,9 @@ public class SearchFragment extends Fragment implements View.OnClickListener{
 
     @Override
     public void onClick(View view) {
-        Intent intent = new Intent(this.getActivity(), BookInfoActivity.class);
-        this.getActivity().startActivity(intent);
+        if(view == bookInfoBtn) {
+            Intent intent = new Intent(this.getActivity(), BookInfoActivity.class);
+            this.getActivity().startActivity(intent);
+        }
     }
 }
