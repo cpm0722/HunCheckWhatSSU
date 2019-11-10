@@ -1,6 +1,7 @@
 package ssu.ssu.huncheckwhatssu;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,12 +19,30 @@ public class AddBookAdapter extends RecyclerView.Adapter<AddBookAdapter.MyViewHo
     private Context context;
     private ArrayList<Book> bookList;
 
+    public interface OnItemClickListener {
+        void onItemClick(View v, int pos);
+    }
+
+    private OnItemClickListener listener = null;
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.listener = listener;
+    }
+
     public AddBookAdapter(ArrayList<Book> bookList, Context context) {
         this.context = context;
         this.bookList = bookList;
     }
 
-    public static class MyViewHolder extends RecyclerView.ViewHolder {
+    public ArrayList<Book> getBookList() {
+        return bookList;
+    }
+
+    public void setBookList(ArrayList<Book> bookList) {
+        this.bookList = bookList;
+    }
+
+    public class MyViewHolder extends RecyclerView.ViewHolder {
         TextView title;
         TextView isbn10;
         TextView author;
@@ -41,6 +60,18 @@ public class AddBookAdapter extends RecyclerView.Adapter<AddBookAdapter.MyViewHo
             this.pubdate = itemView.findViewById(R.id.add_book_item_pubdate_text);
             this.price = itemView.findViewById(R.id.add_book_item_price_text);
             this.image = itemView.findViewById(R.id.add_book_item_image);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION) {
+                        if (listener!= null) {
+                            listener.onItemClick(v, position);
+                        }
+                    }
+                }
+            });
         }
     }
 
@@ -63,6 +94,8 @@ public class AddBookAdapter extends RecyclerView.Adapter<AddBookAdapter.MyViewHo
         holder.author.setText(book.getAuthor());
         Glide.with(this.context).load(book.getImage()).into(holder.image);
     }
+
+
 
     @Override
     public int getItemCount() {

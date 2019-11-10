@@ -31,7 +31,7 @@ public class _AddBookActivity extends AppCompatActivity {
     NaverBookSearch naverBookSearch;
     ArrayList<Book> searchedBookList;
     RecyclerView recyclerView;
-    RecyclerView.Adapter adapter;
+    AddBookAdapter adapter;
     RecyclerView.LayoutManager layoutManager;
 
     // 스크롤이 끝에 닿아서 책 로드하는 동안 이벤트 더이상 동작불가능하게 하기 위한 Trigger
@@ -106,6 +106,15 @@ public class _AddBookActivity extends AppCompatActivity {
                             Log.d("book_js_search", searchedBookList.get(i).toString());
                         }
                         adapter = new AddBookAdapter(searchedBookList, getApplicationContext());
+                        adapter.setOnItemClickListener(new AddBookAdapter.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(View v, int pos) {
+                                Book book = searchedBookList.get(pos);
+                                // 책정보 전달할 액티비티 만들면 됨
+                                Log.d("JS", "onItemClick: " + book.toString());
+                            }
+                        });
+
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
