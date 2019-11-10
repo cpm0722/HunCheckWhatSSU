@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<!--    // 책의 고유번호-->
+<!--    long ISBN;-->
+<!--    long key;-->
+<!--    // &#45;&#45;-->
+<!--    String name;-->
+<!--    String author;-->
+<!--    Calendar publicationDate;-->
+<!--    long original_price;-->
+<!--    long sellPrice;-->
+<!--    Image bookCoverImg;-->
+<!--    BookState bookState;-->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <TextView
+            android:text="판매할 책이름을 입력해 주세요"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <SearchView
+            android:id="@+id/book_add_search_text"
+            android:background="@drawable/round_shape"
+            android:layoutDirection="rtl"
+            android:layout_marginTop="13dp"
+            android:textSize="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </LinearLayout>
+
+    <TextView
+        android:background="#CCC"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/add_book_recyclerView"
+        android:scrollbars="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+
+    <TextView
+        android:id="@+id/add_book_nothingResult"
+        android:text="검색 결과가 없습니다."
+        android:textSize="16dp"
+        android:textColor="#F00"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:padding="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0"/>
+</LinearLayout>

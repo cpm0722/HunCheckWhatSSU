@@ -7,36 +7,75 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Book {
-    // 책의 고유번호
-    long ISBN;
-    long key;
-    // --
-    String name;
+    String isbn10;
+    String isbn13;
+    String title;
+    String image;
     String author;
-    Calendar publicationDate;
-    long original_price;
-    long sellPrice;
-    Image bookCoverImg;
+    int price;
+    String publisher;
+    String pubdate;
+    String description;
     BookState bookState;
 
-    public Book(long ISBN, long key, String name, String author, Calendar publicationDate, long original_price, long sellPrice, Image bookCoverImg, BookState bookState) {
-        this.ISBN = ISBN;
-        this.key = key;
-        this.name = name;
+    public Book(String isbn10, String isbn13, String title, String image, String author, int price, String publisher, String pubdate, String description) {
+        this.isbn10 = isbn10;
+        this.isbn13 = isbn13;
+        this.title = title;
+        this.image = image;
         this.author = author;
-        this.publicationDate = publicationDate;
-        this.original_price = original_price;
-        this.sellPrice = sellPrice;
-        this.bookCoverImg = bookCoverImg;
-        this.bookState = bookState;
+        this.price = price;
+        this.publisher = publisher;
+        this.pubdate = pubdate;
+        this.description = description;
     }
 
-    public String getName() {
-        return name;
+    @Override
+    public String toString() {
+        return "Book{" +
+                "isbn10='" + isbn10 + '\'' +
+                ", isbn13='" + isbn13 + '\'' +
+                ", title='" + title + '\'' +
+                ", image='" + image + '\'' +
+                ", author='" + author + '\'' +
+                ", price=" + price +
+                ", publisher='" + publisher + '\'' +
+                ", pubdate='" + pubdate + '\'' +
+                ", description='" + description + '\'' +
+                ", bookState=" + bookState +
+                '}';
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getIsbn10() {
+        return isbn10;
+    }
+
+    public void setIsbn10(String isbn10) {
+        this.isbn10 = isbn10;
+    }
+
+    public String getIsbn13() {
+        return isbn13;
+    }
+
+    public void setIsbn13(String isbn13) {
+        this.isbn13 = isbn13;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public String getAuthor() {
@@ -47,36 +86,44 @@ public class Book {
         this.author = author;
     }
 
-    public Calendar getPublicationDate() {
-        return publicationDate;
+    public int getPrice() {
+        return price;
     }
 
-    public void setPublicationDate(Calendar publicationDate) {
-        this.publicationDate = publicationDate;
+    public void setPrice(int price) {
+        this.price = price;
     }
 
-    public long getOriginal_price() {
-        return original_price;
+    public String getPublisher() {
+        return publisher;
     }
 
-    public void setOriginal_price(long original_price) {
-        this.original_price = original_price;
+    public void setPublisher(String publisher) {
+        this.publisher = publisher;
     }
 
-    public long getSellPrice() {
-        return sellPrice;
+    public String getPubdate() {
+        return pubdate;
     }
 
-    public void setSellPrice(long sellPrice) {
-        this.sellPrice = sellPrice;
+    public void setPubdate(String pubdate) {
+        this.pubdate = pubdate;
     }
 
-    public Image getBookCoverImg() {
-        return bookCoverImg;
+    public String getDescription() {
+        return description;
     }
 
-    public void setBookCoverImg(Image bookCoverImg) {
-        this.bookCoverImg = bookCoverImg;
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public BookState getBookState() {
+        return bookState;
+    }
+
+    public void setBookState(BookState bookState) {
+        this.bookState = bookState;
     }
 
     public Map<String, Object> toMap(){

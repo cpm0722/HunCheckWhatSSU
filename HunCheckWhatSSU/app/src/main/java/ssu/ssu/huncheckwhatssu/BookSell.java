@@ -33,6 +33,6 @@ public class BookSell {
 
     public void setSeller(String seller) {
         this.seller = seller;
-    }
-}
+
+}}
 
