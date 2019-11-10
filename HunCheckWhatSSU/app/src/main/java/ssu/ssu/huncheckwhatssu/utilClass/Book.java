@@ -1,10 +1,13 @@
 package ssu.ssu.huncheckwhatssu.utilClass;
 
 import android.media.Image;
+import android.os.Bundle;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 import java.util.Calendar;
 
-public class Book {
+public class Book implements Parcelable {
     String isbn10;
     String isbn13;
     String title;
@@ -16,7 +19,7 @@ public class Book {
     String description;
     BookState bookState;
 
-    public Book(String isbn10, String isbn13, String title, String image, String author, int price, String publisher, String pubdate, String description) {
+    public Book(String isbn10, String isbn13, String title, String image, String author, int price, String publisher, String pubdate, String description, BookState bookState) {
         this.isbn10 = isbn10;
         this.isbn13 = isbn13;
         this.title = title;
@@ -26,6 +29,51 @@ public class Book {
         this.publisher = publisher;
         this.pubdate = pubdate;
         this.description = description;
+        this.bookState = bookState;
+    }
+
+    protected Book(Parcel in) {
+        isbn10 = in.readString();
+        isbn13 = in.readString();
+        title = in.readString();
+        image = in.readString();
+        author = in.readString();
+        price = in.readInt();
+        publisher = in.readString();
+        pubdate = in.readString();
+        description = in.readString();
+        bookState = in.readParcelable(BookState.class.getClassLoader());
+    }
+
+    public static final Creator<Book> CREATOR = new Creator<Book>() {
+        @Override
+        public Book createFromParcel(Parcel in) {
+            return new Book(in);
+        }
+
+        @Override
+        public Book[] newArray(int size) {
+            return new Book[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(isbn10);
+        dest.writeString(isbn13);
+        dest.writeString(title);
+        dest.writeString(image);
+        dest.writeString(author);
+        dest.writeInt(price);
+        dest.writeString(publisher);
+        dest.writeString(pubdate);
+        dest.writeString(description);
+        dest.writeParcelable(bookState, flags);
     }
 
     @Override
@@ -40,7 +88,7 @@ public class Book {
                 ", publisher='" + publisher + '\'' +
                 ", pubdate='" + pubdate + '\'' +
                 ", description='" + description + '\'' +
-                ", bookState=" + bookState +
+                ", bookState=" + (bookState == null ? "null" : bookState.toString()) +
                 '}';
     }
 
@@ -125,7 +173,7 @@ public class Book {
     }
 }
 
-class BookState {
+class BookState implements Parcelable {
     enum bookState {
         BEST,GOOD,BAD,WORST;
     }
@@ -144,6 +192,54 @@ class BookState {
         this.bookState04 = bookState04;
         this.bookState05 = bookState05;
         this.bookState06 = bookState06;
+    }
+
+    @Override
+    public String toString() {
+        return "BookState{" +
+                "bookState01=" + bookState01.name() +
+                ", bookState02=" + bookState02.name() +
+                ", bookState03=" + bookState03.name() +
+                ", bookState04=" + bookState04.name() +
+                ", bookState05=" + bookState05.name() +
+                ", bookState06=" + bookState06.name() +
+                '}';
+    }
+
+    protected BookState(Parcel in) {
+        bookState01 = bookState.valueOf(in.readString());
+        bookState02 = bookState.valueOf(in.readString());
+        bookState03 = bookState.valueOf(in.readString());
+        bookState04 = bookState.valueOf(in.readString());
+        bookState05 = bookState.valueOf(in.readString());
+        bookState06 = bookState.valueOf(in.readString());
+    }
+
+    public static final Creator<BookState> CREATOR = new Creator<BookState>() {
+        @Override
+        public BookState createFromParcel(Parcel in) {
+            return new BookState(in);
+        }
+
+        @Override
+        public BookState[] newArray(int size) {
+            return new BookState[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(bookState01.name());
+        dest.writeString(bookState02.name());
+        dest.writeString(bookState03.name());
+        dest.writeString(bookState04.name());
+        dest.writeString(bookState05.name());
+        dest.writeString(bookState06.name());
     }
 
     public bookState getBookState01() {

@@ -1,6 +1,9 @@
 package ssu.ssu.huncheckwhatssu.utilClass;
 
-public class Customer {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Customer implements Parcelable {
     // 사용자 고유 번호
     String id;
     String name;
@@ -12,6 +15,39 @@ public class Customer {
         this.name = name;
         this.phoneNumber = phoneNumber;
         this.address = address;
+    }
+
+
+    protected Customer(Parcel in) {
+        id = in.readString();
+        name = in.readString();
+        phoneNumber = in.readString();
+        address = in.readString();
+    }
+
+    public static final Creator<Customer> CREATOR = new Creator<Customer>() {
+        @Override
+        public Customer createFromParcel(Parcel in) {
+            return new Customer(in);
+        }
+
+        @Override
+        public Customer[] newArray(int size) {
+            return new Customer[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeString(name);
+        dest.writeString(phoneNumber);
+        dest.writeString(address);
     }
 
     public String getId() {

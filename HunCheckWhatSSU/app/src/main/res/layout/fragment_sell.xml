@@ -29,6 +29,12 @@
         android:text="판매할 책 등록"
         android:layout_gravity="center"/>
 
+    <Button
+        android:id="@+id/book_info_test_btn"
+        android:text="임시 테스트"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
     <Space
         android:layout_width="match_parent"
         android:layout_height="43dp" />
