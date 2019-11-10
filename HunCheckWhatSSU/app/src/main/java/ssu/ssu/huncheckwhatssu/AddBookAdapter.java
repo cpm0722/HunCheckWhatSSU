@@ -61,7 +61,6 @@ public class AddBookAdapter extends RecyclerView.Adapter<AddBookAdapter.MyViewHo
         holder.publisher.setText(book.getPublisher());
         holder.isbn10.setText(book.getIsbn10());
         holder.author.setText(book.getAuthor());
-
         Glide.with(this.context).load(book.getImage()).into(holder.image);
     }
 
