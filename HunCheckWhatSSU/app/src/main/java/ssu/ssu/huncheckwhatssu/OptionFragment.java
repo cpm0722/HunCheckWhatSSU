@@ -79,7 +79,7 @@ public class OptionFragment extends Fragment implements View.OnClickListener {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setTitle("고객센터 연락처");
         builder.setMessage("010-0000-0000");
-        builder.setNeutralButton("확인",null);
+        builder.setPositiveButton("확인",null);
         showCustomerSupportContactDialog = builder.create();
         showCustomerSupportContactDialog.show();
     }

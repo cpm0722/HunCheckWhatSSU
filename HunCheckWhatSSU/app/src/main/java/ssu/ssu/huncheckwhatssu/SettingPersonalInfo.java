@@ -11,7 +11,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-public class SettingPersonalInfo extends AppCompatActivity implements View.OnClickListener, TextWatcher {
+import ssu.ssu.huncheckwhatssu.utilClass.Customer;
+
+public class SettingPersonalInfo extends AppCompatActivity implements View.OnClickListener{
 
     private Button setImageBtn;
     private Button cancelBtn;
@@ -40,6 +42,27 @@ public class SettingPersonalInfo extends AppCompatActivity implements View.OnCli
         editGrade = (EditText)findViewById(R.id.setting_personal_grade_edit);
         editContactAddress = (EditText)findViewById(R.id.setting_personal_contactAddress_edit);
 
+        initializaing();
+    }
+
+    private void initializaing() {
+        Customer customer;
+        String name, nickName, major, contactAddress, grade, address;
+
+        //사용자 정보를 텍스트 박스에 초기화하는 작업
+
+        /*name = customer.getName();
+        nickName = customer.getNickName();
+        major = customer.getMajor();
+        grade = customer.getGrade();
+        contactAddress = customer.getPhoneNumber();
+        address = customer.getAddress();
+
+        editName.setText(name);
+        editNickName.setText(nickName);
+        editMajor.setText(major);
+        editGrade.setText(grade);
+        editContactAddress.setText(contactAddress);*/
     }
 
     @Override
@@ -58,22 +81,16 @@ public class SettingPersonalInfo extends AppCompatActivity implements View.OnCli
     }
 
     private void savePersonalInfo() {
+        Customer customer;
+
+        //customer 객체에 입력받은 텍스트를 저장하는 작업
+
+       /* customer.setName(editName.getText());
+        customer.setNickName(editNickName.getText());
+        customer.setMajor(editMajor.getText());
+        customer.setGrdae(editGrade.getText());
+        customer.setContactAddress(editContactAddress.getText());*/
 
     }
 
-    //텍스트 리스너 오버라이드 메소드
-    @Override
-    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-    }
-
-    @Override
-    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-    }
-
-    @Override
-    public void afterTextChanged(Editable editable) {
-
-    }
 }
