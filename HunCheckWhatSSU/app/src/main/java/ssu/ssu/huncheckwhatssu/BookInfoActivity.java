@@ -202,7 +202,6 @@ public class BookInfoActivity extends AppCompatActivity implements OnMapReadyCal
             activity_book_info_purchaserContactNumberText.setText(purchaser.getPhoneNumber());
             activity_book_info_purchaserCreditRating.setText(purchaser.getCreditRating() + "");
         }
-        setContentView(R.layout.activity_book_trade_detail);
 
 
         Button back2TradeOverview=findViewById(R.id.back2TradeOverview);
