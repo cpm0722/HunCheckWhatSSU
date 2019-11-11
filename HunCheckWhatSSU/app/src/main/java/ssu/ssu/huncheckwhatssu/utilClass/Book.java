@@ -1,12 +1,13 @@
 package ssu.ssu.huncheckwhatssu.utilClass;
 
 import android.media.Image;
+import android.os.Bundle;
+import android.os.Parcel;
+import android.os.Parcelable;
 
-import java.util.Calendar;
-import java.util.HashMap;
 import java.util.Map;
 
-public class Book {
+public class Book implements Parcelable {
     String isbn10;
     String isbn13;
     String title;
@@ -20,7 +21,7 @@ public class Book {
 
     public Book(){}
 
-    public Book(String isbn10, String isbn13, String title, String image, String author, int price, String publisher, String pubDate, String description) {
+    public Book(String isbn10, String isbn13, String title, String image, String author, int price, String publisher, String pubDate, String description, BookState bookState) {
         this.isbn10 = isbn10;
         this.isbn13 = isbn13;
         this.title = title;
@@ -30,6 +31,51 @@ public class Book {
         this.publisher = publisher;
         this.pubDate = pubDate;
         this.description = description;
+        this.bookState = bookState;
+    }
+
+    protected Book(Parcel in) {
+        isbn10 = in.readString();
+        isbn13 = in.readString();
+        title = in.readString();
+        image = in.readString();
+        author = in.readString();
+        price = in.readInt();
+        publisher = in.readString();
+        pubDate = in.readString();
+        description = in.readString();
+        bookState = in.readParcelable(BookState.class.getClassLoader());
+    }
+
+    public static final Creator<Book> CREATOR = new Creator<Book>() {
+        @Override
+        public Book createFromParcel(Parcel in) {
+            return new Book(in);
+        }
+
+        @Override
+        public Book[] newArray(int size) {
+            return new Book[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(isbn10);
+        dest.writeString(isbn13);
+        dest.writeString(title);
+        dest.writeString(image);
+        dest.writeString(author);
+        dest.writeInt(price);
+        dest.writeString(publisher);
+        dest.writeString(pubDate);
+        dest.writeString(description);
+        dest.writeParcelable(bookState, flags);
     }
 
     @Override
@@ -44,7 +90,7 @@ public class Book {
                 ", publisher='" + publisher + '\'' +
                 ", pubDate='" + pubDate + '\'' +
                 ", description='" + description + '\'' +
-                ", bookState=" + bookState +
+                ", bookState=" + (bookState == null ? "null" : bookState.toString()) +
                 '}';
     }
 
@@ -128,7 +174,7 @@ public class Book {
         this.bookState = bookState;
     }
 
-    public void toMap(Map<String, Object> result){
+    public void toMap(Map<String, Object> result) {
         result.put("isbn10", this.isbn10);
         result.put("isbn13", this.isbn13);
         result.put("title", this.title);
@@ -141,72 +187,3 @@ public class Book {
     }
 }
 
-class BookState {
-    enum bookState {
-        BEST,GOOD,BAD,WORST;
-    }
-
-    bookState bookState01;
-    bookState bookState02;
-    bookState bookState03;
-    bookState bookState04;
-    bookState bookState05;
-    bookState bookState06;
-
-    public BookState(bookState bookState01, bookState bookState02, bookState bookState03, bookState bookState04, bookState bookState05, bookState bookState06) {
-        this.bookState01 = bookState01;
-        this.bookState02 = bookState02;
-        this.bookState03 = bookState03;
-        this.bookState04 = bookState04;
-        this.bookState05 = bookState05;
-        this.bookState06 = bookState06;
-    }
-
-    public bookState getBookState01() {
-        return bookState01;
-    }
-
-    public void setBookState01(bookState bookState01) {
-        this.bookState01 = bookState01;
-    }
-
-    public bookState getBookState02() {
-        return bookState02;
-    }
-
-    public void setBookState02(bookState bookState02) {
-        this.bookState02 = bookState02;
-    }
-
-    public bookState getBookState03() {
-        return bookState03;
-    }
-
-    public void setBookState03(bookState bookState03) {
-        this.bookState03 = bookState03;
-    }
-
-    public bookState getBookState04() {
-        return bookState04;
-    }
-
-    public void setBookState04(bookState bookState04) {
-        this.bookState04 = bookState04;
-    }
-
-    public bookState getBookState05() {
-        return bookState05;
-    }
-
-    public void setBookState05(bookState bookState05) {
-        this.bookState05 = bookState05;
-    }
-
-    public bookState getBookState06() {
-        return bookState06;
-    }
-
-    public void setBookState06(bookState bookState06) {
-        this.bookState06 = bookState06;
-    }
-}

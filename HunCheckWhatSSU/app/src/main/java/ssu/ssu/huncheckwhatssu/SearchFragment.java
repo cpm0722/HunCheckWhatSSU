@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ssu.ssu.huncheckwhatssu.utilClass.Book;
+import ssu.ssu.huncheckwhatssu.utilClass.BookState;
 import ssu.ssu.huncheckwhatssu.utilClass.Customer;
 import ssu.ssu.huncheckwhatssu.utilClass.Trade;
 
@@ -65,8 +66,8 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
 
             @Override
             public void onClick(View view) {
-                Book book = new Book("testISBN10", "testISBN13", "testTitle", "testImage", "testAuthor", 15000, "testPublisher", "testPubDate", "testDescription");
-                Customer seller = new Customer("testId", "testName", "testPhoneNumber", "testAdress");
+                Book book = new Book("testISBN10", "testISBN13", "testTitle", "testImage", "testAuthor", 15000, "testPublisher", "testPubDate", "testDescription", new BookState());
+                Customer seller = new Customer("testId", "testName", "testPhoneNumber", "testAdress", (float) 1.0);
                 Trade trade = new Trade(book, seller);
                 firebase.uploadTrade(trade);
             }

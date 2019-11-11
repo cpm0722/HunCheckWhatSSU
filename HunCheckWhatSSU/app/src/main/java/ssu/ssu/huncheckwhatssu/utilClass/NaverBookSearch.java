@@ -12,6 +12,9 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 
+import ssu.ssu.huncheckwhatssu.AddBookAdapter;
+import ssu.ssu.huncheckwhatssu._AddBookActivity;
+
 public class NaverBookSearch {
     StringBuffer response;
     String lastKeyword;
@@ -20,15 +23,19 @@ public class NaverBookSearch {
     final static String clientSecret = "ipkzdv9oUA";//애플리케이션 클라이언트 시크릿값 공용 키 만들어서 사용해야함;
     int responseCode = 0;
     String responseJson;
-
+    int liststart;
     public NaverBookSearch() {
         searchedBookList = new ArrayList<>();
+        liststart = 1;
+    }
+
+    public void resetSearchList() {
+        this.searchedBookList.clear();
+        liststart = 1;
     }
 
     public ArrayList<ssu.ssu.huncheckwhatssu.utilClass.Book> searchBook(String keyword) {
         lastKeyword = keyword;
-        searchedBookList.clear();
-
         responseJson = getNaverSearch(lastKeyword);
 
         Log.d("book_js", "run: " + responseJson);
@@ -47,7 +54,7 @@ public class NaverBookSearch {
                         searchedBookList.add(new Book(item.getString("isbn").split(" ")[0], item.getString("isbn").split(" ")[1],
                                 item.getString("title").replaceAll("[<>a-zA-Z/]",""),
                                 item.getString("image"), item.getString("author").replaceAll("[<>a-zA-Z/]",""), item.getInt("price"),
-                                item.getString("publisher").replaceAll("[<>a-zA-Z/]",""), item.getString("pubdate"), item.getString("description")));
+                                item.getString("publisher").replaceAll("[<>a-zA-Z/]",""), item.getString("pubdate"), item.getString("description"), null));
                     }
                 }
             } catch (Exception e) {
@@ -56,13 +63,14 @@ public class NaverBookSearch {
             }
         }
 
+        _AddBookActivity.process = false;
         return  this.searchedBookList;
     }
 
     private String getNaverSearch(String keyword) {
         try {
             String encodingKeyword = URLEncoder.encode(keyword, "UTF-8");
-            String apiURL = "https://openapi.naver.com/v1/search/book.json?query=" + encodingKeyword;
+            String apiURL = "https://openapi.naver.com/v1/search/book.json?query=" + encodingKeyword + "&start=" + liststart;
             Log.d("book_js", "getNaverSearch: " + apiURL);
             URL url = new URL(apiURL);
             HttpURLConnection con = (HttpURLConnection)url.openConnection();
@@ -83,6 +91,8 @@ public class NaverBookSearch {
                 response.append(inputLine);
             }
             br.close();
+
+            liststart += 10;
             return response.toString();
         } catch (Exception e) {
             e.printStackTrace();

@@ -12,6 +12,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
+<!--        공용 네이버 map 클라이언트 key 필요-->
+        <meta-data android:name="com.naver.maps.map.CLIENT_ID"
+            android:value="r14df325a1"/>
+
         <activity android:name="._AddBookActivity">
         </activity>
         <activity android:name=".BookInfoActivity"></activity>
