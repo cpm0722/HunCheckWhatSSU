@@ -2,6 +2,7 @@ package ssu.ssu.huncheckwhatssu;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,12 +12,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.nikhilpanju.recyclerviewenhanced.RecyclerTouchListener;
 
 import java.util.List;
 
 import ssu.ssu.huncheckwhatssu.utilClass.Trade;
+
+import static androidx.constraintlayout.widget.Constraints.TAG;
 
 public class RecyclerViewTradeAdapter extends RecyclerView.Adapter<RecyclerViewTradeAdapter.TradeViewHolder> {
     LayoutInflater inflater;
@@ -119,4 +123,15 @@ public class RecyclerViewTradeAdapter extends RecyclerView.Adapter<RecyclerViewT
         return;
     }
 
+    public static void SetRefresh(final SwipeRefreshLayout swipeRefreshLayout) {
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                //새로 고침할 작업 나중에 추가하기
+                swipeRefreshLayout.setRefreshing(false);
+                Log.d(TAG, "recyclerview: swipe&Refresh");
+
+            }
+        });
+    }
 }

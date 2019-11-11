@@ -46,14 +46,17 @@
         android:text="판매 등록한 책"
         android:textColor="#344ABD"
         android:textSize="25dp" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/sellList"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_fragment_sell"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1">
-
-    </androidx.recyclerview.widget.RecyclerView>
-
+        android:layout_weight="1"
+        android:layout_height="match_parent">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/sell_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+        </androidx.recyclerview.widget.RecyclerView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 </android.widget.LinearLayout>

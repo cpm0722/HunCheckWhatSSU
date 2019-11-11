@@ -4,53 +4,198 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:gravity="center"
-    android:paddingTop="@dimen/activity_vertical_margin"
     android:orientation="vertical">
 
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="30dp" />
     <ImageView
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="50dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/bookimag"
+        android:background="#FF0">
+    </ImageView>
+    <Space
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textEmailAddress"
-        android:ems="10"
-        android:hint="title"
-        android:id="@+id/Btitle" />
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textPassword"
-        android:ems="10"
-        android:hint="출판사/지은이"
-        android:id="@+id/editor" />
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textPassword"
-        android:ems="10"
-        android:hint="ISBN"
-        android:id="@+id/ISBN" />
-
+        android:layout_height="59dp" />
     <LinearLayout
-        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
+        android:baselineAligned="true">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="책이름"
+            android:textSize="20dp"
+            android:gravity="center"></TextView>
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2.5"
+            android:gravity="left|center_vertical"
+            android:paddingLeft="20dp"
+            android:hint="책이름"
+            android:background="#0FFF"
+            android:singleLine="true"
+            android:selectAllOnFocus="true"
+            android:textSize="20sp"></EditText>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
+        android:baselineAligned="true">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="출판사"
+            android:textSize="20dp"
+            android:gravity="center"></TextView>
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2.5"
+            android:gravity="left|center_vertical"
+            android:paddingLeft="20dp"
+            android:hint="출판사"
+            android:background="#0FFF"
+            android:singleLine="true"
+            android:selectAllOnFocus="true"
+            android:textSize="20sp"></EditText>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
+        android:baselineAligned="true">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="ISBN"
+            android:textSize="20dp"
+            android:gravity="center"></TextView>
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2.5"
+            android:gravity="left|center_vertical"
+            android:paddingLeft="20dp"
+            android:hint="ISBN"
+            android:background="#0FFF"
+            android:singleLine="true"
+            android:selectAllOnFocus="true"
+            android:textSize="20sp"></EditText>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
+        android:baselineAligned="true">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="판매자"
+            android:textSize="20dp"
+            android:gravity="center"></TextView>
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2.5"
+            android:gravity="left|center_vertical"
+            android:paddingLeft="20dp"
+            android:hint="판매자"
+            android:background="#0FFF"
+            android:singleLine="true"
+            android:selectAllOnFocus="true"
+            android:textSize="20sp"></EditText>
 
     </LinearLayout>
-
-    <Button
-
-        android:id="@+id/btnDone"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="등록" />
-
-
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
+        android:baselineAligned="true">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="가격"
+            android:textSize="20dp"
+            android:gravity="center"></TextView>
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2.5"
+            android:gravity="left|center_vertical"
+            android:paddingLeft="20dp"
+            android:hint="가격"
+            android:background="#0FFF"
+            android:singleLine="true"
+            android:selectAllOnFocus="true"
+            android:textSize="20sp"></EditText>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
+        android:baselineAligned="true">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="학부"
+            android:textSize="20dp"
+            android:gravity="center"></TextView>
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2.5"
+            android:gravity="left|center_vertical"
+            android:paddingLeft="20dp"
+            android:hint="학부"
+            android:background="#0FFF"
+            android:singleLine="true"
+            android:selectAllOnFocus="true"
+            android:textSize="20sp"></EditText>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:orientation="horizontal"
+        android:baselineAligned="true">
+        <Button
+            android:id="@+id/btnDone"
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="등록하기"
+            android:textSize="20dp"
+            android:gravity="center"></Button>
+        <Button
+            android:id="@+id/returnBack"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:paddingLeft="20dp"
+            android:text="취소하기"
+            android:selectAllOnFocus="true"
+            android:textSize="20dp"></Button>
+    </LinearLayout>
 </android.widget.LinearLayout>
+

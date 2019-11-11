@@ -30,8 +30,15 @@
         android:text="Add"
         android:id="@+id/test_add_btn"/>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/search_fragment_recycler_view"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_fragment_search"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_weight="1"
+        android:layout_height="match_parent"
+        >
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/search_fragment_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </android.widget.LinearLayout>

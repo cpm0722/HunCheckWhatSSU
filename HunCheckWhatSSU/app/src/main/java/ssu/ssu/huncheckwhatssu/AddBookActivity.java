@@ -34,7 +34,13 @@ public class AddBookActivity extends AppCompatActivity {
                 finish();
             }
         });
+        Button remove=findViewById(R.id.returnBack);
+        remove.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                finish();
+            }
+        });
+        }
     }
 
-
-}

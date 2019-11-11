@@ -15,7 +15,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.nikhilpanju.recyclerviewenhanced.OnActivityTouchListener;
+
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +25,8 @@ import ssu.ssu.huncheckwhatssu.utilClass.Book;
 import ssu.ssu.huncheckwhatssu.utilClass.BookState;
 import ssu.ssu.huncheckwhatssu.utilClass.Customer;
 import ssu.ssu.huncheckwhatssu.utilClass.Trade;
+
+import static androidx.constraintlayout.widget.Constraints.TAG;
 
 public class SearchFragment extends Fragment implements View.OnClickListener {
     Button bookInfoBtn;
@@ -48,8 +51,10 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
         recyclerView = root.findViewById(R.id.search_fragment_recycler_view);
         adapter = new RecyclerViewTradeAdapter(this.getContext(), new ArrayList<Trade>());
         recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
         RecyclerViewTradeAdapter.setSwipeable(this.getContext(), this.getActivity(), recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
+        RecyclerViewTradeAdapter.SetRefresh((SwipeRefreshLayout)root.findViewById(R.id.swipe_fragment_search));
+
 
 
         //FirebaseCommunicator 생성

@@ -25,7 +25,7 @@
         android:textSize="15dp"
         android:text="10건" />
 <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-    android:id="@+id/swipe"
+    android:id="@+id/swipe_fragment_trade_ongoing"
     android:layout_width="match_parent"
     android:layout_weight="1"
     android:layout_height="match_parent"
@@ -48,7 +48,7 @@
         android:textSize="20dp"
         android:textStyle="bold" />
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/swipe2"
+        android:id="@+id/swipe_fragment_trade_done"
         android:layout_width="match_parent"
         android:layout_weight="1"
         android:layout_height="match_parent">
