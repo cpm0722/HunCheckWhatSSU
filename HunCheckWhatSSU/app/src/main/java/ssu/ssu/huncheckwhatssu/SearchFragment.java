@@ -48,11 +48,14 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
         adapter = new RecyclerViewTradeAdapter(this.getContext(), new ArrayList<Trade>());
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
-        RecyclerViewTradeAdapter.setTouchListener(this.getContext(), this.getActivity(), recyclerView);
+        RecyclerViewTradeAdapter.setSwipeable(this.getContext(), this.getActivity(), recyclerView);
 
 
-        firebase = new FirebaseCommunicator(this.getContext(), this.getActivity());
-        firebase.setRecyclerView(recyclerView);
+        //FirebaseCommunicator 생성
+        firebase = new FirebaseCommunicator();
+        //FirebaseCommunicator에 RecyclerView 설정
+        firebase.setRecyclerView(this.getContext(), this.getActivity(), recyclerView);
+
         bookInfoBtn = root.findViewById(R.id.book_info_btn);
         bookInfoBtn.setOnClickListener(this);
 

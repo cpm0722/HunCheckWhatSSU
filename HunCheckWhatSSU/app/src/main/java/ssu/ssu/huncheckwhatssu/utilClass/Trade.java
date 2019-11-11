@@ -1,50 +1,52 @@
 package ssu.ssu.huncheckwhatssu.utilClass;
 
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
-import java.util.HashMap;
-import java.util.Map;
-
-import ssu.ssu.huncheckwhatssu.FirebaseCommunicator;
 
 public class Trade {
     Book book;
     Customer seller;
+    Customer buyer;
     TradeState state;
 
-    enum TradeState{
+    enum TradeState {
         WAIT, PRECONTRACT, COMPLETE
     }
 
-    public Trade(){
+    public Trade() {
 
     }
 
-    public Trade(Book book, Customer customer){
+    public Trade(Book book, Customer customer) {
         this.book = book;
         this.seller = customer;
+        this.buyer = null;
         this.state = TradeState.WAIT;
     }
 
-    public Book getBook(){
+    public Book getBook() {
         return this.book;
     }
 
-    public Customer getSeller(){
+    public Customer getSeller() {
         return this.seller;
     }
 
-    public void setBook(Book book){
+    public Customer getBuyer() {
+        return this.buyer;}
+
+    public void setBook(Book book) {
         this.book = book;
         return;
     }
 
-    public void setSeller(Customer customer){
+    public void setSeller(Customer customer) {
         this.seller = customer;
         return;
     }
 
+    public void setBuyer(Customer customer){
+        this.buyer = customer;
+        return;
+    }
 
 
 }

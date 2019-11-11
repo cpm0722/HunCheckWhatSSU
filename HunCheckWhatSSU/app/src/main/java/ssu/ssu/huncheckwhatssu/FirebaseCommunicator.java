@@ -2,17 +2,14 @@ package ssu.ssu.huncheckwhatssu;
 
 import android.app.Activity;
 import android.content.Context;
-import android.os.CpuUsageInfo;
 import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -30,26 +27,30 @@ import ssu.ssu.huncheckwhatssu.utilClass.Customer;
 import ssu.ssu.huncheckwhatssu.utilClass.Trade;
 
 public class FirebaseCommunicator {
-    DatabaseReference mPostReference;
-    private FirebaseAuth firebaseAuth = null;
+    //Firebase Database의 주소
+    private DatabaseReference mPostReference;
+    //Firebase 로그인 계정
     private FirebaseUser user = null;
+    //계정의 이름_UID로 이루어진 string (DB root/userPath로 사용)
     private String userPath;
+    //DB root/userPath 의 Reference
+    private DatabaseReference myRef;
     private ValueEventListener valueEventListener;
     private List list;
+    //RecyclerView 설정
     private RecyclerView recyclerView;
-    final private Context context;
-    final private Activity activity;
+    private Context context;
+    private Activity activity;
 
-    public FirebaseCommunicator(final Context context, Activity activity) {
-        this.context = context;
-        this.activity = activity;
+    public FirebaseCommunicator(){
         mPostReference = FirebaseDatabase.getInstance().getReference();
         while (user == null) {
-            firebaseAuth = FirebaseAuth.getInstance();
-            user = firebaseAuth.getCurrentUser();
+            user = FirebaseAuth.getInstance().getCurrentUser();
         }
         userPath = user.getDisplayName() + "_" + user.getUid();
+        myRef = mPostReference.child(userPath);
 
+        //
         valueEventListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -58,14 +59,9 @@ public class FirebaseCommunicator {
                     Book book = postSnapshot.getValue(Book.class);
                     Customer customer = postSnapshot.getValue(Customer.class);
                     Trade nowObject = new Trade(book, customer);
-                    Log.d("DEBUG!", nowObject.getBook().getTitle());
                     list.add(nowObject);
-                    if(recyclerView != null) {
+                    if(recyclerView != null)
                         recyclerView.setAdapter(new RecyclerViewTradeAdapter(context, list));
-                        Log.d("DEBUG!", "ADAPTER!");
-                    }
-                    else
-                        Log.d("DEBUG!", "VIEW NULL!");
                 }
             }
 
@@ -74,12 +70,14 @@ public class FirebaseCommunicator {
 
             }
         };
-        mPostReference.addValueEventListener(valueEventListener);
-        //mPostReference.addChildEventListener(childEventListener);
+        myRef.addValueEventListener(valueEventListener);
 
     }
 
-    public void setRecyclerView(RecyclerView recyclerView){
+    //RecyclerView 및 Context, Activity 받아옴 (Activity 및 Fragment 전환 시마다 호출)
+    public void setRecyclerView(Context context, Activity activity, RecyclerView recyclerView){
+        this.context = context;
+        this.activity = activity;
         this.recyclerView = recyclerView;
         return;
     }
@@ -123,12 +121,11 @@ public class FirebaseCommunicator {
     }
 
     public void uploadTrade(Trade trade) {
+        String key = myRef.push().getKey();
         Map<String, Object> childUpdates = new HashMap<>();
         trade.getBook().toMap(childUpdates);
         trade.getSeller().toMap(childUpdates);
-        String path = userPath + timeToString();
-        mPostReference.child(path).setValue(childUpdates);
-        mPostReference.addValueEventListener(valueEventListener);
+        myRef.child(key).updateChildren(childUpdates);
         return;
     }
 

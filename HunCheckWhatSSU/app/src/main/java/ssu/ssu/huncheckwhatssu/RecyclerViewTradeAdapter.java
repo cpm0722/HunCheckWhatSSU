@@ -2,11 +2,11 @@ package ssu.ssu.huncheckwhatssu;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -65,8 +65,8 @@ public class RecyclerViewTradeAdapter extends RecyclerView.Adapter<RecyclerViewT
         }
     }
 
-    //RecyclerView에 TouchListener 설정 함수
-     public static void setTouchListener(final Context context, Activity activity, RecyclerView recyclerView) {
+    //RecyclerView에 TouchListener 설정 함수 (Swipe로 메뉴 출력 가능하게)
+    public static void setSwipeable(final Context context, Activity activity, RecyclerView recyclerView) {
         RecyclerTouchListener onTouchListener = new RecyclerTouchListener(activity, recyclerView);
         onTouchListener
                 .setClickable(new RecyclerTouchListener.OnRowClickListener() {
@@ -98,4 +98,25 @@ public class RecyclerViewTradeAdapter extends RecyclerView.Adapter<RecyclerViewT
         recyclerView.addOnItemTouchListener(onTouchListener);
         return;
     }
+
+    //RecyclerView에 TouchListener 설정 함수 (Swipe로 메뉴 출력 불가능하게)
+    public static void setNonSwipeable(final Context context, Activity activity, RecyclerView recyclerView) {
+        RecyclerTouchListener onTouchListener = new RecyclerTouchListener(activity, recyclerView);
+        onTouchListener
+                .setClickable(new RecyclerTouchListener.OnRowClickListener() {
+                    @Override
+                    public void onRowClicked(int position) {
+                        Toast toast = Toast.makeText(context, "RowClick!", Toast.LENGTH_SHORT);
+                        toast.show();
+                    }
+
+                    @Override
+                    public void onIndependentViewClicked(int independentViewID, int position) {
+
+                    }
+                });
+        recyclerView.addOnItemTouchListener(onTouchListener);
+        return;
+    }
+
 }
