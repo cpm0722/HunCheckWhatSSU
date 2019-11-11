@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 public class RecyclerViewAdapterSell extends RecyclerView.Adapter<RecyclerViewAdapterSell.ViewHolder> {
-    private ArrayList<BookSell> mData = null ;
+    private ArrayList<Book> mData = null ;
 
     // 아이템 뷰를 저장하는 뷰홀더 클래스.
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -26,7 +26,7 @@ public class RecyclerViewAdapterSell extends RecyclerView.Adapter<RecyclerViewAd
         }
     }
 
-    RecyclerViewAdapterSell(ArrayList<BookSell> list) {
+    RecyclerViewAdapterSell(ArrayList<Book> list) {
         mData = list ;
     }
 

@@ -38,12 +38,12 @@ public class SellFragment extends Fragment {
          }
         });
 
-        ArrayList<BookSell>list =new ArrayList<BookSell>();
-        list.add(new BookSell("자료구조","15000","김승주"));
-        list.add(new BookSell("컴퓨터구조","20000","김승주"));
-        list.add(new BookSell("Pro Git","170000","김승주"));
-        list.add(new BookSell("알고리즘","20000","김승주"));
-        list.add(new BookSell("리눅스","230000","김승주"));
+        ArrayList<Book>list =new ArrayList<Book>();
+        list.add(new Book("자료구조","15000","김승주"));
+        list.add(new Book("컴퓨터구조","20000","김승주"));
+        list.add(new Book("Pro Git","170000","김승주"));
+        list.add(new Book("알고리즘","20000","김승주"));
+        list.add(new Book("리눅스","230000","김승주"));
 
         RecyclerView recyclerView = root.findViewById(R.id.sellList) ;
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext())) ;
