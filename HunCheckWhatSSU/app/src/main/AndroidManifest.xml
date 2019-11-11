@@ -16,7 +16,7 @@
         <meta-data android:name="com.naver.maps.map.CLIENT_ID"
             android:value="r14df325a1"/>
 
-        <activity android:name="._AddBookActivity">
+        <activity android:name=".NaverBookSearchActivity">
         </activity>
         <activity android:name=".BookInfoActivity"></activity>
         <activity android:name=".AddBookActivity"></activity>
@@ -33,6 +33,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".SettingPersonalInfo"/>
     </application>
 
 </manifest>

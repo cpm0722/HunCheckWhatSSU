@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import ssu.ssu.huncheckwhatssu.utilClass.Book;
 import ssu.ssu.huncheckwhatssu.utilClass.NaverBookSearch;
 
-public class _AddBookActivity extends AppCompatActivity {
+public class NaverBookSearchActivity extends AppCompatActivity {
 
     SearchView searchView;
     NaverBookSearch naverBookSearch;
