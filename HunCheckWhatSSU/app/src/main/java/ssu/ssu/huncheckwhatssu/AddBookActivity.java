@@ -12,6 +12,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import ssu.ssu.huncheckwhatssu.utilClass.NaverBookSearch;
+
 public class AddBookActivity extends AppCompatActivity {
    Button add;
     @Override
@@ -30,7 +32,8 @@ public class AddBookActivity extends AppCompatActivity {
         Button add=findViewById(R.id.btnDone);
         add.setOnClickListener(new View.OnClickListener(){
             @Override
-            public void onClick(View v){//등록 버튼 누르면 종료, 데이터 추가기능 넣어야함.
+            public void onClick(View v){
+                //등록 버튼 누르면 종료, 데이터 추가기능 넣어야함.
                 finish();
             }
         });
@@ -41,6 +44,18 @@ public class AddBookActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        Button search=findViewById(R.id.search_book);
+        search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent=new Intent(getApplicationContext(), NaverBookSearchActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
         }
     }
 
