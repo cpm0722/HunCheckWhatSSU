@@ -37,6 +37,9 @@ dependencies {
     implementation 'androidx.navigation:navigation-runtime:2.1.0'
     implementation 'com.google.android.material:material:1.0.0'
 
+    // Naver map
+    implementation 'com.naver.maps:map-sdk:3.6.0'
+
     //image url
     implementation 'com.github.bumptech.glide:glide:4.9.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'

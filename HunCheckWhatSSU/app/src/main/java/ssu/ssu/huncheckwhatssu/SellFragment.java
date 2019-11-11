@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -18,6 +19,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import ssu.ssu.huncheckwhatssu.utilClass.BookState;
+import ssu.ssu.huncheckwhatssu.utilClass.Customer;
 import ssu.ssu.huncheckwhatssu.utilClass.Trade;
 
 public class SellFragment extends Fragment {
@@ -34,13 +37,18 @@ public class SellFragment extends Fragment {
          @Override
          public void onClick(View v) {
           ssu.ssu.huncheckwhatssu.utilClass.Book book = new ssu.ssu.huncheckwhatssu.utilClass.Book("123", "123", "테스트", null, "작가입니디.",
-                  123, "기르벗","20162510","asnkdasnksadklndas", null);
-          Trade trade = new Trade(book, null, Trade.TradeState.WAIT);
+                  123, "길벗","20161012","asnkdasnksadklndas", null);
+
+          BookState bookState = new BookState(BookState.bookState.GOOD, BookState.bookState.BEST,BookState.bookState.BAD,BookState.bookState.WORST,BookState.bookState.GOOD,BookState.bookState.BEST);
+          book.setBookState(bookState);
+          Customer seller = new Customer("1", "정지승","010-1010-1212","관악구 중앙동 양녕로", 5.0f);
+          Customer purchaser = new Customer("2", "정지승2", "010-1234-1234", "상도동 상도로 상도리", 3.1f);
+          Trade trade = new Trade(book, seller, purchaser, Trade.TradeState.WAIT, "여기가 어딜까", Calendar.getInstance());
 
           Intent intent = new Intent(context, BookInfoActivity.class);
 
-          intent.putExtra("BookInfoType", "BOOK_INFO_DEFAULT");
-          intent.putExtra("book_info_default_data", trade);
+          intent.putExtra("BookInfoType", "BOOK_INFO_TRADE_DETAIL");
+          intent.putExtra("book_info_trade_detail", trade);
 
           startActivity(intent);
          }

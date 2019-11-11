@@ -218,6 +218,7 @@
                         android:layout_height="wrap_content"/>
 
                     <TextView
+                        android:id="@+id/activity_book_info_sellerCreditRating"
                         android:text="******"
                         android:textSize="12dp"
                         android:layout_marginTop="5dp"
@@ -417,13 +418,11 @@
 
                 </LinearLayout>
 
-                <TextView
+                <com.naver.maps.map.MapView xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/activity_book_info_map"
+                    android:name="com.naver.maps.map.MapFragment"
                     android:layout_below="@id/activity_book_info_placeLabelGroup"
-                    android:text="Map"
-                    android:textSize="30dp"
                     android:layout_marginTop="16dp"
-                    android:gravity="center"
-                    android:background="#FF0"
                     android:layout_width="match_parent"
                     android:layout_height="300dp"/>
             </RelativeLayout>

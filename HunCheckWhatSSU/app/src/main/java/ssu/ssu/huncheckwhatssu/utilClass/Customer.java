@@ -9,12 +9,14 @@ public class Customer implements Parcelable {
     String name;
     String phoneNumber;
     String address;
+    float creditRating;
 
-    public Customer(String id, String name, String phoneNumber, String address) {
+    public Customer(String id, String name, String phoneNumber, String address, float creditRating) {
         this.id = id;
         this.name = name;
         this.phoneNumber = phoneNumber;
         this.address = address;
+        this.creditRating = creditRating;
     }
 
 
@@ -23,6 +25,7 @@ public class Customer implements Parcelable {
         name = in.readString();
         phoneNumber = in.readString();
         address = in.readString();
+        creditRating = in.readFloat();
     }
 
     public static final Creator<Customer> CREATOR = new Creator<Customer>() {
@@ -48,6 +51,7 @@ public class Customer implements Parcelable {
         dest.writeString(name);
         dest.writeString(phoneNumber);
         dest.writeString(address);
+        dest.writeFloat(creditRating);
     }
 
     public String getId() {
@@ -80,5 +84,13 @@ public class Customer implements Parcelable {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public float getCreditRating() {
+        return creditRating;
+    }
+
+    public void setCreditRating(float creditRating) {
+        this.creditRating = creditRating;
     }
 }
