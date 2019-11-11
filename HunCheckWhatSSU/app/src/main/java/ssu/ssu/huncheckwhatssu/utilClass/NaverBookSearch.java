@@ -12,8 +12,7 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 
-import ssu.ssu.huncheckwhatssu.AddBookAdapter;
-import ssu.ssu.huncheckwhatssu._AddBookActivity;
+import ssu.ssu.huncheckwhatssu.NaverBookSearchActivity;
 
 public class NaverBookSearch {
     StringBuffer response;
@@ -63,7 +62,7 @@ public class NaverBookSearch {
             }
         }
 
-        _AddBookActivity.process = false;
+        NaverBookSearchActivity.process = false;
         return  this.searchedBookList;
     }
 
