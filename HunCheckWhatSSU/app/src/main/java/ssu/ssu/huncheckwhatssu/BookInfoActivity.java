@@ -82,6 +82,7 @@ public class BookInfoActivity extends AppCompatActivity implements OnMapReadyCal
             trade = intent.getParcelableExtra("book_info_trade_detail");
             initObject(2);
             setData(2);
+            Log.d("JS", "onCreate: " + trade.toString());
         } else {
             Log.d("JS", "onCreate: BookInfoActivity - unknownBookType");
             finish();
@@ -154,8 +155,11 @@ public class BookInfoActivity extends AppCompatActivity implements OnMapReadyCal
 
     public void setData(int bookInfoType) {
         // Book
+        Log.d("JS", "setData2: " + trade.toString());
+
         Book book = trade.getBook();
         if (book != null) {
+            Log.d("JS", "setData: A");
             activity_book_info_title.setText(book.getTitle());
             if (book.getImage() == null) {
                 activity_book_info_coverImg.setImageDrawable(getResources().getDrawable(R.drawable.noimage));
@@ -171,6 +175,7 @@ public class BookInfoActivity extends AppCompatActivity implements OnMapReadyCal
         // Seller
         Customer customer = trade.getSeller();
         if (customer != null) {
+            Log.d("JS", "setData: B");
             activity_book_info_sellerText.setText(customer.getName());
             activity_book_info_sellerContactNumberText.setText(customer.getPhoneNumber());
             activity_book_info_sellerCreditRating.setText(customer.getCreditRating() + "");
@@ -179,6 +184,7 @@ public class BookInfoActivity extends AppCompatActivity implements OnMapReadyCal
         // BookState
         BookState bookState = trade.getBook().getBookState();
         if (bookState != null) {
+            Log.d("JS", "setData: C");
             activity_book_info_state01Text.setText(bookState.getBookState01().name());
             activity_book_info_state02Text.setText(bookState.getBookState02().name());
             activity_book_info_state03Text.setText(bookState.getBookState03().name());
@@ -202,8 +208,6 @@ public class BookInfoActivity extends AppCompatActivity implements OnMapReadyCal
             activity_book_info_purchaserContactNumberText.setText(purchaser.getPhoneNumber());
             activity_book_info_purchaserCreditRating.setText(purchaser.getCreditRating() + "");
         }
-        setContentView(R.layout.activity_book_trade_detail);
-
 
         Button back2TradeOverview=findViewById(R.id.back2TradeOverview);
         back2TradeOverview.setOnClickListener(new View.OnClickListener() {
