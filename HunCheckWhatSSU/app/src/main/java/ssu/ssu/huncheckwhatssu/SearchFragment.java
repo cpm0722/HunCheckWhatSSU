@@ -83,21 +83,21 @@ public class SearchFragment extends Fragment implements View.OnClickListener, Ad
         //FirebaseCommunicator에 RecyclerView 설정
         firebase.setRecyclerView(this.getContext(), this.getActivity(), recyclerView);
 
-        bookInfoBtn = root.findViewById(R.id.book_info_btn);
-        bookInfoBtn.setOnClickListener(this);
-
-        //TEST용 Firebase 추가 버튼
-        addBtn = root.findViewById(R.id.test_add_btn);
-        addBtn.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-                Book book = new Book("testISBN10", "testISBN13", "testTitle", "testImage", "testAuthor", 15000, "testPublisher", "testPubDate", "testDescription", new BookState());
-                Customer seller = new Customer("testId", "testName", "testPhoneNumber", "testAdress", (float) 1.0);
-                Trade trade = new Trade(book, seller);
-                firebase.uploadTrade(trade);
-            }
-        });
+//        bookInfoBtn = root.findViewById(R.id.book_info_btn);
+//        bookInfoBtn.setOnClickListener(this);
+//
+//        //TEST용 Firebase 추가 버튼
+//        addBtn = root.findViewById(R.id.test_add_btn);
+//        addBtn.setOnClickListener(new View.OnClickListener() {
+//
+//            @Override
+//            public void onClick(View view) {
+//                Book book = new Book("testISBN10", "testISBN13", "testTitle", "testImage", "testAuthor", 15000, "testPublisher", "testPubDate", "testDescription", new BookState());
+//                Customer seller = new Customer("testId", "testName", "testPhoneNumber", "testAdress", (float) 1.0);
+//                Trade trade = new Trade(book, seller);
+//                firebase.uploadTrade(trade);
+//            }
+//        });
 
 
         // 상단 카테고리 작업

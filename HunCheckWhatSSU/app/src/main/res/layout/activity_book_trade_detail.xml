@@ -515,7 +515,7 @@
                         android:layout_height="wrap_content"/>
                 </LinearLayout>
 
-                <com.naver.maps.map.MapView xmlns:app="http://schemas.android.com/apk/res-auto"
+                <ssu.ssu.huncheckwhatssu.utilClass.Custom_MapView
                     android:id="@+id/activity_book_info_map"
                     android:name="com.naver.maps.map.MapFragment"
                     android:layout_below="@id/activity_book_info_placeLabelGroup"

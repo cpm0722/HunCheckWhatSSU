@@ -8,6 +8,7 @@ import androidx.fragment.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -16,6 +17,7 @@ import com.naver.maps.geometry.LatLng;
 import com.naver.maps.map.CameraPosition;
 import com.naver.maps.map.MapFragment;
 import com.naver.maps.map.NaverMap;
+import com.naver.maps.map.NaverMapOptions;
 import com.naver.maps.map.OnMapReadyCallback;
 import com.naver.maps.map.overlay.Marker;
 import android.view.View;
@@ -97,6 +99,7 @@ public class BookInfoActivity extends AppCompatActivity implements OnMapReadyCal
             fm.beginTransaction().add(R.id.activity_book_info_map, mapFragment).commit();
         }
         mapFragment.getMapAsync(this);
+
 
     }
 
