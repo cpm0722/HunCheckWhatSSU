@@ -36,32 +36,38 @@ public class FirebaseCommunicator {
     //DB root/userPath 의 Reference
     private DatabaseReference myRef;
     private ValueEventListener valueEventListener;
-    private List list;
+    private List<Trade> list;
     //RecyclerView 설정
     private RecyclerView recyclerView;
     private Context context;
     private Activity activity;
 
-    public FirebaseCommunicator(){
+    public FirebaseCommunicator(String path){
         mPostReference = FirebaseDatabase.getInstance().getReference();
+        list = new ArrayList<>();
         while (user == null) {
             user = FirebaseAuth.getInstance().getCurrentUser();
         }
-        userPath = user.getDisplayName() + "_" + user.getUid();
+        userPath = path;
         myRef = mPostReference.child(userPath);
 
-        //
-        valueEventListener = new ValueEventListener() {
+
+        // 첫 로드시 100개 데이터 로드로 제한
+        myRef.limitToLast(100);
+        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                list = new ArrayList<Trade>();
-                for(DataSnapshot postSnapshot : dataSnapshot.getChildren()){
-                    Book book = postSnapshot.getValue(Book.class);
-                    Customer customer = postSnapshot.getValue(Customer.class);
-                    Trade nowObject = new Trade(book, customer);
-                    list.add(nowObject);
-                    if(recyclerView != null)
-                        recyclerView.setAdapter(new RecyclerViewTradeAdapter(context, list));
+
+                if (dataSnapshot != null && dataSnapshot.exists()) {
+                    for (DataSnapshot tradeSnap : dataSnapshot.getChildren()) {
+//                        Log.d("JS", "onDataChange: " + tradeSnap.getValue().toString());
+                        Trade trade = tradeSnap.getValue(Trade.class);
+                        list.add(trade);
+//                        Log.d("js", "onDataChange: " + trade.toString());
+                    }
+
+                    if (recyclerView != null)
+                        recyclerView.getAdapter().notifyDataSetChanged();
                 }
             }
 
@@ -69,8 +75,7 @@ public class FirebaseCommunicator {
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
-        };
-        myRef.addValueEventListener(valueEventListener);
+        });
 
     }
 
@@ -79,7 +84,39 @@ public class FirebaseCommunicator {
         this.context = context;
         this.activity = activity;
         this.recyclerView = recyclerView;
-        return;
+
+        RecyclerViewTradeAdapter adapter = new RecyclerViewTradeAdapter(context, list);
+        adapter.setOnRefreshListener(new RecyclerViewTradeAdapter.custom_RefreshListener() {
+            @Override
+            public void onRefreshListener() {
+
+//                Log.d("js", "onRefreshListener");
+                myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        if (dataSnapshot != null && dataSnapshot.exists()) {
+                            list.clear();
+                            for (DataSnapshot tradeSnap : dataSnapshot.getChildren()) {
+//                        Log.d("JS", "onDataChange: " + tradeSnap.getValue().toString());
+                                Trade trade = tradeSnap.getValue(Trade.class);
+                                list.add(trade);
+                                Log.d("js", "onDataChange: " + trade.toString());
+                            }
+
+                            if (getRecyclerView() != null)
+                                getRecyclerView().getAdapter().notifyDataSetChanged();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+            }
+        });
+
+        recyclerView.setAdapter(adapter);
     }
 
     public String timeToString() {
@@ -123,10 +160,11 @@ public class FirebaseCommunicator {
     public void uploadTrade(Trade trade) {
         String key = myRef.push().getKey();
         Map<String, Object> childUpdates = new HashMap<>();
-        trade.getBook().toMap(childUpdates);
-        trade.getSeller().toMap(childUpdates);
+        trade.toMap(childUpdates);
         myRef.child(key).updateChildren(childUpdates);
-        return;
     }
 
+    public RecyclerView getRecyclerView() {
+        return recyclerView;
+    }
 }

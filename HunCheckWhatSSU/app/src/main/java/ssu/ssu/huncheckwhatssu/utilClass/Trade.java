@@ -6,6 +6,8 @@ import android.os.Parcelable;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.Map;
 
 
 public class Trade implements Parcelable {
@@ -18,8 +20,11 @@ public class Trade implements Parcelable {
     Customer seller;
     Customer purchaser;
     TradeState tradeState;
+    Calendar loadDate; // 추가
     String tradePlace; // 주소
-    Calendar tradeDate; // 거래일
+    String tradeDate; // 거래일
+
+    public Trade() {};
 
     public Trade(Book book, Customer customer) {
         this.book = book;
@@ -36,7 +41,14 @@ public class Trade implements Parcelable {
         this.purchaser = purchaser;
         this.tradeState = tradeState;
         this.tradePlace = tradePlace;
-        this.tradeDate = tradeDate;
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
+        if (tradeDate  == null) {
+            this.tradeDate = null;
+        } else {
+            this.tradeDate = simpleDateFormat.format(new Date(tradeDate.getTimeInMillis()));
+        }
+
     }
 
     protected Trade(Parcel in) {
@@ -45,7 +57,7 @@ public class Trade implements Parcelable {
         purchaser = in.readParcelable(Customer.class.getClassLoader());
         tradeState = TradeState.valueOf(in.readString());
         tradePlace = in.readString();
-        tradeDate = (Calendar) in.readSerializable();
+        tradeDate = in.readString();
     }
 
     public Book getBook() {
@@ -88,11 +100,17 @@ public class Trade implements Parcelable {
         this.tradePlace = tradePlace;
     }
 
-    public Calendar getTradeDate() {
-        return tradeDate;
+    public String getTradeDate() {
+        return this.tradeDate;
     }
 
-    public void setTradeDate(Calendar tradeDate) {
+    public void _setTradeDate(Calendar tradeDate) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
+
+        this.tradeDate = simpleDateFormat.format(new Date(tradeDate.getTimeInMillis()));
+    }
+
+    public void setTradeDate(String tradeDate) {
         this.tradeDate = tradeDate;
     }
 
@@ -100,13 +118,14 @@ public class Trade implements Parcelable {
         return CREATOR;
     }
 
-    public String getTradeDate_typeOfString() {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy년 MM월 dd일");
-        return simpleDateFormat.format(tradeDate.getTime());
-    }
-
     public Calendar getTradeDate_typeOfCalendar() {
-        return tradeDate;
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
+        try {
+            Calendar c = Calendar.getInstance();
+            c.setTime(simpleDateFormat.parse(tradeDate));
+            return c;
+        } catch (Exception e) {}
+        return null;
     }
 
     @Override
@@ -145,7 +164,19 @@ public class Trade implements Parcelable {
         dest.writeParcelable(purchaser, flags);
         dest.writeString(tradeState.name());
         dest.writeString(tradePlace);
-        dest.writeSerializable(tradeDate);
+        dest.writeString(tradeDate);
     }
+
+    public void toMap(Map<String, Object> result) {
+        result.put("book", this.book);
+        result.put("seller", this.seller);
+        result.put("purchaser", this.purchaser);
+        result.put("tradeState", this.tradeState);
+        result.put("tradePlace", this.tradePlace);
+        result.put("tradeDate", this.tradeDate);
+        result.put("loadDate", this.loadDate);
+    }
+
+
 
 }

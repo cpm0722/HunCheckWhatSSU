@@ -185,5 +185,7 @@ public class Book implements Parcelable {
         result.put("description", this.description);
         result.put("bookState", this.bookState);
     }
+
+
 }
 

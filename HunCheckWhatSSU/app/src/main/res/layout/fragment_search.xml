@@ -31,10 +31,17 @@
         android:layout_height="wrap_content" />
 
     <SearchView
+        android:id="@+id/fragment_search_searchView"
         android:background="@drawable/round_shape"
         android:layoutDirection="rtl"
         android:layout_marginBottom="10dp"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <Button
+        android:id="@+id/fragment_add_btn"
+        android:text="add"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout

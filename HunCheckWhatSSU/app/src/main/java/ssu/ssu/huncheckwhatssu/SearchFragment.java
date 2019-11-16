@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.SearchView;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 
@@ -21,10 +22,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.database.DatabaseReference;
+import com.naver.maps.geometry.LatLng;
 
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import ssu.ssu.huncheckwhatssu.DB.DBHelper;
@@ -35,13 +39,14 @@ import ssu.ssu.huncheckwhatssu.utilClass.Trade;
 
 import static androidx.constraintlayout.widget.Constraints.TAG;
 
-public class SearchFragment extends Fragment implements View.OnClickListener, AdapterView.OnItemSelectedListener {
+public class SearchFragment extends Fragment implements View.OnClickListener, AdapterView.OnItemSelectedListener, SearchView.OnQueryTextListener {
     Button bookInfoBtn;
     Button addBtn;
     FirebaseCommunicator firebase;
     Spinner college_spin;
     Spinner department_spin;
     Spinner subject_spin;
+    SearchView searchView;
     ArrayList<DBData> collegeData;
     ArrayList<DBData> departmentData;
     ArrayList<DBData> subjectData;
@@ -56,10 +61,12 @@ public class SearchFragment extends Fragment implements View.OnClickListener, Ad
         college_spin = root.findViewById(R.id.fragment_search_college_spin);
         department_spin = root.findViewById(R.id.fragment_search_department_spin);
         subject_spin = root.findViewById(R.id.fragment_search_subject_spin);
+        searchView = root.findViewById(R.id.fragment_search_searchView);
 
         college_spin.setOnItemSelectedListener(this);
         department_spin.setOnItemSelectedListener(this);
         subject_spin.setOnItemSelectedListener(this);
+        searchView.setOnQueryTextListener(this);
 
 
         //BackButton Pressed 시 NavigationBottom Menu Selected 변경
@@ -79,25 +86,23 @@ public class SearchFragment extends Fragment implements View.OnClickListener, Ad
 
 
         //FirebaseCommunicator 생성
-        firebase = new FirebaseCommunicator();
+        firebase = new FirebaseCommunicator("tb_trade");
         //FirebaseCommunicator에 RecyclerView 설정
         firebase.setRecyclerView(this.getContext(), this.getActivity(), recyclerView);
 
-//        bookInfoBtn = root.findViewById(R.id.book_info_btn);
-//        bookInfoBtn.setOnClickListener(this);
-//
-//        //TEST용 Firebase 추가 버튼
-//        addBtn = root.findViewById(R.id.test_add_btn);
-//        addBtn.setOnClickListener(new View.OnClickListener() {
-//
-//            @Override
-//            public void onClick(View view) {
-//                Book book = new Book("testISBN10", "testISBN13", "testTitle", "testImage", "testAuthor", 15000, "testPublisher", "testPubDate", "testDescription", new BookState());
-//                Customer seller = new Customer("testId", "testName", "testPhoneNumber", "testAdress", (float) 1.0);
-//                Trade trade = new Trade(book, seller);
-//                firebase.uploadTrade(trade);
-//            }
-//        });
+        //TEST용 Firebase 추가 버튼
+        addBtn = root.findViewById(R.id.fragment_add_btn);
+        addBtn.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                Book book = new Book("testISBN10", "testISBN13", "testTitle", "testImage", "testAuthor", 15000, "testPublisher", "testPubDate", "testDescription", new BookState());
+                Customer seller = new Customer("testId", "testName", "testPhoneNumber", "testAdress", (float) 1.4);
+                Customer purchaser = new Customer("testId", "testName", "testPhoneNumber", "testAdress", (float) 1.4);
+                Trade trade = new Trade(book, seller, purchaser, Trade.TradeState.WAIT, "장소 미정", Calendar.getInstance());
+                firebase.uploadTrade(trade);
+            }
+        });
 
 
         // 상단 카테고리 작업
@@ -178,6 +183,18 @@ public class SearchFragment extends Fragment implements View.OnClickListener, Ad
         }
 
         return arrayList;
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+
+
+        return true;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        return false;
     }
 
     @Override

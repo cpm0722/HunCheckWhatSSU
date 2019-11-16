@@ -179,9 +179,9 @@ public class BookInfoActivity extends AppCompatActivity implements OnMapReadyCal
         Customer customer = trade.getSeller();
         if (customer != null) {
             Log.d("JS", "setData: B");
-            activity_book_info_sellerText.setText(customer.getName());
-            activity_book_info_sellerContactNumberText.setText(customer.getPhoneNumber());
-            activity_book_info_sellerCreditRating.setText(customer.getCreditRating() + "");
+            activity_book_info_sellerText.setText(customer._getName());
+            activity_book_info_sellerContactNumberText.setText(customer._getPhoneNumber());
+            activity_book_info_sellerCreditRating.setText(customer._getCreditRating() + "");
         }
 
         // BookState
@@ -203,13 +203,13 @@ public class BookInfoActivity extends AppCompatActivity implements OnMapReadyCal
         if (bookInfoType == 1) {
         } else if (bookInfoType == 2) {
             // Trade Info
-            activity_book_info_tradeDateText.setText(trade.getTradeDate_typeOfString());
+            activity_book_info_tradeDateText.setText(trade.getTradeDate());
 
             // Purchaser
             Customer purchaser = trade.getPurchaser();
-            activity_book_info_purchaserText.setText(purchaser.getName());
-            activity_book_info_purchaserContactNumberText.setText(purchaser.getPhoneNumber());
-            activity_book_info_purchaserCreditRating.setText(purchaser.getCreditRating() + "");
+            activity_book_info_purchaserText.setText(purchaser._getName());
+            activity_book_info_purchaserContactNumberText.setText(purchaser._getPhoneNumber());
+            activity_book_info_purchaserCreditRating.setText(purchaser._getCreditRating() + "");
         }
 
 

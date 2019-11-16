@@ -17,6 +17,10 @@ public class Customer implements Parcelable {
 
     public Customer(){}
 
+    public Customer(String id) {
+        this.id = id;
+    }
+
     public Customer(String id, String name, String phoneNumber, String address, float creditRating) {
         this.id = id;
         this.name = name;
@@ -24,7 +28,6 @@ public class Customer implements Parcelable {
         this.address = address;
         this.creditRating = creditRating;
     }
-
 
     protected Customer(Parcel in) {
         id = in.readString();
@@ -68,44 +71,35 @@ public class Customer implements Parcelable {
         this.id = id;
     }
 
-    public String getName() {
+    public String _getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public void _setName(String name) {
         this.name = name;
     }
 
-    public String getPhoneNumber() {
+    public String _getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
+    public void _setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 
-    public String getAddress() {
+    public String _getAddress() {
         return address;
     }
 
-    public void setAddress(String address) {
+    public void _setAddress(String address) {
         this.address = address;
     }
 
-    public void toMap(Map<String, Object> result) {
-        result.put("id", this.id);
-        result.put("name", this.name);
-        result.put("phoneNumber", this.phoneNumber);
-        result.put("address", this.address);
-        return;
-    }
-
-    public float getCreditRating() {
+    public float _getCreditRating() {
         return creditRating;
     }
 
-    public void setCreditRating(float creditRating) {
+    public void _setCreditRating(float creditRating) {
         this.creditRating = creditRating;
     }
-
 }
