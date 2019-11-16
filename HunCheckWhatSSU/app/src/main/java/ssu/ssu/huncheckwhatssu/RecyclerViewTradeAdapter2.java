@@ -96,7 +96,7 @@ public class RecyclerViewTradeAdapter2 extends RecyclerView.Adapter<RecyclerView
                             toast.show();
                             //삭제 기능 추가(현재는 그냥 삭제 나중에 DB삭제)
                             modelList.remove(position);
-
+                            //notifyItemRemoved(position);
                         }
                     }
                 });

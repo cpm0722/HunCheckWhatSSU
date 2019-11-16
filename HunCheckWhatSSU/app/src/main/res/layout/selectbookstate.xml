@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/book_state_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="책 상태 표기" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="101dp"
+            android:layout_height="match_parent"
+            android:text="밑줄흔적"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/book_state_BEST1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="매우좋음" />
+
+            <RadioButton
+                android:id="@+id/book_state_GOOD1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="좋음" />
+
+            <RadioButton
+                android:id="@+id/book_state_BAD1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="나쁨" />
+
+            <RadioButton
+                android:id="@+id/book_state_WORST1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="매우나쁨" />
+
+        </RadioGroup>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="101dp"
+            android:layout_height="match_parent"
+            android:text="필기흔적"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/book_state_BEST2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="매우좋음" />
+
+            <RadioButton
+                android:id="@+id/book_state_GOOD2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="좋음" />
+
+            <RadioButton
+                android:id="@+id/book_state_BAD2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="나쁨" />
+
+            <RadioButton
+                android:id="@+id/book_state_WORST2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="매우나쁨" />
+
+        </RadioGroup>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="95dp"
+            android:layout_height="match_parent"
+            android:text="겉표지"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/book_state_BEST3"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="매우좋음" />
+
+            <RadioButton
+                android:id="@+id/book_state_GOOD3"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="좋음" />
+
+            <RadioButton
+                android:id="@+id/book_state_BAD3"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="나쁨" />
+
+            <RadioButton
+                android:id="@+id/book_state_WORST3"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="매우나쁨" />
+
+        </RadioGroup>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="95dp"
+            android:layout_height="match_parent"
+            android:text="이름기입"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/book_state_BEST4"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="매우좋음" />
+
+            <RadioButton
+                android:id="@+id/book_state_GOOD4"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="좋음" />
+
+            <RadioButton
+                android:id="@+id/book_state_BAD4"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="나쁨" />
+
+            <RadioButton
+                android:id="@+id/book_state_WORST4"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="매우나쁨" />
+
+        </RadioGroup>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="페이지변색"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/book_state_BEST5"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="매우좋음" />
+
+            <RadioButton
+                android:id="@+id/book_state_GOOD5"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="좋음" />
+
+            <RadioButton
+                android:id="@+id/book_state_BAD5"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="나쁨" />
+
+            <RadioButton
+                android:id="@+id/book_state_WORST5"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="매우나쁨" />
+
+        </RadioGroup>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="페이지훼손"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/book_state_BEST6"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="매우좋음" />
+
+            <RadioButton
+                android:id="@+id/book_state_GOOD6"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="좋음" />
+
+            <RadioButton
+                android:id="@+id/book_state_BAD6"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="나쁨" />
+
+            <RadioButton
+                android:id="@+id/book_state_WORST6"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="매우나쁨" />
+
+        </RadioGroup>
+
+    </LinearLayout>
+
+
+</LinearLayout>
