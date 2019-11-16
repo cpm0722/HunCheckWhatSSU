@@ -157,6 +157,14 @@ public class FirebaseCommunicator {
         return str;
     }
 
+    public List<Trade> getList() {
+        return list;
+    }
+
+    public void setList(List<Trade> list) {
+        this.list = list;
+    }
+
     public void uploadTrade(Trade trade) {
         String key = myRef.push().getKey();
         Map<String, Object> childUpdates = new HashMap<>();

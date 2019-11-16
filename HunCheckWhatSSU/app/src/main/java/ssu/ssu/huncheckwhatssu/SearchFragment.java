@@ -17,12 +17,19 @@ import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.naver.maps.geometry.LatLng;
 
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -96,7 +103,7 @@ public class SearchFragment extends Fragment implements View.OnClickListener, Ad
 
             @Override
             public void onClick(View view) {
-                Book book = new Book("testISBN10", "testISBN13", "testTitle", "testImage", "testAuthor", 15000, "testPublisher", "testPubDate", "testDescription", new BookState());
+                Book book = new Book("testISBN10", "testISBN13", "testTitle", "testImage", "testAuthor", 12000, 13000, "testPublisher", "testPubDate", "testDescription", "8", "38" ,"33", new BookState());
                 Customer seller = new Customer("testId", "testName", "testPhoneNumber", "testAdress", (float) 1.4);
                 Customer purchaser = new Customer("testId", "testName", "testPhoneNumber", "testAdress", (float) 1.4);
                 Trade trade = new Trade(book, seller, purchaser, Trade.TradeState.WAIT, "장소 미정", Calendar.getInstance());
@@ -185,8 +192,72 @@ public class SearchFragment extends Fragment implements View.OnClickListener, Ad
         return arrayList;
     }
 
+    String search_collegeId;
+    String search_departmentId;
+    String search_subjectId;
+    String search_text;
     @Override
     public boolean onQueryTextSubmit(String query) {
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("tb_trade");
+        search_collegeId = college_spin.getSelectedItemPosition() + "";
+        search_departmentId = departmentData.get(department_spin.getSelectedItemPosition()).getKey() + "";
+        search_subjectId = subjectData.get(subject_spin.getSelectedItemPosition()).getKey() + "";
+        search_text = query;
+        firebase.getList().clear();
+
+        reference.addChildEventListener(new ChildEventListener() {
+
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                Log.d(TAG, "onChildAdded: dwdwd");
+                Trade trade = dataSnapshot.getValue(Trade.class);
+        
+                Log.d("js", "/onQueryTextSubmit: " + search_collegeId);
+                Log.d("js", "onQueryTextSubmit: " + search_departmentId);
+                Log.d("js", "onQueryTextSubmit:/ " + search_subjectId);
+
+                if (trade.getBook().getCollege_id().equals(search_collegeId) || search_collegeId.equals("0") || search_collegeId.equals("-1")) {
+                    if (trade.getBook().getDepartment_id().equals(search_departmentId) || search_departmentId.equals("0")|| search_departmentId.equals("-1")) {
+                        if (trade.getBook().getCollege_id().equals(search_subjectId) || search_subjectId.equals("0")|| search_subjectId.equals("-1")) {
+                            Log.d(TAG, "onChildAdded: ");
+                            if (search_text.isEmpty() || trade.getBook().getTitle().contains(search_text)) {
+                                firebase.getList().add(trade);
+                            }
+                        }
+                    }
+                }
+
+                firebase.getRecyclerView().getAdapter().notifyDataSetChanged();
+
+//                Log.d("JS", "onChildAdded: " + dataSnapshot.getValue(Trade.class).toString());
+//                for (DataSnapshot snap: dataSnapshot.getChildren()) {
+////                    Trade trade = snap.getValue(Trade.class);
+//                    Log.d("JS", "onChildAdded: " + snap.getValue(Trade.class).toString());
+//                }
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
 
 
         return true;
@@ -204,7 +275,7 @@ public class SearchFragment extends Fragment implements View.OnClickListener, Ad
                 setSpinnerData(2, 0, -1);
             } else {
                 setSpinnerData(2, collegeData.get(position).getKey(), -1);
-                Log.d("JS", "onItemSelected: " + collegeData.get(position).getKey());
+//                Log.d("JS", "onItemSelected: " + collegeData.get(position).getKey());
 
             }
 
@@ -287,5 +358,7 @@ public class SearchFragment extends Fragment implements View.OnClickListener, Ad
         public void setAnother(String[] another) {
             this.another = another;
         }
+
+
     }
 }
