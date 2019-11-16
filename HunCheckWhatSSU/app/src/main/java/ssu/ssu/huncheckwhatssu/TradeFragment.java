@@ -30,6 +30,7 @@ import static androidx.constraintlayout.widget.Constraints.TAG;
 public class TradeFragment extends Fragment {
     RecyclerViewTradeAdapter ongoingAdapter, doneAdapter;
     RecyclerView ongoingRecyclerView, doneRecyclerView;
+    FirebaseCommunicator firebaseCommunicator;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -44,16 +45,14 @@ public class TradeFragment extends Fragment {
         //OnGoing RecyclerView
         final ArrayList<Trade>ongoingList =new ArrayList<Trade>();
         Book book = new Book("testISBN10", "testISBN13", "git", "testImage", "testAuthor", 10000, "testPublisher", "testPubDate", "testDescription", new BookState());
-        Customer seller = new Customer("testId", "dms", "testPhoneNumber", "testAdress", (float) 1.0);
+        firebaseCommunicator = new FirebaseCommunicator(FirebaseCommunicator.WhichRecyclerView.ongoingRecyclerView);
+        String seller = firebaseCommunicator.getUserPath();
         ongoingList.add(new Trade(book, seller));
         book = new Book("testISBN10", "testISBN13", "hi", "testImage", "testAuthor", 300, "testPublisher", "testPubDate", "testDescription", new BookState());
-        seller = new Customer("testId", "dagag", "testPhoneNumber", "testAdress", (float) 1.0);
         ongoingList.add(new Trade(book, seller));
         book = new Book("testISBN10", "testISBN13", "hi", "testImage", "testAuthor", 300, "testPublisher", "testPubDate", "testDescription", new BookState());
-        seller = new Customer("testId", "dagag", "testPhoneNumber", "testAdress", (float) 1.0);
         ongoingList.add(new Trade(book, seller));
         book = new Book("testISBN10", "testISBN13", "hi", "testImage", "testAuthor", 300, "testPublisher", "testPubDate", "testDescription", new BookState());
-        seller = new Customer("testId", "dagag", "testPhoneNumber", "testAdress", (float) 1.0);
         ongoingList.add(new Trade(book, seller));
 
         // 리사이클러뷰에 LinearLayoutManager 객체 지정.
@@ -72,18 +71,15 @@ public class TradeFragment extends Fragment {
 
 
         //Done RecyclerView
+        firebaseCommunicator = new FirebaseCommunicator(FirebaseCommunicator.WhichRecyclerView.doneRecyclerView);
         final ArrayList<Trade>doneList =new ArrayList<Trade>();
         book = new Book("testISBN10", "testISBN13", "git2", "testImage", "testAuthor", 10000, "testPublisher", "testPubDate", "testDescription", new BookState());
-        seller = new Customer("testId", "dms", "testPhoneNumber", "testAdress", (float) 1.0);
         doneList.add(new Trade(book, seller));
         book = new Book("testISBN10", "testISBN13", "hi2", "testImage", "testAuthor", 300, "testPublisher", "testPubDate", "testDescription", new BookState());
-        seller = new Customer("testId", "dagag", "testPhoneNumber", "testAdress", (float) 1.0);
         doneList.add(new Trade(book, seller));
         book = new Book("testISBN10", "testISBN13", "hi3", "testImage", "testAuthor", 300, "testPublisher", "testPubDate", "testDescription", new BookState());
-        seller = new Customer("testId", "dagag", "testPhoneNumber", "testAdress", (float) 1.0);
         doneList.add(new Trade(book, seller));
         book = new Book("testISBN10", "testISBN13", "hi4", "testImage", "testAuthor", 300, "testPublisher", "testPubDate", "testDescription", new BookState());
-        seller = new Customer("testId", "dagag", "testPhoneNumber", "testAdress", (float) 1.0);
         doneList.add(new Trade(book, seller));
 
         // 리사이클러뷰에 LinearLayoutManager 객체 지정.

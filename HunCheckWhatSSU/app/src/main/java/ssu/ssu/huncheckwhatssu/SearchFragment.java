@@ -58,9 +58,10 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
 
 
         //FirebaseCommunicator 생성
-        firebase = new FirebaseCommunicator();
+        firebase = new FirebaseCommunicator(FirebaseCommunicator.WhichRecyclerView.sellRecyclerView);
         //FirebaseCommunicator에 RecyclerView 설정
-        firebase.setRecyclerView(this.getContext(), this.getActivity(), recyclerView);
+        //firebase.setRecyclerView(this.getContext(), this.getActivity(), recyclerView);
+        firebase.setRecyclerView(this.getContext(), this.getActivity(), recyclerView, FirebaseCommunicator.WhichRecyclerView.sellRecyclerView);
 
         bookInfoBtn = root.findViewById(R.id.book_info_btn);
         bookInfoBtn.setOnClickListener(this);
@@ -72,8 +73,8 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onClick(View view) {
                 Book book = new Book("testISBN10", "testISBN13", "testTitle", "testImage", "testAuthor", 15000, "testPublisher", "testPubDate", "testDescription", new BookState());
-                Customer seller = new Customer("testId", "testName", "testPhoneNumber", "testAdress", (float) 1.0);
-                Trade trade = new Trade(book, seller);
+                Trade trade = new Trade(book, firebase.getUserPath());
+                //trade.setSellerId("테스트아이디~~");
                 firebase.uploadTrade(trade);
             }
         });

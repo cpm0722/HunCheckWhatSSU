@@ -7,6 +7,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -82,10 +83,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 // 구글 로그인 성공
                 GoogleSignInAccount account = task.getResult(ApiException.class);
                 firebaseAuthWithGoogle(account);
-                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                startActivity(intent);
-                finish();
+
             } catch (ApiException e) {
+                Log.d("book", "onActivityResult: 1");
                 Toast.makeText(LoginActivity.this, "예외처리!", Toast.LENGTH_SHORT).show();
             }
         }
@@ -101,10 +101,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // 로그인 성공
+                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                            startActivity(intent);
+                            finish();
+                            Log.d("book", "onActivityResult: 성공");
                             Toast.makeText(LoginActivity.this, R.string.success_login, Toast.LENGTH_SHORT).show();
                         } else {
                             // 로그인 실패
-                            Toast.makeText(LoginActivity.this, R.string.failed_login, Toast.LENGTH_SHORT).show();
+                            Log.d("book", "onActivityResult: 2");
                         }
 
                     }

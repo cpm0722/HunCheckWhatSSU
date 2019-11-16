@@ -152,7 +152,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="left"
-                    android:text="판매자: " />
+                    android:text="판매가: " />
 
                 <TextView
                     android:id="@+id/item_book_price"
@@ -172,7 +172,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="left"
-                    android:text="판매가: " />
+                    android:text="판매자: " />
 
                 <TextView
                     android:id="@+id/item_seller_name"

@@ -29,11 +29,15 @@ public class SellFragment extends Fragment {
        Context context;
        RecyclerView sellRecyclerView;
        RecyclerViewTradeAdapter sellAdapter;
+       FirebaseCommunicator firebaseCommunicator;
 
        public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_sell, container, false);
         this.context = root.getContext();
+
+        firebaseCommunicator = new FirebaseCommunicator(FirebaseCommunicator.WhichRecyclerView.sellRecyclerView);
+
 //       테스트
         Button btn = root.findViewById(R.id.book_info_test_btn);
 
@@ -45,8 +49,8 @@ public class SellFragment extends Fragment {
 
           BookState bookState = new BookState(BookState.bookState.GOOD, BookState.bookState.BEST,BookState.bookState.BAD,BookState.bookState.WORST,BookState.bookState.GOOD,BookState.bookState.BEST);
           book.setBookState(bookState);
-          Customer seller = new Customer("1", "정지승","010-1010-1212","관악구 중앙동 양녕로", 5.0f);
-          Customer purchaser = new Customer("2", "정지승2", "010-1234-1234", "상도동 상도로 상도리", 3.1f);
+          String seller = firebaseCommunicator.getUserPath();
+          String purchaser = firebaseCommunicator.getUserPath();
           Trade trade = new Trade(book, seller, purchaser, Trade.TradeState.WAIT, "여기가 어딜까", Calendar.getInstance());
 
           Intent intent = new Intent(context, BookInfoActivity.class);
@@ -77,13 +81,11 @@ public class SellFragment extends Fragment {
 
         final ArrayList<Trade>sellList =new ArrayList<Trade>();
         Book book = new Book("testISBN10", "testISBN13", "sell", "testImage", "testAuthor", 10000, "testPublisher", "testPubDate", "testDescription", new BookState());
-        Customer seller = new Customer("testId", "dms", "testPhoneNumber", "testAdress", (float) 1.0);
+        String seller = firebaseCommunicator.getUserPath();
         sellList.add(new Trade(book, seller));
         book = new Book("testISBN10", "testISBN13", "sell2", "testImage", "testAuthor", 300, "testPublisher", "testPubDate", "testDescription", new BookState());
-        seller = new Customer("testId", "dagag", "testPhoneNumber", "testAdress", (float) 1.0);
         sellList.add(new Trade(book, seller));
         book = new Book("testISBN10", "testISBN13", "sell3", "testImage", "testAuthor", 300, "testPublisher", "testPubDate", "testDescription", new BookState());
-        seller = new Customer("testId", "dagag", "testPhoneNumber", "testAdress", (float) 1.0);
         sellList.add(new Trade(book, seller));
 
         // 리사이클러뷰에 LinearLayoutManager 객체 지정.

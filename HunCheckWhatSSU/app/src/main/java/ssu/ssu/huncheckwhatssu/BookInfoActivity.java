@@ -173,7 +173,8 @@ public class BookInfoActivity extends AppCompatActivity implements OnMapReadyCal
         }
 
         // Seller
-        Customer customer = trade.getSeller();
+        FirebaseCommunicator firebaseCommunicator = new FirebaseCommunicator(FirebaseCommunicator.WhichRecyclerView.none);
+        Customer customer = firebaseCommunicator.getCustomer(trade.getSellerId());
         if (customer != null) {
             Log.d("JS", "setData: B");
             activity_book_info_sellerText.setText(customer.getName());
@@ -203,7 +204,7 @@ public class BookInfoActivity extends AppCompatActivity implements OnMapReadyCal
             activity_book_info_tradeDateText.setText(trade.getTradeDate_typeOfString());
 
             // Purchaser
-            Customer purchaser = trade.getPurchaser();
+            Customer purchaser = firebaseCommunicator.getCustomer(trade.getPurchaserId());
             activity_book_info_purchaserText.setText(purchaser.getName());
             activity_book_info_purchaserContactNumberText.setText(purchaser.getPhoneNumber());
             activity_book_info_purchaserCreditRating.setText(purchaser.getCreditRating() + "");

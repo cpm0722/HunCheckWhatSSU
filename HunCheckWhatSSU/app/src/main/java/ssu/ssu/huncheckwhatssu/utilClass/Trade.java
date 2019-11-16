@@ -6,6 +6,7 @@ import android.os.Parcelable;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Map;
 
 
 public class Trade implements Parcelable {
@@ -14,26 +15,30 @@ public class Trade implements Parcelable {
         WAIT, PRECONTRACT, COMPLETE;
     }
 
+    String tradeId;
     Book book;
-    Customer seller;
-    Customer purchaser;
+    //seller, purchaser는 Customer의 Id(String)
+    String sellerId;
+    String purchaserId;
     TradeState tradeState;
     String tradePlace; // 주소
     Calendar tradeDate; // 거래일
 
-    public Trade(Book book, Customer customer) {
+    public Trade(){}
+
+    public Trade(Book book, String sellerId) {
         this.book = book;
-        this.seller = customer;
-        this.purchaser = null;
+        this.sellerId = sellerId;
+        this.purchaserId = null;
         this.tradeState= TradeState.WAIT;
         this.tradePlace = null;
         this.tradeDate = null;
     }
 
-    public Trade(Book book, Customer seller, Customer purchaser, TradeState tradeState, String tradePlace, Calendar tradeDate) {
+    public Trade(Book book, String sellerId, String purchaserId, TradeState tradeState, String tradePlace, Calendar tradeDate) {
         this.book = book;
-        this.seller = seller;
-        this.purchaser = purchaser;
+        this.sellerId = sellerId;
+        this.purchaserId = purchaserId;
         this.tradeState = tradeState;
         this.tradePlace = tradePlace;
         this.tradeDate = tradeDate;
@@ -41,8 +46,8 @@ public class Trade implements Parcelable {
 
     protected Trade(Parcel in) {
         book = in.readParcelable(Book.class.getClassLoader());
-        seller = in.readParcelable(Customer.class.getClassLoader());
-        purchaser = in.readParcelable(Customer.class.getClassLoader());
+        sellerId = in.readString();
+        purchaserId = in.readString();
         tradeState = TradeState.valueOf(in.readString());
         tradePlace = in.readString();
         tradeDate = (Calendar) in.readSerializable();
@@ -64,20 +69,20 @@ public class Trade implements Parcelable {
         this.book = book;
     }
 
-    public Customer getSeller() {
-        return seller;
+    public String getSellerId() {
+        return sellerId;
     }
 
-    public void setSeller(Customer seller) {
-        this.seller = seller;
+    public void setSellerId(String sellerId) {
+        this.sellerId = sellerId;
     }
 
-    public Customer getPurchaser() {
-        return purchaser;
+    public String getPurchaserId() {
+        return purchaserId;
     }
 
-    public void setPurchaser(Customer purchaser) {
-        this.purchaser = purchaser;
+    public void setPurchaserId(String purchaserId) {
+        this.purchaserId = purchaserId;
     }
 
     public void setTradeState(TradeState tradeState) {
@@ -96,6 +101,10 @@ public class Trade implements Parcelable {
         this.tradeDate = tradeDate;
     }
 
+    public String getTradeId(){ return tradeId; }
+
+    public void setTradeId(String tradeId){ this.tradeId = tradeId;}
+
     public static Creator<Trade> getCREATOR() {
         return CREATOR;
     }
@@ -113,8 +122,8 @@ public class Trade implements Parcelable {
     public String toString() {
         return "Trade{" +
                 "book=" + book +
-                ", seller=" + seller +
-                ", purchaser=" + purchaser +
+                ", sellerId=" + sellerId +
+                ", purchaserId=" + purchaserId +
                 ", tradeState=" + tradeState +
                 ", tradePlace='" + tradePlace + '\'' +
                 ", tradeDate=" + tradeDate +
@@ -141,11 +150,19 @@ public class Trade implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeParcelable(book, flags);
-        dest.writeParcelable(seller, flags);
-        dest.writeParcelable(purchaser, flags);
+        dest.writeString(sellerId);
+        dest.writeString(purchaserId);
         dest.writeString(tradeState.name());
         dest.writeString(tradePlace);
         dest.writeSerializable(tradeDate);
     }
 
+    public void toMap(Map<String, Object> result) {
+        result.put("tradeId", this.tradeId);
+        result.put("sellerId", this.sellerId);
+        result.put("purchaserId", this.purchaserId);
+        result.put("tradeState", this.tradeState);
+        result.put("tradePlace", this.tradePlace);
+        result.put("tradeDate", this.tradeDate);
+    }
 }

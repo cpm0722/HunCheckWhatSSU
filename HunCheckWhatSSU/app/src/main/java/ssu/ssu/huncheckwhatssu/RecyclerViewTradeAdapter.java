@@ -65,7 +65,7 @@ public class RecyclerViewTradeAdapter extends RecyclerView.Adapter<RecyclerViewT
             imageView.setBackgroundResource(R.drawable.bookimag);
             bookTitleTextView.setText(object.getBook().getTitle());
             bookPriceTextView.setText(String.valueOf(object.getBook().getPrice()));
-            sellerNameTextView.setText(object.getSeller().getName());
+            sellerNameTextView.setText(object.getSellerId());
         }
     }
 
