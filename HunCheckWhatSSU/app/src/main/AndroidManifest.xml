@@ -17,6 +17,11 @@
             android:value="r14df325a1"/>
 
         <activity android:name=".NaverBookSearchActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity android:name=".BookInfoActivity"></activity>
         <activity android:name=".AddBookActivity"></activity>
