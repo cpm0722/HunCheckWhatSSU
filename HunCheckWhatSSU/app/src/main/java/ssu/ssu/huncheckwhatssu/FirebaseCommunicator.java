@@ -41,6 +41,7 @@ public class FirebaseCommunicator {
     private RecyclerView recyclerView;
     private Context context;
     private Activity activity;
+    private  Customer result;
 
     public FirebaseCommunicator(){
         mPostReference = FirebaseDatabase.getInstance().getReference();
@@ -129,4 +130,28 @@ public class FirebaseCommunicator {
         return;
     }
 
+
+    //---------------------------------------------------------------------------진예찬
+    public void upLoadCustomer(Customer customer){
+        String id = customer.getId();
+        DatabaseReference path = mPostReference.child("customer").child(id);
+        HashMap<String, Object> update = new HashMap<>();
+        customer.toMap(update);
+        path.updateChildren(update);
+    }
+    public Customer getCustomerById(String Uid){
+        DatabaseReference path = mPostReference.child("customer").child(Uid);
+        path.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                result = new Customer(dataSnapshot);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        return result;
+    }
 }

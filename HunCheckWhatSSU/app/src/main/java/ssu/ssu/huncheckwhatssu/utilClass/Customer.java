@@ -3,9 +3,10 @@ package ssu.ssu.huncheckwhatssu.utilClass;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.ArrayList;
 import java.util.Map;
-import android.os.Parcel;
-import android.os.Parcelable;
+
+import com.google.firebase.database.DataSnapshot;
 
 public class Customer implements Parcelable {
     // 사용자 고유 번호
@@ -13,7 +14,9 @@ public class Customer implements Parcelable {
     String name;
     String phoneNumber;
     String address;
-    float creditRating;
+    double creditRating;
+    ArrayList<String> sellList;
+    ArrayList<String> buyList;
 
     public Customer(){}
 
@@ -57,7 +60,7 @@ public class Customer implements Parcelable {
         dest.writeString(name);
         dest.writeString(phoneNumber);
         dest.writeString(address);
-        dest.writeFloat(creditRating);
+        dest.writeDouble(creditRating);
     }
 
     public String getId() {
@@ -93,19 +96,39 @@ public class Customer implements Parcelable {
     }
 
     public void toMap(Map<String, Object> result) {
-        result.put("id", this.id);
-        result.put("name", this.name);
-        result.put("phoneNumber", this.phoneNumber);
-        result.put("address", this.address);
+        result.put("Uid", this.id);
+        result.put("Name", this.name);
+        result.put("PhoneNumber", this.phoneNumber);
+        result.put("Address", this.address);
+        result.put("CreditRating", this.creditRating);
+        result.put("sellList",sellList);
+        result.put("buyList",buyList);
         return;
     }
 
-    public float getCreditRating() {
+    public double getCreditRating() {
         return creditRating;
     }
 
-    public void setCreditRating(float creditRating) {
+    public void setCreditRating(double creditRating) {
         this.creditRating = creditRating;
     }
 
+    public Customer(DataSnapshot dataSnapshot){
+        sellList = new ArrayList<>();
+        buyList = new ArrayList<>();
+        this.id = dataSnapshot.child("Uid").getValue(String.class);
+        this.name = dataSnapshot.child("Name").getValue(String.class);
+        this.phoneNumber = dataSnapshot.child("PhoneNumber").getValue(String.class);
+        this.address = dataSnapshot.child("Address").getValue(String.class);
+        this.creditRating = dataSnapshot.child("CreditRating").getValue(Double.class);
+        DataSnapshot tempSnapshot = dataSnapshot.child("sellList");
+        for(DataSnapshot sellSnapshot : tempSnapshot.getChildren()){
+            sellList.add(sellSnapshot.getValue(String.class));
+        }
+        tempSnapshot = dataSnapshot.child("buyList");
+        for(DataSnapshot buySnapshot : tempSnapshot.getChildren()){
+            buyList.add(buySnapshot.getValue(String.class));
+        }
+    }
 }

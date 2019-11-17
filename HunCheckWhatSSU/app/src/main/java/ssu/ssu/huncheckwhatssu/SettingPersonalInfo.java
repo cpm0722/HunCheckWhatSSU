@@ -11,6 +11,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 import ssu.ssu.huncheckwhatssu.utilClass.Customer;
 
 public class SettingPersonalInfo extends AppCompatActivity implements View.OnClickListener{
@@ -42,7 +45,7 @@ public class SettingPersonalInfo extends AppCompatActivity implements View.OnCli
         editGrade = (EditText)findViewById(R.id.setting_personal_grade_edit);
         editContactAddress = (EditText)findViewById(R.id.setting_personal_contactAddress_edit);
 
-        initializaing();
+        //initializaing();
     }
 
     private void initializaing() {
@@ -81,16 +84,21 @@ public class SettingPersonalInfo extends AppCompatActivity implements View.OnCli
     }
 
     private void savePersonalInfo() {
-        Customer customer;
+        Customer customer = new Customer();
 
         //customer 객체에 입력받은 텍스트를 저장하는 작업
+        FirebaseUser me = FirebaseAuth.getInstance().getCurrentUser();
+        customer.setId(me.getDisplayName()+"_"+me.getUid());
+        customer.setPhoneNumber("01000000000");
+        customer.setCreditRating(3.5);
+        customer.setName(editName.getText().toString());
+       // customer.setNickName(editNickName.getText());
+        //customer.setMajor(editMajor.getText());
+       // customer.setGrdae(editGrade.getText());
+        customer.setAddress(editContactAddress.getText().toString());
 
-       /* customer.setName(editName.getText());
-        customer.setNickName(editNickName.getText());
-        customer.setMajor(editMajor.getText());
-        customer.setGrdae(editGrade.getText());
-        customer.setContactAddress(editContactAddress.getText());*/
-
+        FirebaseCommunicator temp = new FirebaseCommunicator();
+        temp.upLoadCustomer(customer);
     }
 
 }
