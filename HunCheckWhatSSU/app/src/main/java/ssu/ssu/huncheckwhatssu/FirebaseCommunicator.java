@@ -132,6 +132,7 @@ public class FirebaseCommunicator {
 
 
     //---------------------------------------------------------------------------진예찬
+
     public void upLoadCustomer(Customer customer){
         String id = customer.getId();
         DatabaseReference path = mPostReference.child("customer").child(id);
@@ -139,7 +140,9 @@ public class FirebaseCommunicator {
         customer.toMap(update);
         path.updateChildren(update);
     }
+
     public Customer getCustomerById(String Uid){
+        result = null;
         DatabaseReference path = mPostReference.child("customer").child(Uid);
         path.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

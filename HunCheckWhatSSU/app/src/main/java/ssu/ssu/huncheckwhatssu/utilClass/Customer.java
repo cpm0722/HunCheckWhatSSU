@@ -34,7 +34,9 @@ public class Customer implements Parcelable {
         name = in.readString();
         phoneNumber = in.readString();
         address = in.readString();
-        creditRating = in.readFloat();
+        creditRating = in.readDouble();
+        sellList = in.readArrayList(String.class.getClassLoader());
+        buyList = in.readArrayList(String.class.getClassLoader());
     }
 
     public static final Creator<Customer> CREATOR = new Creator<Customer>() {
@@ -61,6 +63,8 @@ public class Customer implements Parcelable {
         dest.writeString(phoneNumber);
         dest.writeString(address);
         dest.writeDouble(creditRating);
+        dest.writeStringList(sellList);
+        dest.writeStringList(buyList);
     }
 
     public String getId() {

@@ -5,12 +5,20 @@ import android.view.MenuItem;
 import android.widget.Button;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+
+import java.util.HashMap;
+
+import ssu.ssu.huncheckwhatssu.utilClass.Customer;
 
 public class MainActivity extends AppCompatActivity {
     NavController navController;
@@ -20,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         BottomNavigationView navView = findViewById(R.id.nav_view);
 
+        initailSetting();
         navController = Navigation.findNavController(findViewById(R.id.nav_host_fragment));
         navView.setOnNavigationItemSelectedListener(
                 new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -44,6 +53,13 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
         );
+    }
+    protected void initailSetting(){
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String path = user.getDisplayName()+"_"+user.getUid();
+        HashMap<String, Object> initial = new HashMap<>() ;
+        initial.put("Uid",path);
+        FirebaseDatabase.getInstance().getReference().child("customer").child(path).updateChildren(initial);
     }
 
 }
