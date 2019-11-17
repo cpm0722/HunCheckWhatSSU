@@ -19,6 +19,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
+import java.util.Vector;
 
 import ssu.ssu.huncheckwhatssu.utilClass.Book;
 import ssu.ssu.huncheckwhatssu.utilClass.BookState;
@@ -43,7 +44,7 @@ public class TradeFragment extends Fragment {
         menu.getItem(2).setChecked(true);
 
         //OnGoing RecyclerView
-        final ArrayList<Trade>ongoingList =new ArrayList<Trade>();
+        final Vector<Trade> ongoingList =new Vector<Trade>();
         Book book = new Book("testISBN10", "testISBN13", "git", "testImage", "testAuthor", 10000, "testPublisher", "testPubDate", "testDescription", new BookState());
         firebaseCommunicator = new FirebaseCommunicator(FirebaseCommunicator.WhichRecyclerView.ongoingRecyclerView);
         String seller = firebaseCommunicator.getUserPath();
@@ -72,7 +73,7 @@ public class TradeFragment extends Fragment {
 
         //Done RecyclerView
         firebaseCommunicator = new FirebaseCommunicator(FirebaseCommunicator.WhichRecyclerView.doneRecyclerView);
-        final ArrayList<Trade>doneList =new ArrayList<Trade>();
+        final Vector<Trade> doneList = new Vector<Trade>();
         book = new Book("testISBN10", "testISBN13", "git2", "testImage", "testAuthor", 10000, "testPublisher", "testPubDate", "testDescription", new BookState());
         doneList.add(new Trade(book, seller));
         book = new Book("testISBN10", "testISBN13", "hi2", "testImage", "testAuthor", 300, "testPublisher", "testPubDate", "testDescription", new BookState());

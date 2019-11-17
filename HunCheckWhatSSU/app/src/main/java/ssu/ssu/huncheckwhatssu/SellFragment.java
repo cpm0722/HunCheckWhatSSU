@@ -11,6 +11,8 @@ import android.widget.Button;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
+import java.util.Vector;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -79,7 +81,7 @@ public class SellFragment extends Fragment {
          }
         });
 
-        final ArrayList<Trade>sellList =new ArrayList<Trade>();
+        final Vector<Trade> sellList =new Vector<Trade>();
         Book book = new Book("testISBN10", "testISBN13", "sell", "testImage", "testAuthor", 10000, "testPublisher", "testPubDate", "testDescription", new BookState());
         String seller = firebaseCommunicator.getUserPath();
         sellList.add(new Trade(book, seller));

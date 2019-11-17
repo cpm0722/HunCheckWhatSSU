@@ -17,6 +17,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.nikhilpanju.recyclerviewenhanced.RecyclerTouchListener;
 
 import java.util.List;
+import java.util.Vector;
 
 import ssu.ssu.huncheckwhatssu.utilClass.Trade;
 
@@ -24,11 +25,16 @@ import static androidx.constraintlayout.widget.Constraints.TAG;
 
 public class RecyclerViewTradeAdapter extends RecyclerView.Adapter<RecyclerViewTradeAdapter.TradeViewHolder> {
     LayoutInflater inflater;
-    List<Trade> modelList;
+    Vector<Trade> modelVector;
 
-    public RecyclerViewTradeAdapter(Context context, List<Trade> list) {
+    public RecyclerViewTradeAdapter(Context context, FirebaseCommunicator firebaseCommunicator) {
         inflater = LayoutInflater.from(context);
-        modelList = list;
+        modelVector = firebaseCommunicator.getTradeListVector();
+    }
+
+    public RecyclerViewTradeAdapter(Context context, Vector<Trade> vector){
+        inflater = LayoutInflater.from(context);
+        modelVector = vector;
     }
 
     @Override
@@ -39,12 +45,12 @@ public class RecyclerViewTradeAdapter extends RecyclerView.Adapter<RecyclerViewT
 
     @Override
     public void onBindViewHolder(TradeViewHolder holder, int position) {
-        holder.bindData(modelList.get(position));
+        holder.bindData(modelVector.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return modelList.size();
+        return modelVector.size();
     }
 
     class TradeViewHolder extends RecyclerView.ViewHolder {

@@ -49,18 +49,18 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
 
         //RecyclerView
         recyclerView = root.findViewById(R.id.search_fragment_recycler_view);
-        adapter = new RecyclerViewTradeAdapter(this.getContext(), new ArrayList<Trade>());
-        recyclerView.setAdapter(adapter);
-        RecyclerViewTradeAdapter.setSwipeable(this.getContext(), this.getActivity(), recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
-        RecyclerViewTradeAdapter.SetRefresh((SwipeRefreshLayout)root.findViewById(R.id.swipe_fragment_search));
-
-
 
         //FirebaseCommunicator 생성
         firebase = new FirebaseCommunicator(FirebaseCommunicator.WhichRecyclerView.sellRecyclerView);
+
+        //RecyclerView
+        adapter = new RecyclerViewTradeAdapter(this.getContext(), firebase);
+        recyclerView.setAdapter(adapter);
+        RecyclerViewTradeAdapter.setSwipeable(this.getContext(), this.getActivity(), recyclerView);
+        RecyclerViewTradeAdapter.SetRefresh((SwipeRefreshLayout)root.findViewById(R.id.swipe_fragment_search));
+
         //FirebaseCommunicator에 RecyclerView 설정
-        //firebase.setRecyclerView(this.getContext(), this.getActivity(), recyclerView);
         firebase.setRecyclerView(this.getContext(), this.getActivity(), recyclerView, FirebaseCommunicator.WhichRecyclerView.sellRecyclerView);
 
         bookInfoBtn = root.findViewById(R.id.book_info_btn);
