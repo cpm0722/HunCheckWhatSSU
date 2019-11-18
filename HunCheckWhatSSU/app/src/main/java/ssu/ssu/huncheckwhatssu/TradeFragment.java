@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -17,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.nikhilpanju.recyclerviewenhanced.RecyclerTouchListener;
 
 import java.util.ArrayList;
 
@@ -27,7 +29,7 @@ import ssu.ssu.huncheckwhatssu.utilClass.Trade;
 
 import static androidx.constraintlayout.widget.Constraints.TAG;
 
-public class TradeFragment extends Fragment {
+public class TradeFragment extends Fragment implements RecyclerViewTradeAdapter2.OnItemClickListener{
     RecyclerViewTradeAdapter2 ongoingAdapter, doneAdapter;
     RecyclerView ongoingRecyclerView, doneRecyclerView;
 
@@ -66,6 +68,19 @@ public class TradeFragment extends Fragment {
         ongoingRecyclerView.setAdapter(ongoingAdapter);
         RecyclerViewTradeAdapter2.SetRefresh((SwipeRefreshLayout)root.findViewById(R.id.swipe_fragment_trade_ongoing));
 
+
+    /*추가 작업 시작 3
+   ongoingAdapter.setOnItemClickListener(new RecyclerViewTradeAdapter2.OnItemClickListener() {
+        @Override
+        public void onItemClick(View v, int pos) {
+            Intent intent=new Intent(getContext(),BookInfoActivity.class);
+
+            startActivity(intent);
+        }
+    });
+   추가 작업3 끝*/
+
+
         /*거래진행중인 아이템개수 보여주기 위해서*/
         final TextView ongoingCountTrade=root.findViewById(R.id.counttrade);
         ongoingCountTrade.setText(""+ongoingAdapter.getItemCount()+" 건");
@@ -96,6 +111,7 @@ public class TradeFragment extends Fragment {
         RecyclerViewTradeAdapter2.setSwipeable(this.getContext(), this.getActivity(), doneRecyclerView);
         RecyclerViewTradeAdapter2.SetRefresh((SwipeRefreshLayout)root.findViewById(R.id.swipe_fragment_trade_done));
 
+
         /*거래진행중인 아이템개수 보여주기 위해서*/
         final TextView doneCountTrade=root.findViewById(R.id.counttrade);
         doneCountTrade.setText(""+ongoingAdapter.getItemCount()+" 건");
@@ -109,5 +125,9 @@ public class TradeFragment extends Fragment {
     }
 
 
-
+    @Override
+    public void onItemClick(View v, int pos) {
+        Intent intent=new Intent(getContext(),BookInfoActivity.class);
+        startActivity(intent);
+    }
 }

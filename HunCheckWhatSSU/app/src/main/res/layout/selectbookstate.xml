@@ -11,12 +11,14 @@
         android:text="책 상태 표기" />
 
     <LinearLayout
+        android:id="@+id/book_state_line"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <TextView
-            android:layout_width="101dp"
+            android:layout_width="100dp"
             android:layout_height="match_parent"
+            android:background="#D8FAFD"
             android:text="밑줄흔적"
             android:textSize="20dp"
             android:textStyle="bold" />
@@ -54,12 +56,14 @@
 
     </LinearLayout>
     <LinearLayout
+        android:id="@+id/book_state_write"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <TextView
-            android:layout_width="101dp"
+            android:layout_width="100dp"
             android:layout_height="match_parent"
+            android:background="#DEEEFA"
             android:text="필기흔적"
             android:textSize="20dp"
             android:textStyle="bold" />
@@ -97,14 +101,16 @@
 
     </LinearLayout>
     <LinearLayout
+        android:id="@+id/book_state_cover"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <TextView
-            android:layout_width="95dp"
+            android:layout_width="100dp"
             android:layout_height="match_parent"
             android:text="겉표지"
             android:textSize="20dp"
+            android:background="#D8FAFD"
             android:textStyle="bold" />
 
         <RadioGroup
@@ -140,12 +146,14 @@
 
     </LinearLayout>
     <LinearLayout
+        android:id="@+id/book_state_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <TextView
-            android:layout_width="95dp"
+            android:layout_width="100dp"
             android:layout_height="match_parent"
+            android:background="#DEEEFA"
             android:text="이름기입"
             android:textSize="20dp"
             android:textStyle="bold" />
@@ -183,12 +191,14 @@
 
     </LinearLayout>
     <LinearLayout
+        android:id="@+id/book_state_color"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="match_parent"
+            android:background="#D8FAFD"
             android:text="페이지변색"
             android:textSize="20dp"
             android:textStyle="bold" />
@@ -226,12 +236,14 @@
 
     </LinearLayout>
     <LinearLayout
+        android:id="@+id/book_state_pagegone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="match_parent"
+            android:background="#DEEEFA"
             android:text="페이지훼손"
             android:textSize="20dp"
             android:textStyle="bold" />
@@ -268,6 +280,5 @@
         </RadioGroup>
 
     </LinearLayout>
-
 
 </LinearLayout>

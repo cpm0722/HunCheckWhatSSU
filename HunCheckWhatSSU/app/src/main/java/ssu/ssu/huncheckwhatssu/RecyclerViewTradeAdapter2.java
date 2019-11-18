@@ -2,6 +2,7 @@ package ssu.ssu.huncheckwhatssu;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +18,8 @@ import com.nikhilpanju.recyclerviewenhanced.RecyclerTouchListener;
 
 import java.util.List;
 
+import ssu.ssu.huncheckwhatssu.utilClass.Book;
+import ssu.ssu.huncheckwhatssu.utilClass.Customer;
 import ssu.ssu.huncheckwhatssu.utilClass.Trade;
 
 import static androidx.constraintlayout.widget.Constraints.TAG;
@@ -24,6 +27,18 @@ import static androidx.constraintlayout.widget.Constraints.TAG;
 public class RecyclerViewTradeAdapter2 extends RecyclerView.Adapter<RecyclerViewTradeAdapter2.TradeViewHolder> {
     LayoutInflater inflater;
     static List<Trade> modelList;
+
+
+    /*여기 추가 1*/
+    public interface OnItemClickListener {
+        void onItemClick(View v, int pos);
+    }
+    private OnItemClickListener listener = null;
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.listener = listener;
+    }
+ /*   여기까지 1*/
 
     public RecyclerViewTradeAdapter2(Context context, List<Trade> list) {
         inflater = LayoutInflater.from(context);
@@ -46,7 +61,7 @@ public class RecyclerViewTradeAdapter2 extends RecyclerView.Adapter<RecyclerView
         return modelList.size();
     }
 
-    class TradeViewHolder extends RecyclerView.ViewHolder {
+   public class TradeViewHolder extends RecyclerView.ViewHolder {
         ImageView imageView;
         TextView bookTitleTextView;
         TextView bookPriceTextView;
@@ -59,6 +74,20 @@ public class RecyclerViewTradeAdapter2 extends RecyclerView.Adapter<RecyclerView
             bookPriceTextView = itemView.findViewById(R.id.item_book_price);
             sellerNameTextView = itemView.findViewById(R.id.item_seller_name);
 
+            /*여기 추가 2*/
+            itemView.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View v){
+                    int position=getAdapterPosition();
+                    if(position!=RecyclerView.NO_POSITION){
+                        if (listener!= null) {
+                            listener.onItemClick(v, position);
+
+                        }
+                    }
+                }
+            });
+           /* 여기까지 2*/
         }
 
         public void bindData(Trade object) {
@@ -71,17 +100,18 @@ public class RecyclerViewTradeAdapter2 extends RecyclerView.Adapter<RecyclerView
 
     //RecyclerView에 TouchListener 설정 함수 (Swipe로 메뉴 출력 가능하게)
     public static void setSwipeable(final Context context, Activity activity, RecyclerView recyclerView) {
-        RecyclerTouchListener onTouchListener = new RecyclerTouchListener(activity, recyclerView);
+        final RecyclerTouchListener onTouchListener = new RecyclerTouchListener(activity, recyclerView);
         onTouchListener
-                .setClickable(new RecyclerTouchListener.OnRowClickListener() {
-                    @Override
+                     .setClickable(new RecyclerTouchListener.OnRowClickListener() {
+                      @Override
                     public void onRowClicked(int position) {
-                        Toast toast = Toast.makeText(context, "RowClick!", Toast.LENGTH_SHORT);
-                        toast.show();
+
+                          Toast toast = Toast.makeText(context, "RowClick!"+position, Toast.LENGTH_SHORT);
+                          toast.show();
 
                     }
 
-                    @Override
+                 @Override
                     public void onIndependentViewClicked(int independentViewID, int position) {
                         Log.d(TAG,"Indepent");
                     }
