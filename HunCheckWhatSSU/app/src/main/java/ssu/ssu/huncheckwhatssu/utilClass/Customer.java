@@ -2,6 +2,7 @@ package ssu.ssu.huncheckwhatssu.utilClass;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -14,6 +15,12 @@ public class Customer implements Parcelable {
     String name;
     String phoneNumber;
     String address;
+    String nickName;
+    String major;
+    int grade;
+
+
+
     double creditRating;
     ArrayList<String> sellList;
     ArrayList<String> buyList;
@@ -99,12 +106,27 @@ public class Customer implements Parcelable {
         this.address = address;
     }
 
+    public String getNickName() { return nickName; }
+
+    public void setNickName(String nickName) { this.nickName = nickName; }
+
+    public String getMajor() { return major; }
+
+    public void setMajor(String major) { this.major = major; }
+
+    public int getGrade() { return grade; }
+
+    public void setGrade(int grade) { this.grade = grade; }
+
     public void toMap(Map<String, Object> result) {
         result.put("Uid", this.id);
         result.put("Name", this.name);
         result.put("PhoneNumber", this.phoneNumber);
         result.put("Address", this.address);
         result.put("CreditRating", this.creditRating);
+        result.put("NickName",this.nickName);
+        result.put("Major",this.major);
+        result.put("Grade",this.grade);
         result.put("sellList",sellList);
         result.put("buyList",buyList);
         return;
@@ -121,16 +143,24 @@ public class Customer implements Parcelable {
     public Customer(DataSnapshot dataSnapshot){
         sellList = new ArrayList<>();
         buyList = new ArrayList<>();
+
+        Log.d("YECHAN","Customer 생성자");
+
         this.id = dataSnapshot.child("Uid").getValue(String.class);
         this.name = dataSnapshot.child("Name").getValue(String.class);
         this.phoneNumber = dataSnapshot.child("PhoneNumber").getValue(String.class);
         this.address = dataSnapshot.child("Address").getValue(String.class);
         this.creditRating = dataSnapshot.child("CreditRating").getValue(Double.class);
-        DataSnapshot tempSnapshot = dataSnapshot.child("sellList");
+        this.nickName = dataSnapshot.child("NickName").getValue(String.class);
+        this.major = dataSnapshot.child("Major").getValue(String.class);
+        //this.grade = dataSnapshot.child("Grade").getValue(Integer.class);
+
+        DataSnapshot tempSnapshot = dataSnapshot.child("SellList");
         for(DataSnapshot sellSnapshot : tempSnapshot.getChildren()){
             sellList.add(sellSnapshot.getValue(String.class));
         }
-        tempSnapshot = dataSnapshot.child("buyList");
+        tempSnapshot = dataSnapshot.child("BuyList");
+
         for(DataSnapshot buySnapshot : tempSnapshot.getChildren()){
             buyList.add(buySnapshot.getValue(String.class));
         }

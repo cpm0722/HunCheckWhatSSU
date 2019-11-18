@@ -141,20 +141,42 @@ public class FirebaseCommunicator {
         path.updateChildren(update);
     }
 
-    public Customer getCustomerById(String Uid){
-        result = null;
+    public interface forSettingPersonalInfo {
+        void onSettingListener(Customer customer);
+    }
+
+    forSettingPersonalInfo testListener;
+
+    public void setForSettingPersonalInfo(forSettingPersonalInfo testListener) {
+        this.testListener = testListener;
+    }
+
+    public void getCustomerById(String Uid){
         DatabaseReference path = mPostReference.child("customer").child(Uid);
+        result = null;
+        Log.d("YECHAN", "getCustomer 함수");
+
         path.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                result = new Customer(dataSnapshot);
+                if (testListener != null) {
+                    testListener.onSettingListener(new Customer(dataSnapshot));
+                }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                Log.d("YECHAN", "Data Read Fail");
             }
         });
+        Log.d("YECHAN", "getCustomer 함수 끝");
+    }
+
+    public Customer getResult() {
         return result;
+    }
+
+    public void setResult(Customer result) {
+        this.result = result;
     }
 }

@@ -57,9 +57,8 @@ public class MainActivity extends AppCompatActivity {
     protected void initailSetting(){
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String path = user.getDisplayName()+"_"+user.getUid();
-        HashMap<String, Object> initial = new HashMap<>() ;
+        HashMap<String, Object> initial = new HashMap<>();
         initial.put("Uid",path);
         FirebaseDatabase.getInstance().getReference().child("customer").child(path).updateChildren(initial);
     }
-
 }
