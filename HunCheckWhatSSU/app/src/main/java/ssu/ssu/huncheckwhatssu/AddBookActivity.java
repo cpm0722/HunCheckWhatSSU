@@ -16,6 +16,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -44,7 +45,15 @@ public class AddBookActivity extends AppCompatActivity {
     TextView price;
     int price1;//원가
     TextView publisher;
-    RadioGroup radioGroup;
+    RadioGroup radioGroup1;
+    RadioGroup radioGroup2;
+    RadioGroup radioGroup3;
+    RadioGroup radioGroup4;
+    RadioGroup radioGroup5;
+    RadioGroup radioGroup6;
+    BookState bookState;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState)  {
@@ -77,38 +86,6 @@ public class AddBookActivity extends AppCompatActivity {
             }
         });
 
-
-    /*   ArrayAdapter<CharSequence> adapter1= ArrayAdapter.createFromResource(this,R.array.college,android.R.layout.simple_spinner_item);
-        adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        s1.setAdapter(adapter1);
-        s1.setOnItemClickListener(new AdapterView.OnItemSelectedListener(){
-
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                List<String > s= Arrays.asList(getResources().getStringArray(R.array.department));
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-        //s1.setOnItemClickListener(this);
-       /* ArrayAdapter adapter2= ArrayAdapter.createFromResource(this,R.array.department,android.R.layout.simple_spinner_item);
-        adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        s2.setAdapter(adapter2);*/
-
-       /*
-         Spinner s=(Spinner)findViewById(R.id.spinner2);
-        s.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                tv.setText(""+ parent.getItemAtPosition(position));
-                여기서 customer 객체에 학부추가하도록 작업...
-            }
-
-        });
-*/
         Bundle bd = getIntent().getExtras();
         if (bd != null) {
             if (bd.getString("start") != null) {
@@ -155,6 +132,130 @@ public class AddBookActivity extends AppCompatActivity {
         publisher.setText(intent.getStringExtra("publisher"));
        // ImageView image=findViewById(R.id.image);
       //  Bitmap bitmap= BitmapFactory.decodeResource(getResources(),R.id.)
+        bookState= new BookState();
+        radioGroup1=findViewById(R.id.book_state_line);
+        radioGroup1.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch(checkedId){
+                    case R.id.book_state_BEST1:
+                        bookState.setBookState01(BookState.bookState.BEST);
+                        break;
+                    case R.id.book_state_GOOD1:
+                        bookState.setBookState01(BookState.bookState.GOOD);
+                        break;
+                    case R.id.book_state_BAD1:
+                        bookState.setBookState01(BookState.bookState.BAD);
+                        break;
+                    case R.id.book_state_WORST1:
+                        bookState.setBookState01(BookState.bookState.WORST);
+                        break;
+                }
+            }
+        });
+        radioGroup2=findViewById(R.id.book_state_write);
+        radioGroup2.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch(checkedId){
+                    case R.id.book_state_BEST2:
+                        bookState.setBookState02(BookState.bookState.BEST);
+                        break;
+                    case R.id.book_state_GOOD2:
+                        bookState.setBookState02(BookState.bookState.GOOD);
+                        break;
+                    case R.id.book_state_BAD2:
+                        bookState.setBookState02(BookState.bookState.BAD);
+                        break;
+                    case R.id.book_state_WORST2:
+                        bookState.setBookState02(BookState.bookState.WORST);
+                        break;
+                }
+            }
+        });
+        radioGroup3=findViewById(R.id.book_state_cover);
+        radioGroup3.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch(checkedId){
+                    case R.id.book_state_BEST3:
+                        bookState.setBookState03(BookState.bookState.BEST);
+                        break;
+                    case R.id.book_state_GOOD3:
+                        bookState.setBookState03(BookState.bookState.GOOD);
+                        break;
+                    case R.id.book_state_BAD3:
+                        bookState.setBookState03(BookState.bookState.BAD);
+                        break;
+                    case R.id.book_state_WORST3:
+                        bookState.setBookState03(BookState.bookState.WORST);
+                        break;
+                }
+            }
+        });
+        radioGroup4=findViewById(R.id.book_state_name);
+        radioGroup4.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch(checkedId){
+                    case R.id.book_state_BEST4:
+                        bookState.setBookState04(BookState.bookState.BEST);
+                        break;
+                    case R.id.book_state_GOOD4:
+                        bookState.setBookState04(BookState.bookState.GOOD);
+                        break;
+                    case R.id.book_state_BAD4:
+                        bookState.setBookState04(BookState.bookState.BAD);
+                        break;
+                    case R.id.book_state_WORST4:
+                        bookState.setBookState04(BookState.bookState.WORST);
+                        break;
+                }
+            }
+        });
+        radioGroup5=findViewById(R.id.book_state_color);
+        radioGroup5.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch(checkedId){
+                    case R.id.book_state_BEST5:
+                        bookState.setBookState05(BookState.bookState.BEST);
+                        break;
+                    case R.id.book_state_GOOD5:
+                        bookState.setBookState05(BookState.bookState.GOOD);
+                        break;
+                    case R.id.book_state_BAD5:
+                        bookState.setBookState05(BookState.bookState.BAD);
+                        break;
+                    case R.id.book_state_WORST5:
+                        bookState.setBookState05(BookState.bookState.WORST);
+                        break;
+                }
+            }
+        });
+
+        radioGroup6=findViewById(R.id.book_state_pagegone);
+        radioGroup6.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch(checkedId){
+                    case R.id.book_state_BEST6:
+                        bookState.setBookState06(BookState.bookState.BEST);
+                        break;
+                    case R.id.book_state_GOOD6:
+                        bookState.setBookState06(BookState.bookState.GOOD);
+                        break;
+                    case R.id.book_state_BAD6:
+                        bookState.setBookState06(BookState.bookState.BAD);
+                        break;
+                    case R.id.book_state_WORST6:
+                        bookState.setBookState06(BookState.bookState.WORST);
+                        break;
+                }
+            }
+        });
+
+
     }
 
     public Trade setData(){ //Trade형 객체 데이터베이스 올리기 위해 객체화작업.
@@ -167,8 +268,6 @@ public class AddBookActivity extends AppCompatActivity {
         book1.setPublisher((String)publisher.getText());
         book1.setPubDate((String)PubDate.getText());
 
-        BookState bookState = new BookState(BookState.bookState.GOOD, BookState.bookState.BEST,BookState.bookState.BAD,BookState.bookState.WORST,BookState.bookState.GOOD,BookState.bookState.BEST);
-        book1.setBookState(bookState);
 
         customer1.setName("승주");
         trade= new Trade(book1,customer1);
