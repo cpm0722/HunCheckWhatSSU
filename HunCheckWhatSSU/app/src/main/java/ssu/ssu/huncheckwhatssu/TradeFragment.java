@@ -1,8 +1,6 @@
 package ssu.ssu.huncheckwhatssu;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -25,8 +23,6 @@ import ssu.ssu.huncheckwhatssu.utilClass.Book;
 import ssu.ssu.huncheckwhatssu.utilClass.BookState;
 import ssu.ssu.huncheckwhatssu.utilClass.Customer;
 import ssu.ssu.huncheckwhatssu.utilClass.Trade;
-
-import static androidx.constraintlayout.widget.Constraints.TAG;
 
 public class TradeFragment extends Fragment {
     RecyclerViewTradeAdapter ongoingAdapter, doneAdapter;

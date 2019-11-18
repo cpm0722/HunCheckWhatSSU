@@ -52,6 +52,8 @@ public class FirebaseCommunicator {
 
     ValueEventListener tradeEventListener;
 
+    public FirebaseCommunicator(){}
+
     //  FirebaseCommunicator 생성자, 초기화 실행
     public FirebaseCommunicator(final WhichRecyclerView whichRecyclerView) {
         this.whichRecyclerView = whichRecyclerView;

@@ -1,34 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="5dp">
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:text="SearchFragment"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:orientation="horizontal">
+        <Spinner
+            android:id="@+id/fragment_search_college_spin"
+            android:dropDownWidth="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+
+        <Spinner
+            android:id="@+id/fragment_search_department_spin"
+            android:dropDownWidth="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+    </LinearLayout>
+
+    <Spinner
+        android:id="@+id/fragment_search_subject_spin"
+        android:dropDownWidth="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <SearchView
+        android:id="@+id/fragment_search_searchView"
+        android:background="@drawable/round_shape"
+        android:layoutDirection="rtl"
+        android:layout_marginBottom="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
     <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="bookinfo"
-        android:id="@+id/book_info_btn"/>
-
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Add"
-        android:id="@+id/test_add_btn"/>
+        android:id="@+id/fragment_add_btn"
+        android:text="add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipe_fragment_search"

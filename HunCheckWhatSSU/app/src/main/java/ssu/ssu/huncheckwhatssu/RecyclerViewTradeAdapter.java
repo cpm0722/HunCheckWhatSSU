@@ -56,14 +56,12 @@ public class RecyclerViewTradeAdapter extends RecyclerView.Adapter<RecyclerViewT
             super(itemView);
             imageView = itemView.findViewById(R.id.item_image);
             bookTitleTextView = itemView.findViewById(R.id.item_book_title);
-            bookPriceTextView = itemView.findViewById(R.id.item_book_price);
             sellerNameTextView = itemView.findViewById(R.id.item_seller_name);
         }
 
         public void bindData(Trade object) {
             imageView.setBackgroundResource(R.drawable.bookimag);
             bookTitleTextView.setText(object.getBook().getTitle());
-            bookPriceTextView.setText(String.valueOf(object.getBook().getPrice()));
             sellerNameTextView.setText(object.getSellerId());
         }
     }

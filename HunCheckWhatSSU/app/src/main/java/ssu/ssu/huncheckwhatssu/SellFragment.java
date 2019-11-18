@@ -46,7 +46,7 @@ public class SellFragment extends Fragment {
         btn.setOnClickListener(new View.OnClickListener(){
          @Override
          public void onClick(View v) {
-          ssu.ssu.huncheckwhatssu.utilClass.Book book = new ssu.ssu.huncheckwhatssu.utilClass.Book("123", "123", "테스트", null, "작가입니디.",
+          Book book = new ssu.ssu.huncheckwhatssu.utilClass.Book("123", "123", "테스트", null, "작가입니디.",
                   123, "길벗","20161012","asnkdasnksadklndas", null);
 
           BookState bookState = new BookState(BookState.bookState.GOOD, BookState.bookState.BEST,BookState.bookState.BAD,BookState.bookState.WORST,BookState.bookState.GOOD,BookState.bookState.BEST);

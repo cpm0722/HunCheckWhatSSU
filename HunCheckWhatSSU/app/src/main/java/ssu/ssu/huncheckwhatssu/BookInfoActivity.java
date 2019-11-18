@@ -8,6 +8,7 @@ import androidx.fragment.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -16,6 +17,7 @@ import com.naver.maps.geometry.LatLng;
 import com.naver.maps.map.CameraPosition;
 import com.naver.maps.map.MapFragment;
 import com.naver.maps.map.NaverMap;
+import com.naver.maps.map.NaverMapOptions;
 import com.naver.maps.map.OnMapReadyCallback;
 import com.naver.maps.map.overlay.Marker;
 import android.view.View;
@@ -97,7 +99,6 @@ public class BookInfoActivity extends AppCompatActivity implements OnMapReadyCal
             fm.beginTransaction().add(R.id.activity_book_info_map, mapFragment).commit();
         }
         mapFragment.getMapAsync(this);
-
     }
 
     @UiThread
@@ -168,8 +169,8 @@ public class BookInfoActivity extends AppCompatActivity implements OnMapReadyCal
             activity_book_info_authorText.setText(book.getAuthor());
             activity_book_info_publisherText.setText(book.getPublisher());
             String plain_text = book.getPubDate();
-            activity_book_info_publicationDateText.setText(plain_text.substring(0,4) + "년 " + plain_text.substring(4,6) + "월 " + plain_text.substring(6,8) + "일");
-            activity_book_info_bookCostText.setText(book.getPrice() + "");
+            activity_book_info_publicationDateText.setText(plain_text.substring(0, 4) + "년 " + plain_text.substring(4, 6) + "월 " + plain_text.substring(6, 8) + "일");
+            activity_book_info_bookCostText.setText(book.getOriginal_Price() + "");
         }
 
         // Seller
@@ -201,13 +202,14 @@ public class BookInfoActivity extends AppCompatActivity implements OnMapReadyCal
         if (bookInfoType == 1) {
         } else if (bookInfoType == 2) {
             // Trade Info
-            activity_book_info_tradeDateText.setText(trade.getTradeDate_typeOfString());
+            activity_book_info_tradeDateText.setText(trade.getTradeDate());
 
             // Purchaser
             Customer purchaser = firebaseCommunicator.getCustomer(trade.getPurchaserId());
             activity_book_info_purchaserText.setText(purchaser.getName());
             activity_book_info_purchaserContactNumberText.setText(purchaser.getPhoneNumber());
             activity_book_info_purchaserCreditRating.setText(purchaser.getCreditRating() + "");
+
         }
 
         Button back2TradeOverview=findViewById(R.id.back2TradeOverview);

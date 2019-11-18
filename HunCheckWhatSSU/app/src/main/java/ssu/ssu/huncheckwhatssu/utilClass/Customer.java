@@ -9,6 +9,16 @@ import java.util.Map;
 
 import com.google.firebase.database.DataSnapshot;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+
 public class Customer implements Parcelable {
     // 사용자 고유 번호
     String id;
@@ -25,7 +35,12 @@ public class Customer implements Parcelable {
     ArrayList<String> sellList;
     ArrayList<String> buyList;
 
-    public Customer(){}
+    public Customer(){
+    }
+
+    public Customer(String id) {
+        this.id = id;
+    }
 
     public Customer(String id, String name, String phoneNumber, String address, float creditRating) {
         this.id = id;
@@ -35,7 +50,6 @@ public class Customer implements Parcelable {
         this.creditRating = creditRating;
     }
 
-
     protected Customer(Parcel in) {
         id = in.readString();
         name = in.readString();
@@ -44,6 +58,46 @@ public class Customer implements Parcelable {
         creditRating = in.readDouble();
         sellList = in.readArrayList(String.class.getClassLoader());
         buyList = in.readArrayList(String.class.getClassLoader());
+    }
+
+//    (이거해라빨간줄~~)
+    public void setCustomerDataFromUID() {
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("tb_customer");
+        Query query = reference.equalTo(this.getId());
+
+        query.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                if (dataSnapshot != null && dataSnapshot.exists()) {
+                    Customer customer = dataSnapshot.child("customer").getValue(Customer.class);
+
+                    setName(customer.getName());
+                    setAddress(customer.getAddress());
+                    setCreditRating(customer.getCreditRating());
+                    setPhoneNumber(customer.getPhoneNumber());
+                }
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
     public static final Creator<Customer> CREATOR = new Creator<Customer>() {
