@@ -64,7 +64,6 @@ public class SellFragment extends Fragment {
          }
         });
 
-
         //BackButton Pressed 시 NavigationBottom Menu Selected 변경
         Fragment navHostFragment = this.getActivity().getSupportFragmentManager().getFragments().get(0);
         BottomNavigationView navView = navHostFragment.getActivity().findViewById(R.id.nav_view);
@@ -75,9 +74,10 @@ public class SellFragment extends Fragment {
         add.setOnClickListener(new View.OnClickListener() {
          @Override
          public void onClick(View v) {
-          Intent in=new Intent(getActivity(),AddBookActivity.class);
-          in.putExtra("start","Add BookSell");
+          Intent in=new Intent(getActivity(),NaverBookSearchActivity.class);
+        //  in.putExtra("start","Add BookSell");
           startActivity(in);
+          //sellList.add();
          }
         });
 
@@ -99,6 +99,7 @@ public class SellFragment extends Fragment {
         sellAdapter = new RecyclerViewTradeAdapter(this.getContext(), sellList) ;
         sellRecyclerView.setAdapter(sellAdapter);
         RecyclerViewTradeAdapter.SetRefresh((SwipeRefreshLayout)root.findViewById(R.id.swipe_fragment_sell));
+
 
         return root;
     }

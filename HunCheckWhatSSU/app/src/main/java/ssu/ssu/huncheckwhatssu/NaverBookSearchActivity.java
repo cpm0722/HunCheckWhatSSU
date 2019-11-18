@@ -5,10 +5,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.SearchView;
+
+import com.google.firebase.internal.InternalTokenProvider;
 
 import org.json.JSONObject;
 import org.xmlpull.v1.XmlPullParser;
@@ -110,7 +115,19 @@ public class NaverBookSearchActivity extends AppCompatActivity {
                             @Override
                             public void onItemClick(View v, int pos) {
                                 Book book = searchedBookList.get(pos);
-                                // 책정보 전달할 액티비티 만들면 됨
+                                Intent intent=new Intent(getApplicationContext(),AddBookActivity.class);
+                               // Bitmap senditmap= BitmapFactory.decodeResource(getResources(),R.id.add_book_item_image)
+                               //senditmap.compress(Bitmap.CompressFormat.JPEG,100);
+                                intent.putExtra("booktitle",book.getTitle());
+                               intent.putExtra("Author",book.getAuthor());
+                               intent.putExtra("ISBN",book.getIsbn10());
+                               intent.putExtra("p_date",book.getPubDate());
+                               intent.putExtra("price", book.getOriginal_Price());
+                               intent.putExtra("image",book.getImage());
+                               intent.putExtra("publisher",book.getPublisher());
+                               startActivity(intent);
+                               finish();
+                               // 책정보 전달할 액티비티 만들면 됨 //파셀로 전송할수 있게 해야할듯.
                                 Log.d("JS", "onItemClick: " + book.toString());
                             }
                         });

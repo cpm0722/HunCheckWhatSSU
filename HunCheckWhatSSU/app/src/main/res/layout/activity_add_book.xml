@@ -1,17 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<android.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
-
+    android:id="@+id/Scrollview1">
+   <LinearLayout
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:orientation="vertical">
     <Space
         android:layout_width="match_parent"
         android:layout_height="30dp" />
     <ImageView
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:id="@+id/image"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="50dp"
         android:scaleType="centerCrop"
@@ -20,7 +25,8 @@
     </ImageView>
     <Space
         android:layout_width="match_parent"
-        android:layout_height="59dp" />
+        android:layout_height="10dp" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -34,7 +40,8 @@
             android:text="책이름"
             android:textSize="20dp"
             android:gravity="center"></TextView>
-        <EditText
+        <TextView
+            android:id="@+id/s_title"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="2.5"
@@ -44,7 +51,7 @@
             android:background="#0FFF"
             android:singleLine="true"
             android:selectAllOnFocus="true"
-            android:textSize="20sp"></EditText>
+            android:textSize="20sp"></TextView>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -56,21 +63,100 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="출판사"
+            android:text="지은이"
             android:textSize="20dp"
             android:gravity="center"></TextView>
-        <EditText
+        <TextView
+            android:id="@+id/author"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="2.5"
             android:gravity="left|center_vertical"
             android:paddingLeft="20dp"
-            android:hint="출판사"
+            android:hint="지은이"
             android:background="#0FFF"
             android:singleLine="true"
             android:selectAllOnFocus="true"
-            android:textSize="20sp"></EditText>
+            android:textSize="20sp"></TextView>
     </LinearLayout>
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:layout_marginTop="10dp"
+           android:orientation="horizontal"
+           android:baselineAligned="true">
+           <TextView
+               android:layout_width="0dp"
+               android:layout_height="match_parent"
+               android:layout_weight="1"
+               android:text="출판사"
+               android:textSize="20dp"
+               android:gravity="center"></TextView>
+           <TextView
+               android:id="@+id/s_publisher"
+               android:layout_width="0dp"
+               android:layout_height="match_parent"
+               android:layout_weight="2.5"
+               android:gravity="left|center_vertical"
+               android:paddingLeft="20dp"
+               android:hint="출판사"
+               android:background="#0FFF"
+               android:singleLine="true"
+               android:selectAllOnFocus="true"
+               android:textSize="20sp"></TextView>
+       </LinearLayout>
+       <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
+        android:baselineAligned="true">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="출판일"
+            android:textSize="20dp"
+            android:gravity="center"></TextView>
+        <TextView
+            android:id="@+id/p_date"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2.5"
+            android:gravity="left|center_vertical"
+            android:paddingLeft="20dp"
+            android:hint="출판일"
+            android:background="#0FFF"
+            android:singleLine="true"
+            android:selectAllOnFocus="true"
+            android:textSize="20sp"></TextView>
+    </LinearLayout>
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:layout_marginTop="10dp"
+           android:orientation="horizontal"
+           android:baselineAligned="true">
+           <TextView
+               android:layout_width="0dp"
+               android:layout_height="match_parent"
+               android:layout_weight="1"
+               android:text="ISBN"
+               android:textSize="20dp"
+               android:gravity="center"></TextView>
+           <TextView
+               android:id="@+id/ISBN"
+               android:layout_width="0dp"
+               android:layout_height="match_parent"
+               android:layout_weight="2.5"
+               android:gravity="left|center_vertical"
+               android:paddingLeft="20dp"
+               android:hint="ISBN"
+               android:background="#0FFF"
+               android:singleLine="true"
+               android:selectAllOnFocus="true"
+               android:textSize="20sp"></TextView>
+       </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -81,21 +167,48 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="ISBN"
+            android:text="정가"
             android:textSize="20dp"
             android:gravity="center"></TextView>
-        <EditText
+        <TextView
+            android:id="@+id/realprice"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="2.5"
             android:gravity="left|center_vertical"
             android:paddingLeft="20dp"
-            android:hint="ISBN"
+            android:hint="정가"
             android:background="#0FFF"
             android:singleLine="true"
             android:selectAllOnFocus="true"
-            android:textSize="20sp"></EditText>
+            android:textSize="20sp"></TextView>
     </LinearLayout>
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:layout_marginTop="10dp"
+           android:orientation="horizontal"
+           android:baselineAligned="true">
+           <TextView
+               android:layout_width="0dp"
+               android:layout_height="match_parent"
+               android:layout_weight="1"
+               android:text="판매가"
+               android:textSize="20dp"
+               android:gravity="center"></TextView>
+           <EditText
+               android:id="@+id/sellprice"
+               android:layout_width="0dp"
+               android:layout_height="match_parent"
+               android:layout_weight="2.5"
+               android:gravity="left|center_vertical"
+               android:paddingLeft="20dp"
+               android:hint="판매가"
+               android:background="#0FFF"
+               android:singleLine="true"
+               android:selectAllOnFocus="true"
+               android:textSize="20sp"></EditText>
+       </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -110,6 +223,7 @@
             android:textSize="20dp"
             android:gravity="center"></TextView>
         <EditText
+            android:id="@+id/seller"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="2.5"
@@ -120,33 +234,30 @@
             android:singleLine="true"
             android:selectAllOnFocus="true"
             android:textSize="20sp"></EditText>
+    </LinearLayout>
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:layout_marginTop="10dp"
+           android:orientation="horizontal"
+           android:baselineAligned="true">
+           <TextView
+               android:layout_width="0dp"
+               android:layout_height="match_parent"
+               android:layout_weight="1"
+               android:text="단과대"
+               android:textSize="20dp"
+               android:gravity="center"></TextView>
 
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:orientation="horizontal"
-        android:baselineAligned="true">
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="가격"
-            android:textSize="20dp"
-            android:gravity="center"></TextView>
-        <EditText
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="2.5"
-            android:gravity="left|center_vertical"
-            android:paddingLeft="20dp"
-            android:hint="가격"
-            android:background="#0FFF"
-            android:singleLine="true"
-            android:selectAllOnFocus="true"
-            android:textSize="20sp"></EditText>
-    </LinearLayout>
+           <Spinner
+               android:id="@+id/spinner1"
+               android:layout_width="0dp"
+               android:layout_height="match_parent"
+               android:layout_weight="2.5"
+               android:gravity="left|center_vertical"
+               android:paddingLeft="20dp">
+           </Spinner>
+       </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -160,18 +271,303 @@
             android:text="학부"
             android:textSize="20dp"
             android:gravity="center"></TextView>
-        <EditText
+        <Spinner
+            android:id="@+id/spinner2"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="2.5"
             android:gravity="left|center_vertical"
-            android:paddingLeft="20dp"
-            android:hint="학부"
-            android:background="#0FFF"
-            android:singleLine="true"
-            android:selectAllOnFocus="true"
-            android:textSize="20sp"></EditText>
+            android:paddingLeft="20dp"/>
+
     </LinearLayout>
+       <Space
+           android:layout_width="match_parent"
+           android:layout_height="30dp" />
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="match_parent"
+           android:orientation="vertical">
+
+           <TextView
+               android:id="@+id/book_state_group"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:text="책 상태 표기" />
+
+           <LinearLayout
+               android:id="@+id/book_state_line"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content">
+
+               <TextView
+                   android:layout_width="100dp"
+                   android:layout_height="match_parent"
+                   android:background="#D8FAFD"
+                   android:text="밑줄흔적"
+                   android:textSize="20dp"
+                   android:textStyle="bold" />
+
+               <RadioGroup
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:orientation="horizontal">
+
+                   <RadioButton
+                       android:id="@+id/book_state_BEST1"
+                       android:layout_width="match_parent"
+                       android:layout_height="match_parent"
+                       android:text="매우좋음" />
+
+                   <RadioButton
+                       android:id="@+id/book_state_GOOD1"
+                       android:layout_width="match_parent"
+                       android:layout_height="match_parent"
+                       android:text="좋음" />
+
+                   <RadioButton
+                       android:id="@+id/book_state_BAD1"
+                       android:layout_width="match_parent"
+                       android:layout_height="match_parent"
+                       android:text="나쁨" />
+
+                   <RadioButton
+                       android:id="@+id/book_state_WORST1"
+                       android:layout_width="match_parent"
+                       android:layout_height="match_parent"
+                       android:text="매우나쁨" />
+
+               </RadioGroup>
+
+           </LinearLayout>
+           <LinearLayout
+               android:id="@+id/book_state_write"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content">
+
+               <TextView
+                   android:layout_width="100dp"
+                   android:layout_height="match_parent"
+                   android:background="#DEEEFA"
+                   android:text="필기흔적"
+                   android:textSize="20dp"
+                   android:textStyle="bold" />
+
+               <RadioGroup
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:orientation="horizontal">
+
+                   <RadioButton
+                       android:id="@+id/book_state_BEST2"
+                       android:layout_width="match_parent"
+                       android:layout_height="match_parent"
+                       android:text="매우좋음" />
+
+                   <RadioButton
+                       android:id="@+id/book_state_GOOD2"
+                       android:layout_width="match_parent"
+                       android:layout_height="match_parent"
+                       android:text="좋음" />
+
+                   <RadioButton
+                       android:id="@+id/book_state_BAD2"
+                       android:layout_width="match_parent"
+                       android:layout_height="match_parent"
+                       android:text="나쁨" />
+
+                   <RadioButton
+                       android:id="@+id/book_state_WORST2"
+                       android:layout_width="match_parent"
+                       android:layout_height="match_parent"
+                       android:text="매우나쁨" />
+
+               </RadioGroup>
+
+           </LinearLayout>
+           <LinearLayout
+               android:id="@+id/book_state_cover"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content">
+
+               <TextView
+                   android:layout_width="100dp"
+                   android:layout_height="match_parent"
+                   android:text="겉표지"
+                   android:textSize="20dp"
+                   android:background="#D8FAFD"
+                   android:textStyle="bold" />
+
+               <RadioGroup
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:orientation="horizontal">
+
+                   <RadioButton
+                       android:id="@+id/book_state_BEST3"
+                       android:layout_width="match_parent"
+                       android:layout_height="match_parent"
+                       android:text="매우좋음" />
+
+                   <RadioButton
+                       android:id="@+id/book_state_GOOD3"
+                       android:layout_width="match_parent"
+                       android:layout_height="match_parent"
+                       android:text="좋음" />
+
+                   <RadioButton
+                       android:id="@+id/book_state_BAD3"
+                       android:layout_width="match_parent"
+                       android:layout_height="match_parent"
+                       android:text="나쁨" />
+
+                   <RadioButton
+                       android:id="@+id/book_state_WORST3"
+                       android:layout_width="match_parent"
+                       android:layout_height="match_parent"
+                       android:text="매우나쁨" />
+
+               </RadioGroup>
+
+           </LinearLayout>
+           <LinearLayout
+               android:id="@+id/book_state_name"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content">
+
+               <TextView
+                   android:layout_width="100dp"
+                   android:layout_height="match_parent"
+                   android:background="#DEEEFA"
+                   android:text="이름기입"
+                   android:textSize="20dp"
+                   android:textStyle="bold" />
+
+               <RadioGroup
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:orientation="horizontal">
+
+                   <RadioButton
+                       android:id="@+id/book_state_BEST4"
+                       android:layout_width="match_parent"
+                       android:layout_height="match_parent"
+                       android:text="매우좋음" />
+
+                   <RadioButton
+                       android:id="@+id/book_state_GOOD4"
+                       android:layout_width="match_parent"
+                       android:layout_height="match_parent"
+                       android:text="좋음" />
+
+                   <RadioButton
+                       android:id="@+id/book_state_BAD4"
+                       android:layout_width="match_parent"
+                       android:layout_height="match_parent"
+                       android:text="나쁨" />
+
+                   <RadioButton
+                       android:id="@+id/book_state_WORST4"
+                       android:layout_width="match_parent"
+                       android:layout_height="match_parent"
+                       android:text="매우나쁨" />
+
+               </RadioGroup>
+
+           </LinearLayout>
+           <LinearLayout
+               android:id="@+id/book_state_color"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content">
+
+               <TextView
+                   android:layout_width="100dp"
+                   android:layout_height="match_parent"
+                   android:background="#D8FAFD"
+                   android:text="페이지변색"
+                   android:textSize="20dp"
+                   android:textStyle="bold" />
+
+               <RadioGroup
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:orientation="horizontal">
+
+                   <RadioButton
+                       android:id="@+id/book_state_BEST5"
+                       android:layout_width="match_parent"
+                       android:layout_height="match_parent"
+                       android:text="매우좋음" />
+
+                   <RadioButton
+                       android:id="@+id/book_state_GOOD5"
+                       android:layout_width="match_parent"
+                       android:layout_height="match_parent"
+                       android:text="좋음" />
+
+                   <RadioButton
+                       android:id="@+id/book_state_BAD5"
+                       android:layout_width="match_parent"
+                       android:layout_height="match_parent"
+                       android:text="나쁨" />
+
+                   <RadioButton
+                       android:id="@+id/book_state_WORST5"
+                       android:layout_width="match_parent"
+                       android:layout_height="match_parent"
+                       android:text="매우나쁨" />
+
+               </RadioGroup>
+
+           </LinearLayout>
+           <LinearLayout
+               android:id="@+id/book_state_pagegone"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content">
+
+               <TextView
+                   android:layout_width="100dp"
+                   android:layout_height="match_parent"
+                   android:background="#DEEEFA"
+                   android:text="페이지훼손"
+                   android:textSize="20dp"
+                   android:textStyle="bold" />
+
+               <RadioGroup
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:orientation="horizontal">
+
+                   <RadioButton
+                       android:id="@+id/book_state_BEST6"
+                       android:layout_width="match_parent"
+                       android:layout_height="match_parent"
+                       android:text="매우좋음" />
+
+                   <RadioButton
+                       android:id="@+id/book_state_GOOD6"
+                       android:layout_width="match_parent"
+                       android:layout_height="match_parent"
+                       android:text="좋음" />
+
+                   <RadioButton
+                       android:id="@+id/book_state_BAD6"
+                       android:layout_width="match_parent"
+                       android:layout_height="match_parent"
+                       android:text="나쁨" />
+
+                   <RadioButton
+                       android:id="@+id/book_state_WORST6"
+                       android:layout_width="match_parent"
+                       android:layout_height="match_parent"
+                       android:text="매우나쁨" />
+
+               </RadioGroup>
+
+           </LinearLayout>
+
+       </LinearLayout>
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -197,5 +593,8 @@
             android:selectAllOnFocus="true"
             android:textSize="20dp"></Button>
     </LinearLayout>
-</android.widget.LinearLayout>
+   </LinearLayout>
+</ScrollView>
+
+
 

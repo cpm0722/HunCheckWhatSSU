@@ -15,10 +15,12 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.nikhilpanju.recyclerviewenhanced.RecyclerTouchListener;
 
+import java.util.List;
 import java.util.Vector;
 
 import ssu.ssu.huncheckwhatssu.utilClass.Trade;
 
+import static android.view.View.inflate;
 import static androidx.constraintlayout.widget.Constraints.TAG;
 
 public class RecyclerViewTradeAdapter extends RecyclerView.Adapter<RecyclerViewTradeAdapter.TradeViewHolder> {
@@ -67,7 +69,7 @@ public class RecyclerViewTradeAdapter extends RecyclerView.Adapter<RecyclerViewT
     }
 
     //RecyclerView에 TouchListener 설정 함수 (Swipe로 메뉴 출력 가능하게)
-    public static void setSwipeable(final Context context, Activity activity, RecyclerView recyclerView) {
+    public static void setSwipeable(final Context context, Activity activity, final RecyclerView recyclerView) {
         RecyclerTouchListener onTouchListener = new RecyclerTouchListener(activity, recyclerView);
         onTouchListener
                 .setClickable(new RecyclerTouchListener.OnRowClickListener() {
@@ -93,6 +95,11 @@ public class RecyclerViewTradeAdapter extends RecyclerView.Adapter<RecyclerViewT
                         if (viewID == R.id.item_button_edit) {
                             Toast toast = Toast.makeText(context, "Edit!", Toast.LENGTH_SHORT);
                             toast.show();
+                           // notifyItemRemoved(position);
+
+
+
+
                         } else if (viewID == R.id.item_button_delete) {
                             Toast toast = Toast.makeText(context, "Delete!", Toast.LENGTH_SHORT);
                             toast.show();
