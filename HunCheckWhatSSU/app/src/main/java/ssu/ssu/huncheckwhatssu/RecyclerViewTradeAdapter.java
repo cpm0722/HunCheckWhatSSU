@@ -75,11 +75,14 @@ public class RecyclerViewTradeAdapter extends RecyclerView.Adapter<RecyclerViewT
                     public void onRowClicked(int position) {
                         Toast toast = Toast.makeText(context, "RowClick!", Toast.LENGTH_SHORT);
                         toast.show();
+                    /*여기에 액티비티로 전달하는 기능이 구현되있어야함.*/
                     }
 
                     @Override
                     public void onIndependentViewClicked(int independentViewID, int position) {
-
+                        Toast toast = Toast.makeText(context, "IndependentViewID", Toast.LENGTH_SHORT);
+                        toast.show();
+                        /*도대체 어디 클릭하면 작동하는 함수인가?*/
                     }
                 })
                 .setSwipeOptionViews(R.id.item_button_edit, R.id.item_button_delete)
@@ -104,6 +107,7 @@ public class RecyclerViewTradeAdapter extends RecyclerView.Adapter<RecyclerViewT
     public static void setNonSwipeable(final Context context, Activity activity, RecyclerView recyclerView) {
         RecyclerTouchListener onTouchListener = new RecyclerTouchListener(activity, recyclerView);
         onTouchListener
+
                 .setClickable(new RecyclerTouchListener.OnRowClickListener() {
                     @Override
                     public void onRowClicked(int position) {

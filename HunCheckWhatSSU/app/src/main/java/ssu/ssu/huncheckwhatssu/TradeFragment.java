@@ -1,11 +1,13 @@
 package ssu.ssu.huncheckwhatssu;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -15,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.nikhilpanju.recyclerviewenhanced.RecyclerTouchListener;
 
 import java.util.ArrayList;
 import java.util.Vector;
@@ -24,8 +27,10 @@ import ssu.ssu.huncheckwhatssu.utilClass.BookState;
 import ssu.ssu.huncheckwhatssu.utilClass.Customer;
 import ssu.ssu.huncheckwhatssu.utilClass.Trade;
 
-public class TradeFragment extends Fragment {
-    RecyclerViewTradeAdapter ongoingAdapter, doneAdapter;
+import static androidx.constraintlayout.widget.Constraints.TAG;
+
+public class TradeFragment extends Fragment implements RecyclerViewTradeAdapter2.OnItemClickListener{
+    RecyclerViewTradeAdapter2 ongoingAdapter, doneAdapter;
     RecyclerView ongoingRecyclerView, doneRecyclerView;
     FirebaseCommunicator firebaseCommunicator;
 
@@ -55,12 +60,25 @@ public class TradeFragment extends Fragment {
         // 리사이클러뷰에 LinearLayoutManager 객체 지정.
         ongoingRecyclerView = root.findViewById(R.id.trade_ongoing_list) ;
         ongoingRecyclerView.setLayoutManager(new LinearLayoutManager(getContext())) ;
-        RecyclerViewTradeAdapter.setSwipeable(this.getContext(), this.getActivity(), ongoingRecyclerView);
+        RecyclerViewTradeAdapter2.setSwipeable(this.getContext(), this.getActivity(), ongoingRecyclerView);
 
         // 리사이클러뷰에 RecyclerViewAdapter1 객체 지정.
-        ongoingAdapter = new RecyclerViewTradeAdapter(this.getContext(), ongoingList) ;
+        ongoingAdapter = new RecyclerViewTradeAdapter2(this.getContext(), ongoingList) ;
         ongoingRecyclerView.setAdapter(ongoingAdapter);
-        RecyclerViewTradeAdapter.SetRefresh((SwipeRefreshLayout)root.findViewById(R.id.swipe_fragment_trade_ongoing));
+        RecyclerViewTradeAdapter2.SetRefresh((SwipeRefreshLayout)root.findViewById(R.id.swipe_fragment_trade_ongoing));
+
+
+    /*추가 작업 시작 3
+   ongoingAdapter.setOnItemClickListener(new RecyclerViewTradeAdapter2.OnItemClickListener() {
+        @Override
+        public void onItemClick(View v, int pos) {
+            Intent intent=new Intent(getContext(),BookInfoActivity.class);
+
+            startActivity(intent);
+        }
+    });
+   추가 작업3 끝*/
+
 
         /*거래진행중인 아이템개수 보여주기 위해서*/
         final TextView ongoingCountTrade=root.findViewById(R.id.counttrade);
@@ -84,10 +102,11 @@ public class TradeFragment extends Fragment {
         doneRecyclerView.setLayoutManager(new LinearLayoutManager(getContext())) ;
 
         // 리사이클러뷰에 RecyclerViewAdapter1 객체 지정.
-        doneAdapter = new RecyclerViewTradeAdapter(this.getContext(), doneList) ;
+        doneAdapter = new RecyclerViewTradeAdapter2(this.getContext(), doneList) ;
         doneRecyclerView.setAdapter(doneAdapter);
-        RecyclerViewTradeAdapter.setSwipeable(this.getContext(), this.getActivity(), doneRecyclerView);
-        RecyclerViewTradeAdapter.SetRefresh((SwipeRefreshLayout)root.findViewById(R.id.swipe_fragment_trade_done));
+        RecyclerViewTradeAdapter2.setSwipeable(this.getContext(), this.getActivity(), doneRecyclerView);
+        RecyclerViewTradeAdapter2.SetRefresh((SwipeRefreshLayout)root.findViewById(R.id.swipe_fragment_trade_done));
+
 
         /*거래진행중인 아이템개수 보여주기 위해서*/
         final TextView doneCountTrade=root.findViewById(R.id.counttrade);
@@ -102,5 +121,9 @@ public class TradeFragment extends Fragment {
     }
 
 
-
+    @Override
+    public void onItemClick(View v, int pos) {
+        Intent intent=new Intent(getContext(),BookInfoActivity.class);
+        startActivity(intent);
+    }
 }
