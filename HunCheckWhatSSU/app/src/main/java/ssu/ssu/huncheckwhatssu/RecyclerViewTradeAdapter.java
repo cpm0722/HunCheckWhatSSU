@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,7 +15,6 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.nikhilpanju.recyclerviewenhanced.RecyclerTouchListener;
 
-import java.util.List;
 import java.util.Vector;
 
 import ssu.ssu.huncheckwhatssu.utilClass.Trade;
@@ -27,12 +25,7 @@ public class RecyclerViewTradeAdapter extends RecyclerView.Adapter<RecyclerViewT
     LayoutInflater inflater;
     Vector<Trade> modelVector;
 
-    public RecyclerViewTradeAdapter(Context context, FirebaseCommunicator firebaseCommunicator) {
-        inflater = LayoutInflater.from(context);
-        modelVector = firebaseCommunicator.getTradeListVector();
-    }
-
-    public RecyclerViewTradeAdapter(Context context, Vector<Trade> vector){
+    public RecyclerViewTradeAdapter(Context context, Vector<Trade> vector) {
         inflater = LayoutInflater.from(context);
         modelVector = vector;
     }

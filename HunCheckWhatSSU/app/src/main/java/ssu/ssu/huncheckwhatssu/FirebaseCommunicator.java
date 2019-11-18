@@ -6,13 +6,11 @@ import android.os.Parcel;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -40,9 +38,11 @@ public class FirebaseCommunicator {
     //DB root/userPath 의 Reference
     private static DatabaseReference myRef = null;
     private static DatabaseReference tradeRef = null;
-    private static Vector tradeListVector = null;
-    private static Vector sellListVector = null;
-    private static Vector buyListVector = null;
+    private static Vector<Trade> sellTradeListVector = null;
+    private static Vector<Trade> ongoingTradeListVector = null;
+    private static Vector<Trade> doneTradeListVector = null;
+    private static Vector<String> sellListVector = null;
+    private static Vector<String> buyListVector = null;
     //RecyclerView 설정
     private RecyclerView recyclerView;
     private Context context;
@@ -50,9 +50,10 @@ public class FirebaseCommunicator {
     private WhichRecyclerView whichRecyclerView;
 
     ValueEventListener tradeEventListener;
+    ValueEventListener buyEventListener;
 
     //  FirebaseCommunicator 생성자, 초기화 실행
-    public FirebaseCommunicator(WhichRecyclerView whichRecyclerView) {
+    public FirebaseCommunicator(final WhichRecyclerView whichRecyclerView) {
         this.whichRecyclerView = whichRecyclerView;
         //  user 값 받아옴
         if (user == null)
@@ -68,14 +69,31 @@ public class FirebaseCommunicator {
             tradeRef = FirebaseDatabase.getInstance().getReference().child("trade");
         //Length 변수 초기화
 
-        //tradeRef 탐색하면서 trade 객체의 정보 받아와 tradeListVector에 trade 객체 추가하는 Event Listener
+        //tradeRef 탐색하면서 trade 객체의 정보 받아와 Vector<Trade>에 trade 객체 추가하는 Event Listener
         tradeEventListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Book book = dataSnapshot.child("book").getValue(Book.class);
                 Trade trade = dataSnapshot.getValue(Trade.class);
                 trade.setBook(book);
-                tradeListVector.add(trade);
+                switch (whichRecyclerView) {
+                    case sellRecyclerView:
+                        sellTradeListVector.add(trade);
+                        break;
+                    case ongoingRecyclerView:
+                    case doneRecyclerView:
+                        if (trade.getTradeState() == Trade.TradeState.COMPLETE)
+                            doneTradeListVector.add(trade);
+                        else {
+                            ongoingTradeListVector.add(trade);
+                        }
+                        break;
+                    case searchRecyclerView:
+                        break;
+                }
+                if(recyclerView != null) {
+                    recyclerView.getAdapter().notifyDataSetChanged();
+                }
             }
 
             @Override
@@ -85,11 +103,15 @@ public class FirebaseCommunicator {
         };
 
         //  Vector 초기화
-        if (tradeListVector == null)
-            tradeListVector = new Vector<Trade>();
+        if (sellTradeListVector == null)
+            sellTradeListVector = new Vector<Trade>();
+        if (ongoingTradeListVector == null)
+            ongoingTradeListVector = new Vector<Trade>();
+        if (doneTradeListVector == null)
+            doneTradeListVector = new Vector<Trade>();
         //  어느 RecyclerView에 사용할지에 따라 초기화 실행
-        if (whichRecyclerView == WhichRecyclerView.sellRecyclerView || whichRecyclerView == WhichRecyclerView.ongoingRecyclerView || whichRecyclerView == WhichRecyclerView.doneRecyclerView) {
-            //  sellListVector 초기화 (selllFragment와 tradeFragment에서 모두 사용)
+        if (whichRecyclerView == WhichRecyclerView.sellRecyclerView) {
+            //  sellListVector 초기화
             //  현재 User가 seller로 등록되어 있는 trade들의 key 값을 Vector로 저장
             if (sellListVector == null) {
                 sellListVector = new Vector<String>();
@@ -113,36 +135,35 @@ public class FirebaseCommunicator {
                     }
                 };
                 myRef.child("sellList").addListenerForSingleValueEvent(sellListListener);
-
             }
-            //buyListVector 초기화
-            if (whichRecyclerView == WhichRecyclerView.ongoingRecyclerView || whichRecyclerView == WhichRecyclerView.doneRecyclerView) {
-                //  buyListVector 초기화 (tradeFragment에서 사용)
-                //  현재 User가 purchaser로 등록되어 있는 trade들의 key 값을 Vector로 저장
-                if (buyListVector == null) {
-                    buyListVector = new Vector<String>();
-                    //  myRef/buyList 에 등록할 Event Listener(buyList에 있는 trade의 key값들을 받아와 buyListVector에 저장)
-                    ValueEventListener buyListListener = new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            //  myRef/buyList의 child들을 탐색
-                            for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                                String str = (String) postSnapshot.getValue();
-                                //  얻어온 trade key를 buyListVector에 추가
-                                buyListVector.addElement(str);
-                                //  root/trade/key값 경로에 tradeEventListener 추가
-                                tradeRef.child(str).addListenerForSingleValueEvent(tradeEventListener);
-                            }
+        }
+        //buyListVector 초기화
+        else if (whichRecyclerView == WhichRecyclerView.ongoingRecyclerView || whichRecyclerView == WhichRecyclerView.doneRecyclerView) {
+            //  현재 User가 purchaser로 등록되어 있는 trade들의 key 값을 Vector로 저장
+            if (buyListVector == null) {
+                buyListVector = new Vector<String>();
+                ongoingTradeListVector = new Vector<Trade>();
+                doneTradeListVector = new Vector<Trade>();
+                //  myRef/buyList 에 등록할 Event Listener(buyList에 있는 trade의 key값들을 받아와 buyListVector에 저장)
+                ValueEventListener buyListListener = new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        //  myRef/buyList의 child들을 탐색
+                        for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                            String str = (String) postSnapshot.getValue();
+                            //  얻어온 trade key를 buyListVector에 추가
+                            buyListVector.addElement(str);
+                            //  root/trade/key값 경로에 tradeEventListener 추가
+                            tradeRef.child(str).addListenerForSingleValueEvent(tradeEventListener);
                         }
+                    }
 
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                        }
-                    };
-                    myRef.child("buyList").addListenerForSingleValueEvent(buyListListener);
-
-                }
+                    }
+                };
+                myRef.child("buyList").addListenerForSingleValueEvent(buyListListener);
             }
         }
     }
@@ -156,12 +177,21 @@ public class FirebaseCommunicator {
         return userPath;
     }
 
-    public Vector<Trade> getTradeListVector() {
-        return tradeListVector;
+    public Vector<Trade> getSellTradeListVector() {
+        return sellTradeListVector;
+    }
+
+    public Vector<Trade> getOngoingTradeListVector() {
+        return ongoingTradeListVector;
+    }
+
+    public Vector<Trade> getDoneTradeListVector() {
+        return doneTradeListVector;
     }
 
     //  RecyclerView 세팅 함수 (어떤 recyclerView인지 넘겨받아 해당 Vector를 adapter에 등록)
-    public void setRecyclerView(final Context con, Activity act, RecyclerView recView, final WhichRecyclerView whichRecyclerView) {
+    public void setRecyclerView(final Context con, Activity act, RecyclerView recView,
+                                final WhichRecyclerView whichRecyclerView) {
         //  초기화
         this.context = con;
         this.activity = act;
@@ -169,7 +199,7 @@ public class FirebaseCommunicator {
         this.recyclerView.setLayoutManager(new LinearLayoutManager(this.context));
         this.whichRecyclerView = whichRecyclerView;
 
-        //  root/trade의 Event 처리 Listener
+        /*//  root/trade의 Event 처리 Listener
         tradeRef.addChildEventListener(new ChildEventListener() {
             //  root/trade에 새로운 child가 추가됐을 경우
             @Override
@@ -178,23 +208,24 @@ public class FirebaseCommunicator {
                 Book book = dataSnapshot.child("book").getValue(Book.class);
                 Trade trade = dataSnapshot.getValue(Trade.class);
                 trade.setBook(book);
-                //  sellFragment에서 사용할 경우
+                //  Adapter 등록
                 if (whichRecyclerView == WhichRecyclerView.sellRecyclerView) {
-                    //  Adapter 등록
-                    //recyclerView.setAdapter(new RecyclerViewTradeAdapter(context, tradeListVector));
-                    recyclerView.swapAdapter(new RecyclerViewTradeAdapter(context, tradeListVector), true);
-                } else if (whichRecyclerView == WhichRecyclerView.ongoingRecyclerView || whichRecyclerView == WhichRecyclerView.ongoingRecyclerView) {
-
+                    sellTradeListVector.add(trade);
                 }
+                //  tradeFragment에서 사용할 경우
+                else if (whichRecyclerView == WhichRecyclerView.ongoingRecyclerView){
+                    ongoingTradeListVector.add(trade);
+                    Log.d("DEBUG!", trade.getBook().getTitle());
+                }
+                else if(whichRecyclerView == WhichRecyclerView.ongoingRecyclerView){
+                    doneTradeListVector.add(trade);
+                }
+                recyclerView.getAdapter().notifyDataSetChanged();
             }
 
             @Override
             public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                if (whichRecyclerView == WhichRecyclerView.sellRecyclerView) {
-                    recyclerView.setAdapter(new RecyclerViewTradeAdapter(context, tradeListVector));
-                } else if (whichRecyclerView == WhichRecyclerView.ongoingRecyclerView || whichRecyclerView == WhichRecyclerView.ongoingRecyclerView) {
-
-                }
+                recyclerView.getAdapter().notifyDataSetChanged();
             }
 
             @Override
@@ -211,7 +242,7 @@ public class FirebaseCommunicator {
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
-        });
+        });*/
         this.recyclerView.smoothScrollToPosition(0);
     }
 
@@ -272,9 +303,10 @@ public class FirebaseCommunicator {
 
         //현재 로그인한 사용자의 sellList Update 위해 기존의 sellListVector에 현재 trade의 key 값 추가
         sellListVector.add(key);
-        tradeListVector.add(trade);
+        sellTradeListVector.add(trade);
         //Update된 sellListVector를 FIrebase에 Upload
         myRef.child("sellList").setValue(sellListVector);
+        recyclerView.getAdapter().notifyDataSetChanged();
         return;
     }
 

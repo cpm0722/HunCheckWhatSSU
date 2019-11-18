@@ -18,9 +18,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import ssu.ssu.huncheckwhatssu.utilClass.Book;
 import ssu.ssu.huncheckwhatssu.utilClass.BookState;
 import ssu.ssu.huncheckwhatssu.utilClass.Customer;
@@ -52,16 +49,16 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
 
         //FirebaseCommunicator 생성
-        firebase = new FirebaseCommunicator(FirebaseCommunicator.WhichRecyclerView.sellRecyclerView);
+        firebase = new FirebaseCommunicator(FirebaseCommunicator.WhichRecyclerView.ongoingRecyclerView);
 
         //RecyclerView
-        adapter = new RecyclerViewTradeAdapter(this.getContext(), firebase);
+        adapter = new RecyclerViewTradeAdapter(this.getContext(), firebase.getOngoingTradeListVector());
         recyclerView.setAdapter(adapter);
         RecyclerViewTradeAdapter.setSwipeable(this.getContext(), this.getActivity(), recyclerView);
         RecyclerViewTradeAdapter.SetRefresh((SwipeRefreshLayout)root.findViewById(R.id.swipe_fragment_search));
 
         //FirebaseCommunicator에 RecyclerView 설정
-        firebase.setRecyclerView(this.getContext(), this.getActivity(), recyclerView, FirebaseCommunicator.WhichRecyclerView.sellRecyclerView);
+        firebase.setRecyclerView(this.getContext(), this.getActivity(), recyclerView, FirebaseCommunicator.WhichRecyclerView.ongoingRecyclerView);
 
         bookInfoBtn = root.findViewById(R.id.book_info_btn);
         bookInfoBtn.setOnClickListener(this);
