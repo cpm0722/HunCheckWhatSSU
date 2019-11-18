@@ -50,7 +50,6 @@ public class FirebaseCommunicator {
     private WhichRecyclerView whichRecyclerView;
 
     ValueEventListener tradeEventListener;
-    ValueEventListener buyEventListener;
 
     //  FirebaseCommunicator 생성자, 초기화 실행
     public FirebaseCommunicator(final WhichRecyclerView whichRecyclerView) {
@@ -198,52 +197,6 @@ public class FirebaseCommunicator {
         this.recyclerView = recView;
         this.recyclerView.setLayoutManager(new LinearLayoutManager(this.context));
         this.whichRecyclerView = whichRecyclerView;
-
-        /*//  root/trade의 Event 처리 Listener
-        tradeRef.addChildEventListener(new ChildEventListener() {
-            //  root/trade에 새로운 child가 추가됐을 경우
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                //  trade 객체 생성 후 firebase에서 값 읽어옴
-                Book book = dataSnapshot.child("book").getValue(Book.class);
-                Trade trade = dataSnapshot.getValue(Trade.class);
-                trade.setBook(book);
-                //  Adapter 등록
-                if (whichRecyclerView == WhichRecyclerView.sellRecyclerView) {
-                    sellTradeListVector.add(trade);
-                }
-                //  tradeFragment에서 사용할 경우
-                else if (whichRecyclerView == WhichRecyclerView.ongoingRecyclerView){
-                    ongoingTradeListVector.add(trade);
-                    Log.d("DEBUG!", trade.getBook().getTitle());
-                }
-                else if(whichRecyclerView == WhichRecyclerView.ongoingRecyclerView){
-                    doneTradeListVector.add(trade);
-                }
-                recyclerView.getAdapter().notifyDataSetChanged();
-            }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                recyclerView.getAdapter().notifyDataSetChanged();
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });*/
-        this.recyclerView.smoothScrollToPosition(0);
     }
 
     public String timeToString() {
