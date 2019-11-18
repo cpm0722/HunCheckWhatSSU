@@ -58,23 +58,6 @@ public class SellFragment extends Fragment {
          }
         });
 
-
-        //BackButton Pressed 시 NavigationBottom Menu Selected 변경
-        Fragment navHostFragment = this.getActivity().getSupportFragmentManager().getFragments().get(0);
-        BottomNavigationView navView = navHostFragment.getActivity().findViewById(R.id.nav_view);
-        Menu menu = navView.getMenu();
-        menu.getItem(1).setChecked(true);
-
-        Button add=(Button)root.findViewById(R.id.AddSellBook);
-        add.setOnClickListener(new View.OnClickListener() {
-         @Override
-         public void onClick(View v) {
-          Intent in=new Intent(getActivity(),AddBookActivity.class);
-          in.putExtra("start","Add BookSell");
-          startActivity(in);
-         }
-        });
-
         final ArrayList<Trade>sellList =new ArrayList<Trade>();
         Book book = new Book("testISBN10", "testISBN13", "sell", "testImage", "testAuthor", 10000, "testPublisher", "testPubDate", "testDescription", new BookState());
         Customer seller = new Customer("testId", "dms", "testPhoneNumber", "testAdress", (float) 1.0);
@@ -85,6 +68,24 @@ public class SellFragment extends Fragment {
         book = new Book("testISBN10", "testISBN13", "sell3", "testImage", "testAuthor", 300, "testPublisher", "testPubDate", "testDescription", new BookState());
         seller = new Customer("testId", "dagag", "testPhoneNumber", "testAdress", (float) 1.0);
         sellList.add(new Trade(book, seller));
+        //BackButton Pressed 시 NavigationBottom Menu Selected 변경
+        Fragment navHostFragment = this.getActivity().getSupportFragmentManager().getFragments().get(0);
+        BottomNavigationView navView = navHostFragment.getActivity().findViewById(R.id.nav_view);
+        Menu menu = navView.getMenu();
+        menu.getItem(1).setChecked(true);
+
+        Button add=(Button)root.findViewById(R.id.AddSellBook);
+        add.setOnClickListener(new View.OnClickListener() {
+         @Override
+         public void onClick(View v) {
+          Intent in=new Intent(getActivity(),NaverBookSearchActivity.class);
+        //  in.putExtra("start","Add BookSell");
+          startActivity(in);
+          //sellList.add();
+         }
+        });
+
+
 
         // 리사이클러뷰에 LinearLayoutManager 객체 지정.
         sellRecyclerView = root.findViewById(R.id.sell_list) ;
@@ -95,6 +96,7 @@ public class SellFragment extends Fragment {
         sellAdapter = new RecyclerViewTradeAdapter(this.getContext(), sellList) ;
         sellRecyclerView.setAdapter(sellAdapter);
         RecyclerViewTradeAdapter.SetRefresh((SwipeRefreshLayout)root.findViewById(R.id.swipe_fragment_sell));
+
 
         return root;
     }
