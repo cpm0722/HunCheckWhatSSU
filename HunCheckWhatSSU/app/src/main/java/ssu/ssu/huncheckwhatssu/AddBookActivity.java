@@ -16,6 +16,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -43,6 +44,8 @@ public class AddBookActivity extends AppCompatActivity {
     TextView price;
     int price1;//원가
     TextView publisher;
+    RadioGroup radioGroup;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)  {
         super.onCreate(savedInstanceState);
@@ -163,6 +166,10 @@ public class AddBookActivity extends AppCompatActivity {
         book1.setPrice(price1);//원가
         book1.setPublisher((String)publisher.getText());
         book1.setPubDate((String)PubDate.getText());
+
+        BookState bookState = new BookState(BookState.bookState.GOOD, BookState.bookState.BEST,BookState.bookState.BAD,BookState.bookState.WORST,BookState.bookState.GOOD,BookState.bookState.BEST);
+        book1.setBookState(bookState);
+
         customer1.setName("승주");
         trade= new Trade(book1,customer1);
         return trade;
