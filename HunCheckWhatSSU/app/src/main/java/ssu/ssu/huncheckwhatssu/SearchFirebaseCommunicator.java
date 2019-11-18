@@ -3,7 +3,6 @@ package ssu.ssu.huncheckwhatssu;
 import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -22,8 +21,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import ssu.ssu.huncheckwhatssu.utilClass.Book;
-import ssu.ssu.huncheckwhatssu.utilClass.Customer;
 import ssu.ssu.huncheckwhatssu.utilClass.Trade;
 
 public class SearchFirebaseCommunicator {
@@ -62,9 +59,12 @@ public class SearchFirebaseCommunicator {
                     for (DataSnapshot tradeSnap : dataSnapshot.getChildren()) {
 //                        Log.d("JS", "onDataChange: " + tradeSnap.getValue().toString());
                         Trade trade = tradeSnap.getValue(Trade.class);
-                        trade.getSeller().setCustomerDataFromUID();
+//                        Map<String, Object> childUpdates = (Map<String, Object>) tradeSnap.getValue();
+//                        trade.getSeller().setCustomerDataFromUID();
                         list.add(trade);
 //                        Log.d("js", "onDataChange: " + trade.toString());
+//                        Book book = (Book) childUpdates.get("book");
+                        Log.d("JS", "onDataChange: " + trade.toString());
                     }
 
                     if (recyclerView != null)
@@ -86,8 +86,8 @@ public class SearchFirebaseCommunicator {
         this.activity = activity;
         this.recyclerView = recyclerView;
 
-        RecyclerViewTradeAdapter adapter = new RecyclerViewTradeAdapter(context, list);
-        adapter.setOnRefreshListener(new RecyclerViewTradeAdapter.custom_RefreshListener() {
+        RecyclerViewTradeAdapter_Search adapter = new RecyclerViewTradeAdapter_Search(context, list);
+        adapter.setOnRefreshListener(new RecyclerViewTradeAdapter_Search.custom_RefreshListener() {
             @Override
             public void onRefreshListener() {
 
@@ -98,11 +98,13 @@ public class SearchFirebaseCommunicator {
                         if (dataSnapshot != null && dataSnapshot.exists()) {
                             list.clear();
                             for (DataSnapshot tradeSnap : dataSnapshot.getChildren()) {
-//                        Log.d("JS", "onDataChange: " + tradeSnap.getValue().toString());
+                                Log.d("JS", "onDataChange: " + tradeSnap.getValue().toString());
                                 Trade trade = tradeSnap.getValue(Trade.class);
-                                trade.getSeller().setCustomerDataFromUID();
+//                                Map<String, Object> childUpdates = (Map<String, Object>) tradeSnap.getValue(true);
+//                                trade.getSeller().setCustomerDataFromUID();
                                 list.add(trade);
-                                Log.d("js", "onDataChange: " + trade.toString());
+//                                Log.d("js", "onDataChange: " + childUpdates.toString());
+//                                Log.d("js", "onDataChange: " + childUpdates.get(""));
                             }
 
                             if (getRecyclerView() != null)

@@ -28,7 +28,7 @@ import ssu.ssu.huncheckwhatssu.utilClass.Trade;
 public class SellFragment extends Fragment {
        Context context;
        RecyclerView sellRecyclerView;
-       RecyclerViewTradeAdapter sellAdapter;
+       RecyclerViewTradeAdapter_Search sellAdapter;
 
        public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -89,12 +89,12 @@ public class SellFragment extends Fragment {
         // 리사이클러뷰에 LinearLayoutManager 객체 지정.
         sellRecyclerView = root.findViewById(R.id.sell_list) ;
         sellRecyclerView.setLayoutManager(new LinearLayoutManager(getContext())) ;
-        RecyclerViewTradeAdapter.setSwipeable(this.getContext(), this.getActivity(), sellRecyclerView);
+        RecyclerViewTradeAdapter_Search.setSwipeable(this.getContext(), this.getActivity(), sellRecyclerView);
 
         // 리사이클러뷰에 RecyclerViewAdapter1 객체 지정.
-        sellAdapter = new RecyclerViewTradeAdapter(this.getContext(), sellList) ;
+        sellAdapter = new RecyclerViewTradeAdapter_Search(this.getContext(), sellList) ;
         sellRecyclerView.setAdapter(sellAdapter);
-        RecyclerViewTradeAdapter.SetRefresh((SwipeRefreshLayout)root.findViewById(R.id.swipe_fragment_sell));
+        RecyclerViewTradeAdapter_Search.SetRefresh((SwipeRefreshLayout)root.findViewById(R.id.swipe_fragment_sell));
 
         return root;
     }

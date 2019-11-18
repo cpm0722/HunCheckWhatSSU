@@ -1,8 +1,6 @@
 package ssu.ssu.huncheckwhatssu;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -25,10 +23,8 @@ import ssu.ssu.huncheckwhatssu.utilClass.BookState;
 import ssu.ssu.huncheckwhatssu.utilClass.Customer;
 import ssu.ssu.huncheckwhatssu.utilClass.Trade;
 
-import static androidx.constraintlayout.widget.Constraints.TAG;
-
 public class TradeFragment extends Fragment {
-    RecyclerViewTradeAdapter ongoingAdapter, doneAdapter;
+    RecyclerViewTradeAdapter_Search ongoingAdapter, doneAdapter;
     RecyclerView ongoingRecyclerView, doneRecyclerView;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -59,12 +55,12 @@ public class TradeFragment extends Fragment {
         // 리사이클러뷰에 LinearLayoutManager 객체 지정.
         ongoingRecyclerView = root.findViewById(R.id.trade_ongoing_list) ;
         ongoingRecyclerView.setLayoutManager(new LinearLayoutManager(getContext())) ;
-        RecyclerViewTradeAdapter.setSwipeable(this.getContext(), this.getActivity(), ongoingRecyclerView);
+        RecyclerViewTradeAdapter_Search.setSwipeable(this.getContext(), this.getActivity(), ongoingRecyclerView);
 
         // 리사이클러뷰에 RecyclerViewAdapter1 객체 지정.
-        ongoingAdapter = new RecyclerViewTradeAdapter(this.getContext(), ongoingList) ;
+        ongoingAdapter = new RecyclerViewTradeAdapter_Search(this.getContext(), ongoingList) ;
         ongoingRecyclerView.setAdapter(ongoingAdapter);
-        RecyclerViewTradeAdapter.SetRefresh((SwipeRefreshLayout)root.findViewById(R.id.swipe_fragment_trade_ongoing));
+        RecyclerViewTradeAdapter_Search.SetRefresh((SwipeRefreshLayout)root.findViewById(R.id.swipe_fragment_trade_ongoing));
 
         /*거래진행중인 아이템개수 보여주기 위해서*/
         final TextView ongoingCountTrade=root.findViewById(R.id.counttrade);
@@ -91,10 +87,10 @@ public class TradeFragment extends Fragment {
         doneRecyclerView.setLayoutManager(new LinearLayoutManager(getContext())) ;
 
         // 리사이클러뷰에 RecyclerViewAdapter1 객체 지정.
-        doneAdapter = new RecyclerViewTradeAdapter(this.getContext(), doneList) ;
+        doneAdapter = new RecyclerViewTradeAdapter_Search(this.getContext(), doneList) ;
         doneRecyclerView.setAdapter(doneAdapter);
-        RecyclerViewTradeAdapter.setSwipeable(this.getContext(), this.getActivity(), doneRecyclerView);
-        RecyclerViewTradeAdapter.SetRefresh((SwipeRefreshLayout)root.findViewById(R.id.swipe_fragment_trade_done));
+        RecyclerViewTradeAdapter_Search.setSwipeable(this.getContext(), this.getActivity(), doneRecyclerView);
+        RecyclerViewTradeAdapter_Search.SetRefresh((SwipeRefreshLayout)root.findViewById(R.id.swipe_fragment_trade_done));
 
         /*거래진행중인 아이템개수 보여주기 위해서*/
         final TextView doneCountTrade=root.findViewById(R.id.counttrade);

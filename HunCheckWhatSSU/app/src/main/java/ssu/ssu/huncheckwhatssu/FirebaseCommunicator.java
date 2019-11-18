@@ -2,8 +2,6 @@ package ssu.ssu.huncheckwhatssu;
 
 import android.app.Activity;
 import android.content.Context;
-import android.util.Log;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -61,7 +59,7 @@ public class FirebaseCommunicator {
                     Trade nowObject = new Trade(book, customer);
                     list.add(nowObject);
                     if(recyclerView != null)
-                        recyclerView.setAdapter(new RecyclerViewTradeAdapter(context, list));
+                        recyclerView.setAdapter(new RecyclerViewTradeAdapter_Search(context, list));
                 }
             }
 

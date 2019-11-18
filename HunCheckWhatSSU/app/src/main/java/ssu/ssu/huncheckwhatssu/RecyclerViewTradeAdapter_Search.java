@@ -2,6 +2,7 @@ package ssu.ssu.huncheckwhatssu;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Paint;
@@ -18,8 +19,6 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.nikhilpanju.recyclerviewenhanced.RecyclerTouchListener;
 
-import org.w3c.dom.Text;
-
 import java.util.List;
 
 import ssu.ssu.huncheckwhatssu.DB.DBHelper;
@@ -27,7 +26,7 @@ import ssu.ssu.huncheckwhatssu.utilClass.Trade;
 
 import static androidx.constraintlayout.widget.Constraints.TAG;
 
-public class RecyclerViewTradeAdapter extends RecyclerView.Adapter<RecyclerViewTradeAdapter.TradeViewHolder> {
+public class RecyclerViewTradeAdapter_Search extends RecyclerView.Adapter<RecyclerViewTradeAdapter_Search.TradeViewHolder> {
     LayoutInflater inflater;
     static List<Trade> modelList;
     static custom_RefreshListener custom_RefreshListener;
@@ -40,7 +39,7 @@ public class RecyclerViewTradeAdapter extends RecyclerView.Adapter<RecyclerViewT
         this.custom_RefreshListener = onRefreshListener;
     }
 
-    public RecyclerViewTradeAdapter(Context context, List<Trade> list) {
+    public RecyclerViewTradeAdapter_Search(Context context, List<Trade> list) {
         inflater = LayoutInflater.from(context);
         modelList = list;
     }
@@ -140,8 +139,13 @@ public class RecyclerViewTradeAdapter extends RecyclerView.Adapter<RecyclerViewT
                 .setClickable(new RecyclerTouchListener.OnRowClickListener() {
                     @Override
                     public void onRowClicked(int position) {
-                        Toast toast = Toast.makeText(context, "RowClick!", Toast.LENGTH_SHORT);
-                        toast.show();
+                        Trade trade = modelList.get(position);
+
+                        Intent intent = new Intent(context, BookInfoActivity.class);
+                        intent.putExtra("BookInfoType", "BOOK_INFO_DEFAULT");
+                        intent.putExtra("book_info_default_data", trade);
+
+                        context.startActivity(intent);
 
                     }
 
@@ -175,8 +179,6 @@ public class RecyclerViewTradeAdapter extends RecyclerView.Adapter<RecyclerViewT
                 .setClickable(new RecyclerTouchListener.OnRowClickListener() {
                     @Override
                     public void onRowClicked(int position) {
-                        Toast toast = Toast.makeText(context, "RowClick!", Toast.LENGTH_SHORT);
-                        toast.show();
 
                     }
 
@@ -198,7 +200,7 @@ public class RecyclerViewTradeAdapter extends RecyclerView.Adapter<RecyclerViewT
                 Log.d(TAG, "recyclerview: swipe&Refresh");
 
                 // search refresh
-                if (RecyclerViewTradeAdapter.custom_RefreshListener != null) {
+                if (RecyclerViewTradeAdapter_Search.custom_RefreshListener != null) {
                     custom_RefreshListener.onRefreshListener();
                 }
             }

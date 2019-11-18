@@ -169,8 +169,8 @@ public class Trade implements Parcelable {
 
     public void toMap(Map<String, Object> result) {
         result.put("book", this.book);
-        result.put("seller", this.seller);
-        result.put("purchaser", this.purchaser);
+        result.put("seller", this.seller.getId());
+        result.put("purchaser", this.purchaser.getId());
         result.put("tradeState", this.tradeState);
         result.put("tradePlace", this.tradePlace);
         result.put("tradeDate", this.tradeDate);

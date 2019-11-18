@@ -31,8 +31,12 @@ import com.google.firebase.database.FirebaseDatabase;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import ssu.ssu.huncheckwhatssu.DB.DBHelper;
+import ssu.ssu.huncheckwhatssu.utilClass.Book;
+import ssu.ssu.huncheckwhatssu.utilClass.BookState;
+import ssu.ssu.huncheckwhatssu.utilClass.Customer;
 import ssu.ssu.huncheckwhatssu.utilClass.Trade;
 
 import static androidx.constraintlayout.widget.Constraints.TAG;
@@ -50,7 +54,7 @@ public class SearchFragment extends Fragment implements View.OnClickListener, Ad
     ArrayList<DBData> subjectData;
 
     private RecyclerView recyclerView;
-    private RecyclerViewTradeAdapter adapter;
+    private RecyclerViewTradeAdapter_Search adapter;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -75,11 +79,11 @@ public class SearchFragment extends Fragment implements View.OnClickListener, Ad
 
         //RecyclerView
         recyclerView = root.findViewById(R.id.search_fragment_recycler_view);
-        adapter = new RecyclerViewTradeAdapter(this.getContext(), new ArrayList<Trade>());
+        adapter = new RecyclerViewTradeAdapter_Search(this.getContext(), new ArrayList<Trade>());
         recyclerView.setAdapter(adapter);
-        RecyclerViewTradeAdapter.setSwipeable(this.getContext(), this.getActivity(), recyclerView);
+        RecyclerViewTradeAdapter_Search.setSwipeable(this.getContext(), this.getActivity(), recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
-        RecyclerViewTradeAdapter.SetRefresh((SwipeRefreshLayout)root.findViewById(R.id.swipe_fragment_search));
+        RecyclerViewTradeAdapter_Search.SetRefresh((SwipeRefreshLayout)root.findViewById(R.id.swipe_fragment_search));
 
 
 
@@ -88,19 +92,19 @@ public class SearchFragment extends Fragment implements View.OnClickListener, Ad
         //FirebaseCommunicator에 RecyclerView 설정
         firebase.setRecyclerView(this.getContext(), this.getActivity(), recyclerView);
 
-        //TEST용 Firebase 추가 버튼
-//        addBtn = root.findViewById(R.id.fragment_add_btn);
-//        addBtn.setOnClickListener(new View.OnClickListener() {
-//
-//            @Override
-//            public void onClick(View view) {
-//                Book book = new Book("testISBN10", "testISBN13", "testTitle", "testImage", "testAuthor", 12000, 13000, "testPublisher", "testPubDate", "testDescription", "8", "38" ,"33", new BookState());
-//                Customer seller = new Customer("testId", "testName", "testPhoneNumber", "testAdress", (float) 1.4);
-//                Customer purchaser = new Customer("testId", "testName", "testPhoneNumber", "testAdress", (float) 1.4);
-//                Trade trade = new Trade(book, seller, purchaser, Trade.TradeState.WAIT, "장소 미정", Calendar.getInstance());
-//                firebase.uploadTrade(trade);
-//            }
-//        });
+//        TEST용 Firebase 추가 버튼
+        addBtn = root.findViewById(R.id.fragment_add_btn);
+        addBtn.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                Book book = new Book("testISBN10", "testISBN13", "testTitle", "testImage", "testAuthor", 12000, 13000, "testPublisher", "testPubDate", "testDescription", "8", "38" ,"33", new BookState());
+                Customer seller = new Customer("testId", "testName", "testPhoneNumber", "testAdress", (float) 1.4);
+                Customer purchaser = new Customer("testId", "testName", "testPhoneNumber", "testAdress", (float) 1.4);
+                Trade trade = new Trade(book, seller, purchaser, Trade.TradeState.WAIT, "장소 미정", Calendar.getInstance());
+                firebase.uploadTrade(trade);
+            }
+        });
 
 
         // 상단 카테고리 작업
@@ -200,7 +204,6 @@ public class SearchFragment extends Fragment implements View.OnClickListener, Ad
 
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                Log.d(TAG, "onChildAdded: dwdwd");
                 Trade trade = dataSnapshot.getValue(Trade.class);
         
                 Log.d("js", "/onQueryTextSubmit: " + search_collegeId);

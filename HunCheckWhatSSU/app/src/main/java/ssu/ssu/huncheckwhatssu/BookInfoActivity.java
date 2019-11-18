@@ -99,8 +99,6 @@ public class BookInfoActivity extends AppCompatActivity implements OnMapReadyCal
             fm.beginTransaction().add(R.id.activity_book_info_map, mapFragment).commit();
         }
         mapFragment.getMapAsync(this);
-
-
     }
 
     @UiThread
@@ -171,7 +169,7 @@ public class BookInfoActivity extends AppCompatActivity implements OnMapReadyCal
             activity_book_info_authorText.setText(book.getAuthor());
             activity_book_info_publisherText.setText(book.getPublisher());
             String plain_text = book.getPubDate();
-            activity_book_info_publicationDateText.setText(plain_text.substring(0,4) + "년 " + plain_text.substring(4,6) + "월 " + plain_text.substring(6,8) + "일");
+            activity_book_info_publicationDateText.setText(plain_text.substring(0, 4) + "년 " + plain_text.substring(4, 6) + "월 " + plain_text.substring(6, 8) + "일");
             activity_book_info_bookCostText.setText(book.getOriginal_Price() + "");
         }
 
@@ -210,8 +208,15 @@ public class BookInfoActivity extends AppCompatActivity implements OnMapReadyCal
             activity_book_info_purchaserText.setText(purchaser._getName());
             activity_book_info_purchaserContactNumberText.setText(purchaser._getPhoneNumber());
             activity_book_info_purchaserCreditRating.setText(purchaser._getCreditRating() + "");
-        }
 
+            Button back2TradeOverview=findViewById(R.id.back2TradeOverview);
+            back2TradeOverview.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    finish();
+                }
+            });
+        }
 
         Button back2TradeOverview=findViewById(R.id.back2TradeOverview);
         back2TradeOverview.setOnClickListener(new View.OnClickListener() {
