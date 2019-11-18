@@ -59,7 +59,6 @@ public class SellFragment extends Fragment {
 
           intent.putExtra("BookInfoType", "BOOK_INFO_TRADE_DETAIL");
           intent.putExtra("book_info_trade_detail", trade);
-
           startActivity(intent);
          }
         });
