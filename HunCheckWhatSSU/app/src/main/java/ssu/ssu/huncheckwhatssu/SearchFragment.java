@@ -24,11 +24,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.FirebaseAppLifecycleListener;
+import com.google.firebase.FirebaseOptions;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.nikhilpanju.recyclerviewenhanced.RecyclerTouchListener;
 
@@ -157,26 +160,27 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemSelect
 
     private void setFirebaseEvent() {
         // Firebase
-        DatabaseReference myRef = firebase.getMyRef();
+        final DatabaseReference myRef = firebase.getMyRef();
+        final DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("customer");
+        final String eventKey = "combine_data";
         myRef.limitToLast(100);
+
         myRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
                 if (dataSnapshot != null && dataSnapshot.exists()) {
                     for (DataSnapshot tradeSnap : dataSnapshot.getChildren()) {
-//                        Log.d("JS", "onDataChange: " + tradeSnap.getValue().toString());
                         Trade trade = tradeSnap.getValue(Trade.class);
-//                        Map<String, Object> childUpdates = (Map<String, Object>) tradeSnap.getValue();
-//                        trade.getSeller().setCustomerDataFromUID();
+
                         firebase.getList().add(trade);
-//                        Log.d("js", "onDataChange: " + trade.toString());
-//                        Book book = (Book) childUpdates.get("book");
+
+                        trade.getSeller().setCustomerDataFromUID(firebase.getRecyclerView().getAdapter());
+
+                        if (firebase.getRecyclerView() != null)
+                            firebase.getRecyclerView().getAdapter().notifyDataSetChanged();
+
                         Log.d("JS", "onDatwwaChange: " + trade.toString());
                     }
-
-                    if (firebase.getRecyclerView() != null)
-                        firebase.getRecyclerView().getAdapter().notifyDataSetChanged();
                 }
             }
 
@@ -261,18 +265,22 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemSelect
 
     @Override
     public boolean onQueryTextSubmit(String query) {
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("tb_trade");
+
         search_collegeId = college_spin.getSelectedItemPosition() + "";
         search_departmentId = departmentData.get(department_spin.getSelectedItemPosition()).getKey() + "";
         search_subjectId = subjectData.get(subject_spin.getSelectedItemPosition()).getKey() + "";
         search_text = (query==null?"":query);
         firebase.getList().clear();
 
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("tb_trade");
+
         reference.addChildEventListener(new ChildEventListener() {
 
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 Trade trade = dataSnapshot.getValue(Trade.class);
+
+                Log.d(TAG, "onChildAdded: ");
 
                 Log.d("js", "/onQueryTextSubmit: " + search_collegeId);
                 Log.d("js", "onQueryTextSubmit: " + search_departmentId);

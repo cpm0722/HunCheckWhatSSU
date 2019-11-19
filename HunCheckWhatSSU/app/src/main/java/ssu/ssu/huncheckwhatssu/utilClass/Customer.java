@@ -11,6 +11,7 @@ import com.google.firebase.database.DataSnapshot;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -18,6 +19,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 public class Customer implements Parcelable {
     // 사용자 고유 번호
@@ -28,8 +30,6 @@ public class Customer implements Parcelable {
     String nickName;
     String major;
     int grade;
-
-
 
     double creditRating;
     ArrayList<String> sellList;
@@ -60,37 +60,32 @@ public class Customer implements Parcelable {
         buyList = in.readArrayList(String.class.getClassLoader());
     }
 
-//    (이거해라빨간줄~~)
-    public void setCustomerDataFromUID() {
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("tb_customer");
-        Query query = reference.equalTo(this.getId());
+    public void setCustomerDataFromUID(final RecyclerView.Adapter adapter) {
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("customer/" + this.getId());
 
-        query.addChildEventListener(new ChildEventListener() {
+        Log.d("JS", "setCustomerDataFromUID: " + this.getId());
+
+        reference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                if (dataSnapshot != null && dataSnapshot.exists()) {
-                    Customer customer = dataSnapshot.child("customer").getValue(Customer.class);
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Log.d("JS", "onDataChange: " + dataSnapshot.toString());
+
+                if (dataSnapshot.getValue() != null) {
+                    Customer customer = new Customer(dataSnapshot);
+
+                    Log.d("JS", "onDataChange: " + customer.toString());
 
                     setName(customer.getName());
                     setAddress(customer.getAddress());
                     setCreditRating(customer.getCreditRating());
                     setPhoneNumber(customer.getPhoneNumber());
+
+                } else {
+                    // 정보 없을때 (정상적인 절차를 걸쳐서 사용하게 되면 생길 수 없는 경우)
+                    setName("정보 없음");
                 }
-            }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
+                if (adapter != null)
+                    adapter.notifyDataSetChanged();
             }
 
             @Override
@@ -186,6 +181,23 @@ public class Customer implements Parcelable {
         return;
     }
 
+
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", address='" + address + '\'' +
+                ", nickName='" + nickName + '\'' +
+                ", major='" + major + '\'' +
+                ", grade=" + grade +
+                ", creditRating=" + creditRating +
+                ", sellList=" + sellList +
+                ", buyList=" + buyList +
+                '}';
+    }
+
     public double getCreditRating() {
         return creditRating;
     }
@@ -198,7 +210,7 @@ public class Customer implements Parcelable {
         sellList = new ArrayList<>();
         buyList = new ArrayList<>();
 
-        Log.d("YECHAN","Customer 생성자");
+        Log.d("YECHAN","Customer 생성자" + dataSnapshot.toString());
 
         this.id = dataSnapshot.child("Uid").getValue(String.class);
         this.name = dataSnapshot.child("Name").getValue(String.class);

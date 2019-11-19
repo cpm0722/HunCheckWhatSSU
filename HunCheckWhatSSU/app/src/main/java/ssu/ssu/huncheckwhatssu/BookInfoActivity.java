@@ -110,6 +110,7 @@ public class BookInfoActivity extends AppCompatActivity implements OnMapReadyCal
     public void onMapReady(@NonNull NaverMap naverMap) {
         // 숭실대학교
         LatLng latLng = new LatLng(37.49630160214827, 126.9574464751917);
+
         Marker marker = new Marker();
 //        naverMap.setMaxZoom(13);
 //        naverMap.setMinZoom(13);
