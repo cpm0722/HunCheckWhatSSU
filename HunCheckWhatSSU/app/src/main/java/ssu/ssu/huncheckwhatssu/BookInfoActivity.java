@@ -24,6 +24,9 @@ import android.view.View;
 import android.widget.Button;
 
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import ssu.ssu.huncheckwhatssu.utilClass.Book;
 import ssu.ssu.huncheckwhatssu.utilClass.BookState;
 import ssu.ssu.huncheckwhatssu.utilClass.Customer;
@@ -82,6 +85,7 @@ public class BookInfoActivity extends AppCompatActivity implements OnMapReadyCal
         } else if(bookInfoType.equals("BOOK_INFO_TRADE_DETAIL")) {
             setContentView(R.layout.activity_book_trade_detail);
             trade = intent.getParcelableExtra("book_info_trade_detail");
+            Log.d("JS", "onCreate: " + trade.toString());
             initObject(2);
             setData(2);
             Log.d("JS", "onCreate: " + trade.toString());
@@ -168,14 +172,14 @@ public class BookInfoActivity extends AppCompatActivity implements OnMapReadyCal
 
             activity_book_info_authorText.setText(book.getAuthor());
             activity_book_info_publisherText.setText(book.getPublisher());
-            String plain_text = book.getPubDate();
-            activity_book_info_publicationDateText.setText(plain_text.substring(0, 4) + "년 " + plain_text.substring(4, 6) + "월 " + plain_text.substring(6, 8) + "일");
+
+            activity_book_info_publicationDateText.setText(book.getPubDate());
             activity_book_info_bookCostText.setText(book.getOriginal_Price() + "");
         }
 
         // Seller
-        FirebaseCommunicator firebaseCommunicator = new FirebaseCommunicator(FirebaseCommunicator.WhichRecyclerView.none);
-        Customer customer = firebaseCommunicator.getCustomer(trade.getSellerId());
+
+        Customer customer = trade.getSeller();
         if (customer != null) {
             Log.d("JS", "setData: B");
             activity_book_info_sellerText.setText(customer.getName());
@@ -205,7 +209,9 @@ public class BookInfoActivity extends AppCompatActivity implements OnMapReadyCal
             activity_book_info_tradeDateText.setText(trade.getTradeDate());
 
             // Purchaser
-            Customer purchaser = firebaseCommunicator.getCustomer(trade.getPurchaserId());
+            Customer purchaser = trade.getPurchaser();
+            if(purchaser == null)
+                purchaser = new Customer();
             activity_book_info_purchaserText.setText(purchaser.getName());
             activity_book_info_purchaserContactNumberText.setText(purchaser.getPhoneNumber());
             activity_book_info_purchaserCreditRating.setText(purchaser.getCreditRating() + "");

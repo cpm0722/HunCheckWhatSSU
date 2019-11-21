@@ -3,12 +3,16 @@ package ssu.ssu.huncheckwhatssu;
 import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
+import android.widget.SearchView;
+import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -23,6 +27,8 @@ import java.util.Map;
 
 import ssu.ssu.huncheckwhatssu.utilClass.Trade;
 
+import static androidx.constraintlayout.widget.Constraints.TAG;
+
 public class SearchFirebaseCommunicator {
     //Firebase Database의 주소
     private DatabaseReference mPostReference;
@@ -32,93 +38,34 @@ public class SearchFirebaseCommunicator {
     private String userPath;
     //DB root/userPath 의 Reference
     private DatabaseReference myRef;
-    private ValueEventListener valueEventListener;
     private List<Trade> list;
     //RecyclerView 설정
-    private RecyclerView recyclerView;
+    RecyclerView recyclerView;
     private Context context;
     private Activity activity;
 
-    public SearchFirebaseCommunicator(String path){
+    public SearchFirebaseCommunicator(String path, Context context, Activity activity, RecyclerView recyclerView){
         mPostReference = FirebaseDatabase.getInstance().getReference();
-        list = new ArrayList<>();
+
         while (user == null) {
             user = FirebaseAuth.getInstance().getCurrentUser();
         }
+
         userPath = path;
         myRef = mPostReference.child(userPath);
+        list = new ArrayList<>();
 
-
-        // 첫 로드시 100개 데이터 로드로 제한
-        myRef.limitToLast(100);
-        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                if (dataSnapshot != null && dataSnapshot.exists()) {
-                    for (DataSnapshot tradeSnap : dataSnapshot.getChildren()) {
-//                        Log.d("JS", "onDataChange: " + tradeSnap.getValue().toString());
-                        Trade trade = tradeSnap.getValue(Trade.class);
-//                        Map<String, Object> childUpdates = (Map<String, Object>) tradeSnap.getValue();
-//                        trade.getSeller().setCustomerDataFromUID();
-                        list.add(trade);
-//                        Log.d("js", "onDataChange: " + trade.toString());
-//                        Book book = (Book) childUpdates.get("book");
-                        Log.d("JS", "onDataChange: " + trade.toString());
-                    }
-
-                    if (recyclerView != null)
-                        recyclerView.getAdapter().notifyDataSetChanged();
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
-    }
-
-    //RecyclerView 및 Context, Activity 받아옴 (Activity 및 Fragment 전환 시마다 호출)
-    public void setRecyclerView(Context context, Activity activity, RecyclerView recyclerView){
         this.context = context;
         this.activity = activity;
         this.recyclerView = recyclerView;
 
-        RecyclerViewTradeAdapter_Search adapter = new RecyclerViewTradeAdapter_Search(context, list);
-        adapter.setOnRefreshListener(new RecyclerViewTradeAdapter_Search.custom_RefreshListener() {
-            @Override
-            public void onRefreshListener() {
+        setRecyclerView();
 
-//                Log.d("js", "onRefreshListener");
-                myRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        if (dataSnapshot != null && dataSnapshot.exists()) {
-                            list.clear();
-                            for (DataSnapshot tradeSnap : dataSnapshot.getChildren()) {
-                                Log.d("JS", "onDataChange: " + tradeSnap.getValue().toString());
-                                Trade trade = tradeSnap.getValue(Trade.class);
-//                                Map<String, Object> childUpdates = (Map<String, Object>) tradeSnap.getValue(true);
-//                                trade.getSeller().setCustomerDataFromUID();
-                                list.add(trade);
-//                                Log.d("js", "onDataChange: " + childUpdates.toString());
-//                                Log.d("js", "onDataChange: " + childUpdates.get(""));
-                            }
+    }
 
-                            if (getRecyclerView() != null)
-                                getRecyclerView().getAdapter().notifyDataSetChanged();
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                    }
-                });
-            }
-        });
+    //RecyclerView 및 Context, Activity 받아옴 (Activity 및 Fragment 전환 시마다 호출)
+    public void setRecyclerView(){
+        RecyclerViewTradeAdapter_Search adapter = new RecyclerViewTradeAdapter_Search(context, this.getList());
 
         recyclerView.setAdapter(adapter);
     }
@@ -178,5 +125,9 @@ public class SearchFirebaseCommunicator {
 
     public RecyclerView getRecyclerView() {
         return recyclerView;
+    }
+
+    public DatabaseReference getMyRef() {
+        return myRef;
     }
 }

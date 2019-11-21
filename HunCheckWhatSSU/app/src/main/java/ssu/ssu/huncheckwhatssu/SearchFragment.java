@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -14,6 +15,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.SearchView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -27,6 +29,8 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.nikhilpanju.recyclerviewenhanced.RecyclerTouchListener;
 
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
@@ -41,20 +45,18 @@ import ssu.ssu.huncheckwhatssu.utilClass.Trade;
 
 import static androidx.constraintlayout.widget.Constraints.TAG;
 
-public class SearchFragment extends Fragment implements View.OnClickListener, AdapterView.OnItemSelectedListener, SearchView.OnQueryTextListener {
-    Button bookInfoBtn;
-    Button addBtn;
+public class SearchFragment extends Fragment implements AdapterView.OnItemSelectedListener, SearchView.OnQueryTextListener {
     SearchFirebaseCommunicator firebase;
     Spinner college_spin;
     Spinner department_spin;
     Spinner subject_spin;
     SearchView searchView;
+    SwipeRefreshLayout swipeRefreshLayout;
     ArrayList<DBData> collegeData;
     ArrayList<DBData> departmentData;
     ArrayList<DBData> subjectData;
 
     private RecyclerView recyclerView;
-    private RecyclerViewTradeAdapter_Search adapter;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -79,30 +81,64 @@ public class SearchFragment extends Fragment implements View.OnClickListener, Ad
 
         //RecyclerView
         recyclerView = root.findViewById(R.id.search_fragment_recycler_view);
-
-        adapter = new RecyclerViewTradeAdapter_Search(this.getContext(), new ArrayList<Trade>());
-        recyclerView.setAdapter(adapter);
-        RecyclerViewTradeAdapter_Search.setSwipeable(this.getContext(), this.getActivity(), recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
-        RecyclerViewTradeAdapter_Search.SetRefresh((SwipeRefreshLayout) root.findViewById(R.id.swipe_fragment_search));
 
-        //SearchFirebaseCommunicator 생성
-        firebase = new SearchFirebaseCommunicator("tb_trade");
+        swipeRefreshLayout = root.findViewById(R.id.swipe_fragment_search);
 
-//        TEST용 Firebase 추가 버튼
-        addBtn = root.findViewById(R.id.fragment_add_btn);
-        addBtn.setOnClickListener(new View.OnClickListener() {
-
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
-            public void onClick(View view) {
+            public void onRefresh() {
+                //새로 고침할 작업 나중에 추가하기
+                swipeRefreshLayout.setRefreshing(false);
+                Log.d(TAG, "recyclerview: swipe&Refresh");
 
-                Book book = new Book("testISBN10", "testISBN13", "testTitle", "testImage", "testAuthor", 12000, 13000, "testPublisher", "testPubDate", "testDescription", "8", "38", "33", new BookState());
-                Customer seller = new Customer("testId", "testName", "testPhoneNumber", "testAdress", (float) 1.4);
-                Customer purchaser = new Customer("testId", "testName", "testPhoneNumber", "testAdress", (float) 1.4);
-                Trade trade = new Trade(book, seller, purchaser, Trade.TradeState.WAIT, "장소 미정", Calendar.getInstance());
-                firebase.uploadTrade(trade);
+                // search refresh
+                onQueryTextSubmit(search_text);
             }
         });
+
+        //SearchFirebaseCommunicator 생성
+        firebase = new SearchFirebaseCommunicator("tb_trade", this.getContext(), this.getActivity(), recyclerView);
+
+        // Recycler View Click Listener
+        RecyclerTouchListener onTouchListener = new RecyclerTouchListener(this.getActivity(), recyclerView);
+        onTouchListener.setClickable(new RecyclerTouchListener.OnRowClickListener() {
+                    @Override
+                    public void onRowClicked(int position) {
+                        Trade trade = firebase.getList().get(position);
+
+                        Intent intent = new Intent(getContext(), BookInfoActivity.class);
+                        intent.putExtra("BookInfoType", "BOOK_INFO_DEFAULT");
+                        intent.putExtra("book_info_default_data", trade);
+
+                        getContext().startActivity(intent);
+
+                    }
+
+                    @Override
+                    public void onIndependentViewClicked(int independentViewID, int position) {
+                    }
+                });
+
+
+        recyclerView.addOnItemTouchListener(onTouchListener);
+
+
+//        TEST용 Firebase 추가 버튼
+//        addBtn = root.findViewById(R.id.fragment_add_btn);
+//        addBtn.setOnClickListener(new View.OnClickListener() {
+//
+//            @Override
+//            public void onClick(View view) {
+//                Book book = new Book("testISBN10", "testISBN13", "testTitle", "testImage", "testAuthor", 12000, 13000, "testPublisher", "testPubDate", "testDescription", "8", "38" ,"33", new BookState());
+//                Customer seller = new Customer("testId", "testName", "testPhoneNumber", "testAdress", (float) 1.4);
+//                Customer purchaser = new Customer("testId", "testName", "testPhoneNumber", "testAdress", (float) 1.4);
+//                Trade trade = new Trade(book, seller, purchaser, Trade.TradeState.WAIT, "장소 미정", Calendar.getInstance());
+//                firebase.uploadTrade(trade);
+//            }
+//        });
+
+        setFirebaseEvent();
 
 
         // 상단 카테고리 작업
@@ -110,13 +146,46 @@ public class SearchFragment extends Fragment implements View.OnClickListener, Ad
         departmentData = new ArrayList<>();
         subjectData = new ArrayList<>();
 
-        setSpinnerData(1, -1, -1);
+        setSpinnerData(1,-1,-1);
 
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter(getContext(), android.R.layout.simple_spinner_dropdown_item, getDataName(collegeData));
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         college_spin.setAdapter(arrayAdapter);
 
         return root;
+    }
+
+    private void setFirebaseEvent() {
+        // Firebase
+        DatabaseReference myRef = firebase.getMyRef();
+        myRef.limitToLast(100);
+        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                if (dataSnapshot != null && dataSnapshot.exists()) {
+                    for (DataSnapshot tradeSnap : dataSnapshot.getChildren()) {
+//                        Log.d("JS", "onDataChange: " + tradeSnap.getValue().toString());
+                        Trade trade = tradeSnap.getValue(Trade.class);
+//                        Map<String, Object> childUpdates = (Map<String, Object>) tradeSnap.getValue();
+//                        trade.getSeller().setCustomerDataFromUID();
+                        firebase.getList().add(trade);
+//                        Log.d("js", "onDataChange: " + trade.toString());
+//                        Book book = (Book) childUpdates.get("book");
+                        Log.d("JS", "onDatwwaChange: " + trade.toString());
+                    }
+
+                    if (firebase.getRecyclerView() != null)
+                        firebase.getRecyclerView().getAdapter().notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
     }
 
     private void setSpinnerData(int spin_switch, int college_id, int department_id) {
@@ -145,12 +214,12 @@ public class SearchFragment extends Fragment implements View.OnClickListener, Ad
             if (college_id == 0)
                 cursor = db.rawQuery("select * from tb_department", null);
             else
-                cursor = db.rawQuery("select * from tb_department where college_id = ?", new String[]{(college_id) + ""});
+                cursor = db.rawQuery("select * from tb_department where college_id = ?", new String[]{(college_id)+""});
 
             departmentData.add(new DBData(-1, -1, "전체", null));
 
             while (cursor.moveToNext()) {
-                departmentData.add(new DBData(cursor.getInt(0), cursor.getInt(1), cursor.getString(2), null));
+                departmentData.add(new DBData(cursor.getInt(0), cursor.getInt(1) , cursor.getString(2), null));
             }
         }
 
@@ -160,7 +229,7 @@ public class SearchFragment extends Fragment implements View.OnClickListener, Ad
             if (department_id == 0)
                 cursor = db.rawQuery("select * from tb_subject", null);
             else
-                cursor = db.rawQuery("select * from tb_subject where department_id = ?", new String[]{(department_id) + ""});
+                cursor = db.rawQuery("select * from tb_subject where department_id = ?", new String[]{(department_id)+""});
 
             subjectData.add(new DBData(-1, -1, "전체", null));
 
@@ -178,7 +247,7 @@ public class SearchFragment extends Fragment implements View.OnClickListener, Ad
 
         for (int i = 0; i < dbData.size(); i++) {
             if (dbData.get(i).another != null)
-                arrayList.add("(" + dbData.get(i).getAnother()[0] + ")" + dbData.get(i).name);
+                arrayList.add("(" + dbData.get(i).getAnother()[0] + ")" +dbData.get(i).name);
             else arrayList.add(dbData.get(i).name);
         }
 
@@ -196,7 +265,7 @@ public class SearchFragment extends Fragment implements View.OnClickListener, Ad
         search_collegeId = college_spin.getSelectedItemPosition() + "";
         search_departmentId = departmentData.get(department_spin.getSelectedItemPosition()).getKey() + "";
         search_subjectId = subjectData.get(subject_spin.getSelectedItemPosition()).getKey() + "";
-        search_text = query;
+        search_text = (query==null?"":query);
         firebase.getList().clear();
 
         reference.addChildEventListener(new ChildEventListener() {
@@ -210,8 +279,8 @@ public class SearchFragment extends Fragment implements View.OnClickListener, Ad
                 Log.d("js", "onQueryTextSubmit:/ " + search_subjectId);
 
                 if (trade.getBook().getCollege_id().equals(search_collegeId) || search_collegeId.equals("0") || search_collegeId.equals("-1")) {
-                    if (trade.getBook().getDepartment_id().equals(search_departmentId) || search_departmentId.equals("0") || search_departmentId.equals("-1")) {
-                        if (trade.getBook().getCollege_id().equals(search_subjectId) || search_subjectId.equals("0") || search_subjectId.equals("-1")) {
+                    if (trade.getBook().getDepartment_id().equals(search_departmentId) || search_departmentId.equals("0")|| search_departmentId.equals("-1")) {
+                        if (trade.getBook().getSubject_id().equals(search_subjectId) || search_subjectId.equals("0")|| search_subjectId.equals("-1")) {
                             Log.d(TAG, "onChildAdded: ");
                             if (search_text.isEmpty() || trade.getBook().getTitle().contains(search_text)) {
                                 firebase.getList().add(trade);
@@ -221,12 +290,6 @@ public class SearchFragment extends Fragment implements View.OnClickListener, Ad
                 }
 
                 firebase.getRecyclerView().getAdapter().notifyDataSetChanged();
-
-//                Log.d("JS", "onChildAdded: " + dataSnapshot.getValue(Trade.class).toString());
-//                for (DataSnapshot snap: dataSnapshot.getChildren()) {
-////                    Trade trade = snap.getValue(Trade.class);
-//                    Log.d("JS", "onChildAdded: " + snap.getValue(Trade.class).toString());
-//                }
             }
 
             @Override
@@ -249,6 +312,8 @@ public class SearchFragment extends Fragment implements View.OnClickListener, Ad
 
             }
         });
+
+
 
 
         return true;
@@ -295,14 +360,6 @@ public class SearchFragment extends Fragment implements View.OnClickListener, Ad
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
-    }
-
-    @Override
-    public void onClick(View view) {
-        if (view == bookInfoBtn) {
-            Intent intent = new Intent(this.getActivity(), BookInfoActivity.class);
-            this.getActivity().startActivity(intent);
-        }
     }
 
     class DBData {
