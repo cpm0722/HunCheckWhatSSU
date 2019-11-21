@@ -210,6 +210,8 @@ public class BookInfoActivity extends AppCompatActivity implements OnMapReadyCal
 
             // Purchaser
             Customer purchaser = trade.getPurchaser();
+            if(purchaser == null)
+                purchaser = new Customer();
             activity_book_info_purchaserText.setText(purchaser.getName());
             activity_book_info_purchaserContactNumberText.setText(purchaser.getPhoneNumber());
             activity_book_info_purchaserCreditRating.setText(purchaser.getCreditRating() + "");
