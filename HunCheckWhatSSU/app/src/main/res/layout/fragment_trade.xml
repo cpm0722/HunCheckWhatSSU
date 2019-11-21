@@ -22,20 +22,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="end"
-        android:textSize="15dp"
-        android:text="10건" />
-<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-    android:id="@+id/swipe_fragment_trade_ongoing"
-    android:layout_width="match_parent"
-    android:layout_weight="1"
-    android:layout_height="match_parent"
-    >
+        android:text="10건"
+        android:textSize="15dp" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/trade_ongoing_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1" />
-</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -47,16 +42,11 @@
         android:textAlignment="center"
         android:textSize="20dp"
         android:textStyle="bold" />
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/swipe_fragment_trade_done"
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/trade_done_list"
         android:layout_width="match_parent"
-        android:layout_weight="1"
-        android:layout_height="match_parent">
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/trade_done_list"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1" />
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+        android:layout_height="match_parent"
+        android:layout_weight="1" />
 
 </LinearLayout>

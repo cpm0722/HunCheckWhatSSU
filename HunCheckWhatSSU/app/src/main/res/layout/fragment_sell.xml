@@ -13,29 +13,30 @@
         android:id="@+id/logo"
         android:layout_width="match_parent"
         android:layout_height="89dp"
-        android:scaleType="fitXY"
         android:layout_gravity="center_horizontal"
         android:adjustViewBounds="true"
         android:background="#FF0"
+        android:scaleType="fitXY"
         android:src="@drawable/logo" />
 
     <Button
         android:id="@+id/AddSellBook"
         android:layout_width="323dp"
         android:layout_height="wrap_content"
-        android:text="판매할 책 등록"
-        android:layout_gravity="center"/>
+        android:layout_gravity="center"
+        android:text="판매할 책 등록" />
 
     <Button
         android:id="@+id/book_info_test_btn"
-        android:text="임시 테스트"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:text="임시 테스트" />
 
 
     <Space
         android:layout_width="match_parent"
         android:layout_height="26dp" />
+
     <TextView
         android:id="@+id/textView"
         android:layout_width="match_parent"
@@ -44,17 +45,11 @@
         android:text="판매 등록한 책"
         android:textAlignment="center"
         android:textSize="20dp"
-        android:textStyle="bold"/>
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/swipe_fragment_sell"
+        android:textStyle="bold" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/sell_list"
         android:layout_width="match_parent"
-        android:layout_weight="1"
-        android:layout_height="match_parent">
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/sell_list"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
-        </androidx.recyclerview.widget.RecyclerView>
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-    </LinearLayout>
+        android:layout_height="match_parent"
+        android:layout_weight="1"></androidx.recyclerview.widget.RecyclerView>
+</LinearLayout>

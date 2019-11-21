@@ -189,7 +189,6 @@
                     android:id="@+id/item_book_original_price"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="10000"
                     />
 
                 <TextView
@@ -203,7 +202,6 @@
                     android:textColor="#F55"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="10000"
                     />
             </LinearLayout>
             <LinearLayout

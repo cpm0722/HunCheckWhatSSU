@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">HunCheckWhatSSU</string>
-    <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_main">HunCheckWhatSSU</string>
     <string name="title_search">Search</string>
     <string name="title_sell">Sell</string>
     <string name="title_trade">trade</string>

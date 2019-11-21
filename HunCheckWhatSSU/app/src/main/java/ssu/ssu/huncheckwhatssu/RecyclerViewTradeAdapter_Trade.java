@@ -16,33 +16,22 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.nikhilpanju.recyclerviewenhanced.RecyclerTouchListener;
 
-import java.util.List;
+import java.util.Vector;
 
-import ssu.ssu.huncheckwhatssu.utilClass.Book;
-import ssu.ssu.huncheckwhatssu.utilClass.Customer;
 import ssu.ssu.huncheckwhatssu.utilClass.Trade;
 
 import static androidx.constraintlayout.widget.Constraints.TAG;
 
-public class RecyclerViewTradeAdapter2 extends RecyclerView.Adapter<RecyclerViewTradeAdapter2.TradeViewHolder> {
+public class RecyclerViewTradeAdapter_Trade extends RecyclerView.Adapter<RecyclerViewTradeAdapter_Trade.TradeViewHolder> {
     LayoutInflater inflater;
-    static List<Trade> modelList;
+    Vector<Trade> modelList;
 
 
-    /*여기 추가 1*/
-    public interface OnItemClickListener {
-        void onItemClick(View v, int pos);
-    }
-    private OnItemClickListener listener = null;
+    public Vector<Trade> getTrades(){ return modelList;}
 
-    public void setOnItemClickListener(OnItemClickListener listener) {
-        this.listener = listener;
-    }
- /*   여기까지 1*/
-
-    public RecyclerViewTradeAdapter2(Context context, List<Trade> list) {
+    public RecyclerViewTradeAdapter_Trade(Context context, Vector<Trade> vector) {
         inflater = LayoutInflater.from(context);
-        modelList = list;
+        modelList = vector;
     }
 
     @Override
@@ -62,52 +51,61 @@ public class RecyclerViewTradeAdapter2 extends RecyclerView.Adapter<RecyclerView
     }
 
    public class TradeViewHolder extends RecyclerView.ViewHolder {
-        ImageView imageView;
-        TextView bookTitleTextView;
-        TextView bookPriceTextView;
-        TextView sellerNameTextView;
-
+        ImageView book_image;
+        TextView book_title;
+        TextView original_price;
+        TextView seller_name;
+        TextView  book_category;
+        TextView book_author;
+        TextView selling_price;
+        TextView seller_credit;
+        TextView book_publisher;
         public TradeViewHolder(View itemView) {
             super(itemView);
-            imageView = itemView.findViewById(R.id.item_image);
-            bookTitleTextView = itemView.findViewById(R.id.item_book_title);
-            bookPriceTextView = itemView.findViewById(R.id.item_book_price);
-            sellerNameTextView = itemView.findViewById(R.id.item_seller_name);
+            book_image = itemView.findViewById(R.id.item_image);
+            book_title= itemView.findViewById(R.id.item_book_title);
+            original_price = itemView.findViewById(R.id.item_book_original_price);
+            seller_name = itemView.findViewById(R.id.item_seller_name);
+            book_category=itemView.findViewById(R.id.item_book_category);
+            book_author=itemView.findViewById(R.id.item_book_author);
+            selling_price=itemView.findViewById(R.id.item_book_selling_price);
+            seller_credit=itemView.findViewById(R.id.item_seller_credit);
 
-            /*여기 추가 2*/
-            itemView.setOnClickListener(new View.OnClickListener(){
-                @Override
-                public void onClick(View v){
-                    int position=getAdapterPosition();
-                    if(position!=RecyclerView.NO_POSITION){
-                        if (listener!= null) {
-                            listener.onItemClick(v, position);
 
-                        }
-                    }
-                }
-            });
-           /* 여기까지 2*/
         }
 
         public void bindData(Trade object) {
-            imageView.setBackgroundResource(R.drawable.bookimag);
-            bookTitleTextView.setText(object.getBook().getTitle());
-            bookPriceTextView.setText(String.valueOf(object.getBook().getSellingPrice()));
-            sellerNameTextView.setText(object.getSeller().getName());
+            book_image.setBackgroundResource(R.drawable.bookimag);
+            book_title.setText(object.getBook().getTitle());
+            Log.d("DEBUG!", object.getBook().getTitle() + new Integer(object.getBook().getSellingPrice()).toString());
+            original_price.setText(String.valueOf(object.getBook().getSellingPrice()));
+            seller_name.setText(object.getSeller().getName());
+            book_category.setText(object.getBook().getCollege_id());
+            book_author.setText(object.getSeller().getNickName());
+            selling_price.setText(String.valueOf(object.getBook().getSellingPrice()));
+            seller_credit.setText("신룅");//seller_credit.setText((int)object.getSeller().getCreditRating());
+
+            //   book_image.setImageDrawable(ResourcesCompat.getDrawable(context.getResources(),R.drawable.bookimag,null))
         }
     }
 
     //RecyclerView에 TouchListener 설정 함수 (Swipe로 메뉴 출력 가능하게)
-    public static void setSwipeable(final Context context, Activity activity, RecyclerView recyclerView) {
+    public static void setSwipeable(final Context context, Activity activity, final RecyclerView recyclerView) {
         final RecyclerTouchListener onTouchListener = new RecyclerTouchListener(activity, recyclerView);
         onTouchListener
                      .setClickable(new RecyclerTouchListener.OnRowClickListener() {
                       @Override
                     public void onRowClicked(int position) {
-
-                          Toast toast = Toast.makeText(context, "RowClick!"+position, Toast.LENGTH_SHORT);
+                          Trade trade = ((RecyclerViewTradeAdapter_Trade)(recyclerView.getAdapter())).getTrades().get(position);
+                          Toast toast = Toast.makeText(context, "RowClick! " + trade.getBook().getTitle(), Toast.LENGTH_SHORT);
                           toast.show();
+                          recyclerView.getAdapter().notifyItemChanged(position);
+                          /*여기에 클릭 하는 거 처리햐앟ㅁ*/
+
+                          Intent intent=new Intent(context,BookInfoActivity.class);
+
+                          context.startActivity(intent);
+
 
                     }
 
@@ -121,12 +119,11 @@ public class RecyclerViewTradeAdapter2 extends RecyclerView.Adapter<RecyclerView
 
                     @Override
                     public void onSwipeOptionClicked(int viewID, int position) {
+                        Trade trade = ((RecyclerViewTradeAdapter_Trade)(recyclerView.getAdapter())).getTrades().get(position);
                         if (viewID == R.id.item_button_delete) {
-                            Toast toast = Toast.makeText(context, "Delete!", Toast.LENGTH_SHORT);
+                            Toast toast = Toast.makeText(context, "Delete! " + trade.getBook().getTitle(), Toast.LENGTH_SHORT);
                             toast.show();
-                            //삭제 기능 추가(현재는 그냥 삭제 나중에 DB삭제)
-                            modelList.remove(position);
-                            //notifyItemRemoved(position);
+                            recyclerView.getAdapter().notifyDataSetChanged();
                         }
                     }
                 });

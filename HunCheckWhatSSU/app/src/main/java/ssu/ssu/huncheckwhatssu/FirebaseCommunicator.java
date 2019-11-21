@@ -77,6 +77,7 @@ public class FirebaseCommunicator {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Book book = dataSnapshot.child("book").getValue(Book.class);
                 Trade trade = dataSnapshot.getValue(Trade.class);
+                trade.setSeller(new Customer(trade.getSellerId()));
                 trade.setBook(book);
                 switch (whichRecyclerView) {
                     case sellRecyclerView:
@@ -84,6 +85,7 @@ public class FirebaseCommunicator {
                         break;
                     case ongoingRecyclerView:
                     case doneRecyclerView:
+                        Log.d("DEBUG!", trade.getTradeState().toString());
                         if (trade.getTradeState() == Trade.TradeState.COMPLETE)
                             doneTradeListVector.add(trade);
                         else {

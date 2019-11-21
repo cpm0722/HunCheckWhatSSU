@@ -40,6 +40,7 @@ public class Customer implements Parcelable {
 
     public Customer(String id) {
         this.id = id;
+        setCustomerDataFromUID();
     }
 
     public Customer(String id, String name, String phoneNumber, String address, float creditRating) {
@@ -62,14 +63,14 @@ public class Customer implements Parcelable {
 
 //    (이거해라빨간줄~~)
     public void setCustomerDataFromUID() {
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("tb_customer");
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("customer");
         Query query = reference.equalTo(this.getId());
 
         query.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 if (dataSnapshot != null && dataSnapshot.exists()) {
-                    Customer customer = dataSnapshot.child("customer").getValue(Customer.class);
+                    Customer customer = dataSnapshot.getValue(Customer.class);
 
                     setName(customer.getName());
                     setAddress(customer.getAddress());

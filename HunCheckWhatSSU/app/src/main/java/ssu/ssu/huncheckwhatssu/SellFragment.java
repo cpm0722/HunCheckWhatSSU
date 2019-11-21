@@ -9,9 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 import java.util.Vector;
 
 import androidx.annotation.NonNull;
@@ -24,21 +22,18 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import ssu.ssu.huncheckwhatssu.utilClass.Book;
 import ssu.ssu.huncheckwhatssu.utilClass.BookState;
-import ssu.ssu.huncheckwhatssu.utilClass.Customer;
 import ssu.ssu.huncheckwhatssu.utilClass.Trade;
 
 public class SellFragment extends Fragment {
        Context context;
        RecyclerView sellRecyclerView;
-       RecyclerViewTradeAdapter sellAdapter;
+       RecyclerViewTradeAdapter_Sell sellAdapter;
        FirebaseCommunicator firebaseCommunicator;
 
        public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_sell, container, false);
         this.context = root.getContext();
-
-        firebaseCommunicator = new FirebaseCommunicator(FirebaseCommunicator.WhichRecyclerView.sellRecyclerView);
 
 //       테스트
         Button btn = root.findViewById(R.id.book_info_test_btn);
@@ -80,25 +75,17 @@ public class SellFragment extends Fragment {
          }
         });
 
-        final Vector<Trade> sellList =new Vector<Trade>();
-        Book book = new Book("testISBN10", "testISBN13", "sell", "testImage", "testAuthor", 10000, "testPublisher", "testPubDate", "testDescription", new BookState());
-        String seller = firebaseCommunicator.getUserPath();
-        sellList.add(new Trade(book, seller));
-        book = new Book("testISBN10", "testISBN13", "sell2", "testImage", "testAuthor", 300, "testPublisher", "testPubDate", "testDescription", new BookState());
-        sellList.add(new Trade(book, seller));
-        book = new Book("testISBN10", "testISBN13", "sell3", "testImage", "testAuthor", 300, "testPublisher", "testPubDate", "testDescription", new BookState());
-        sellList.add(new Trade(book, seller));
-
         // 리사이클러뷰에 LinearLayoutManager 객체 지정.
         sellRecyclerView = root.findViewById(R.id.sell_list) ;
         sellRecyclerView.setLayoutManager(new LinearLayoutManager(getContext())) ;
-        RecyclerViewTradeAdapter.setSwipeable(this.getContext(), this.getActivity(), sellRecyclerView);
+
+        firebaseCommunicator = new FirebaseCommunicator(FirebaseCommunicator.WhichRecyclerView.sellRecyclerView);
+        firebaseCommunicator.setRecyclerView(this.getContext(), this.getActivity(), sellRecyclerView, FirebaseCommunicator.WhichRecyclerView.sellRecyclerView);
 
         // 리사이클러뷰에 RecyclerViewAdapter1 객체 지정.
-        sellAdapter = new RecyclerViewTradeAdapter(this.getContext(), sellList) ;
+        sellAdapter = new RecyclerViewTradeAdapter_Sell(this.getContext(), firebaseCommunicator, firebaseCommunicator.getSellTradeListVector()) ;
         sellRecyclerView.setAdapter(sellAdapter);
-        RecyclerViewTradeAdapter.SetRefresh((SwipeRefreshLayout)root.findViewById(R.id.swipe_fragment_sell));
-
+        sellAdapter.setSwipeable(this.getContext(), this.getActivity(), sellRecyclerView);
 
         return root;
     }

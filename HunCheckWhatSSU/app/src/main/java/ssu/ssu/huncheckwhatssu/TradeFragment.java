@@ -1,38 +1,32 @@
 package ssu.ssu.huncheckwhatssu;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.nikhilpanju.recyclerviewenhanced.RecyclerTouchListener;
 
-import java.util.ArrayList;
 import java.util.Vector;
 
 import ssu.ssu.huncheckwhatssu.utilClass.Book;
 import ssu.ssu.huncheckwhatssu.utilClass.BookState;
-import ssu.ssu.huncheckwhatssu.utilClass.Customer;
 import ssu.ssu.huncheckwhatssu.utilClass.Trade;
 
-import static androidx.constraintlayout.widget.Constraints.TAG;
+import static ssu.ssu.huncheckwhatssu.utilClass.BookState.bookState.GOOD;
 
-public class TradeFragment extends Fragment implements RecyclerViewTradeAdapter2.OnItemClickListener{
-    RecyclerViewTradeAdapter2 ongoingAdapter, doneAdapter;
+public class TradeFragment extends Fragment {
+    RecyclerViewTradeAdapter_Trade ongoingAdapter;
+    RecyclerViewTradeAdapter_Trade doneAdapter;
     RecyclerView ongoingRecyclerView, doneRecyclerView;
-    FirebaseCommunicator firebaseCommunicator;
+    FirebaseCommunicator ongoingFirebase, doneFirebase;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -44,40 +38,24 @@ public class TradeFragment extends Fragment implements RecyclerViewTradeAdapter2
         Menu menu = navView.getMenu();
         menu.getItem(2).setChecked(true);
 
-        //OnGoing RecyclerView
-        final Vector<Trade> ongoingList =new Vector<Trade>();
-        Book book = new Book("testISBN10", "testISBN13", "git", "testImage", "testAuthor", 10000, "testPublisher", "testPubDate", "testDescription", new BookState());
-        firebaseCommunicator = new FirebaseCommunicator(FirebaseCommunicator.WhichRecyclerView.ongoingRecyclerView);
-        String seller = firebaseCommunicator.getUserPath();
-        ongoingList.add(new Trade(book, seller));
-        book = new Book("testISBN10", "testISBN13", "hi", "testImage", "testAuthor", 300, "testPublisher", "testPubDate", "testDescription", new BookState());
-        ongoingList.add(new Trade(book, seller));
-        book = new Book("testISBN10", "testISBN13", "hi", "testImage", "testAuthor", 300, "testPublisher", "testPubDate", "testDescription", new BookState());
-        ongoingList.add(new Trade(book, seller));
-        book = new Book("testISBN10", "testISBN13", "hi", "testImage", "testAuthor", 300, "testPublisher", "testPubDate", "testDescription", new BookState());
-        ongoingList.add(new Trade(book, seller));
+        /*편집 시작*/
 
         // 리사이클러뷰에 LinearLayoutManager 객체 지정.
+        ongoingFirebase = new FirebaseCommunicator(FirebaseCommunicator.WhichRecyclerView.ongoingRecyclerView);
+        String seller = ongoingFirebase.getUserPath();
         ongoingRecyclerView = root.findViewById(R.id.trade_ongoing_list) ;
         ongoingRecyclerView.setLayoutManager(new LinearLayoutManager(getContext())) ;
-        RecyclerViewTradeAdapter2.setSwipeable(this.getContext(), this.getActivity(), ongoingRecyclerView);
+        ongoingFirebase.setRecyclerView(this.getContext(), this.getActivity(), ongoingRecyclerView, FirebaseCommunicator.WhichRecyclerView.ongoingRecyclerView);
+
+
 
         // 리사이클러뷰에 RecyclerViewAdapter1 객체 지정.
-        ongoingAdapter = new RecyclerViewTradeAdapter2(this.getContext(), ongoingList) ;
+        ongoingAdapter = new RecyclerViewTradeAdapter_Trade(this.getContext(), ongoingFirebase.getOngoingTradeListVector()) ;
+        ongoingAdapter.setSwipeable(this.getContext(), this.getActivity(), ongoingRecyclerView);
         ongoingRecyclerView.setAdapter(ongoingAdapter);
-        RecyclerViewTradeAdapter2.SetRefresh((SwipeRefreshLayout)root.findViewById(R.id.swipe_fragment_trade_ongoing));
 
 
-    /*추가 작업 시작 3
-   ongoingAdapter.setOnItemClickListener(new RecyclerViewTradeAdapter2.OnItemClickListener() {
-        @Override
-        public void onItemClick(View v, int pos) {
-            Intent intent=new Intent(getContext(),BookInfoActivity.class);
 
-            startActivity(intent);
-        }
-    });
-   추가 작업3 끝*/
 
 
         /*거래진행중인 아이템개수 보여주기 위해서*/
@@ -85,45 +63,30 @@ public class TradeFragment extends Fragment implements RecyclerViewTradeAdapter2
         ongoingCountTrade.setText(""+ongoingAdapter.getItemCount()+" 건");
 
 
-        //Done RecyclerView
-        firebaseCommunicator = new FirebaseCommunicator(FirebaseCommunicator.WhichRecyclerView.doneRecyclerView);
-        final Vector<Trade> doneList = new Vector<Trade>();
-        book = new Book("testISBN10", "testISBN13", "git2", "testImage", "testAuthor", 10000, "testPublisher", "testPubDate", "testDescription", new BookState());
-        doneList.add(new Trade(book, seller));
-        book = new Book("testISBN10", "testISBN13", "hi2", "testImage", "testAuthor", 300, "testPublisher", "testPubDate", "testDescription", new BookState());
-        doneList.add(new Trade(book, seller));
-        book = new Book("testISBN10", "testISBN13", "hi3", "testImage", "testAuthor", 300, "testPublisher", "testPubDate", "testDescription", new BookState());
-        doneList.add(new Trade(book, seller));
-        book = new Book("testISBN10", "testISBN13", "hi4", "testImage", "testAuthor", 300, "testPublisher", "testPubDate", "testDescription", new BookState());
-        doneList.add(new Trade(book, seller));
-
         // 리사이클러뷰에 LinearLayoutManager 객체 지정.
+        doneFirebase = new FirebaseCommunicator(FirebaseCommunicator.WhichRecyclerView.doneRecyclerView);
         doneRecyclerView = root.findViewById(R.id.trade_done_list) ;
         doneRecyclerView.setLayoutManager(new LinearLayoutManager(getContext())) ;
+        doneFirebase.setRecyclerView(this.getContext(), this.getActivity(), doneRecyclerView, FirebaseCommunicator.WhichRecyclerView.doneRecyclerView);
 
         // 리사이클러뷰에 RecyclerViewAdapter1 객체 지정.
-        doneAdapter = new RecyclerViewTradeAdapter2(this.getContext(), doneList) ;
+        doneAdapter = new RecyclerViewTradeAdapter_Trade(this.getContext(), doneFirebase.getDoneTradeListVector()) ;
+        doneAdapter.setSwipeable(this.getContext(), this.getActivity(), doneRecyclerView);
         doneRecyclerView.setAdapter(doneAdapter);
-        RecyclerViewTradeAdapter2.setSwipeable(this.getContext(), this.getActivity(), doneRecyclerView);
-        RecyclerViewTradeAdapter2.SetRefresh((SwipeRefreshLayout)root.findViewById(R.id.swipe_fragment_trade_done));
 
 
         /*거래진행중인 아이템개수 보여주기 위해서*/
         final TextView doneCountTrade=root.findViewById(R.id.counttrade);
         doneCountTrade.setText(""+ongoingAdapter.getItemCount()+" 건");
 
-        /*리사이클러뷰에 구분선 넣기*/
+        /*리사이클러뷰에 구분선 넣기
         DividerItemDecoration dividerItemDecoration=new DividerItemDecoration(getContext(),new LinearLayoutManager(getContext()).getOrientation());
         dividerItemDecoration.setDrawable(getResources().getDrawable(R.drawable.recyleritem_line));
         ongoingRecyclerView.addItemDecoration(dividerItemDecoration);
-        doneRecyclerView.addItemDecoration(dividerItemDecoration);
+        doneRecyclerView.addItemDecoration(dividerItemDecoration);*/
         return root;
     }
 
 
-    @Override
-    public void onItemClick(View v, int pos) {
-        Intent intent=new Intent(getContext(),BookInfoActivity.class);
-        startActivity(intent);
-    }
+
 }
