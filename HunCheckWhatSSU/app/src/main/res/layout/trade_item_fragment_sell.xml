@@ -47,7 +47,7 @@
                     android:ellipsize="end"
                     android:gravity="center"
                     android:maxLines="1"
-                    android:text="Delete"
+                    android:text="Edit"
                     android:textColor="@android:color/white"
                     android:textSize="12sp" />
             </LinearLayout>
@@ -161,7 +161,6 @@
                     android:id="@+id/item_book_author"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="김길동"
                     />
                 <TextView
                     android:text=" | "
@@ -171,7 +170,6 @@
                     android:id="@+id/item_book_publisher"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="나는출판사"
                     />
             </LinearLayout>
             <LinearLayout

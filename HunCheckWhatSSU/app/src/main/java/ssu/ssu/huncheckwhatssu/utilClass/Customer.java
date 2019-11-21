@@ -18,6 +18,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 public class Customer implements Parcelable {
     // 사용자 고유 번호
@@ -65,7 +66,6 @@ public class Customer implements Parcelable {
     public void setCustomerDataFromUID() {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("customer");
         Query query = reference.equalTo(this.getId());
-
         query.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
@@ -99,6 +99,7 @@ public class Customer implements Parcelable {
 
             }
         });
+
     }
 
     public static final Creator<Customer> CREATOR = new Creator<Customer>() {

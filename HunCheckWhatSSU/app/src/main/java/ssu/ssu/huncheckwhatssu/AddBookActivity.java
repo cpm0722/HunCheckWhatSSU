@@ -266,7 +266,7 @@ public class AddBookActivity extends AppCompatActivity {
         book1.setTitle((String) title.getText());
         book1.setAuthor((String) Author.getText());
         book1.setIsbn10((String) Isbn.getText());
-        book1.setOriginal_Price(price1);//원가
+        book1.setOriginalPrice(price1);//원가
         book1.setPublisher((String) publisher.getText());
         book1.setPubDate((String) PubDate.getText());
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();

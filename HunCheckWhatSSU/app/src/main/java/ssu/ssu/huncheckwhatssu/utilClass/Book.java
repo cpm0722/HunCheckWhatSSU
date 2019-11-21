@@ -14,7 +14,7 @@ public class Book implements Parcelable {
     String title;
     String image;
     String author;
-    int original_Price;
+    int originalPrice;
     String publisher;
     String pubDate;
     String description;
@@ -35,7 +35,7 @@ public class Book implements Parcelable {
         this.title = title;
         this.image = image;
         this.author = author;
-        this.original_Price = price;
+        this.originalPrice = price;
         this.publisher = publisher;
         this.pubDate = pubDate;
         this.description = description;
@@ -48,7 +48,7 @@ public class Book implements Parcelable {
         this.title = title;
         this.image = image;
         this.author = author;
-        this.original_Price = price;
+        this.originalPrice = price;
         this.sellingPrice = sellingPrice;
         this.publisher = publisher;
         this.pubDate = pubDate;
@@ -65,7 +65,7 @@ public class Book implements Parcelable {
         title = in.readString();
         image = in.readString();
         author = in.readString();
-        original_Price = in.readInt();
+        originalPrice = in.readInt();
         sellingPrice = in.readInt();
         publisher = in.readString();
         pubDate = in.readString();
@@ -100,7 +100,7 @@ public class Book implements Parcelable {
         dest.writeString(title);
         dest.writeString(image);
         dest.writeString(author);
-        dest.writeInt(original_Price);
+        dest.writeInt(originalPrice);
         dest.writeInt(sellingPrice);
         dest.writeString(publisher);
         dest.writeString(pubDate);
@@ -119,7 +119,7 @@ public class Book implements Parcelable {
                 ", title='" + title + '\'' +
                 ", image='" + image + '\'' +
                 ", author='" + author + '\'' +
-                ", price=" + original_Price +
+                ", price=" + originalPrice +
                 ", publisher='" + publisher + '\'' +
                 ", pubDate='" + pubDate + '\'' +
                 ", description='" + description + '\'' +
@@ -170,12 +170,12 @@ public class Book implements Parcelable {
         this.author = author;
     }
 
-    public int getOriginal_Price() {
-        return original_Price;
+    public int getOriginalPrice() {
+        return originalPrice;
     }
 
-    public void setOriginal_Price(int original_Price) {
-        this.original_Price = original_Price;
+    public void setOriginalPrice(int originalPrice) {
+        this.originalPrice = originalPrice;
     }
 
     public int getSellingPrice() {
@@ -247,7 +247,7 @@ public class Book implements Parcelable {
         result.put("isbn13", this.isbn13);
         result.put("title", this.title);
         result.put("author", this.author);
-        result.put("price", this.original_Price);
+        result.put("price", this.originalPrice);
         result.put("publisher", this.publisher);
         result.put("pubDate", this.pubDate);
         result.put("description", this.description);

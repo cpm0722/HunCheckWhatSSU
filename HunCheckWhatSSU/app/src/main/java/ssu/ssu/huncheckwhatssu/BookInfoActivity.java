@@ -174,7 +174,7 @@ public class BookInfoActivity extends AppCompatActivity implements OnMapReadyCal
             activity_book_info_publisherText.setText(book.getPublisher());
 
             activity_book_info_publicationDateText.setText(book.getPubDate());
-            activity_book_info_bookCostText.setText(book.getOriginal_Price() + "");
+            activity_book_info_bookCostText.setText(book.getOriginalPrice() + "");
         }
 
         // Seller

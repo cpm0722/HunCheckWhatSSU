@@ -85,7 +85,6 @@ public class FirebaseCommunicator {
                         break;
                     case ongoingRecyclerView:
                     case doneRecyclerView:
-                        Log.d("DEBUG!", trade.getTradeState().toString());
                         if (trade.getTradeState() == Trade.TradeState.COMPLETE)
                             doneTradeListVector.add(trade);
                         else {

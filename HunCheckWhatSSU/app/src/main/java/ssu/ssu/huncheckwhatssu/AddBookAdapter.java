@@ -87,7 +87,7 @@ public class AddBookAdapter extends RecyclerView.Adapter<AddBookAdapter.MyViewHo
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         Book book = bookList.get(position);
         holder.title.setText(book.getTitle());
-        holder.price.setText(String.valueOf(book.getOriginal_Price()));
+        holder.price.setText(String.valueOf(book.getOriginalPrice()));
         holder.pubdate.setText(book.getPubDate());
         holder.publisher.setText(book.getPublisher());
         holder.isbn10.setText(book.getIsbn10());

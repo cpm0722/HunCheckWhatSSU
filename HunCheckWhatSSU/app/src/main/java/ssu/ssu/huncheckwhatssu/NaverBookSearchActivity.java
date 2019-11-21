@@ -122,7 +122,7 @@ public class NaverBookSearchActivity extends AppCompatActivity {
                                intent.putExtra("Author",book.getAuthor());
                                intent.putExtra("ISBN",book.getIsbn10());
                                intent.putExtra("p_date",book.getPubDate());
-                               intent.putExtra("price", book.getOriginal_Price());
+                               intent.putExtra("price", book.getOriginalPrice());
                                intent.putExtra("image",book.getImage());
                                intent.putExtra("publisher",book.getPublisher());
                                startActivity(intent);

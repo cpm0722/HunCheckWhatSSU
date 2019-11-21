@@ -59,7 +59,7 @@ public class TradeFragment extends Fragment {
 
 
         /*거래진행중인 아이템개수 보여주기 위해서*/
-        final TextView ongoingCountTrade=root.findViewById(R.id.counttrade);
+        final TextView ongoingCountTrade=root.findViewById(R.id.ongoing_count);
         ongoingCountTrade.setText(""+ongoingAdapter.getItemCount()+" 건");
 
 
@@ -76,8 +76,8 @@ public class TradeFragment extends Fragment {
 
 
         /*거래진행중인 아이템개수 보여주기 위해서*/
-        final TextView doneCountTrade=root.findViewById(R.id.counttrade);
-        doneCountTrade.setText(""+ongoingAdapter.getItemCount()+" 건");
+        final TextView doneCountTrade=root.findViewById(R.id.done_count);
+        doneCountTrade.setText(""+doneAdapter.getItemCount()+" 건");
 
         /*리사이클러뷰에 구분선 넣기
         DividerItemDecoration dividerItemDecoration=new DividerItemDecoration(getContext(),new LinearLayoutManager(getContext()).getOrientation());

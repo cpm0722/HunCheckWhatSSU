@@ -18,11 +18,10 @@
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/counttrade"
+        android:id="@+id/ongoing_count"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="end"
-        android:text="10건"
         android:textSize="15dp" />
 
     <androidx.recyclerview.widget.RecyclerView
@@ -42,6 +41,13 @@
         android:textAlignment="center"
         android:textSize="20dp"
         android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/done_count"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="end"
+        android:textSize="15dp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/trade_done_list"

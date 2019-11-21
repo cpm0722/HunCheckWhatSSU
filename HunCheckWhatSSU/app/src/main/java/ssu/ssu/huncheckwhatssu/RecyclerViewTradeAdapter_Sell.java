@@ -35,7 +35,7 @@ public class RecyclerViewTradeAdapter_Sell extends RecyclerView.Adapter<Recycler
 
     @Override
     public TradeViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = inflater.inflate(R.layout.trade_item, parent, false);
+        View view = inflater.inflate(R.layout.trade_item_fragment_sell, parent, false);
         return new TradeViewHolder(view);
     }
 
@@ -55,24 +55,35 @@ public class RecyclerViewTradeAdapter_Sell extends RecyclerView.Adapter<Recycler
         ImageView imageView;
         TextView bookTitleTextView;
         TextView sellerNameTextView;
-        TextView original_price;
-        TextView selling_price;
+        TextView originalPriceTextView;
+        TextView sellingPriceTextView;
+        TextView bookCategoryTextView;
+        TextView bookAuthorTextView;
+        TextView bookPublisherTextView;
+        TextView sellerCreditTextView;
 
         public TradeViewHolder(View itemView) {
             super(itemView);
             imageView = itemView.findViewById(R.id.item_image);
             bookTitleTextView = itemView.findViewById(R.id.item_book_title);
             sellerNameTextView = itemView.findViewById(R.id.item_seller_name);
-            original_price = itemView.findViewById(R.id.item_book_original_price);
-            selling_price=itemView.findViewById(R.id.item_book_selling_price);
+            originalPriceTextView = itemView.findViewById(R.id.item_book_original_price);
+            sellingPriceTextView =itemView.findViewById(R.id.item_book_selling_price);
+            bookCategoryTextView = itemView.findViewById(R.id.item_book_category);
+            bookAuthorTextView = itemView.findViewById(R.id.item_book_author);
+            bookPublisherTextView = itemView.findViewById(R.id.item_book_publisher);
+            sellerCreditTextView = itemView.findViewById(R.id.item_seller_credit);
         }
 
         public void bindData(Trade object) {
             imageView.setBackgroundResource(R.drawable.bookimag);
             bookTitleTextView.setText(object.getBook().getTitle());
-            sellerNameTextView.setText(object.getSellerId());
-            original_price.setText(String.valueOf(object.getBook().getSellingPrice()));
-            selling_price.setText(String.valueOf(object.getBook().getSellingPrice()));
+            sellerNameTextView.setText(object.getSeller().getName());
+            originalPriceTextView.setText(String.valueOf(object.getBook().getOriginalPrice()));
+            sellingPriceTextView.setText(String.valueOf(object.getBook().getSellingPrice()));
+            bookAuthorTextView.setText(object.getBook().getAuthor());
+            bookPublisherTextView.setText(object.getBook().getPublisher());
+            sellerCreditTextView.setText("위험");
         }
     }
 
@@ -120,36 +131,4 @@ public class RecyclerViewTradeAdapter_Sell extends RecyclerView.Adapter<Recycler
         return;
     }
 
-    //RecyclerView에 TouchListener 설정 함수 (Swipe로 메뉴 출력 불가능하게)
-    public static void setNonSwipeable(final Context context, Activity activity, RecyclerView recyclerView) {
-        RecyclerTouchListener onTouchListener = new RecyclerTouchListener(activity, recyclerView);
-        onTouchListener
-
-                .setClickable(new RecyclerTouchListener.OnRowClickListener() {
-                    @Override
-                    public void onRowClicked(int position) {
-                        Toast toast = Toast.makeText(context, "RowClick!", Toast.LENGTH_SHORT);
-                        toast.show();
-                    }
-
-                    @Override
-                    public void onIndependentViewClicked(int independentViewID, int position) {
-
-                    }
-                });
-        recyclerView.addOnItemTouchListener(onTouchListener);
-        return;
-    }
-
-    public static void SetRefresh(final SwipeRefreshLayout swipeRefreshLayout) {
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                //새로 고침할 작업 나중에 추가하기
-                swipeRefreshLayout.setRefreshing(false);
-                Log.d(TAG, "recyclerview: swipe&Refresh");
-
-            }
-        });
-    }
 }

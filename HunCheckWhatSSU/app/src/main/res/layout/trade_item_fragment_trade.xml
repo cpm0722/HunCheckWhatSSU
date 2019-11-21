@@ -16,7 +16,7 @@
 
         <RelativeLayout
             android:id="@+id/item_button_delete"
-            android:layout_width="170dp"
+            android:layout_width="85dp"
             android:layout_height="match_parent"
             android:background="@color/colorPrimaryDark"
             android:clickable="true"
