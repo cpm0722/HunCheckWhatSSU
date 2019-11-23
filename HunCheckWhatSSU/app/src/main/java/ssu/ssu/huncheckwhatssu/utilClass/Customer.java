@@ -239,11 +239,11 @@ public class Customer implements Parcelable {
         if((tempint =dataSnapshot.child("Grade").getValue(Integer.class))!=null)
              this.grade = tempint;
 
-        DataSnapshot tempSnapshot = dataSnapshot.child("SellList");
+        DataSnapshot tempSnapshot = dataSnapshot.child("sellList");
         for (DataSnapshot sellSnapshot : tempSnapshot.getChildren()) {
             sellList.add(sellSnapshot.getValue(String.class));
         }
-        tempSnapshot = dataSnapshot.child("BuyList");
+        tempSnapshot = dataSnapshot.child("buyList");
 
         for(DataSnapshot buySnapshot : tempSnapshot.getChildren()){
             buyList.add(buySnapshot.getValue(String.class));
