@@ -83,7 +83,7 @@ public class SellFragment extends Fragment {
         firebaseCommunicator.setRecyclerView(this.getContext(), this.getActivity(), sellRecyclerView, FirebaseCommunicator.WhichRecyclerView.sellRecyclerView);
 
         // 리사이클러뷰에 RecyclerViewAdapter1 객체 지정.
-        sellAdapter = new RecyclerViewTradeAdapter_Sell(this.getContext(), firebaseCommunicator, firebaseCommunicator.getSellTradeListVector()) ;
+        sellAdapter = new RecyclerViewTradeAdapter_Sell(this.getContext(), firebaseCommunicator.getSellTradeListVector(), sellRecyclerView) ;
         sellRecyclerView.setAdapter(sellAdapter);
         sellAdapter.setSwipeable(this.getContext(), this.getActivity(), sellRecyclerView);
 

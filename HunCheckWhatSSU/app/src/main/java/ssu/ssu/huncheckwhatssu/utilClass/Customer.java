@@ -11,6 +11,7 @@ import com.google.firebase.database.DataSnapshot;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -30,18 +31,15 @@ public class Customer implements Parcelable {
     String major;
     int grade;
 
-
-
     double creditRating;
     ArrayList<String> sellList;
     ArrayList<String> buyList;
 
-    public Customer(){
+    public Customer() {
     }
 
     public Customer(String id) {
         this.id = id;
-        setCustomerDataFromUID();
     }
 
     public Customer(String id, String name, String phoneNumber, String address, float creditRating) {
@@ -62,36 +60,33 @@ public class Customer implements Parcelable {
         buyList = in.readArrayList(String.class.getClassLoader());
     }
 
-//    (이거해라빨간줄~~)
-    public void setCustomerDataFromUID() {
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("customer");
-        Query query = reference.equalTo(this.getId());
-        query.addChildEventListener(new ChildEventListener() {
+    public void setCustomerDataFromUID(final RecyclerView.Adapter adapter) {
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("customer/" + this.getId());
+
+        Log.d("JS", "setCustomerDataFromUID: " + this.getId());
+
+        reference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                if (dataSnapshot != null && dataSnapshot.exists()) {
-                    Customer customer = dataSnapshot.getValue(Customer.class);
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Log.d("JS", "onDataChange: " + dataSnapshot.toString());
+
+                if (dataSnapshot.getValue() != null) {
+                    Customer customer = new Customer(dataSnapshot);
+
+                    Log.d("JS", "onDataChange: " + customer.toString());
 
                     setName(customer.getName());
                     setAddress(customer.getAddress());
                     setCreditRating(customer.getCreditRating());
                     setPhoneNumber(customer.getPhoneNumber());
+                    Log.d("JS", "seller: " + getName() + getPhoneNumber());
+
+                } else {
+                    // 정보 없을때 (정상적인 절차를 걸쳐서 사용하게 되면 생길 수 없는 경우)
+                    setName("정보 없음");
                 }
-            }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
+                if (adapter != null)
+                    adapter.notifyDataSetChanged();
             }
 
             @Override
@@ -162,17 +157,29 @@ public class Customer implements Parcelable {
         this.address = address;
     }
 
-    public String getNickName() { return nickName; }
+    public String getNickName() {
+        return nickName;
+    }
 
-    public void setNickName(String nickName) { this.nickName = nickName; }
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
+    }
 
-    public String getMajor() { return major; }
+    public String getMajor() {
+        return major;
+    }
 
-    public void setMajor(String major) { this.major = major; }
+    public void setMajor(String major) {
+        this.major = major;
+    }
 
-    public int getGrade() { return grade; }
+    public int getGrade() {
+        return grade;
+    }
 
-    public void setGrade(int grade) { this.grade = grade; }
+    public void setGrade(int grade) {
+        this.grade = grade;
+    }
 
     public void toMap(Map<String, Object> result) {
         result.put("Uid", this.id);
@@ -180,12 +187,29 @@ public class Customer implements Parcelable {
         result.put("PhoneNumber", this.phoneNumber);
         result.put("Address", this.address);
         result.put("CreditRating", this.creditRating);
-        result.put("NickName",this.nickName);
-        result.put("Major",this.major);
-        result.put("Grade",this.grade);
-        result.put("sellList",sellList);
-        result.put("buyList",buyList);
+        result.put("NickName", this.nickName);
+        result.put("Major", this.major);
+        result.put("Grade", this.grade);
+        result.put("sellList", sellList);
+        result.put("buyList", buyList);
         return;
+    }
+
+
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", address='" + address + '\'' +
+                ", nickName='" + nickName + '\'' +
+                ", major='" + major + '\'' +
+                ", grade=" + grade +
+                ", creditRating=" + creditRating +
+                ", sellList=" + sellList +
+                ", buyList=" + buyList +
+                '}';
     }
 
     public double getCreditRating() {
@@ -196,11 +220,11 @@ public class Customer implements Parcelable {
         this.creditRating = creditRating;
     }
 
-    public Customer(DataSnapshot dataSnapshot){
+    public Customer(DataSnapshot dataSnapshot) {
         sellList = new ArrayList<>();
         buyList = new ArrayList<>();
 
-        Log.d("YECHAN","Customer 생성자");
+        Log.d("YECHAN", "Customer 생성자" + dataSnapshot.toString());
 
         this.id = dataSnapshot.child("Uid").getValue(String.class);
         this.name = dataSnapshot.child("Name").getValue(String.class);
@@ -212,12 +236,12 @@ public class Customer implements Parcelable {
         //this.grade = dataSnapshot.child("Grade").getValue(Integer.class);
 
         DataSnapshot tempSnapshot = dataSnapshot.child("SellList");
-        for(DataSnapshot sellSnapshot : tempSnapshot.getChildren()){
+        for (DataSnapshot sellSnapshot : tempSnapshot.getChildren()) {
             sellList.add(sellSnapshot.getValue(String.class));
         }
         tempSnapshot = dataSnapshot.child("BuyList");
 
-        for(DataSnapshot buySnapshot : tempSnapshot.getChildren()){
+        for (DataSnapshot buySnapshot : tempSnapshot.getChildren()) {
             buyList.add(buySnapshot.getValue(String.class));
         }
     }

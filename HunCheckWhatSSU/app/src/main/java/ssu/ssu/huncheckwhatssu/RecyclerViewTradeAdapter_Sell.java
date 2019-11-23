@@ -18,6 +18,7 @@ import com.nikhilpanju.recyclerviewenhanced.RecyclerTouchListener;
 
 import java.util.Vector;
 
+import ssu.ssu.huncheckwhatssu.utilClass.Customer;
 import ssu.ssu.huncheckwhatssu.utilClass.Trade;
 
 import static androidx.constraintlayout.widget.Constraints.TAG;
@@ -25,12 +26,12 @@ import static androidx.constraintlayout.widget.Constraints.TAG;
 public class RecyclerViewTradeAdapter_Sell extends RecyclerView.Adapter<RecyclerViewTradeAdapter_Sell.TradeViewHolder> {
     LayoutInflater inflater;
     Vector<Trade> modelVector;
-    FirebaseCommunicator firebaseCommunicator;
+    RecyclerView recyclerView;
 
-    public RecyclerViewTradeAdapter_Sell(Context context, FirebaseCommunicator firebaseCommunicator, Vector<Trade> vector) {
+    public RecyclerViewTradeAdapter_Sell(Context context,  Vector<Trade> vector, RecyclerView recyclerView) {
         inflater = LayoutInflater.from(context);
         modelVector = vector;
-        this.firebaseCommunicator = firebaseCommunicator;
+        this.recyclerView = recyclerView;
     }
 
     @Override
@@ -76,6 +77,10 @@ public class RecyclerViewTradeAdapter_Sell extends RecyclerView.Adapter<Recycler
         }
 
         public void bindData(Trade object) {
+            if(object.getSeller().getName() == null) {
+                object.setSeller(new Customer(object.getSellerId()));
+                object.getSeller().setCustomerDataFromUID(recyclerView.getAdapter());
+            }
             imageView.setBackgroundResource(R.drawable.bookimag);
             bookTitleTextView.setText(object.getBook().getTitle());
             sellerNameTextView.setText(object.getSeller().getName());

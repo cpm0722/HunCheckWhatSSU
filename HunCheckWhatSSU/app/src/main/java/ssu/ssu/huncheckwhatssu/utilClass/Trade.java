@@ -43,7 +43,7 @@ public class Trade implements Parcelable {
         this.tradeDate = null;
         this.seller = new Customer();
         seller.setId(sellerId);
-        seller.setCustomerDataFromUID();
+        seller.setCustomerDataFromUID(null);
     }
 
     public Trade(Book book, String sellerId, String purchaserId, TradeState tradeState, String tradePlace, Calendar tradeDate) {
@@ -54,7 +54,7 @@ public class Trade implements Parcelable {
         this.tradePlace = tradePlace;
         this.seller = new Customer();
         seller.setId(sellerId);
-        seller.setCustomerDataFromUID();
+        seller.setCustomerDataFromUID(null);
 
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
         if (tradeDate  == null) {

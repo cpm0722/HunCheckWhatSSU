@@ -26,15 +26,17 @@ import static androidx.constraintlayout.widget.Constraints.TAG;
 public class RecyclerViewTradeAdapter_Trade extends RecyclerView.Adapter<RecyclerViewTradeAdapter_Trade.TradeViewHolder> {
     LayoutInflater inflater;
     Vector<Trade> modelList;
+    RecyclerView recyclerView;
 
 
     public Vector<Trade> getTrades() {
         return modelList;
     }
 
-    public RecyclerViewTradeAdapter_Trade(Context context, Vector<Trade> vector) {
+    public RecyclerViewTradeAdapter_Trade(Context context, Vector<Trade> vector, RecyclerView recyclerView) {
         inflater = LayoutInflater.from(context);
         modelList = vector;
+        this.recyclerView = recyclerView;
     }
 
     @Override
@@ -79,9 +81,10 @@ public class RecyclerViewTradeAdapter_Trade extends RecyclerView.Adapter<Recycle
         }
 
         public void bindData(Trade object) {
-            Log.d("DEBUG!", "bindData ! " + object.getSeller().getName() + object.getSeller().getId());
-            object.setSeller(new Customer(object.getSellerId()));
-            Log.d("DEBUG!", "bindData ! " + object.getSeller().getName() + object.getSeller().getId());
+            if(object.getSeller().getName() == null) {
+                object.setSeller(new Customer(object.getSellerId()));
+                object.getSeller().setCustomerDataFromUID(recyclerView.getAdapter());
+            }
             book_image.setBackgroundResource(R.drawable.bookimag);
             book_title.setText(object.getBook().getTitle());
             original_price.setText(String.valueOf(object.getBook().getOriginalPrice()));
