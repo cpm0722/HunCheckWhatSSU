@@ -48,7 +48,6 @@ public class FirebaseCommunicator {
     private Context context;
     private Activity activity;
     private WhichRecyclerView whichRecyclerView;
-    private  Customer result;
 
     ValueEventListener tradeEventListener;
 
@@ -284,54 +283,5 @@ public class FirebaseCommunicator {
                 }
         );
         return customer[0];
-    }
-
-    //---------------------------------------------------------------------------진예찬
-
-    public void upLoadCustomer(Customer customer){
-        String id = customer.getId();
-        DatabaseReference path = FirebaseDatabase.getInstance().getReference().child("customer").child(id);
-        HashMap<String, Object> update = new HashMap<>();
-        customer.toMap(update);
-        path.updateChildren(update);
-    }
-
-    public interface forSettingPersonalInfo {
-        void onSettingListener(Customer customer);
-    }
-
-    forSettingPersonalInfo testListener;
-
-    public void setForSettingPersonalInfo(forSettingPersonalInfo testListener) {
-        this.testListener = testListener;
-    }
-
-    public void getCustomerById(String Uid){
-        DatabaseReference path = FirebaseDatabase.getInstance().getReference().child("customer").child(Uid);
-        result = null;
-        Log.d("YECHAN", "getCustomer 함수");
-
-        path.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (testListener != null) {
-                    testListener.onSettingListener(new Customer(dataSnapshot));
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Log.d("YECHAN", "Data Read Fail");
-            }
-        });
-        Log.d("YECHAN", "getCustomer 함수 끝");
-    }
-
-    public Customer getResult() {
-        return result;
-    }
-
-    public void setResult(Customer result) {
-        this.result = result;
     }
 }

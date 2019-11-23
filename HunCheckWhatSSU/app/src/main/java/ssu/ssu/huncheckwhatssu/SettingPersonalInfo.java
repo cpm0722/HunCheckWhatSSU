@@ -3,17 +3,16 @@ package ssu.ssu.huncheckwhatssu;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
+import java.util.Vector;
 
 import ssu.ssu.huncheckwhatssu.utilClass.Customer;
 
@@ -21,6 +20,7 @@ public class SettingPersonalInfo extends AppCompatActivity implements View.OnCli
 
     Customer myInfo;
     FirebaseCommunicator firebaseCommunicator;
+    FirebaseHelper firebaseHelper;
     private Button setImageBtn;
     private Button cancelBtn;
     private Button saveBtn;
@@ -36,9 +36,8 @@ public class SettingPersonalInfo extends AppCompatActivity implements View.OnCli
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting_personal);
 
-
         getId();
-        firebaseCommunicator = new FirebaseCommunicator(FirebaseCommunicator.WhichRecyclerView.none);
+        firebaseHelper = new FirebaseHelper();
 
     }
 
@@ -47,16 +46,16 @@ public class SettingPersonalInfo extends AppCompatActivity implements View.OnCli
         super.onStart();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-        firebaseCommunicator.setForSettingPersonalInfo(new FirebaseCommunicator.forSettingPersonalInfo() {
+        firebaseHelper.addCallBackListener(new FirebaseHelper.CallBackListener() {
             @Override
-            public void onSettingListener(Customer customer) {
+            public void afterGetCustomer(Customer customer) {
                 myInfo = customer;
-                Log.d("YECHAN", myInfo.getName());
                 initializaing();
             }
+
+
         });
-        firebaseCommunicator.getCustomerById(user.getDisplayName() + "_" + user.getUid());
-        //initializaing();
+        firebaseHelper.getCustomerById(user.getDisplayName() + "_" + user.getUid());
     }
 
     private void getId(){
@@ -99,9 +98,7 @@ public class SettingPersonalInfo extends AppCompatActivity implements View.OnCli
     @Override
     public void onClick(View view) {
         if(view == setImageBtn){
-            if(myInfo == null) {
-                Log.d("YECHAN","myinfo 값이 안들어옴");
-            }
+
         }
         else if(view == cancelBtn){
             finish();
@@ -123,6 +120,6 @@ public class SettingPersonalInfo extends AppCompatActivity implements View.OnCli
         myInfo.setPhoneNumber(editContactAddress.getText().toString());
         myInfo.setAddress(editAddress.getText().toString());
 
-        firebaseCommunicator.upLoadCustomer(myInfo);
+        firebaseHelper.upLoadCustomer(myInfo);
     }
 }
