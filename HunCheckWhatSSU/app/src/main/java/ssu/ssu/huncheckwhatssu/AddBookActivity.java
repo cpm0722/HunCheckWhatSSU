@@ -1,29 +1,19 @@
 package ssu.ssu.huncheckwhatssu;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.SearchView;
+import android.widget.Spinner;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,30 +21,21 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
-
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.concurrent.TimeoutException;
 
 import ssu.ssu.huncheckwhatssu.utilClass.Book;
 import ssu.ssu.huncheckwhatssu.utilClass.BookState;
 import ssu.ssu.huncheckwhatssu.utilClass.Customer;
-import ssu.ssu.huncheckwhatssu.utilClass.NaverBookSearch;
 import ssu.ssu.huncheckwhatssu.utilClass.Trade;
 import ssu.ssu.huncheckwhatssu.DB.DBHelper;
 import ssu.ssu.huncheckwhatssu.SearchFragment.DBData;
 
 import static androidx.constraintlayout.widget.Constraints.TAG;
 
-public class AddBookActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class AddBookActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
     Button add;
     Book book1;
     Trade trade;
@@ -65,7 +46,7 @@ public class AddBookActivity extends AppCompatActivity implements AdapterView.On
     TextView price;
     int price1;//원가
     TextView publisher;
-    RadioGroup radioGroup1,radioGroup2,radioGroup3,radioGroup4,radioGroup5,radioGroup6;
+    RadioGroup radioGroup1, radioGroup2, radioGroup3, radioGroup4, radioGroup5, radioGroup6;
     BookState bookState;
     Spinner college_sp;
     Spinner department_sp;
@@ -80,23 +61,20 @@ public class AddBookActivity extends AppCompatActivity implements AdapterView.On
         setContentView(R.layout.activity_add_book);
         college_sp = (Spinner) findViewById(R.id.college_sp);
         subject_sp = (Spinner) findViewById(R.id.subject_sp);
-        department_sp = (Spinner) findViewById(R.id.department_sp);
+        department_sp = findViewById(R.id.department_sp);
 
         collegeData = new ArrayList<>();
         departmentData = new ArrayList<>();
         subjectData = new ArrayList<>();
 
-        // setSpinnerData(1, -1, -1);
-        setSpinnerData(1, -1, -1);
+        college_sp.setOnItemSelectedListener(this);
+        subject_sp.setOnItemSelectedListener(this);
+        department_sp.setOnItemSelectedListener(this);
 
+        setSpinnerData(1, -1, -1);
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, getDataName(collegeData));
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         college_sp.setAdapter(arrayAdapter);
-        
-
-
-
-
 
 
         Bundle bd = getIntent().getExtras();
@@ -284,41 +262,37 @@ public class AddBookActivity extends AppCompatActivity implements AdapterView.On
         return arrayList;
     }
 
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+   public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         if (parent == college_sp) {
             if (position == 0) {
                 setSpinnerData(2, 0, -1);
             } else {
                 setSpinnerData(2, collegeData.get(position).getKey(), -1);
-//                Log.d("JS", "onItemSelected: " + collegeData.get(position).getKey());
 
             }
 
             ArrayAdapter<String> arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, getDataName(departmentData));
             arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             department_sp.setAdapter(arrayAdapter);
-            Log.d("JS", "onItemSelected: " + parent.getItemAtPosition(position));
         } else if (parent == department_sp) {
             if (position == 0) {
                 setSpinnerData(3, -1, 0);
             } else {
                 setSpinnerData(3, -1, departmentData.get(position).getKey());
-                Log.d("JS", "onItemSelected: " + departmentData.get(position).getKey());
-
             }
 
             ArrayAdapter<String> arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, getDataName(subjectData));
             arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             subject_sp.setAdapter(arrayAdapter);
-            Log.d("JS", "onItemSelected: " + parent.getItemAtPosition(position));
-
-        }
+           }
     }
 
-    @Override
-    public void onNothingSelected (AdapterView < ? > parent){
+
+    public void onNothingSelected(AdapterView<?> parent) {
 
     }
+
+
 
     private void setSpinnerData(int spin_switch, int college_id, int department_id) {
         DBHelper dbHelper = new DBHelper(this);
@@ -376,60 +350,7 @@ public class AddBookActivity extends AppCompatActivity implements AdapterView.On
 
 
 
-  /*  private void setSpinnerData(int spin_switch, int college_id, int department_id) {//1,-1,-1
-        DBHelper dbHelper = new DBHelper(getContext());
-        Cursor cursor;
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
 
-        if (spin_switch == 1) {
-            collegeData.clear();
-            departmentData.clear();
-            subjectData.clear();
-
-            cursor = db.rawQuery("select * from tb_college", null);
-
-            collegeData.add(new DBData(-1, -1, "전체", null));
-
-            while (cursor.moveToNext()) {
-                collegeData.add(new DBData(cursor.getInt(0), -1, cursor.getString(1), null));
-            }
-        }
-
-        if (spin_switch == 2) {
-            departmentData.clear();
-            subjectData.clear();
-
-            if (college_id == 0)
-                cursor = db.rawQuery("select * from tb_department", null);
-            else
-                cursor = db.rawQuery("select * from tb_department where college_id = ?", new String[]{(college_id) + ""});
-
-            departmentData.add(new DBData(-1, -1, "전체", null));
-
-            while (cursor.moveToNext()) {
-                departmentData.add(new DBData(cursor.getInt(0), cursor.getInt(1), cursor.getString(2), null));
-            }
-        }
-
-        if (spin_switch == 3) {
-            subjectData.clear();
-
-            if (department_id == 0)
-                cursor = db.rawQuery("select * from tb_subject", null);
-            else
-                cursor = db.rawQuery("select * from tb_subject where department_id = ?", new String[]{(department_id) + ""});
-
-            subjectData.add(new DBData(-1, -1, "전체", null));
-
-            while (cursor.moveToNext()) {
-                subjectData.add(new DBData(cursor.getInt(0), cursor.getInt(1),
-                        cursor.getString(3), new String[]{cursor.getString(2), cursor.getString(4), cursor.getString(5)}));
-            }
-        }
-
-        db.close();
-    }
-*/
 
     public Trade setData() { //Trade형 객체 데이터베이스 올리기 위해 객체화작업.
         Book book1 = new Book();
@@ -446,7 +367,6 @@ public class AddBookActivity extends AppCompatActivity implements AdapterView.On
         return trade;
 
     }
-
 
 
 
