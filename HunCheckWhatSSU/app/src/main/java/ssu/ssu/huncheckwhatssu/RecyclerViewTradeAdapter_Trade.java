@@ -92,7 +92,7 @@ public class RecyclerViewTradeAdapter_Trade extends RecyclerView.Adapter<Recycle
             book_category.setText(object.getBook().getCollege_id());
             book_author.setText(object.getBook().getAuthor());
             book_publisher.setText(object.getBook().getPublisher());
-            selling_price.setText(String.valueOf(object.getBook().getSellingPrice()));
+            selling_price.setText(String.valueOf(object.getSellingPrice()));
             seller_credit.setText("신뢰");
             //seller_credit.setText((int)object.getSeller().getCreditRating());
 

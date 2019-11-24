@@ -92,7 +92,7 @@ public class RecyclerViewTradeAdapter_Search extends RecyclerView.Adapter<Recycl
             imageView.setBackgroundResource(R.drawable.bookimag);
             bookTitleTextView.setText(object.getBook().getTitle());
             bookPriceTextView.setText(String.valueOf(object.getBook().getOriginalPrice()));
-            bookSellingPriceTextView.setText(String.valueOf(object.getBook().getSellingPrice()));
+            bookSellingPriceTextView.setText(String.valueOf(object.getSellingPrice()));
             bookPublisherTextView.setText(String.valueOf(object.getBook().getPublisher()));
 
             DBHelper dbHelper = new DBHelper(inflater.getContext());

@@ -16,9 +16,21 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.Calendar;
+import java.util.HashMap;
+
+import ssu.ssu.huncheckwhatssu.utilClass.Book;
+import ssu.ssu.huncheckwhatssu.utilClass.BookState;
+import ssu.ssu.huncheckwhatssu.utilClass.Trade;
 
 public class OptionFragment extends Fragment implements View.OnClickListener {
 
+    private  Button seeMyInfoBtn;
     private Button setPersonalInfoBtn;
     private Button setNotificationBtn;
     private Button customerContactAddressBtn;
@@ -36,10 +48,11 @@ public class OptionFragment extends Fragment implements View.OnClickListener {
         Menu menu = navView.getMenu();
         menu.getItem(3).setChecked(true);
 
-
+        seeMyInfoBtn = root.findViewById(R.id.see_my_info);
         setPersonalInfoBtn = (Button)root.findViewById(R.id.setting_Personal_Info_Btn);
         setNotificationBtn = (Button)root.findViewById(R.id.setting_notification_btn);
         customerContactAddressBtn= (Button)root.findViewById(R.id.customer_support_center_btn);
+        seeMyInfoBtn.setOnClickListener(this);
         setPersonalInfoBtn.setOnClickListener(this);
         setNotificationBtn.setOnClickListener(this);
         customerContactAddressBtn.setOnClickListener(this);
@@ -60,6 +73,19 @@ public class OptionFragment extends Fragment implements View.OnClickListener {
         }
         else if(view == customerContactAddressBtn){
             showCustomerSupportContactAddress();
+        }
+        else if(view == seeMyInfoBtn){
+            BookState bookState = new BookState(BookState.bookState.BAD, BookState.bookState.WORST, BookState.bookState.BEST, BookState.bookState.GOOD, BookState.bookState.BAD, BookState.bookState.GOOD);
+            Book book = new Book("testISBN10","testISBN13","testTitle","testimg","testAuthor",15000,"testPublisher","testPubdate","testdescription",bookState);
+            FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+            Trade trade = new Trade(book, firebaseUser.getDisplayName()+"_"+firebaseUser.getUid());
+            trade.setSellingPrice(5000);
+            HashMap<String,Object> update = new HashMap<>();
+            trade.toMap(update);
+            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("trade").push();
+            String key = databaseReference.getKey();
+            trade.setTradeId(key);
+            databaseReference.updateChildren(update);
         }
     }
     private void setNotification(){

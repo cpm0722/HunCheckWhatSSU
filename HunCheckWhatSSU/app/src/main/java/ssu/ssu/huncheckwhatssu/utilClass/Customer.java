@@ -4,22 +4,17 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
 
-import java.util.ArrayList;
-import java.util.Map;
-
-import com.google.firebase.database.DataSnapshot;
-
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.Map;
 
 public class Customer implements Parcelable {
     // 사용자 고유 번호
@@ -41,7 +36,7 @@ public class Customer implements Parcelable {
         this.id = id;
     }
 
-    public Customer(String id, String name, String phoneNumber, String address, float creditRating) {
+    public Customer(String id, String name, String phoneNumber, String address, double creditRating) {
         this.id = id;
         this.name = name;
         this.phoneNumber = phoneNumber;
@@ -180,6 +175,14 @@ public class Customer implements Parcelable {
         this.grade = grade;
     }
 
+    public double getCreditRating() {
+        return creditRating;
+    }
+
+    public void setCreditRating(double creditRating) {
+        this.creditRating = creditRating;
+    }
+
     public void toMap(Map<String, Object> result) {
         result.put("Uid", this.id);
         result.put("Name", this.name);
@@ -211,13 +214,7 @@ public class Customer implements Parcelable {
                 '}';
     }
 
-    public double getCreditRating() {
-        return creditRating;
-    }
 
-    public void setCreditRating(double creditRating) {
-        this.creditRating = creditRating;
-    }
 
     public Customer(DataSnapshot dataSnapshot) {
         sellList = new ArrayList<>();
@@ -229,15 +226,15 @@ public class Customer implements Parcelable {
         this.phoneNumber = dataSnapshot.child("PhoneNumber").getValue(String.class);
         this.address = dataSnapshot.child("Address").getValue(String.class);
         Double tempdouble;
-        if((tempdouble = dataSnapshot.child("CreditRating").getValue(Double.class))!=null)
-             this.creditRating = tempdouble;
+        if ((tempdouble = dataSnapshot.child("CreditRating").getValue(Double.class)) != null)
+            this.creditRating = tempdouble;
         else
             this.creditRating = 5.0;
         this.nickName = dataSnapshot.child("NickName").getValue(String.class);
         this.major = dataSnapshot.child("Major").getValue(String.class);
         Integer tempint;
-        if((tempint =dataSnapshot.child("Grade").getValue(Integer.class))!=null)
-             this.grade = tempint;
+        if ((tempint = dataSnapshot.child("Grade").getValue(Integer.class)) != null)
+            this.grade = tempint;
 
         DataSnapshot tempSnapshot = dataSnapshot.child("sellList");
         for (DataSnapshot sellSnapshot : tempSnapshot.getChildren()) {
@@ -245,7 +242,7 @@ public class Customer implements Parcelable {
         }
         tempSnapshot = dataSnapshot.child("buyList");
 
-        for(DataSnapshot buySnapshot : tempSnapshot.getChildren()){
+        for (DataSnapshot buySnapshot : tempSnapshot.getChildren()) {
             buyList.add(buySnapshot.getValue(String.class));
         }
     }

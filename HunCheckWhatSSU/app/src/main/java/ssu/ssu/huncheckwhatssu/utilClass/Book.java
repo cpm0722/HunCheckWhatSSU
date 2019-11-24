@@ -24,7 +24,6 @@ public class Book implements Parcelable {
     String department_id;
     String subject_id;
     BookState bookState;
-    int sellingPrice;
     //
 
     public Book(){}
@@ -49,7 +48,6 @@ public class Book implements Parcelable {
         this.image = image;
         this.author = author;
         this.originalPrice = price;
-        this.sellingPrice = sellingPrice;
         this.publisher = publisher;
         this.pubDate = pubDate;
         this.description = description;
@@ -66,7 +64,6 @@ public class Book implements Parcelable {
         image = in.readString();
         author = in.readString();
         originalPrice = in.readInt();
-        sellingPrice = in.readInt();
         publisher = in.readString();
         pubDate = in.readString();
         description = in.readString();
@@ -101,7 +98,6 @@ public class Book implements Parcelable {
         dest.writeString(image);
         dest.writeString(author);
         dest.writeInt(originalPrice);
-        dest.writeInt(sellingPrice);
         dest.writeString(publisher);
         dest.writeString(pubDate);
         dest.writeString(description);
@@ -178,13 +174,6 @@ public class Book implements Parcelable {
         this.originalPrice = originalPrice;
     }
 
-    public int getSellingPrice() {
-        return sellingPrice;
-    }
-
-    public void setSellingPrice(int sellingPrice) {
-        this.sellingPrice = sellingPrice;
-    }
 
     public String getPublisher() {
         return publisher;
