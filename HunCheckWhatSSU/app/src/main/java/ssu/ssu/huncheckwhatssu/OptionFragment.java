@@ -75,17 +75,12 @@ public class OptionFragment extends Fragment implements View.OnClickListener {
             showCustomerSupportContactAddress();
         }
         else if(view == seeMyInfoBtn){
+            FirebaseHelper firebaseHelper = new FirebaseHelper();
             BookState bookState = new BookState(BookState.bookState.BAD, BookState.bookState.WORST, BookState.bookState.BEST, BookState.bookState.GOOD, BookState.bookState.BAD, BookState.bookState.GOOD);
             Book book = new Book("testISBN10","testISBN13","testTitle","testimg","testAuthor",15000,"testPublisher","testPubdate","testdescription",bookState);
-            FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-            Trade trade = new Trade(book, firebaseUser.getDisplayName()+"_"+firebaseUser.getUid());
+            Trade trade = new Trade(book, firebaseHelper.myUid);
             trade.setSellingPrice(5000);
-            HashMap<String,Object> update = new HashMap<>();
-            trade.toMap(update);
-            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("trade").push();
-            String key = databaseReference.getKey();
-            trade.setTradeId(key);
-            databaseReference.updateChildren(update);
+            firebaseHelper.upLoadTrade(trade);
         }
     }
     private void setNotification(){
