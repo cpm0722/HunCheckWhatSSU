@@ -305,7 +305,7 @@ public class SearchFragment extends Fragment implements View.OnClickListener, Ad
         }
     }
 
-    class DBData {
+    static class DBData {
         int key;
         int foreign_key;
         String name;

@@ -1,5 +1,7 @@
 package ssu.ssu.huncheckwhatssu;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -7,25 +9,37 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.SearchView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.database.sqlite.SQLiteDatabase;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeoutException;
@@ -35,12 +49,14 @@ import ssu.ssu.huncheckwhatssu.utilClass.BookState;
 import ssu.ssu.huncheckwhatssu.utilClass.Customer;
 import ssu.ssu.huncheckwhatssu.utilClass.NaverBookSearch;
 import ssu.ssu.huncheckwhatssu.utilClass.Trade;
+import ssu.ssu.huncheckwhatssu.DB.DBHelper;
+import ssu.ssu.huncheckwhatssu.SearchFragment.DBData;
 
-public class AddBookActivity extends AppCompatActivity {
+import static androidx.constraintlayout.widget.Constraints.TAG;
+
+public class AddBookActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     Button add;
     Book book1;
-    Spinner s1;
-    Spinner s2;
     Trade trade;
     TextView title;
     TextView Author;
@@ -49,44 +65,39 @@ public class AddBookActivity extends AppCompatActivity {
     TextView price;
     int price1;//원가
     TextView publisher;
-    RadioGroup radioGroup1;
-    RadioGroup radioGroup2;
-    RadioGroup radioGroup3;
-    RadioGroup radioGroup4;
-    RadioGroup radioGroup5;
-    RadioGroup radioGroup6;
+    RadioGroup radioGroup1,radioGroup2,radioGroup3,radioGroup4,radioGroup5,radioGroup6;
     BookState bookState;
-
+    Spinner college_sp;
+    Spinner department_sp;
+    Spinner subject_sp;
+    ArrayList<DBData> collegeData;
+    ArrayList<DBData> departmentData;
+    ArrayList<DBData> subjectData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_book);
-        s1 = (Spinner) findViewById(R.id.spinner1);
-        s2 = (Spinner) findViewById(R.id.spinner2);
-        ArrayAdapter<CharSequence> adapter1 = ArrayAdapter.createFromResource(this, R.array.college, android.R.layout.simple_spinner_item);
-        adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        s1.setAdapter(adapter1);
+        college_sp = (Spinner) findViewById(R.id.college_sp);
+        subject_sp = (Spinner) findViewById(R.id.subject_sp);
+        department_sp = (Spinner) findViewById(R.id.department_sp);
 
-        s1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (s1.getSelectedItem().equals("IT대")) {
-                    Toast.makeText(getApplicationContext(), "IT대", Toast.LENGTH_SHORT).show();
-                    ArrayAdapter adapter2 = ArrayAdapter.createFromResource(AddBookActivity.this, R.array.ITcollege, android.R.layout.simple_spinner_item);
-                    s2.setAdapter(adapter2);
-                } else if (s1.getSelectedItem().equals("공과대")) {
-                    Toast.makeText(getApplicationContext(), "공과대", Toast.LENGTH_SHORT).show();
-                    ArrayAdapter adapter2 = ArrayAdapter.createFromResource(AddBookActivity.this, R.array.EngineeringCollege, android.R.layout.simple_spinner_item);
-                    s2.setAdapter(adapter2);
-                }
-            }
+        collegeData = new ArrayList<>();
+        departmentData = new ArrayList<>();
+        subjectData = new ArrayList<>();
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
+        // setSpinnerData(1, -1, -1);
+        setSpinnerData(1, -1, -1);
 
-            }
-        });
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, getDataName(collegeData));
+        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        college_sp.setAdapter(arrayAdapter);
+        
+
+
+
+
+
 
         Bundle bd = getIntent().getExtras();
         if (bd != null) {
@@ -260,6 +271,166 @@ public class AddBookActivity extends AppCompatActivity {
 
     }
 
+
+    private ArrayList<String> getDataName(ArrayList<SearchFragment.DBData> dbData) {
+        ArrayList<String> arrayList = new ArrayList();
+
+        for (int i = 0; i < dbData.size(); i++) {
+            if (dbData.get(i).another != null)
+                arrayList.add("(" + dbData.get(i).getAnother()[0] + ")" + dbData.get(i).name);
+            else arrayList.add(dbData.get(i).name);
+        }
+
+        return arrayList;
+    }
+
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        if (parent == college_sp) {
+            if (position == 0) {
+                setSpinnerData(2, 0, -1);
+            } else {
+                setSpinnerData(2, collegeData.get(position).getKey(), -1);
+//                Log.d("JS", "onItemSelected: " + collegeData.get(position).getKey());
+
+            }
+
+            ArrayAdapter<String> arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, getDataName(departmentData));
+            arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            department_sp.setAdapter(arrayAdapter);
+            Log.d("JS", "onItemSelected: " + parent.getItemAtPosition(position));
+        } else if (parent == department_sp) {
+            if (position == 0) {
+                setSpinnerData(3, -1, 0);
+            } else {
+                setSpinnerData(3, -1, departmentData.get(position).getKey());
+                Log.d("JS", "onItemSelected: " + departmentData.get(position).getKey());
+
+            }
+
+            ArrayAdapter<String> arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, getDataName(subjectData));
+            arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            subject_sp.setAdapter(arrayAdapter);
+            Log.d("JS", "onItemSelected: " + parent.getItemAtPosition(position));
+
+        }
+    }
+
+    @Override
+    public void onNothingSelected (AdapterView < ? > parent){
+
+    }
+
+    private void setSpinnerData(int spin_switch, int college_id, int department_id) {
+        DBHelper dbHelper = new DBHelper(this);
+        Cursor cursor;
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+
+        if (spin_switch == 1) {
+            collegeData.clear();
+            departmentData.clear();
+            subjectData.clear();
+
+            cursor = db.rawQuery("select * from tb_college", null);
+
+            collegeData.add(new DBData(-1, -1, "전체", null));
+
+            while (cursor.moveToNext()) {
+                collegeData.add(new DBData(cursor.getInt(0), -1, cursor.getString(1), null));
+            }
+        }
+
+        if (spin_switch == 2) {
+            departmentData.clear();
+            subjectData.clear();
+
+            if (college_id == 0)
+                cursor = db.rawQuery("select * from tb_department", null);
+            else
+                cursor = db.rawQuery("select * from tb_department where college_id = ?", new String[]{(college_id) + ""});
+
+            departmentData.add(new DBData(-1, -1, "전체", null));
+
+            while (cursor.moveToNext()) {
+                departmentData.add(new DBData(cursor.getInt(0), cursor.getInt(1), cursor.getString(2), null));
+            }
+        }
+
+        if (spin_switch == 3) {
+            subjectData.clear();
+
+            if (department_id == 0)
+                cursor = db.rawQuery("select * from tb_subject", null);
+            else
+                cursor = db.rawQuery("select * from tb_subject where department_id = ?", new String[]{(department_id) + ""});
+
+            subjectData.add(new DBData(-1, -1, "전체", null));
+
+            while (cursor.moveToNext()) {
+                subjectData.add(new DBData(cursor.getInt(0), cursor.getInt(1),
+                        cursor.getString(3), new String[]{cursor.getString(2), cursor.getString(4), cursor.getString(5)}));
+            }
+        }
+
+        db.close();
+    }
+
+
+
+  /*  private void setSpinnerData(int spin_switch, int college_id, int department_id) {//1,-1,-1
+        DBHelper dbHelper = new DBHelper(getContext());
+        Cursor cursor;
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+
+        if (spin_switch == 1) {
+            collegeData.clear();
+            departmentData.clear();
+            subjectData.clear();
+
+            cursor = db.rawQuery("select * from tb_college", null);
+
+            collegeData.add(new DBData(-1, -1, "전체", null));
+
+            while (cursor.moveToNext()) {
+                collegeData.add(new DBData(cursor.getInt(0), -1, cursor.getString(1), null));
+            }
+        }
+
+        if (spin_switch == 2) {
+            departmentData.clear();
+            subjectData.clear();
+
+            if (college_id == 0)
+                cursor = db.rawQuery("select * from tb_department", null);
+            else
+                cursor = db.rawQuery("select * from tb_department where college_id = ?", new String[]{(college_id) + ""});
+
+            departmentData.add(new DBData(-1, -1, "전체", null));
+
+            while (cursor.moveToNext()) {
+                departmentData.add(new DBData(cursor.getInt(0), cursor.getInt(1), cursor.getString(2), null));
+            }
+        }
+
+        if (spin_switch == 3) {
+            subjectData.clear();
+
+            if (department_id == 0)
+                cursor = db.rawQuery("select * from tb_subject", null);
+            else
+                cursor = db.rawQuery("select * from tb_subject where department_id = ?", new String[]{(department_id) + ""});
+
+            subjectData.add(new DBData(-1, -1, "전체", null));
+
+            while (cursor.moveToNext()) {
+                subjectData.add(new DBData(cursor.getInt(0), cursor.getInt(1),
+                        cursor.getString(3), new String[]{cursor.getString(2), cursor.getString(4), cursor.getString(5)}));
+            }
+        }
+
+        db.close();
+    }
+*/
+
     public Trade setData() { //Trade형 객체 데이터베이스 올리기 위해 객체화작업.
         Book book1 = new Book();
         Customer customer1 = new Customer();
@@ -275,5 +446,9 @@ public class AddBookActivity extends AppCompatActivity {
         return trade;
 
     }
+
+
+
+
 }
 
