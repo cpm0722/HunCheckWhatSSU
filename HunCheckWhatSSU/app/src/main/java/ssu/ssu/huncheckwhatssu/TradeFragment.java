@@ -39,7 +39,7 @@ public class TradeFragment extends Fragment {
         Menu menu = navView.getMenu();
         menu.getItem(2).setChecked(true);
 
-        /*편집 시작*/
+
 
         // 리사이클러뷰에 LinearLayoutManager 객체 지정.
         ongoingFirebase = new FirebaseCommunicator(FirebaseCommunicator.WhichRecyclerView.ongoingRecyclerView);

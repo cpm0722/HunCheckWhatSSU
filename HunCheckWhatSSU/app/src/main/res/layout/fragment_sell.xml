@@ -9,15 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="24dp" />
 
-    <ImageView
-        android:id="@+id/logo"
-        android:layout_width="match_parent"
-        android:layout_height="89dp"
-        android:layout_gravity="center_horizontal"
-        android:adjustViewBounds="true"
-        android:background="#FF0"
-        android:scaleType="fitXY"
-        android:src="@drawable/logo" />
+
 
     <Button
         android:id="@+id/AddSellBook"

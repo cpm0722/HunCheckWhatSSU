@@ -73,7 +73,7 @@ public class BookInfoActivity extends AppCompatActivity implements OnMapReadyCal
         Intent intent = getIntent();
         String bookInfoType = intent.getStringExtra("BookInfoType");
 
-        if (bookInfoType == null) {
+       if (bookInfoType == null) {
             Log.d("JS", "onCreate: 식별할 BookInfoType이 없습니다.");
             finish();
         } else if(bookInfoType.equals("BOOK_INFO_DEFAULT")) {
