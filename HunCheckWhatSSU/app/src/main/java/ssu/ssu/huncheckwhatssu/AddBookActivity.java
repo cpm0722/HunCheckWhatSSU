@@ -20,12 +20,13 @@ import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import java.util.ArrayList;
+
+import ssu.ssu.huncheckwhatssu.DB.DBData;
 import ssu.ssu.huncheckwhatssu.utilClass.Book;
 import ssu.ssu.huncheckwhatssu.utilClass.BookState;
 import ssu.ssu.huncheckwhatssu.utilClass.Customer;
 import ssu.ssu.huncheckwhatssu.utilClass.Trade;
 import ssu.ssu.huncheckwhatssu.DB.DBHelper;
-import ssu.ssu.huncheckwhatssu.SearchFragment.DBData;
 
 public class AddBookActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
     Button add;
@@ -241,13 +242,13 @@ public class AddBookActivity extends AppCompatActivity implements AdapterView.On
     }
 
 
-    private ArrayList<String> getDataName(ArrayList<SearchFragment.DBData> dbData) {
+    private ArrayList<String> getDataName(ArrayList<DBData> dbData) {
         ArrayList<String> arrayList = new ArrayList();
 
         for (int i = 0; i < dbData.size(); i++) {
-            if (dbData.get(i).another != null)
-                arrayList.add("(" + dbData.get(i).getAnother()[0] + ")" + dbData.get(i).name);
-            else arrayList.add(dbData.get(i).name);
+            if (dbData.get(i).getAnother() != null)
+                arrayList.add("(" + dbData.get(i).getAnother()[0] + ")" + dbData.get(i).getName());
+            else arrayList.add(dbData.get(i).getName());
         }
 
         return arrayList;
@@ -344,12 +345,12 @@ public class AddBookActivity extends AppCompatActivity implements AdapterView.On
     public Trade setData() { //Trade형 객체 데이터베이스 올리기 위해 객체화작업.
         Book book1 = new Book();
         Customer customer1 = new Customer();
-        book1.setTitle((String) title.getText());
-        book1.setAuthor((String) Author.getText());
-        book1.setIsbn10((String) Isbn.getText());
+        book1.setTitle(title.getText().toString());
+        book1.setAuthor(Author.getText().toString());
+        book1.setIsbn10(Isbn.getText().toString());
         book1.setOriginalPrice(price1);//원가
-        book1.setPublisher((String) publisher.getText());
-        book1.setPubDate((String) PubDate.getText());
+        book1.setPublisher(publisher.getText().toString());
+        book1.setPubDate( PubDate.getText().toString());
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String userPath = user.getDisplayName() + "_" + user.getUid();
         trade = new Trade(book1, userPath);

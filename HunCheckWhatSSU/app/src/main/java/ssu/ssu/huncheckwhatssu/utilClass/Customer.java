@@ -206,26 +206,31 @@ public class Customer implements Parcelable {
         this.creditRating = creditRating;
     }
 
-    public Customer(DataSnapshot dataSnapshot){
+    public Customer(DataSnapshot dataSnapshot) {
         sellList = new ArrayList<>();
         buyList = new ArrayList<>();
 
-        Log.d("YECHAN","Customer 생성자" + dataSnapshot.toString());
-
+        Log.d("YECHAN", "Customer 생성자" + dataSnapshot.toString());
         this.id = dataSnapshot.child("Uid").getValue(String.class);
         this.name = dataSnapshot.child("Name").getValue(String.class);
         this.phoneNumber = dataSnapshot.child("PhoneNumber").getValue(String.class);
         this.address = dataSnapshot.child("Address").getValue(String.class);
-        this.creditRating = dataSnapshot.child("CreditRating").getValue(Double.class);
+        Double tempdouble;
+        if((tempdouble = dataSnapshot.child("CreditRating").getValue(Double.class))!=null)
+            this.creditRating = tempdouble;
+        else
+            this.creditRating = 5.0;
         this.nickName = dataSnapshot.child("NickName").getValue(String.class);
         this.major = dataSnapshot.child("Major").getValue(String.class);
-        //this.grade = dataSnapshot.child("Grade").getValue(Integer.class);
+        Integer tempint;
+        if((tempint =dataSnapshot.child("Grade").getValue(Integer.class))!=null)
+            this.grade = tempint;
 
-        DataSnapshot tempSnapshot = dataSnapshot.child("SellList");
-        for(DataSnapshot sellSnapshot : tempSnapshot.getChildren()){
+        DataSnapshot tempSnapshot = dataSnapshot.child("sellList");
+        for (DataSnapshot sellSnapshot : tempSnapshot.getChildren()) {
             sellList.add(sellSnapshot.getValue(String.class));
         }
-        tempSnapshot = dataSnapshot.child("BuyList");
+        tempSnapshot = dataSnapshot.child("buyList");
 
         for(DataSnapshot buySnapshot : tempSnapshot.getChildren()){
             buyList.add(buySnapshot.getValue(String.class));

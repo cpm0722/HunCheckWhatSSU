@@ -31,6 +31,7 @@ public class Trade implements Parcelable {
     Calendar loadDate; // 추가
     String tradePlace; // 주소
     String tradeDate; // 거래일
+    int sellingPrice;
 
     public Trade(){}
 
@@ -156,6 +157,22 @@ public class Trade implements Parcelable {
         this.purchaser = purchaser;
     }
 
+    public int getSellingPrice() {
+        return sellingPrice;
+    }
+
+    public void setSellingPrice(int sellingPrice) {
+        this.sellingPrice = sellingPrice;
+    }
+
+    public Calendar getLoadDate() {
+        return loadDate;
+    }
+
+    public void setLoadDate(Calendar loadDate) {
+        this.loadDate = loadDate;
+    }
+
     public static Creator<Trade> getCREATOR() {
         return CREATOR;
     }
@@ -193,6 +210,7 @@ public class Trade implements Parcelable {
                 ", tradeState=" + tradeState +
                 ", tradePlace='" + tradePlace + '\'' +
                 ", tradeDate=" + tradeDate +
+                ", sellingPrice=" + sellingPrice +
                 '}';
     }
 
@@ -224,6 +242,7 @@ public class Trade implements Parcelable {
     }
 
     public void toMap(Map<String, Object> result) {
+        result.put("book",book);
         result.put("tradeId", this.tradeId);
         result.put("sellerId", this.sellerId);
         result.put("purchaserId", this.purchaserId);
@@ -231,6 +250,8 @@ public class Trade implements Parcelable {
         result.put("tradePlace", this.tradePlace);
         result.put("tradeDate", this.tradeDate);
         result.put("loadDate", this.loadDate);
-    }
+        result.put("sellingPrice",this.sellingPrice);
 
+    }
 }
+

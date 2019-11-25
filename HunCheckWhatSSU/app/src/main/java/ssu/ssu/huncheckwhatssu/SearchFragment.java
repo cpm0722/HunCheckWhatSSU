@@ -41,6 +41,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import ssu.ssu.huncheckwhatssu.DB.DBData;
 import ssu.ssu.huncheckwhatssu.DB.DBHelper;
 import ssu.ssu.huncheckwhatssu.utilClass.Book;
 import ssu.ssu.huncheckwhatssu.utilClass.BookState;
@@ -253,9 +254,9 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemSelect
         ArrayList<String> arrayList = new ArrayList();
 
         for (int i = 0; i < dbData.size(); i++) {
-            if (dbData.get(i).another != null)
-                arrayList.add("(" + dbData.get(i).getAnother()[0] + ")" +dbData.get(i).name);
-            else arrayList.add(dbData.get(i).name);
+            if (dbData.get(i).getAnother() != null)
+                arrayList.add("(" + dbData.get(i).getAnother()[0] + ")" +dbData.get(i).getName());
+            else arrayList.add(dbData.get(i).getName());
         }
 
         return arrayList;
@@ -294,6 +295,7 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemSelect
                         if (trade.getBook().getSubject_id().equals(search_subjectId) || search_subjectId.equals("0")|| search_subjectId.equals("-1")) {
                             Log.d(TAG, "onChildAdded: ");
                             if (search_text.isEmpty() || trade.getBook().getTitle().contains(search_text)) {
+                                Log.d(TAG, "onChildAdded: " + firebase);
                                 trade.getSeller().setCustomerDataFromUID(firebase.getRecyclerView().getAdapter());
                                 firebase.getList().add(trade);
                             }
@@ -374,54 +376,6 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemSelect
 
     }
 
-    class DBData {
-        int key;
-        int foreign_key;
-        String name;
-        String another[];
-
-        public DBData(int key, int foreign_key, String name, String[] another) {
-            this.key = key;
-            this.foreign_key = foreign_key;
-            this.name = name;
-            this.another = another;
-        }
-
-        public int getKey() {
-            return key;
-        }
-
-        public void setKey(int key) {
-            this.key = key;
-        }
-
-        public int getForeignkey() {
-            return foreign_key;
-        }
-
-        public void setForeignkey(int foreign_key) {
-            this.foreign_key = foreign_key;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public String[] getAnother() {
-            return another;
-        }
-
-        public void setAnother(String[] another) {
-            this.another = another;
-        }
-
-
-    }
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -436,3 +390,6 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemSelect
         }
     }
 }
+
+
+

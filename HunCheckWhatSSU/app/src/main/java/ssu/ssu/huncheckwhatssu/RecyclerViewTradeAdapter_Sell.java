@@ -81,7 +81,7 @@ public class RecyclerViewTradeAdapter_Sell extends RecyclerView.Adapter<Recycler
             bookTitleTextView.setText(object.getBook().getTitle());
             sellerNameTextView.setText(object.getSeller().getName());
             originalPriceTextView.setText(String.valueOf(object.getBook().getOriginalPrice()));
-            sellingPriceTextView.setText(String.valueOf(object.getBook().getSellingPrice()));
+            sellingPriceTextView.setText(String.valueOf(object.getSellingPrice()));
             bookAuthorTextView.setText(object.getBook().getAuthor());
             bookPublisherTextView.setText(object.getBook().getPublisher());
             sellerCreditTextView.setText("위험");

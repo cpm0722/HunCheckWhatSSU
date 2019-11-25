@@ -262,7 +262,7 @@ public class FirebaseCommunicator {
         sellTradeListVector.add(trade);
         //Update된 sellListVector를 FIrebase에 Upload
         myRef.child("sellList").setValue(sellListVector);
-        recyclerView.getAdapter().notifyDataSetChanged();
+       // recyclerView.getAdapter().notifyDataSetChanged();
         return;
     }
 
