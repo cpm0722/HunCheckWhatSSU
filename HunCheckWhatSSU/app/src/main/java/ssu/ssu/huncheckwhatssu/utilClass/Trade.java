@@ -170,6 +170,20 @@ public class Trade implements Parcelable {
         return null;
     }
 
+    public String getTradeStateForShowView() {
+
+        switch (this.getTradeState()) {
+            case WAIT:
+                return "대기중";
+            case PRECONTRACT:
+                return "예약됨";
+            case COMPLETE:
+                return "완료";
+        }
+
+        return "";
+    }
+
     @Override
     public String toString() {
         return "Trade{" +

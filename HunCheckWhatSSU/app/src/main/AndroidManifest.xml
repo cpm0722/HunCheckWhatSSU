@@ -18,6 +18,8 @@
 
         <activity android:name=".NaverBookSearchActivity">
         </activity>
+        <activity android:name=".SearchPlaceActivity" android:theme="@style/AppThemeNoTitle">
+        </activity>
         <activity android:name=".BookInfoActivity"></activity>
         <activity android:name=".AddBookActivity"></activity>
         <activity
