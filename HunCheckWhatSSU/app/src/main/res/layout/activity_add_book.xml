@@ -250,7 +250,7 @@
                android:gravity="center"></TextView>
 
            <Spinner
-               android:id="@+id/spinner1"
+               android:id="@+id/college_sp"
                android:layout_width="0dp"
                android:layout_height="match_parent"
                android:layout_weight="2.5"
@@ -258,28 +258,51 @@
                android:paddingLeft="20dp">
            </Spinner>
        </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:orientation="horizontal"
-        android:baselineAligned="true">
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="학부"
-            android:textSize="20dp"
-            android:gravity="center"></TextView>
-        <Spinner
-            android:id="@+id/spinner2"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="2.5"
-            android:gravity="left|center_vertical"
-            android:paddingLeft="20dp"/>
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:layout_marginTop="10dp"
+           android:orientation="horizontal"
+           android:baselineAligned="true">
+           <TextView
+               android:layout_width="0dp"
+               android:layout_height="match_parent"
+               android:layout_weight="1"
+               android:text="학부"
+               android:textSize="20dp"
+               android:gravity="center"></TextView>
 
-    </LinearLayout>
+           <Spinner
+               android:id="@+id/department_sp"
+               android:layout_width="0dp"
+               android:layout_height="match_parent"
+               android:layout_weight="2.5"
+               android:gravity="left|center_vertical"
+               android:paddingLeft="20dp">
+           </Spinner>
+       </LinearLayout>
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:layout_marginTop="10dp"
+           android:orientation="horizontal"
+           android:baselineAligned="true">
+           <TextView
+               android:layout_width="0dp"
+               android:layout_height="match_parent"
+               android:layout_weight="1"
+               android:text="전공"
+               android:textSize="20dp"
+               android:gravity="center"></TextView>
+           <Spinner
+               android:id="@+id/subject_sp"
+               android:layout_width="0dp"
+               android:layout_height="match_parent"
+               android:layout_weight="2.5"
+               android:gravity="left|center_vertical"
+               android:paddingLeft="20dp">
+           </Spinner>
+       </LinearLayout>
        <Space
            android:layout_width="match_parent"
            android:layout_height="30dp" />
@@ -293,11 +316,9 @@
                android:layout_width="match_parent"
                android:layout_height="wrap_content"
                android:text="책 상태 표기" />
-
            <LinearLayout
                android:layout_width="match_parent"
                android:layout_height="wrap_content">
-
                <TextView
                    android:layout_width="100dp"
                    android:layout_height="match_parent"
@@ -305,13 +326,11 @@
                    android:text="밑줄흔적"
                    android:textSize="20dp"
                    android:textStyle="bold" />
-
                <RadioGroup
                    android:id="@+id/book_state_line"
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
                    android:orientation="horizontal">
-
                    <RadioButton
                        android:id="@+id/book_state_BEST1"
                        android:layout_width="match_parent"
@@ -337,12 +356,10 @@
                        android:text="매우나쁨" />
 
                </RadioGroup>
-
            </LinearLayout>
            <LinearLayout
                android:layout_width="match_parent"
                android:layout_height="wrap_content">
-
                <TextView
                    android:layout_width="100dp"
                    android:layout_height="match_parent"
@@ -350,13 +367,11 @@
                    android:text="필기흔적"
                    android:textSize="20dp"
                    android:textStyle="bold" />
-
                <RadioGroup
                    android:id="@+id/book_state_write"
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
                    android:orientation="horizontal">
-
                    <RadioButton
                        android:id="@+id/book_state_BEST2"
                        android:layout_width="match_parent"
