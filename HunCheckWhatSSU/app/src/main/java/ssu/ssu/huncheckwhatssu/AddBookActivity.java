@@ -17,23 +17,15 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.database.sqlite.SQLiteDatabase;
-
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
-
 import ssu.ssu.huncheckwhatssu.utilClass.Book;
 import ssu.ssu.huncheckwhatssu.utilClass.BookState;
 import ssu.ssu.huncheckwhatssu.utilClass.Customer;
 import ssu.ssu.huncheckwhatssu.utilClass.Trade;
 import ssu.ssu.huncheckwhatssu.DB.DBHelper;
 import ssu.ssu.huncheckwhatssu.SearchFragment.DBData;
-
-import static androidx.constraintlayout.widget.Constraints.TAG;
 
 public class AddBookActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
     Button add;
@@ -106,7 +98,6 @@ public class AddBookActivity extends AppCompatActivity implements AdapterView.On
                 finish();
             }
         });
-
         Intent intent = getIntent(); //그냥 trade리턴함수 만든는게..나으려나
         title = findViewById(R.id.s_title);
         title.setText(intent.getStringExtra("booktitle"));
@@ -291,8 +282,6 @@ public class AddBookActivity extends AppCompatActivity implements AdapterView.On
     public void onNothingSelected(AdapterView<?> parent) {
 
     }
-
-
 
     private void setSpinnerData(int spin_switch, int college_id, int department_id) {
         DBHelper dbHelper = new DBHelper(this);
