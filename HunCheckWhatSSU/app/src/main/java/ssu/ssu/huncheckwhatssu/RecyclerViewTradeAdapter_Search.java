@@ -28,8 +28,6 @@ import java.util.List;
 import ssu.ssu.huncheckwhatssu.DB.DBHelper;
 import ssu.ssu.huncheckwhatssu.utilClass.Trade;
 
-import static androidx.constraintlayout.widget.Constraints.TAG;
-
 public class RecyclerViewTradeAdapter_Search extends RecyclerView.Adapter<RecyclerViewTradeAdapter_Search.TradeViewHolder> {
     LayoutInflater inflater;
     static List<Trade> modelList;
@@ -66,6 +64,8 @@ public class RecyclerViewTradeAdapter_Search extends RecyclerView.Adapter<Recycl
         TextView bookPublisherTextView;
         TextView bookSellingPriceTextView;
         TextView sellerCreditTextView;
+        TextView tradeState;
+        TextView tradeDate;
 
         public TradeViewHolder(View itemView) {
             super(itemView);
@@ -82,6 +82,9 @@ public class RecyclerViewTradeAdapter_Search extends RecyclerView.Adapter<Recycl
             bookPublisherTextView = itemView.findViewById(R.id.item_book_publisher);
             bookSellingPriceTextView = itemView.findViewById(R.id.item_book_selling_price);
             sellerCreditTextView = itemView.findViewById(R.id.item_seller_credit);
+
+            tradeState = itemView.findViewById(R.id.item_trade_state);
+            tradeDate = itemView.findViewById(R.id.item_seller_sell_date);
         }
 
         public void bindData(Trade object) {
@@ -99,32 +102,33 @@ public class RecyclerViewTradeAdapter_Search extends RecyclerView.Adapter<Recycl
             SQLiteDatabase db = dbHelper.getReadableDatabase();
             StringBuilder sb = new StringBuilder();
 
-            Cursor cursor = db.rawQuery("select * from tb_college where id = ?", new String[]{object.getBook().getCollege_id()});
-
-            while (cursor.moveToNext()) {
-                sb.append(cursor.getString(1));
-            }
-
-            sb.append(">");
-
-            cursor = db.rawQuery("select * from tb_department where id = ?", new String[]{object.getBook().getDepartment_id()});
-
-            while (cursor.moveToNext()) {
-                sb.append(cursor.getString(2));
-            }
-
-            sb.append(">");
-
-            cursor = db.rawQuery("select * from tb_subject where id = ?", new String[]{object.getBook().getSubject_id()});
-
-            while (cursor.moveToNext()) {
-                sb.append(cursor.getString(3));
-            }
+//            Cursor cursor = db.rawQuery("select * from tb_college where id = ?", new String[]{object.getBook().getCollege_id()});
+//
+//            while (cursor.moveToNext()) {
+//                sb.append(cursor.getString(1));
+//            }
+//
+//            sb.append(">");
+//
+//            cursor = db.rawQuery("select * from tb_department where id = ?", new String[]{object.getBook().getDepartment_id()});
+//
+//            while (cursor.moveToNext()) {
+//                sb.append(cursor.getString(2));
+//            }
+//
+//            sb.append(">");
+//
+//            cursor = db.rawQuery("select * from tb_subject where id = ?", new String[]{object.getBook().getSubject_id()});
+//
+//            while (cursor.moveToNext()) {
+//                sb.append(cursor.getString(3));
+//            }
 
             bookCategoryTextView.setText(sb.toString());
             bookAuthorTextView.setText(String.valueOf(object.getBook().getAuthor()));
             sellerCreditTextView.setText(String.format("%.2f", object.getSeller().getCreditRating()));
             sellerNameTextView.setText(object.getSeller().getName());
+            tradeState.setText(object.getTradeStateForShowView());
         }
     }
 

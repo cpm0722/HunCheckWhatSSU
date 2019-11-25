@@ -218,5 +218,5 @@ public class Trade implements Parcelable {
         result.put("tradeDate", this.tradeDate);
         result.put("loadDate", this.loadDate);
     }
-}
 
+}
