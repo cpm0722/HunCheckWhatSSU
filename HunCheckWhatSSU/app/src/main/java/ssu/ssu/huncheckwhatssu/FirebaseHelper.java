@@ -67,7 +67,7 @@ public class FirebaseHelper {
 
     public void sendPurchaseRequest(String tradeKey,String Uid){
         DatabaseReference Ref = purchase_request.child(tradeKey);
-        Ref.push().setValue(Uid);
+        Ref.child(Uid).setValue(Uid);
     }
     public void getPurchaseRequest(String tradeKey){
         DatabaseReference Ref = purchase_request.child(tradeKey);
@@ -101,7 +101,7 @@ public class FirebaseHelper {
         String key = databaseReference.getKey();
         trade.setTradeId(key);
         databaseReference.updateChildren(update);
-        databaseReference = this.customer.child(myUid).child("sellList").push();
+        databaseReference = this.customer.child(myUid).child("sellList").child(key);
         databaseReference.setValue(key);
     }
     public interface CallBackListener {

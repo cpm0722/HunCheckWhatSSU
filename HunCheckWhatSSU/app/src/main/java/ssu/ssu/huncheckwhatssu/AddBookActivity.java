@@ -263,12 +263,12 @@ public class AddBookActivity extends AppCompatActivity {
     public Trade setData() { //Trade형 객체 데이터베이스 올리기 위해 객체화작업.
         Book book1 = new Book();
         Customer customer1 = new Customer();
-        book1.setTitle((String) title.getText());
-        book1.setAuthor((String) Author.getText());
-        book1.setIsbn10((String) Isbn.getText());
+        book1.setTitle(title.getText().toString());
+        book1.setAuthor(Author.getText().toString());
+        book1.setIsbn10(Isbn.getText().toString());
         book1.setOriginalPrice(price1);//원가
-        book1.setPublisher((String) publisher.getText());
-        book1.setPubDate((String) PubDate.getText());
+        book1.setPublisher(publisher.getText().toString());
+        book1.setPubDate( PubDate.getText().toString());
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String userPath = user.getDisplayName() + "_" + user.getUid();
         trade = new Trade(book1, userPath);

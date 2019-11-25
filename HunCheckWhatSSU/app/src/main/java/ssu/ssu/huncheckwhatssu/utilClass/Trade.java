@@ -198,6 +198,7 @@ public class Trade implements Parcelable {
                 ", tradeState=" + tradeState +
                 ", tradePlace='" + tradePlace + '\'' +
                 ", tradeDate=" + tradeDate +
+                ", sellingPrice=" + sellingPrice +
                 '}';
     }
 
