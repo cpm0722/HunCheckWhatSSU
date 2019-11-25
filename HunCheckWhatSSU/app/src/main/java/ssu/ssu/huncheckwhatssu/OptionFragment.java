@@ -69,7 +69,9 @@ public class OptionFragment extends Fragment implements View.OnClickListener {
 
         }
         else if(view == setNotificationBtn){
-            setNotification();
+            //setNotification();
+            FirebaseHelper firebaseHelper = new FirebaseHelper();
+            firebaseHelper.sendPurchaseRequest("-LuXBNYGkj54Y5x1WE5g",firebaseHelper.myUid);
         }
         else if(view == customerContactAddressBtn){
             showCustomerSupportContactAddress();

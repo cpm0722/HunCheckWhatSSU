@@ -38,7 +38,6 @@ public class FirebaseHelper {
         this.trade = root.child("trade");
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         myUid =firebaseUser.getDisplayName()+"_"+firebaseUser.getUid();
-
     }
 
     public void upLoadCustomer(Customer customer){
@@ -103,6 +102,10 @@ public class FirebaseHelper {
         databaseReference.updateChildren(update);
         databaseReference = this.customer.child(myUid).child("sellList").child(key);
         databaseReference.setValue(key);
+    }
+
+    public void updatePurchaser(String purchaserUid){
+
     }
     public interface CallBackListener {
         void afterGetCustomer(Customer customer);
