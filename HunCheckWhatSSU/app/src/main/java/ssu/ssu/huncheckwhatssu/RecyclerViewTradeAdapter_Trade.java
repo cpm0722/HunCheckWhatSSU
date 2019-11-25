@@ -1,7 +1,9 @@
 package ssu.ssu.huncheckwhatssu;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -136,10 +138,80 @@ public class RecyclerViewTradeAdapter_Trade extends RecyclerView.Adapter<Recycle
                         if (viewID == R.id.item_button_delete) {
                             Toast toast = Toast.makeText(context, "Delete! " + trade.getBook().getTitle(), Toast.LENGTH_SHORT);
                             toast.show();
-                          //  recyclerView.remove(position);
+                            if(trade.getTradeState()== Trade.TradeState.WAIT){
+                                /*판매 등록 삭제*/
+                                AlertDialog.Builder alert = new AlertDialog.Builder(context);
+                                alert.setTitle("판매 종료");
+                                alert.setPositiveButton("종료", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        /*삭제되는 코드 넣기*///  recyclerView.remove(position);
+                                        Toast toast=Toast.makeText(context,"판매종료",Toast.LENGTH_SHORT);
+                                        toast.show();
+                                    }
+                                });
+                                alert.setNegativeButton("유지", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface arg0, int arg1) {
+                                        Toast toast=Toast.makeText(context,"유지",Toast.LENGTH_SHORT);
+                                        toast.show();
+                                    }
+                                });
+                                alert.show();
+                            }
+                            else if(trade.getTradeState()==Trade.TradeState.COMPLETE){
+                                /*만약 상태가 거래완료이면*/
+                                AlertDialog.Builder alert = new AlertDialog.Builder(context);
+                                alert.setTitle("거래 내역 삭제");
+                                alert.setMessage("삭제시, 거래 내역을 볼 수 없습니다.");
+                                alert.setPositiveButton("삭제", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        /*삭제되는 코드 넣기*///  recyclerView.remove(position);
+                                        Toast toast=Toast.makeText(context,"내역삭제함",Toast.LENGTH_SHORT);
+                                        toast.show();
+                                    }
+                                });
+                                alert.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface arg0, int arg1) {
+                                        Toast toast=Toast.makeText(context,"취소함",Toast.LENGTH_SHORT);
+                                        toast.show();
+                                    }
+                                });
+                                alert.show();
+
+                            }
+                            else if(trade.getTradeState()== Trade.TradeState.PRECONTRACT){
+                                /*만약, 상태가 거래진행중이면*/
+                                AlertDialog.Builder alert = new AlertDialog.Builder(context);
+                                alert.setTitle("거래 취소");
+                                alert.setMessage("정말로 거래 취소 하시겠습니까?\n 신용도에 영향을 줍니다.");
+                                alert.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        /*삭제되는 코드 넣기*///  recyclerView.remove(position);
+                                        Toast toast=Toast.makeText(context,"거래취소함",Toast.LENGTH_SHORT);
+                                        toast.show();
+                                    }
+                                });
+                                alert.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface arg0, int arg1) {
+                                        Toast toast=Toast.makeText(context,"취소함",Toast.LENGTH_SHORT);
+                                        toast.show();
+                                    }
+                                });
+                                alert.show();
+                            }
+                            else{}
+
+
 
                             recyclerView.getAdapter().notifyItemRemoved(position);
                             recyclerView.getAdapter().notifyDataSetChanged();
+
+
                         }
                     }
                 });

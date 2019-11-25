@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="ssu.ssu.huncheckwhatssu">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -11,19 +11,19 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".EditSell"></activity>
+        <!-- 공용 네이버 map 클라이언트 key 필요 -->
+        <meta-data
+            android:name="com.naver.maps.map.CLIENT_ID"
+            android:value="r14df325a1" />
 
-        <!--        공용 네이버 map 클라이언트 key 필요-->
-        <meta-data android:name="com.naver.maps.map.CLIENT_ID"
-            android:value="r14df325a1"/>
-
-        <activity android:name=".NaverBookSearchActivity">
-        </activity>
-        <activity android:name=".BookInfoActivity"></activity>
-        <activity android:name=".AddBookActivity"></activity>
+        <activity android:name=".NaverBookSearchActivity"></activity>
+        <activity android:name=".BookInfoActivity" />
+        <activity android:name=".AddBookActivity" />
         <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_main"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".LoginActivity"
             android:screenOrientation="portrait">
@@ -33,7 +33,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SettingPersonalInfo"/>
+        <activity android:name=".SettingPersonalInfo" />
     </application>
 
 </manifest>

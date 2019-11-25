@@ -3,7 +3,6 @@ package ssu.ssu.huncheckwhatssu;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +11,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.nikhilpanju.recyclerviewenhanced.RecyclerTouchListener;
 
@@ -20,8 +18,6 @@ import java.util.Vector;
 
 import ssu.ssu.huncheckwhatssu.utilClass.Customer;
 import ssu.ssu.huncheckwhatssu.utilClass.Trade;
-
-import static androidx.constraintlayout.widget.Constraints.TAG;
 
 public class RecyclerViewTradeAdapter_Sell extends RecyclerView.Adapter<RecyclerViewTradeAdapter_Sell.TradeViewHolder> {
     LayoutInflater inflater;
@@ -125,6 +121,12 @@ public class RecyclerViewTradeAdapter_Sell extends RecyclerView.Adapter<Recycler
                         if (viewID == R.id.item_button_edit) {
                             Toast toast = Toast.makeText(context, "Edit! " + trade.getBook().getTitle(), Toast.LENGTH_SHORT);
                             toast.show();
+
+                            Intent intent=new Intent(context, EditSell.class);
+                            intent.putExtra("BookInfoType","BOOK_INFO_SELL_EDIT_DETAIL");
+                            intent.putExtra("book_info_sell_edit_detail", trade);
+                            context.startActivity(intent);
+
                             recyclerView.getAdapter().notifyItemChanged(position);
                         } else if (viewID == R.id.item_button_delete) {
                             Toast toast = Toast.makeText(context, "Delete! " + trade.getBook().getTitle(), Toast.LENGTH_SHORT);
