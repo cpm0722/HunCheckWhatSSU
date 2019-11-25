@@ -78,6 +78,9 @@ public class OptionFragment extends Fragment implements View.OnClickListener {
             FirebaseHelper firebaseHelper = new FirebaseHelper();
             BookState bookState = new BookState(BookState.bookState.BAD, BookState.bookState.WORST, BookState.bookState.BEST, BookState.bookState.GOOD, BookState.bookState.BAD, BookState.bookState.GOOD);
             Book book = new Book("testISBN10","testISBN13","testTitle","testimg","testAuthor",15000,"testPublisher","testPubdate","testdescription",bookState);
+            book.setSubject_id("2150528503");
+            book.setDepartment_id("38");
+            book.setCollege_id("5");
             Trade trade = new Trade(book, firebaseHelper.myUid);
             trade.setSellingPrice(5000);
             firebaseHelper.upLoadTrade(trade);
