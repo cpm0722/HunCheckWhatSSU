@@ -32,6 +32,7 @@ public class Customer implements Parcelable {
     int grade;
 
     double creditRating;
+    int evaluationNumber;
     ArrayList<String> sellList;
     ArrayList<String> buyList;
 
@@ -167,6 +168,14 @@ public class Customer implements Parcelable {
 
     public void setGrade(int grade) { this.grade = grade; }
 
+    public int getEvaluationNumber() {
+        return evaluationNumber;
+    }
+
+    public void setEvaluationNumber(int evaluationNumber) {
+        this.evaluationNumber = evaluationNumber;
+    }
+
     public void toMap(Map<String, Object> result) {
         result.put("Uid", this.id);
         result.put("Name", this.name);
@@ -178,6 +187,7 @@ public class Customer implements Parcelable {
         result.put("Grade",this.grade);
         result.put("sellList",sellList);
         result.put("buyList",buyList);
+        result.put("evaluationNumber",this.evaluationNumber);
         return;
     }
 
@@ -210,7 +220,6 @@ public class Customer implements Parcelable {
         sellList = new ArrayList<>();
         buyList = new ArrayList<>();
 
-        Log.d("YECHAN", "Customer 생성자" + dataSnapshot.toString());
         this.id = dataSnapshot.child("Uid").getValue(String.class);
         this.name = dataSnapshot.child("Name").getValue(String.class);
         this.phoneNumber = dataSnapshot.child("PhoneNumber").getValue(String.class);
@@ -225,6 +234,10 @@ public class Customer implements Parcelable {
         Integer tempint;
         if((tempint =dataSnapshot.child("Grade").getValue(Integer.class))!=null)
             this.grade = tempint;
+        if((tempint = dataSnapshot.child("evaluationNumber").getValue(Integer.class))!=null)
+            this.evaluationNumber = tempint;
+        else
+            this.evaluationNumber = 0;
 
         DataSnapshot tempSnapshot = dataSnapshot.child("sellList");
         for (DataSnapshot sellSnapshot : tempSnapshot.getChildren()) {

@@ -30,7 +30,7 @@ import ssu.ssu.huncheckwhatssu.utilClass.Trade;
 
 public class OptionFragment extends Fragment implements View.OnClickListener {
 
-    private  Button seeMyInfoBtn;
+    private Button seeMyInfoBtn;
     private Button setPersonalInfoBtn;
     private Button setNotificationBtn;
     private Button customerContactAddressBtn;
