@@ -33,6 +33,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.naver.maps.geometry.LatLng;
 import com.nikhilpanju.recyclerviewenhanced.RecyclerTouchListener;
 
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -46,6 +47,7 @@ import ssu.ssu.huncheckwhatssu.utilClass.BookState;
 import ssu.ssu.huncheckwhatssu.utilClass.Customer;
 import ssu.ssu.huncheckwhatssu.utilClass.Trade;
 
+import static android.app.Activity.RESULT_OK;
 import static androidx.constraintlayout.widget.Constraints.TAG;
 
 public class SearchFragment extends Fragment implements AdapterView.OnItemSelectedListener, SearchView.OnQueryTextListener {
@@ -60,6 +62,8 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemSelect
     ArrayList<DBData> subjectData;
 
     private RecyclerView recyclerView;
+
+    static final int MAP_REQUEST_CODE = 9910;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -101,7 +105,7 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemSelect
         });
 
         //SearchFirebaseCommunicator 생성
-        firebase = new SearchFirebaseCommunicator("tb_trade", this.getContext(), this.getActivity(), recyclerView);
+        firebase = new SearchFirebaseCommunicator("trade", this.getContext(), this.getActivity(), recyclerView);
 
         // Recycler View Click Listener
         RecyclerTouchListener onTouchListener = new RecyclerTouchListener(this.getActivity(), recyclerView);
@@ -128,18 +132,15 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemSelect
 
 
 //        TEST용 Firebase 추가 버튼
-//        addBtn = root.findViewById(R.id.fragment_add_btn);
-//        addBtn.setOnClickListener(new View.OnClickListener() {
-//
-//            @Override
-//            public void onClick(View view) {
-//                Book book = new Book("testISBN10", "testISBN13", "testTitle", "testImage", "testAuthor", 12000, 13000, "testPublisher", "testPubDate", "testDescription", "8", "38" ,"33", new BookState());
-//                Customer seller = new Customer("testId", "testName", "testPhoneNumber", "testAdress", (float) 1.4);
-//                Customer purchaser = new Customer("testId", "testName", "testPhoneNumber", "testAdress", (float) 1.4);
-//                Trade trade = new Trade(book, seller, purchaser, Trade.TradeState.WAIT, "장소 미정", Calendar.getInstance());
-//                firebase.uploadTrade(trade);
-//            }
-//        });
+
+        Button addBtn = root.findViewById(R.id.fragment_add_btn);
+        addBtn.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                startActivityForResult(new Intent(getContext(), SearchPlaceActivity.class),MAP_REQUEST_CODE);
+            }
+        });
 
         setFirebaseEvent();
 
@@ -171,6 +172,8 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemSelect
                 if (dataSnapshot != null && dataSnapshot.exists()) {
                     for (DataSnapshot tradeSnap : dataSnapshot.getChildren()) {
                         Trade trade = tradeSnap.getValue(Trade.class);
+
+                        trade.setSeller(new Customer(trade.getSellerId()));
 
                         firebase.getList().add(trade);
 
@@ -272,7 +275,7 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemSelect
         search_text = (query==null?"":query);
         firebase.getList().clear();
 
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("tb_trade");
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("trade");
 
         reference.addChildEventListener(new ChildEventListener() {
 
@@ -291,6 +294,7 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemSelect
                         if (trade.getBook().getSubject_id().equals(search_subjectId) || search_subjectId.equals("0")|| search_subjectId.equals("-1")) {
                             Log.d(TAG, "onChildAdded: ");
                             if (search_text.isEmpty() || trade.getBook().getTitle().contains(search_text)) {
+                                trade.getSeller().setCustomerDataFromUID(firebase.getRecyclerView().getAdapter());
                                 firebase.getList().add(trade);
                             }
                         }
@@ -416,5 +420,19 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemSelect
         }
 
 
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        Log.d(TAG, "onActivityResult: dwdwd " + requestCode + ", " + resultCode);
+        
+        if (requestCode == MAP_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+                Log.d(TAG, "onActivityResult: " + data.getStringExtra("SelectedAddress"));
+                Log.d(TAG, "onActivityResult: " + ((LatLng) data.getParcelableExtra("Location")).toString());
+            }
+        }
     }
 }

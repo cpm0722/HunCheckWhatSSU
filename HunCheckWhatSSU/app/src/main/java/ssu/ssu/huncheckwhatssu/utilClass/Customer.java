@@ -30,12 +30,11 @@ public class Customer implements Parcelable {
     String nickName;
     String major;
     int grade;
-
     double creditRating;
     ArrayList<String> sellList;
     ArrayList<String> buyList;
 
-    public Customer(){
+    public Customer() {
     }
 
     public Customer(String id) {
@@ -79,6 +78,7 @@ public class Customer implements Parcelable {
                     setAddress(customer.getAddress());
                     setCreditRating(customer.getCreditRating());
                     setPhoneNumber(customer.getPhoneNumber());
+                    Log.d("JS", "seller: " + getName() + getPhoneNumber());
 
                 } else {
                     // 정보 없을때 (정상적인 절차를 걸쳐서 사용하게 되면 생길 수 없는 경우)
@@ -93,6 +93,7 @@ public class Customer implements Parcelable {
 
             }
         });
+
     }
 
     public static final Creator<Customer> CREATOR = new Creator<Customer>() {
@@ -155,17 +156,29 @@ public class Customer implements Parcelable {
         this.address = address;
     }
 
-    public String getNickName() { return nickName; }
+    public String getNickName() {
+        return nickName;
+    }
 
-    public void setNickName(String nickName) { this.nickName = nickName; }
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
+    }
 
-    public String getMajor() { return major; }
+    public String getMajor() {
+        return major;
+    }
 
-    public void setMajor(String major) { this.major = major; }
+    public void setMajor(String major) {
+        this.major = major;
+    }
 
-    public int getGrade() { return grade; }
+    public int getGrade() {
+        return grade;
+    }
 
-    public void setGrade(int grade) { this.grade = grade; }
+    public void setGrade(int grade) {
+        this.grade = grade;
+    }
 
     public void toMap(Map<String, Object> result) {
         result.put("Uid", this.id);
@@ -173,11 +186,11 @@ public class Customer implements Parcelable {
         result.put("PhoneNumber", this.phoneNumber);
         result.put("Address", this.address);
         result.put("CreditRating", this.creditRating);
-        result.put("NickName",this.nickName);
-        result.put("Major",this.major);
-        result.put("Grade",this.grade);
-        result.put("sellList",sellList);
-        result.put("buyList",buyList);
+        result.put("NickName", this.nickName);
+        result.put("Major", this.major);
+        result.put("Grade", this.grade);
+        result.put("sellList", sellList);
+        result.put("buyList", buyList);
         return;
     }
 
@@ -206,26 +219,31 @@ public class Customer implements Parcelable {
         this.creditRating = creditRating;
     }
 
-    public Customer(DataSnapshot dataSnapshot){
+    public Customer(DataSnapshot dataSnapshot) {
         sellList = new ArrayList<>();
         buyList = new ArrayList<>();
 
-        Log.d("YECHAN","Customer 생성자" + dataSnapshot.toString());
-
+        Log.d("YECHAN", "Customer 생성자" + dataSnapshot.toString());
         this.id = dataSnapshot.child("Uid").getValue(String.class);
         this.name = dataSnapshot.child("Name").getValue(String.class);
         this.phoneNumber = dataSnapshot.child("PhoneNumber").getValue(String.class);
         this.address = dataSnapshot.child("Address").getValue(String.class);
-        this.creditRating = dataSnapshot.child("CreditRating").getValue(Double.class);
+        Double tempdouble;
+        if((tempdouble = dataSnapshot.child("CreditRating").getValue(Double.class))!=null)
+            this.creditRating = tempdouble;
+        else
+            this.creditRating = 5.0;
         this.nickName = dataSnapshot.child("NickName").getValue(String.class);
         this.major = dataSnapshot.child("Major").getValue(String.class);
-        //this.grade = dataSnapshot.child("Grade").getValue(Integer.class);
+        Integer tempint;
+        if((tempint =dataSnapshot.child("Grade").getValue(Integer.class))!=null)
+            this.grade = tempint;
 
-        DataSnapshot tempSnapshot = dataSnapshot.child("SellList");
-        for(DataSnapshot sellSnapshot : tempSnapshot.getChildren()){
+        DataSnapshot tempSnapshot = dataSnapshot.child("sellList");
+        for (DataSnapshot sellSnapshot : tempSnapshot.getChildren()) {
             sellList.add(sellSnapshot.getValue(String.class));
         }
-        tempSnapshot = dataSnapshot.child("BuyList");
+        tempSnapshot = dataSnapshot.child("buyList");
 
         for(DataSnapshot buySnapshot : tempSnapshot.getChildren()){
             buyList.add(buySnapshot.getValue(String.class));

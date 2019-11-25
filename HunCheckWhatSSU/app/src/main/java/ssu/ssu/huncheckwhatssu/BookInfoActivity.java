@@ -42,6 +42,7 @@ public class BookInfoActivity extends AppCompatActivity implements OnMapReadyCal
     TextView activity_book_info_publisherText;
     TextView activity_book_info_publicationDateText;
     TextView activity_book_info_bookCostText;
+//    TextView activity_book_info_
 
     // Seller
     TextView activity_book_info_sellerText;
@@ -64,6 +65,7 @@ public class BookInfoActivity extends AppCompatActivity implements OnMapReadyCal
     // Trade Info
     TextView activity_book_info_placeAddressText;
     TextView activity_book_info_tradeDateText;
+    TextView activity_book_info_tradeState;
     //MAP 추가
 
     @Override
@@ -145,6 +147,8 @@ public class BookInfoActivity extends AppCompatActivity implements OnMapReadyCal
 
         // Trade Info
         activity_book_info_placeAddressText = findViewById(R.id.activity_book_info_placeAddressText);
+        activity_book_info_tradeState = findViewById(R.id.activity_Trade_Info_StateText);
+
 
         if (bookInfoType == 1) {
 
@@ -203,6 +207,8 @@ public class BookInfoActivity extends AppCompatActivity implements OnMapReadyCal
 
         // Trade Info
         activity_book_info_placeAddressText.setText(trade.getTradePlace());
+
+        activity_book_info_tradeState.setText(trade.getTradeStateForShowView());
 
         if (bookInfoType == 1) {
         } else if (bookInfoType == 2) {

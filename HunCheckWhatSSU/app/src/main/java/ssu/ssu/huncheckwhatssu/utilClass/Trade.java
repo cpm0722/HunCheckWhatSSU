@@ -4,6 +4,7 @@ package ssu.ssu.huncheckwhatssu.utilClass;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.SimpleDateFormat;
@@ -160,6 +161,20 @@ public class Trade implements Parcelable {
         return CREATOR;
     }
 
+    public String getTradeStateForShowView() {
+
+        switch (this.getTradeState()) {
+            case WAIT:
+                return "대기중";
+            case PRECONTRACT:
+                return "예약됨";
+            case COMPLETE:
+                return "완료";
+        }
+
+        return "";
+    }
+
     public Calendar getTradeDate_typeOfCalendar() {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
         try {
@@ -218,5 +233,4 @@ public class Trade implements Parcelable {
         result.put("tradeDate", this.tradeDate);
         result.put("loadDate", this.loadDate);
     }
-
 }
