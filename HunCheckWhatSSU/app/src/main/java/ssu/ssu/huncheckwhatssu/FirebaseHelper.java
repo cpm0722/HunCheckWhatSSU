@@ -4,6 +4,7 @@ import android.provider.ContactsContract;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -104,8 +105,10 @@ public class FirebaseHelper {
         databaseReference.setValue(key);
     }
 
-    public void updatePurchaser(String purchaserUid){
-
+    public void updatePurchaser(String tradeKey, String purchaserUid){
+        trade.child(tradeKey).child("purchaserId").setValue(purchaserUid);
+        customer.child(purchaserUid).child("buyList").child(tradeKey).setValue(tradeKey);
+        purchase_request.child(tradeKey).removeValue();
     }
     public interface CallBackListener {
         void afterGetCustomer(Customer customer);
