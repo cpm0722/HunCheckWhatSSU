@@ -17,7 +17,11 @@ public class SelectPurchaserAdapter extends RecyclerView.Adapter<SelectPurchaser
 
     private Vector<Customer> purchasers;
     private LayoutInflater layoutInflater;
+    private  OnItemClickListener onItemClickListener;
 
+    public interface OnItemClickListener{
+        void onItemClicked(View v, int position);
+    }
     public SelectPurchaserAdapter(Context context,Vector<Customer> purchasers){
         this.purchasers = purchasers;
         this.layoutInflater = LayoutInflater.from(context);
@@ -44,16 +48,28 @@ public class SelectPurchaserAdapter extends RecyclerView.Adapter<SelectPurchaser
         return purchasers.size();
     }
 
-    public static class MyViewHolder extends  RecyclerView.ViewHolder{
+    public class MyViewHolder extends  RecyclerView.ViewHolder{
         public TextView nameText;
         public TextView creditReteText;
         public TextView addressText;
 
-        public MyViewHolder(@NonNull View itemView) {
+        public MyViewHolder(@NonNull final View itemView) {
             super(itemView);
             this.nameText = itemView.findViewById(R.id.purchaser_name_text);
             this.creditReteText = itemView.findViewById(R.id.purchaser_credit_rate_text);
             this.addressText = itemView.findViewById(R.id.purchaser_address_text);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int pos = getAdapterPosition();
+                    if(pos!=RecyclerView.NO_POSITION&&onItemClickListener !=null){
+                        onItemClickListener.onItemClicked(itemView,pos);
+                    }
+                }
+            });
         }
+    }
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener){
+        this.onItemClickListener = onItemClickListener;
     }
 }

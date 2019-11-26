@@ -67,6 +67,12 @@
             android:paddingLeft="10dp"></TextView>
     </LinearLayout>
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="5dp"
+        android:background="#777"></TextView>
+
 
 
 </LinearLayout>
