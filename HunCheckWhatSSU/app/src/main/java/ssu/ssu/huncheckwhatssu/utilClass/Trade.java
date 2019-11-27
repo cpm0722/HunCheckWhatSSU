@@ -109,6 +109,23 @@ public class Trade implements Parcelable {
         longitude = in.readDouble();
     }
 
+    public void Copy(Trade src) {
+
+        this.tradeId = src.getTradeId();
+        this.book = src.getBook();
+        this.sellerId = src.getSellerId();
+        this.purchaserId = src.getPurchaserId();
+        this.seller = src.getSeller();
+        this.purchaser = src.getPurchaser();
+        this.tradeState = src.getTradeState();
+        this.upLoadDate = src.getUpLoadDate();
+        this.tradePlace = src.getTradePlace();
+        this.tradeDate = src.getTradeDate();
+        this.sellingPrice = src.getSellingPrice();
+        this.latitude = src.getLatitude();
+        this.longitude = src.getLongitude();
+    }
+
     @Override
     public int describeContents() {
         return 0;

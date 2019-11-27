@@ -95,10 +95,10 @@ public class FirebaseHelper {
     }
     public void upLoadTrade(Trade trade){
         HashMap<String,Object> update = new HashMap<>();
-        trade.toMap(update);
         DatabaseReference databaseReference = this.trade.push();
         String key = databaseReference.getKey();
         trade.setTradeId(key);
+        trade.toMap(update);
         databaseReference.updateChildren(update);
         databaseReference = this.customer.child(myUid).child("sellList").child(key);
         databaseReference.setValue(key);

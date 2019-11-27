@@ -1,6 +1,7 @@
 package ssu.ssu.huncheckwhatssu;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,6 +20,10 @@ public class EditSell extends AppCompatActivity {
     TextView isbn;
     TextView realPrice;
 
+    Intent resultIntent;
+    Trade trade;
+    int position;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,7 +37,8 @@ public class EditSell extends AppCompatActivity {
         realPrice = findViewById(R.id.originalPrice);
 
         Intent intent = getIntent();
-        Trade trade = intent.getParcelableExtra("book_info_sell_edit_detail");
+        trade = intent.getParcelableExtra("book_info_sell_edit_detail");
+        position = intent.getIntExtra("position", -1);
 
         title.setText(trade.getBook().getTitle());
         author.setText(trade.getBook().getAuthor());
@@ -40,6 +46,14 @@ public class EditSell extends AppCompatActivity {
         publish_date.setText(trade.getBook().getPubDate());
         isbn.setText(trade.getBook().getIsbn10());
         realPrice.setText(String.valueOf(trade.getBook().getOriginalPrice()));
+
+        trade.getBook().setTitle("수정됨!!");
+
+        resultIntent = new Intent(this, MainActivity.class);
+        resultIntent.putExtra("activity", "EditSell");
+        resultIntent.putExtra("trade", trade);
+        resultIntent.putExtra("position", position);
+        setResult(RESULT_OK, resultIntent);
 
         Button btn_back2Sell = findViewById(R.id.back2Sell);
         btn_back2Sell.setOnClickListener(new View.OnClickListener() {

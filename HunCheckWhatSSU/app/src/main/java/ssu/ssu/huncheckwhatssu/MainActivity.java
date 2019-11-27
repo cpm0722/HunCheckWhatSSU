@@ -2,7 +2,9 @@ package ssu.ssu.huncheckwhatssu;
 
 import android.app.Activity;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Button;
 
@@ -13,6 +15,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -64,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
         initial.put("Uid",path);
         FirebaseDatabase.getInstance().getReference().child("customer").child(path).updateChildren(initial);
     }
+
     @Override
     public void onBackPressed() {
         final Activity root = this;

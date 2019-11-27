@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.nikhilpanju.recyclerviewenhanced.RecyclerTouchListener;
@@ -90,7 +91,7 @@ public class RecyclerViewTradeAdapter_Sell extends RecyclerView.Adapter<Recycler
     }
 
     //RecyclerView에 TouchListener 설정 함수 (Swipe로 메뉴 출력 가능하게)
-    public static void setSwipeable(final Context context, Activity activity, final RecyclerView recyclerView) {
+    public static void setSwipeable(final Context context, final Activity activity, final Fragment fragment, final RecyclerView recyclerView) {
         RecyclerTouchListener onTouchListener = new RecyclerTouchListener(activity, recyclerView);
         onTouchListener
                 .setClickable(new RecyclerTouchListener.OnRowClickListener() {
@@ -126,7 +127,8 @@ public class RecyclerViewTradeAdapter_Sell extends RecyclerView.Adapter<Recycler
                             Intent intent=new Intent(context, EditSell.class);
                             intent.putExtra("BookInfoType","BOOK_INFO_SELL_EDIT_DETAIL");
                             intent.putExtra("book_info_sell_edit_detail", trade);
-                            context.startActivity(intent);
+                            intent.putExtra("position", position);
+                            fragment.startActivityForResult(intent, 0);
 
                             recyclerView.getAdapter().notifyItemChanged(position);
                         } else if (viewID == R.id.item_button_delete) {

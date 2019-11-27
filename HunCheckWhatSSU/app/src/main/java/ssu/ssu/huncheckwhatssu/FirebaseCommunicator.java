@@ -266,6 +266,26 @@ public class FirebaseCommunicator {
         return;
     }
 
+    public void editTrade(Trade trade){
+        Log.d("DEBUG!", "edit!");
+        //trade의 book 객체 Map으로 변환
+        Map<String, Object> bookMap = new HashMap<>();
+        trade.getBook().toMap(bookMap);
+        //trade 객체 Map으로 변환
+        Map<String, Object> tradeMap = new HashMap<>();
+        trade.toMap(tradeMap);
+        //TradeId 획득
+        String tradeId = trade.getTradeId();
+        Log.d("DEBUG!", tradeId);
+        //book 객체의 정보 Frirebase에 Upload
+        tradeRef.child(tradeId).child("book").updateChildren(bookMap);
+        //tradeRef.child(tradeId).removeValue();
+        tradeRef.child(tradeId).updateChildren(tradeMap);
+        //tradeRef.child(tradeId).child("book").removeValue();
+        //trade 객체의 정보 Frirebase에 Upload
+        Log.d("DEBUG!", tradeMap.toString());
+    }
+
     //CustomerId로 Customer 객체를 Return하는 함수
     public Customer getCustomer(String customerId) {
         final Customer[] customer = {new Customer()};
