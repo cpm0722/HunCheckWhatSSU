@@ -1,18 +1,12 @@
 package ssu.ssu.huncheckwhatssu;
 
 import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RadioGroup;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -46,6 +40,7 @@ public class EditSell extends AppCompatActivity {
     RadioGroup activity_book_edit_state04;
     RadioGroup activity_book_edit_state05;
     RadioGroup activity_book_edit_state06;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

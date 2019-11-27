@@ -3,6 +3,7 @@ package ssu.ssu.huncheckwhatssu;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;

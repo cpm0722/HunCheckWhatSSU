@@ -9,4 +9,9 @@
     <string name="success_login">로그인 성공</string>
     <string name="failed_login">로그인 실패</string>
 
+    <string name="dialog_exit_title">종료</string>
+    <string name="dialog_exit_question">종료하시겠습니까?</string>
+    <string name="dialog_exit_yes">예</string>
+    <string name="dialog_exit_no">아니오</string>
+
 </resources>
