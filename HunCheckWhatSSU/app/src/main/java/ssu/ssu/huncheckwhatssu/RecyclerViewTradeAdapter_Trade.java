@@ -5,6 +5,8 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,15 +22,19 @@ import com.nikhilpanju.recyclerviewenhanced.RecyclerTouchListener;
 
 import java.util.Vector;
 
+import ssu.ssu.huncheckwhatssu.DB.DBData;
+import ssu.ssu.huncheckwhatssu.DB.DBHelper;
 import ssu.ssu.huncheckwhatssu.utilClass.Customer;
 import ssu.ssu.huncheckwhatssu.utilClass.Trade;
 
 import static androidx.constraintlayout.widget.Constraints.TAG;
+import static java.lang.Integer.parseInt;
 
 public class RecyclerViewTradeAdapter_Trade extends RecyclerView.Adapter<RecyclerViewTradeAdapter_Trade.TradeViewHolder> {
     LayoutInflater inflater;
     Vector<Trade> modelList;
     RecyclerView recyclerView;
+    DBHelper dbHelper;
 
 
     public Vector<Trade> getTrades() {
@@ -39,6 +45,7 @@ public class RecyclerViewTradeAdapter_Trade extends RecyclerView.Adapter<Recycle
         inflater = LayoutInflater.from(context);
         modelList = vector;
         this.recyclerView = recyclerView;
+        dbHelper=new DBHelper(context);
     }
 
     @Override
@@ -91,7 +98,9 @@ public class RecyclerViewTradeAdapter_Trade extends RecyclerView.Adapter<Recycle
             book_title.setText(object.getBook().getTitle());
             original_price.setText(String.valueOf(object.getBook().getOriginalPrice()));
             seller_name.setText(object.getSeller().getName());
-            book_category.setText(object.getBook().getCollege_id());
+
+            book_category.setText(object.getBook().getCollege_id()+" "+object.getBook().getDepartment_id());
+
             book_author.setText(object.getBook().getAuthor());
             book_publisher.setText(object.getBook().getPublisher());
             selling_price.setText(String.valueOf(object.getSellingPrice()));
@@ -101,6 +110,9 @@ public class RecyclerViewTradeAdapter_Trade extends RecyclerView.Adapter<Recycle
             //   book_image.setImageDrawable(ResourcesCompat.getDrawable(context.getResources(),R.drawable.bookimag,null))
         }
     }
+
+
+
 
     //RecyclerView에 TouchListener 설정 함수 (Swipe로 메뉴 출력 가능하게)
     public static void setSwipeable(final Context context, Activity activity, final RecyclerView recyclerView) {
@@ -160,14 +172,14 @@ public class RecyclerViewTradeAdapter_Trade extends RecyclerView.Adapter<Recycle
                                 alert.show();
                             }
                             else if(trade.getTradeState()==Trade.TradeState.COMPLETE){
-                                /*만약 상태가 거래완료이면*/
+                                /*만약 상태가 거래완료이면
                                 AlertDialog.Builder alert = new AlertDialog.Builder(context);
                                 alert.setTitle("거래 내역 삭제");
                                 alert.setMessage("삭제시, 거래 내역을 볼 수 없습니다.");
                                 alert.setPositiveButton("삭제", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
-                                        /*삭제되는 코드 넣기*///  recyclerView.remove(position);
+                                         recyclerView.remove(position);
                                         Toast toast=Toast.makeText(context,"내역삭제함",Toast.LENGTH_SHORT);
                                         toast.show();
                                     }
@@ -180,7 +192,7 @@ public class RecyclerViewTradeAdapter_Trade extends RecyclerView.Adapter<Recycle
                                     }
                                 });
                                 alert.show();
-
+                                */
                             }
                             else if(trade.getTradeState()== Trade.TradeState.PRECONTRACT){
                                 /*만약, 상태가 거래진행중이면*/
