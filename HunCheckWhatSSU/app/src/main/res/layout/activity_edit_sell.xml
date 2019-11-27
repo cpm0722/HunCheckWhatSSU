@@ -181,7 +181,7 @@
                     android:textSize="20dp"></TextView>
 
                 <TextView
-                    android:id="@+id/realprice"
+                    android:id="@+id/originalPrice"
                     android:layout_width="175dp"
                     android:layout_height="match_parent"
                     android:background="#0FFF"

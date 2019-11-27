@@ -93,15 +93,20 @@ public class Trade implements Parcelable {
     }
 
     protected Trade(Parcel in) {
+
+        tradeId = in.readString();
         book = in.readParcelable(Book.class.getClassLoader());
+        sellerId = in.readString();
+        purchaserId = in.readString();
         seller = in.readParcelable(Customer.class.getClassLoader());
         purchaser = in.readParcelable(Customer.class.getClassLoader());
         tradeState = TradeState.valueOf(in.readString());
+        upLoadDate = in.readString();
         tradePlace = in.readString();
         tradeDate = in.readString();
-        upLoadDate = in.readString();
-        longitude = in.readDouble();
+        sellingPrice = in.readInt();
         latitude = in.readDouble();
+        longitude = in.readDouble();
     }
 
     @Override
@@ -111,13 +116,17 @@ public class Trade implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(tradeId);
         dest.writeParcelable(book, flags);
+        dest.writeString(sellerId);
+        dest.writeString(purchaserId);
         dest.writeParcelable(seller, flags);
         dest.writeParcelable(purchaser, flags);
         dest.writeString(tradeState.name());
+        dest.writeString(upLoadDate);
         dest.writeString(tradePlace);
         dest.writeString(tradeDate);
-        dest.writeString(upLoadDate);
+        dest.writeInt(sellingPrice);
         dest.writeDouble(latitude);
         dest.writeDouble(longitude);
     }
