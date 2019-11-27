@@ -58,6 +58,7 @@ public class SellFragment extends Fragment {
                 intent.putExtra("book_info_trade_detail", trade);
                 startActivity(intent);
             }
+
         });
 
         //BackButton Pressed 시 NavigationBottom Menu Selected 변경

@@ -327,4 +327,3 @@ public class Trade implements Parcelable {
 
     }
 }
-

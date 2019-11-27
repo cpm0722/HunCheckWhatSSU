@@ -68,6 +68,8 @@ public class Book implements Parcelable {
         pubDate = in.readString();
         description = in.readString();
         bookState = in.readParcelable(BookState.class.getClassLoader());
+        if(bookState == null)
+            bookState = new BookState();
         college_id = in.readString();
         department_id = in.readString();
         subject_id = in.readString();
