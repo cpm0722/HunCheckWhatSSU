@@ -1,6 +1,7 @@
 package ssu.ssu.huncheckwhatssu;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -93,6 +94,19 @@ public class NaverBookSearchActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent intent) {
+        super.onActivityResult(requestCode, resultCode, intent);
+        String activity = intent.getStringExtra("activity");
+        if(activity != null){
+            if(activity.equals("AddBook")){
+                intent.putExtra("activity", "NaverBookSearch");
+                setResult(RESULT_OK, intent);
+            }
+        }
+        finish();
+    }
+
 
 
     public void searchBook(final String keyword) {
@@ -125,8 +139,7 @@ public class NaverBookSearchActivity extends AppCompatActivity {
                                intent.putExtra("price", book.getOriginalPrice());
                                intent.putExtra("image",book.getImage());
                                intent.putExtra("publisher",book.getPublisher());
-                               startActivity(intent);
-                               finish();
+                               startActivityForResult(intent, 0);
                                // 책정보 전달할 액티비티 만들면 됨 //파셀로 전송할수 있게 해야할듯.
                                 Log.d("JS", "onItemClick: " + book.toString());
                             }

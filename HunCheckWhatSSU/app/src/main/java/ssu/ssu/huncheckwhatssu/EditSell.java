@@ -55,7 +55,7 @@ public class EditSell extends AppCompatActivity {
 
         /*recyclerview의 각 아이템 받기*/
         Intent intent = getIntent();
-        trade = intent.getParcelableExtra("book_info_sell_edit_detail");
+        trade = intent.getParcelableExtra("editTrade");
         book = trade.getBook();
         position = intent.getIntExtra("position", -1);
 
@@ -123,8 +123,10 @@ public class EditSell extends AppCompatActivity {
         btn_modifyback2Sell.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                trade.setSellingPrice(Integer.parseInt((activity_book_edit_bookSellingpriceText.getText()).toString()));
-                resultIntent.putExtra("trade", trade);
+                if(activity_book_edit_bookSellingpriceText.getText().toString().length() > 1) {
+                    trade.setSellingPrice(Integer.parseInt((activity_book_edit_bookSellingpriceText.getText()).toString()));
+                }
+                resultIntent.putExtra("editTrade", trade);
                 /*수정된 데이터가 DB로 보내지고 수정된 데이터를 보여줘야함*/
                 finish();
             }

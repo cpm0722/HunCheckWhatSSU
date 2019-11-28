@@ -15,7 +15,14 @@ public class BookState implements Parcelable {
     bookState bookState05;
     bookState bookState06;
 
-    public BookState(){}
+    public BookState(){
+        this.bookState01 = bookState.BEST;
+        this.bookState02 = bookState.BEST;
+        this.bookState03 = bookState.BEST;
+        this.bookState04 = bookState.BEST;
+        this.bookState05 = bookState.BEST;
+        this.bookState06 = bookState.BEST;
+    }
 
     public BookState(bookState bookState01, bookState bookState02, bookState bookState03, bookState bookState04, bookState bookState05, bookState bookState06) {
         this.bookState01 = bookState01;

@@ -16,7 +16,7 @@ import ssu.ssu.huncheckwhatssu.FirebaseCommunicator;
 
 public class Trade implements Parcelable {
 
-    public enum TradeState{
+    public enum TradeState {
         WAIT, PRECONTRACT, COMPLETE;
     }
 
@@ -39,14 +39,14 @@ public class Trade implements Parcelable {
     double longitude;
 
 
-
-    public Trade(){}
+    public Trade() {
+    }
 
     public Trade(Book book, String sellerId) {
         this.book = book;
         this.sellerId = sellerId;
         this.purchaserId = null;
-        this.tradeState= TradeState.WAIT;
+        this.tradeState = TradeState.WAIT;
         this.tradePlace = null;
         this.tradeDate = null;
 
@@ -54,9 +54,21 @@ public class Trade implements Parcelable {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
         this.upLoadDate = simpleDateFormat.format(loadDate.getTimeInMillis());
 
+        this.tradePlace = null;
+        this.tradeDate = null;
+        this.sellingPrice = 0;
+
+        this.latitude = 0;
+        this.longitude = 0;
+
         this.seller = new Customer();
         seller.setId(sellerId);
         seller.setCustomerDataFromUID(null);
+    }
+
+    public Trade(Book book, String sellerId, int sellingPrice) {
+        this(book, sellerId);
+        this.sellingPrice = sellingPrice;
     }
 
     public Trade(Book book, String sellerId, String purchaserId, TradeState tradeState, String tradePlace, Calendar tradeDate) {
@@ -70,7 +82,7 @@ public class Trade implements Parcelable {
         seller.setCustomerDataFromUID(null);
 
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
-        if (tradeDate  == null) {
+        if (tradeDate == null) {
             this.tradeDate = null;
         } else {
             this.tradeDate = simpleDateFormat.format(new Date(tradeDate.getTimeInMillis()));
@@ -85,7 +97,7 @@ public class Trade implements Parcelable {
         this.seller = seller;
         this.purchaser = purchaser;
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
-        if (tradeDate  == null) {
+        if (tradeDate == null) {
             this.tradeDate = null;
         } else {
             this.tradeDate = simpleDateFormat.format(new Date(tradeDate.getTimeInMillis()));
@@ -208,9 +220,13 @@ public class Trade implements Parcelable {
         this.tradeDate = tradeDate;
     }
 
-    public String getTradeId(){ return tradeId; }
+    public String getTradeId() {
+        return tradeId;
+    }
 
-    public void setTradeId(String tradeId){ this.tradeId = tradeId;}
+    public void setTradeId(String tradeId) {
+        this.tradeId = tradeId;
+    }
 
     public Customer getSeller() {
         return seller;
@@ -263,6 +279,7 @@ public class Trade implements Parcelable {
     public void setLongitude(double longitude) {
         this.longitude = longitude;
     }
+
     public String getUpLoadDate() {
         return upLoadDate;
     }
@@ -278,10 +295,12 @@ public class Trade implements Parcelable {
             Calendar c = Calendar.getInstance();
             c.setTime(simpleDateFormat.parse(tradeDate));
             return c;
-        } catch (Exception e) {}
+        } catch (Exception e) {
+        }
         return null;
     }
-    public void convertTradeDate(){
+
+    public void convertTradeDate() {
 
     }
 
@@ -313,7 +332,7 @@ public class Trade implements Parcelable {
     }
 
     public void toMap(Map<String, Object> result) {
-        result.put("book",book);
+        result.put("book", book);
         result.put("tradeId", this.tradeId);
         result.put("sellerId", this.sellerId);
         result.put("purchaserId", this.purchaserId);
@@ -321,9 +340,9 @@ public class Trade implements Parcelable {
         result.put("tradePlace", this.tradePlace);
         result.put("tradeDate", this.tradeDate);
         result.put("upLoadDate", this.upLoadDate);
-        result.put("sellingPrice",this.sellingPrice);
-        result.put("latitude",this.latitude);
-        result.put("longitude",this.longitude);
+        result.put("sellingPrice", this.sellingPrice);
+        result.put("latitude", this.latitude);
+        result.put("longitude", this.longitude);
 
     }
 }

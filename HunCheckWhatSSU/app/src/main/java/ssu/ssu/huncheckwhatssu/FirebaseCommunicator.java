@@ -175,6 +175,8 @@ public class FirebaseCommunicator {
         userPath = in.readString();
     }
 
+    public FirebaseUser getUser(){ return user;}
+
     public String getUserPath() {
         return userPath;
     }
@@ -261,13 +263,13 @@ public class FirebaseCommunicator {
         sellListVector.add(key);
         sellTradeListVector.add(trade);
         //Update된 sellListVector를 FIrebase에 Upload
-        myRef.child("sellList").setValue(sellListVector);
-       // recyclerView.getAdapter().notifyDataSetChanged();
+        myRef.child("sellList").child(key).setValue(key);
+        //myRef.child("sellList").setValue(sellListVector);
         return;
     }
 
+    //EditSell Activity에서 SellFragment로 되돌아왔을 때 수정된 객체를 Firebasd에 등록
     public void editTrade(Trade trade){
-        Log.d("DEBUG!", "edit!");
         //trade의 book 객체 Map으로 변환
         Map<String, Object> bookMap = new HashMap<>();
         trade.getBook().toMap(bookMap);
@@ -276,14 +278,12 @@ public class FirebaseCommunicator {
         trade.toMap(tradeMap);
         //TradeId 획득
         String tradeId = trade.getTradeId();
-        Log.d("DEBUG!", tradeId);
         //book 객체의 정보 Frirebase에 Upload
         tradeRef.child(tradeId).child("book").updateChildren(bookMap);
         //tradeRef.child(tradeId).removeValue();
         tradeRef.child(tradeId).updateChildren(tradeMap);
         //tradeRef.child(tradeId).child("book").removeValue();
         //trade 객체의 정보 Frirebase에 Upload
-        Log.d("DEBUG!", tradeMap.toString());
     }
 
     //CustomerId로 Customer 객체를 Return하는 함수

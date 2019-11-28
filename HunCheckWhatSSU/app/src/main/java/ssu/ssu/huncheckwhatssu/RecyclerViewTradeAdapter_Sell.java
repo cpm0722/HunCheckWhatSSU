@@ -125,10 +125,10 @@ public class RecyclerViewTradeAdapter_Sell extends RecyclerView.Adapter<Recycler
                             toast.show();
 
                             Intent intent=new Intent(context, EditSell.class);
-                            intent.putExtra("BookInfoType","BOOK_INFO_SELL_EDIT_DETAIL");
-                            intent.putExtra("book_info_sell_edit_detail", trade);
+                            intent.putExtra("activity", "SellFragment");
+                            intent.putExtra("editTrade", trade);
                             intent.putExtra("position", position);
-                            fragment.startActivityForResult(intent, 0);
+                            fragment.startActivityForResult(intent, 1);
 
                             recyclerView.getAdapter().notifyItemChanged(position);
                         } else if (viewID == R.id.item_button_delete) {

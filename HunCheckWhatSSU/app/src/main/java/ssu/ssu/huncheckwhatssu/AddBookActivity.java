@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.SearchView;
 import android.widget.Spinner;
 import android.widget.RadioGroup;
@@ -19,6 +20,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.ArrayList;
 
 import ssu.ssu.huncheckwhatssu.DB.DBData;
@@ -28,6 +31,9 @@ import ssu.ssu.huncheckwhatssu.utilClass.Customer;
 import ssu.ssu.huncheckwhatssu.utilClass.Trade;
 import ssu.ssu.huncheckwhatssu.DB.DBHelper;
 
+import static android.widget.Toast.LENGTH_SHORT;
+
+
 public class AddBookActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
     Button add;
     Book book1;
@@ -36,7 +42,9 @@ public class AddBookActivity extends AppCompatActivity implements AdapterView.On
     TextView Author;
     TextView Isbn;
     TextView PubDate;
-    TextView price;
+    TextView originalPrice;
+    TextView seller;
+    EditText sellPrice;
     int price1;//원가
     TextView publisher;
     RadioGroup radioGroup1, radioGroup2, radioGroup3, radioGroup4, radioGroup5, radioGroup6;
@@ -47,6 +55,8 @@ public class AddBookActivity extends AppCompatActivity implements AdapterView.On
     ArrayList<DBData> collegeData;
     ArrayList<DBData> departmentData;
     ArrayList<DBData> subjectData;
+
+    FirebaseCommunicator firebaseCommunicator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,7 +85,7 @@ public class AddBookActivity extends AppCompatActivity implements AdapterView.On
             if (bd.getString("start") != null) {
                 Toast.makeText(getApplicationContext(),
                         "" + bd.getString("start"),
-                        Toast.LENGTH_SHORT).show();
+                        LENGTH_SHORT).show();
             }
         }
 
@@ -92,13 +102,41 @@ public class AddBookActivity extends AppCompatActivity implements AdapterView.On
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Trade addTrade = setData();
-                //sellRecyclerView = root.findViewById(R.id.sell_list) ;
+                if(sellPrice.getText().toString().length() <= 1) {
+                    Toast toast = Toast.makeText(getApplicationContext(), "판매가격을 입력하세요", LENGTH_SHORT);
+                    toast.show();
+                }
+                else if(college_sp.getSelectedItemPosition() <= 0) {
+                    Toast toast = Toast.makeText(getApplicationContext(), "대학을 선택하세요", LENGTH_SHORT);
+                    toast.show();
+                }
+                else if(department_sp.getSelectedItemPosition() <= 0) {
+                    Toast toast = Toast.makeText(getApplicationContext(), "전공을 선택하세요", LENGTH_SHORT);
+                    toast.show();
+                }
+                else if(subject_sp.getSelectedItemPosition() <= 0) {
+                    Toast toast = Toast.makeText(getApplicationContext(), "강의를 선택하세요", LENGTH_SHORT);
+                    toast.show();
+                }
+                else if((radioGroup1.getCheckedRadioButtonId() == -1) || (radioGroup2.getCheckedRadioButtonId() == -1 ) || (radioGroup3.getCheckedRadioButtonId() == -1) || (radioGroup4.getCheckedRadioButtonId() == -1) || (radioGroup5.getCheckedRadioButtonId() == -1) || (radioGroup6.getCheckedRadioButtonId() == -1)){
+                    Toast toast = Toast.makeText(getApplicationContext(), "책상태를 선택하세요", LENGTH_SHORT);
+                    toast.show();
+                }
+                else {
+                    Trade addTrade = setData();
+                    Intent resultIntent = new Intent();
+                    resultIntent.putExtra("activity", "AddBook");
+                    resultIntent.putExtra("addTrade", addTrade);
+                    setResult(0, resultIntent);
 
-                //등록 버튼 누르면 종료, 데이터 추가기능 넣어야함.
-                finish();
+                    //등록 버튼 누르면 종료, 데이터 추가기능 넣어야함.
+                    finish();
+                }
             }
         });
+
+        firebaseCommunicator = new FirebaseCommunicator(FirebaseCommunicator.WhichRecyclerView.none);
+
         Intent intent = getIntent(); //그냥 trade리턴함수 만든는게..나으려나
         title = findViewById(R.id.s_title);
         title.setText(intent.getStringExtra("booktitle"));
@@ -108,11 +146,14 @@ public class AddBookActivity extends AppCompatActivity implements AdapterView.On
         Isbn.setText(intent.getStringExtra("ISBN"));
         PubDate = findViewById(R.id.p_date);
         PubDate.setText(intent.getStringExtra("p_date"));
-        price = findViewById(R.id.realprice);
+        originalPrice = findViewById(R.id.realprice);
         price1 = intent.getIntExtra("price", 0);
-        price.setText("" + price1);
+        originalPrice.setText("" + price1);
         publisher = findViewById(R.id.s_publisher);
         publisher.setText(intent.getStringExtra("publisher"));
+        seller = findViewById(R.id.seller);
+        seller.setText(firebaseCommunicator.getUser().getDisplayName());
+        sellPrice = findViewById(R.id.sellprice);
         // ImageView image=findViewById(R.id.image);
         //  Bitmap bitmap= BitmapFactory.decodeResource(getResources(),R.id.)
         bookState = new BookState();
@@ -344,16 +385,29 @@ public class AddBookActivity extends AppCompatActivity implements AdapterView.On
 
     public Trade setData() { //Trade형 객체 데이터베이스 올리기 위해 객체화작업.
         Book book1 = new Book();
-        Customer customer1 = new Customer();
         book1.setTitle(title.getText().toString());
         book1.setAuthor(Author.getText().toString());
         book1.setIsbn10(Isbn.getText().toString());
         book1.setOriginalPrice(price1);//원가
         book1.setPublisher(publisher.getText().toString());
         book1.setPubDate( PubDate.getText().toString());
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        String userPath = user.getDisplayName() + "_" + user.getUid();
-        trade = new Trade(book1, userPath);
+        int college = collegeData.get(college_sp.getSelectedItemPosition()).getKey();
+        int department = departmentData.get(department_sp.getSelectedItemPosition()).getKey();
+        int subject = subjectData.get(subject_sp.getSelectedItemPosition()).getKey();
+        if(college > 0) book1.setCollege_id(college + "");
+        else book1.setCollege_id(null);
+        if(department > 0) book1.setDepartment_id(department + "");
+        else book1.setDepartment_id(null);
+        if(subject > 0) book1.setSubject_id(subject + "");
+        else book1.setSubject_id(null);
+        book1.setBookState(bookState);
+        String sellingPrice = sellPrice.getText().toString();
+        if(sellingPrice.length() > 1) {
+            trade = new Trade(book1, firebaseCommunicator.getUserPath(),new Integer(sellingPrice).intValue());
+        }
+        else{
+            trade = new Trade(book1, firebaseCommunicator.getUserPath());
+        }
         return trade;
 
     }

@@ -73,7 +73,7 @@ public class SellFragment extends Fragment {
             public void onClick(View v) {
                 Intent in = new Intent(getActivity(), NaverBookSearchActivity.class);
                 //  in.putExtra("start","Add BookSell");
-                startActivity(in);
+                startActivityForResult(in, 0);
                 //sellList.add();
             }
         });
@@ -99,12 +99,24 @@ public class SellFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, intent);
         String act = intent.getStringExtra("activity");
         if(act != null) {
+            //EditSell에서 넘어왔을 때
             if (act.equals("EditSell")) {
-                Trade trade = intent.getParcelableExtra("trade");
+                Trade trade = intent.getParcelableExtra("editTrade");
                 int position = intent.getIntExtra("position", -1);
+                //Vector에 변경 적용
                 firebaseCommunicator.getSellTradeListVector().get(position).Copy(trade);
+                //RecylcerView에 변경 적용
                 sellRecyclerView.getAdapter().notifyItemChanged(position);
+                //Firebase에 변경 적용
                 firebaseCommunicator.editTrade(trade);
+            }
+            //NaverBookSearch에서 넘어왔을 때
+            else if(act.equals("NaverBookSearch")){
+                Trade trade = intent.getParcelableExtra("addTrade");
+                //Vector 및 Firebase에 변경 적용
+                firebaseCommunicator.uploadTrade(trade);
+                //RecyclerView에 변경 적용
+                sellRecyclerView.getAdapter().notifyDataSetChanged();
             }
         }
     }
