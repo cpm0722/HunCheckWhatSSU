@@ -134,14 +134,14 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemSelect
 
 //        TEST용 Firebase 추가 버튼
 
-        Button addBtn = root.findViewById(R.id.fragment_add_btn);
-        addBtn.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-                startActivityForResult(new Intent(getContext(), SearchPlaceActivity.class),MAP_REQUEST_CODE);
-            }
-        });
+//        Button addBtn = root.findViewById(R.id.fragment_add_btn);
+//        addBtn.setOnClickListener(new View.OnClickListener() {
+//
+//            @Override
+//            public void onClick(View view) {
+//                startActivityForResult(new Intent(getContext(), SearchPlaceActivity.class),MAP_REQUEST_CODE);
+//            }
+//        });
 
         setFirebaseEvent();
 
@@ -284,6 +284,15 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemSelect
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 Trade trade = dataSnapshot.getValue(Trade.class);
 
+                trade.setSeller(new Customer(trade.getSellerId()));
+
+//                firebase.getList().add(trade);
+//
+//                trade.getSeller().setCustomerDataFromUID(firebase.getRecyclerView().getAdapter());
+
+                if (firebase.getRecyclerView() != null)
+                    firebase.getRecyclerView().getAdapter().notifyDataSetChanged();
+
                 Log.d(TAG, "onChildAdded: ");
 
                 Log.d("js", "/onQueryTextSubmit: " + search_collegeId);
@@ -380,14 +389,14 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemSelect
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        Log.d(TAG, "onActivityResult: dwdwd " + requestCode + ", " + resultCode);
-        
-        if (requestCode == MAP_REQUEST_CODE) {
-            if (resultCode == RESULT_OK) {
-                Log.d(TAG, "onActivityResult: " + data.getStringExtra("SelectedAddress"));
-                Log.d(TAG, "onActivityResult: " + ((LatLng) data.getParcelableExtra("Location")).toString());
-            }
-        }
+//        Log.d(TAG, "onActivityResult: dwdwd " + requestCode + ", " + resultCode);
+//
+//        if (requestCode == MAP_REQUEST_CODE) {
+//            if (resultCode == RESULT_OK) {
+//                Log.d(TAG, "onActivityResult: " + data.getStringExtra("SelectedAddress"));
+//                Log.d(TAG, "onActivityResult: " + ((LatLng) data.getParcelableExtra("Location")).toString());
+//            }
+//        }
     }
 }
 
