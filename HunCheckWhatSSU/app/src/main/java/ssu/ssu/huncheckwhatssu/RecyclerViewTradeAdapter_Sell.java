@@ -26,11 +26,13 @@ public class RecyclerViewTradeAdapter_Sell extends RecyclerView.Adapter<Recycler
     LayoutInflater inflater;
     Vector<Trade> modelVector;
     RecyclerView recyclerView;
+    TextView countView;
 
-    public RecyclerViewTradeAdapter_Sell(Context context,  Vector<Trade> vector, RecyclerView recyclerView) {
-        inflater = LayoutInflater.from(context);
-        modelVector = vector;
+    public RecyclerViewTradeAdapter_Sell(Context context,  Vector<Trade> vector, RecyclerView recyclerView, TextView countView) {
+        this.inflater = LayoutInflater.from(context);
+        this.modelVector = vector;
         this.recyclerView = recyclerView;
+        this.countView = countView;
     }
 
     @Override
@@ -90,6 +92,7 @@ public class RecyclerViewTradeAdapter_Sell extends RecyclerView.Adapter<Recycler
             sellerCreditTextView.setText("위험");
             DBHelper dbHelper = new DBHelper(inflater.getContext());
             bookCategoryTextView.setText(dbHelper.getFullCategoryText(object.getBook()));
+            countView.setText(getItemCount() + " 건");
         }
     }
 

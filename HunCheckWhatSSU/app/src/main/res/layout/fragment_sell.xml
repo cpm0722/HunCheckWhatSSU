@@ -10,7 +10,6 @@
         android:layout_height="24dp" />
 
 
-
     <Button
         android:id="@+id/AddSellBook"
         android:layout_width="323dp"
@@ -38,6 +37,13 @@
         android:textAlignment="center"
         android:textSize="20dp"
         android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/sell_count"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="end"
+        android:textSize="15dp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/sell_list"

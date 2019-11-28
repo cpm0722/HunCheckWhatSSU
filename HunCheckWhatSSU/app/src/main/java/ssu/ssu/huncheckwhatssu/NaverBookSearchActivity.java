@@ -58,10 +58,10 @@ public class NaverBookSearchActivity extends AppCompatActivity {
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
 
-                int lastVisiblePosition = ((LinearLayoutManager)recyclerView.getLayoutManager()).findLastVisibleItemPosition();
+                int lastVisiblePosition = ((LinearLayoutManager) recyclerView.getLayoutManager()).findLastVisibleItemPosition();
                 Log.d("JS", "onScrolled: " + lastVisiblePosition);
 
-                if (lastVisiblePosition == recyclerView.getAdapter().getItemCount()-1 && process == false) {
+                if (lastVisiblePosition == recyclerView.getAdapter().getItemCount() - 1 && process == false) {
                     final String keyword = searchView.getQuery() + "";
                     process = true;
                     searchBook(keyword);
@@ -80,7 +80,8 @@ public class NaverBookSearchActivity extends AppCompatActivity {
                 try {
                     recyclerView.removeAllViews();
                     naverBookSearch.resetSearchList();
-                } catch (Exception e){}
+                } catch (Exception e) {
+                }
 
                 searchBook(keyword);
                 return false;
@@ -97,16 +98,17 @@ public class NaverBookSearchActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
-        String activity = intent.getStringExtra("activity");
-        if(activity != null){
-            if(activity.equals("AddBook")){
-                intent.putExtra("activity", "NaverBookSearch");
-                setResult(RESULT_OK, intent);
+        if (resultCode == RESULT_OK) {
+            String activity = intent.getStringExtra("activity");
+            if (activity != null) {
+                if (activity.equals("AddBook")) {
+                    intent.putExtra("activity", "NaverBookSearch");
+                    setResult(RESULT_OK, intent);
+                }
             }
         }
         finish();
     }
-
 
 
     public void searchBook(final String keyword) {
@@ -129,18 +131,18 @@ public class NaverBookSearchActivity extends AppCompatActivity {
                             @Override
                             public void onItemClick(View v, int pos) {
                                 Book book = searchedBookList.get(pos);
-                                Intent intent=new Intent(getApplicationContext(),AddBookActivity.class);
-                               // Bitmap senditmap= BitmapFactory.decodeResource(getResources(),R.id.add_book_item_image)
-                               //senditmap.compress(Bitmap.CompressFormat.JPEG,100);
-                                intent.putExtra("booktitle",book.getTitle());
-                               intent.putExtra("Author",book.getAuthor());
-                               intent.putExtra("ISBN",book.getIsbn10());
-                               intent.putExtra("p_date",book.getPubDate());
-                               intent.putExtra("price", book.getOriginalPrice());
-                               intent.putExtra("image",book.getImage());
-                               intent.putExtra("publisher",book.getPublisher());
-                               startActivityForResult(intent, 0);
-                               // 책정보 전달할 액티비티 만들면 됨 //파셀로 전송할수 있게 해야할듯.
+                                Intent intent = new Intent(getApplicationContext(), AddBookActivity.class);
+                                // Bitmap senditmap= BitmapFactory.decodeResource(getResources(),R.id.add_book_item_image)
+                                //senditmap.compress(Bitmap.CompressFormat.JPEG,100);
+                                intent.putExtra("booktitle", book.getTitle());
+                                intent.putExtra("Author", book.getAuthor());
+                                intent.putExtra("ISBN", book.getIsbn10());
+                                intent.putExtra("p_date", book.getPubDate());
+                                intent.putExtra("price", book.getOriginalPrice());
+                                intent.putExtra("image", book.getImage());
+                                intent.putExtra("publisher", book.getPublisher());
+                                startActivityForResult(intent, 0);
+                                // 책정보 전달할 액티비티 만들면 됨 //파셀로 전송할수 있게 해야할듯.
                                 Log.d("JS", "onItemClick: " + book.toString());
                             }
                         });

@@ -34,6 +34,7 @@ public class RecyclerViewTradeAdapter_Trade extends RecyclerView.Adapter<Recycle
     LayoutInflater inflater;
     Vector<Trade> modelList;
     RecyclerView recyclerView;
+    TextView countView;
     DBHelper dbHelper;
 
 
@@ -41,10 +42,11 @@ public class RecyclerViewTradeAdapter_Trade extends RecyclerView.Adapter<Recycle
         return modelList;
     }
 
-    public RecyclerViewTradeAdapter_Trade(Context context, Vector<Trade> vector, RecyclerView recyclerView) {
-        inflater = LayoutInflater.from(context);
-        modelList = vector;
+    public RecyclerViewTradeAdapter_Trade(Context context, Vector<Trade> vector, RecyclerView recyclerView, TextView countView) {
+        this.inflater = LayoutInflater.from(context);
+        this.modelList = vector;
         this.recyclerView = recyclerView;
+        this.countView = countView;
         dbHelper=new DBHelper(context);
     }
 
@@ -105,6 +107,8 @@ public class RecyclerViewTradeAdapter_Trade extends RecyclerView.Adapter<Recycle
             book_publisher.setText(object.getBook().getPublisher());
             selling_price.setText(String.valueOf(object.getSellingPrice()));
             seller_credit.setText("신뢰");
+
+            countView.setText(new Integer(getItemCount()) + " 건");
             //seller_credit.setText((int)object.getSeller().getCreditRating());
 
             //   book_image.setImageDrawable(ResourcesCompat.getDrawable(context.getResources(),R.drawable.bookimag,null))

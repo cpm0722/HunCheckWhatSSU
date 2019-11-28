@@ -29,6 +29,9 @@ public class TradeFragment extends Fragment {
     RecyclerView ongoingRecyclerView, doneRecyclerView;
     FirebaseCommunicator ongoingFirebase, doneFirebase;
 
+    TextView ongoingCountTrade;
+    TextView doneCountTrade;
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         final View root = inflater.inflate(R.layout.fragment_trade, container, false);
@@ -39,7 +42,8 @@ public class TradeFragment extends Fragment {
         Menu menu = navView.getMenu();
         menu.getItem(2).setChecked(true);
 
-
+        ongoingCountTrade=root.findViewById(R.id.ongoing_count);
+        doneCountTrade=root.findViewById(R.id.done_count);
 
         // 리사이클러뷰에 LinearLayoutManager 객체 지정.
         ongoingFirebase = new FirebaseCommunicator(FirebaseCommunicator.WhichRecyclerView.ongoingRecyclerView);
@@ -48,21 +52,13 @@ public class TradeFragment extends Fragment {
         ongoingRecyclerView.setLayoutManager(new LinearLayoutManager(getContext())) ;
         ongoingFirebase.setRecyclerView(this.getContext(), this.getActivity(), ongoingRecyclerView, FirebaseCommunicator.WhichRecyclerView.ongoingRecyclerView);
 
-
-
         // 리사이클러뷰에 RecyclerViewAdapter1 객체 지정.
-        ongoingAdapter = new RecyclerViewTradeAdapter_Trade(this.getContext(), ongoingFirebase.getOngoingTradeListVector(), ongoingRecyclerView) ;
+        ongoingAdapter = new RecyclerViewTradeAdapter_Trade(this.getContext(), ongoingFirebase.getOngoingTradeListVector(), ongoingRecyclerView, ongoingCountTrade) ;
         ongoingAdapter.setSwipeable(this.getContext(), this.getActivity(), ongoingRecyclerView);
         ongoingRecyclerView.setAdapter(ongoingAdapter);
 
-
-
-
-
         /*거래진행중인 아이템개수 보여주기 위해서*/
-        final TextView ongoingCountTrade=root.findViewById(R.id.ongoing_count);
         ongoingCountTrade.setText(""+ongoingAdapter.getItemCount()+" 건");
-
 
         // 리사이클러뷰에 LinearLayoutManager 객체 지정.
         doneFirebase = new FirebaseCommunicator(FirebaseCommunicator.WhichRecyclerView.doneRecyclerView);
@@ -71,13 +67,11 @@ public class TradeFragment extends Fragment {
         doneFirebase.setRecyclerView(this.getContext(), this.getActivity(), doneRecyclerView, FirebaseCommunicator.WhichRecyclerView.doneRecyclerView);
 
         // 리사이클러뷰에 RecyclerViewAdapter1 객체 지정.
-        doneAdapter = new RecyclerViewTradeAdapter_Trade(this.getContext(), doneFirebase.getDoneTradeListVector(), doneRecyclerView) ;
+        doneAdapter = new RecyclerViewTradeAdapter_Trade(this.getContext(), doneFirebase.getDoneTradeListVector(), doneRecyclerView, doneCountTrade);
         doneAdapter.setSwipeable(this.getContext(), this.getActivity(), doneRecyclerView);
         doneRecyclerView.setAdapter(doneAdapter);
 
-
         /*거래진행중인 아이템개수 보여주기 위해서*/
-        final TextView doneCountTrade=root.findViewById(R.id.done_count);
         doneCountTrade.setText(""+doneAdapter.getItemCount()+" 건");
 
         /*리사이클러뷰에 구분선 넣기
