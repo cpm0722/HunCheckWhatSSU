@@ -154,6 +154,9 @@ public class RecyclerViewTradeAdapter_Sell extends RecyclerView.Adapter<Recycler
                                 @Override
                                 public void onClick(DialogInterface arg0, int arg1) {
                                     FirebaseCommunicator.tradePrecontract(trade.getTradeId(), trade.getSellerId(), "김승주_M3wdnkONA0cFMzXSqwt2dLLcfNI2");
+                                    modelVector.remove(position);
+                                    notifyItemRemoved(position);
+                                    countView.setText(getItemCount() + " 건");
                                     Toast toast = Toast.makeText(context, "취소함", Toast.LENGTH_SHORT);
                                     toast.show();
                                 }

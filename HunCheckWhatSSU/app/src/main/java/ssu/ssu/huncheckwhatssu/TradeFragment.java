@@ -28,7 +28,7 @@ public class TradeFragment extends Fragment {
     RecyclerViewTradeAdapter_Trade ongoingAdapter;
     RecyclerViewTradeAdapter_Trade doneAdapter;
     RecyclerView ongoingRecyclerView, doneRecyclerView;
-    FirebaseCommunicator ongoingFirebase, doneFirebase;
+    FirebaseCommunicator firebase;
 
     TextView ongoingCountTrade;
     TextView doneCountTrade;
@@ -47,14 +47,13 @@ public class TradeFragment extends Fragment {
         doneCountTrade=root.findViewById(R.id.done_count);
 
         // 리사이클러뷰에 LinearLayoutManager 객체 지정.
-        ongoingFirebase = new FirebaseCommunicator(FirebaseCommunicator.WhichRecyclerView.ongoingRecyclerView);
-        String seller = ongoingFirebase.getUserPath();
+        firebase = new FirebaseCommunicator(FirebaseCommunicator.WhichRecyclerView.ongoingRecyclerView);
         ongoingRecyclerView = root.findViewById(R.id.trade_ongoing_list) ;
         ongoingRecyclerView.setLayoutManager(new LinearLayoutManager(getContext())) ;
-        ongoingFirebase.setRecyclerView(this.getContext(), this.getActivity(), ongoingRecyclerView, FirebaseCommunicator.WhichRecyclerView.ongoingRecyclerView);
+        firebase.setRecyclerView(this.getContext(), this.getActivity(), ongoingRecyclerView, FirebaseCommunicator.WhichRecyclerView.ongoingRecyclerView);
 
         // 리사이클러뷰에 RecyclerViewAdapter1 객체 지정.
-        ongoingAdapter = new RecyclerViewTradeAdapter_Trade(this.getContext(), ongoingFirebase.getOngoingTradeListVector(), ongoingRecyclerView, ongoingCountTrade) ;
+        ongoingAdapter = new RecyclerViewTradeAdapter_Trade(this.getContext(), firebase.getOngoingTradeListVector(), ongoingRecyclerView, ongoingCountTrade) ;
         ongoingAdapter.setSwipeable(this.getContext(), this.getActivity(), ongoingRecyclerView);
         ongoingRecyclerView.setAdapter(ongoingAdapter);
 
@@ -62,13 +61,11 @@ public class TradeFragment extends Fragment {
         ongoingCountTrade.setText(""+ongoingAdapter.getItemCount()+" 건");
 
         // 리사이클러뷰에 LinearLayoutManager 객체 지정.
-        doneFirebase = new FirebaseCommunicator(FirebaseCommunicator.WhichRecyclerView.doneRecyclerView);
         doneRecyclerView = root.findViewById(R.id.trade_done_list) ;
         doneRecyclerView.setLayoutManager(new LinearLayoutManager(getContext())) ;
-        doneFirebase.setRecyclerView(this.getContext(), this.getActivity(), doneRecyclerView, FirebaseCommunicator.WhichRecyclerView.doneRecyclerView);
 
         // 리사이클러뷰에 RecyclerViewAdapter1 객체 지정.
-        doneAdapter = new RecyclerViewTradeAdapter_Trade(this.getContext(), doneFirebase.getDoneTradeListVector(), doneRecyclerView, doneCountTrade);
+        doneAdapter = new RecyclerViewTradeAdapter_Trade(this.getContext(), firebase.getDoneTradeListVector(), doneRecyclerView, doneCountTrade);
         doneAdapter.setSwipeable(this.getContext(), this.getActivity(), doneRecyclerView);
         doneRecyclerView.setAdapter(doneAdapter);
 
