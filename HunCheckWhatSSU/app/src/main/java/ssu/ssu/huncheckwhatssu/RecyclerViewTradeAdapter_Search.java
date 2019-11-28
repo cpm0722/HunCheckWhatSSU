@@ -103,27 +103,15 @@ public class RecyclerViewTradeAdapter_Search extends RecyclerView.Adapter<Recycl
             StringBuilder sb = new StringBuilder();
 
 
-            Cursor cursor = db.rawQuery("select * from tb_college where id = ?", new String[]{object.getBook().getCollege_id()});
-
-            while (cursor.moveToNext()) {
-                sb.append(cursor.getString(1));
-            }
+            sb.append(dbHelper.getCollegeName(object.getBook().getCollege_id()));
 
             sb.append(">");
 
-            cursor = db.rawQuery("select * from tb_department where id = ?", new String[]{object.getBook().getDepartment_id()});
-
-            while (cursor.moveToNext()) {
-                sb.append(cursor.getString(2));
-            }
+            sb.append(dbHelper.getDepartmentName(object.getBook().getDepartment_id()));
 
             sb.append(">");
 
-            cursor = db.rawQuery("select * from tb_subject where id = ?", new String[]{object.getBook().getSubject_id()});
-
-            while (cursor.moveToNext()) {
-                sb.append(cursor.getString(3));
-            }
+            sb.append(dbHelper.getSubjectName(object.getBook().getSubject_id()));
 
 
             bookCategoryTextView.setText(sb.toString());
