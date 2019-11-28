@@ -286,18 +286,14 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemSelect
 
                 trade.setSeller(new Customer(trade.getSellerId()));
 
-//                firebase.getList().add(trade);
-//
-//                trade.getSeller().setCustomerDataFromUID(firebase.getRecyclerView().getAdapter());
-
-                if (firebase.getRecyclerView() != null)
-                    firebase.getRecyclerView().getAdapter().notifyDataSetChanged();
-
                 Log.d(TAG, "onChildAdded: ");
 
                 Log.d("js", "/onQueryTextSubmit: " + search_collegeId);
                 Log.d("js", "onQueryTextSubmit: " + search_departmentId);
                 Log.d("js", "onQueryTextSubmit:/ " + search_subjectId);
+
+                // 거래 대기중인 것만 나타남
+                if (trade.getTradeState() != Trade.TradeState.WAIT) return;
 
                 if (trade.getBook().getCollege_id().equals(search_collegeId) || search_collegeId.equals("0") || search_collegeId.equals("-1")) {
                     if (trade.getBook().getDepartment_id().equals(search_departmentId) || search_departmentId.equals("0")|| search_departmentId.equals("-1")) {
