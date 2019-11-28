@@ -5,22 +5,22 @@
 
     <item
         android:id="@+id/navigation_search"
-        android:icon="@drawable/ic_home_black_24dp"
+        android:icon="@android:drawable/ic_menu_search"
         android:title="@string/title_search" />
 
     <item
         android:id="@+id/navigation_sell"
-        android:icon="@drawable/ic_dashboard_black_24dp"
+        android:icon="@drawable/sell_image"
         android:title="@string/title_sell" />
 
     <item
         android:id="@+id/navigation_trade"
-        android:icon="@drawable/ic_notifications_black_24dp"
+        android:icon="@drawable/trade_image"
         android:title="@string/title_trade"/>
 
     <item
         android:id="@+id/navigation_option"
-        android:icon="@drawable/ic_notifications_black_24dp"
+        android:icon="@drawable/setting_image"
         android:title="@string/title_option"/>
 
 </menu>
