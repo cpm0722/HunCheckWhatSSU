@@ -127,7 +127,7 @@ public class AddBookActivity extends AppCompatActivity implements AdapterView.On
                     Intent resultIntent = new Intent();
                     resultIntent.putExtra("activity", "AddBook");
                     resultIntent.putExtra("addTrade", addTrade);
-                    setResult(0, resultIntent);
+                    setResult(RESULT_OK, resultIntent);
 
                     //등록 버튼 누르면 종료, 데이터 추가기능 넣어야함.
                     finish();

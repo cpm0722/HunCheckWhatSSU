@@ -13,6 +13,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 import ssu.ssu.huncheckwhatssu.R;
+import ssu.ssu.huncheckwhatssu.utilClass.Book;
 
 public class DBHelper extends SQLiteOpenHelper {
     final static String DB_NAME = "HunCheckWhatSSUDB";
@@ -70,6 +71,25 @@ public class DBHelper extends SQLiteOpenHelper {
         db.close();
 
         return res;
+    }
+
+    public String getFullCategoryText(Book book){
+        StringBuilder sb = new StringBuilder();
+        String college = this.getCollegeName(book.getCollege_id());
+        if(college == null)
+            college = "None";
+        sb.append(college);
+        sb.append(">");
+        String department = this.getDepartmentName(book.getDepartment_id());
+        if(department == null)
+            department = "None";
+        sb.append(department);
+        sb.append(">");
+        String subject = this.getSubjectName(book.getSubject_id());
+        if(subject == null)
+            subject = "None";
+        sb.append(subject);
+        return sb.toString();
     }
 
     private void createDBTable(SQLiteDatabase db) {

@@ -18,6 +18,7 @@ import com.nikhilpanju.recyclerviewenhanced.RecyclerTouchListener;
 
 import java.util.Vector;
 
+import ssu.ssu.huncheckwhatssu.DB.DBHelper;
 import ssu.ssu.huncheckwhatssu.utilClass.Customer;
 import ssu.ssu.huncheckwhatssu.utilClass.Trade;
 
@@ -87,6 +88,8 @@ public class RecyclerViewTradeAdapter_Sell extends RecyclerView.Adapter<Recycler
             bookAuthorTextView.setText(object.getBook().getAuthor());
             bookPublisherTextView.setText(object.getBook().getPublisher());
             sellerCreditTextView.setText("위험");
+            DBHelper dbHelper = new DBHelper(inflater.getContext());
+            bookCategoryTextView.setText(dbHelper.getFullCategoryText(object.getBook()));
         }
     }
 
@@ -98,8 +101,6 @@ public class RecyclerViewTradeAdapter_Sell extends RecyclerView.Adapter<Recycler
                     @Override
                     public void onRowClicked(int position) {
                         Trade trade = ((RecyclerViewTradeAdapter_Sell)(recyclerView.getAdapter())).getTrades().get(position);
-                        Toast toast = Toast.makeText(context, "RowClick! " + trade.getBook().getTitle(), Toast.LENGTH_SHORT);
-                        toast.show();
                         recyclerView.getAdapter().notifyItemChanged(position);
                         Intent intent=new Intent(context,BookInfoActivity.class);
                         intent.putExtra("BookInfoType","BOOK_INFO_TRADE_DETAIL");
