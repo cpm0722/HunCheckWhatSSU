@@ -1,6 +1,7 @@
 package ssu.ssu.huncheckwhatssu;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -73,6 +74,12 @@ public class TradeFragment extends Fragment {
 
         /*거래진행중인 아이템개수 보여주기 위해서*/
         doneCountTrade.setText(""+doneAdapter.getItemCount()+" 건");
+
+        ongoingAdapter.notifyDataSetChanged();
+        doneAdapter.notifyDataSetChanged();
+
+        ongoingAdapter.setAnotherAdapter(FirebaseCommunicator.WhichRecyclerView.ongoingRecyclerView, doneAdapter);
+        doneAdapter.setAnotherAdapter(FirebaseCommunicator.WhichRecyclerView.doneRecyclerView, ongoingAdapter);
 
         /*리사이클러뷰에 구분선 넣기
         DividerItemDecoration dividerItemDecoration=new DividerItemDecoration(getContext(),new LinearLayoutManager(getContext()).getOrientation());

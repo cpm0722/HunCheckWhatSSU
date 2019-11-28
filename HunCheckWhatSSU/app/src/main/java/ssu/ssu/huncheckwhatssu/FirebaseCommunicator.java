@@ -268,8 +268,8 @@ public class FirebaseCommunicator {
         return;
     }
 
-    //EditSell Activity에서 SellFragment로 되돌아왔을 때 수정된 객체를 Firebasd에 등록
-    public void editTrade(Trade trade){
+    //수정된 trade객체를 받아 Firebasd에 등록 (trade 객체의 tradeId 사용)
+    public static void editTrade(Trade trade){
         //trade의 book 객체 Map으로 변환
         Map<String, Object> bookMap = new HashMap<>();
         trade.getBook().toMap(bookMap);
@@ -279,14 +279,40 @@ public class FirebaseCommunicator {
         //TradeId 획득
         String tradeId = trade.getTradeId();
         //book 객체의 정보 Frirebase에 Upload
-        tradeRef.child(tradeId).child("book").updateChildren(bookMap);
-        //tradeRef.child(tradeId).removeValue();
-        tradeRef.child(tradeId).updateChildren(tradeMap);
-        //tradeRef.child(tradeId).child("book").removeValue();
-        //trade 객체의 정보 Frirebase에 Upload
+        FirebaseDatabase.getInstance().getReference().child("trade").child(tradeId).child("book").updateChildren(bookMap);
+        FirebaseDatabase.getInstance().getReference().child("trade").child(tradeId).updateChildren(tradeMap);
     }
-    
-    public void moveTradeIdFromSellListToOngoingList(String tradeId){
+
+    //trade객체를 Firebase에서 삭제하는 함수 (SellFragment에서 사용)
+    public static void deleteTrade(Trade trade){
+        FirebaseDatabase.getInstance().getReference().child("customer").child(trade.getSellerId()).child("sellList").child(trade.getTradeId()).removeValue();
+        tradeRef.child(trade.getTradeId()).removeValue();
+        return;
+    }
+
+    //거래 예약 잡힌 경우
+    public static void tradePrecontract(String tradeId, String sellerId, String purchaserId){
+        //판매자의 sellLIst에서 삭제
+        FirebaseDatabase.getInstance().getReference().child("customer").child(sellerId).child("sellList").child(tradeId).setValue(null);
+        //판매자의 tradeLIst에 추가
+        FirebaseDatabase.getInstance().getReference().child("customer").child(sellerId).child("tradeList").child(tradeId).setValue(tradeId);
+        //구매자의 tradeLIst에 추가
+        FirebaseDatabase.getInstance().getReference().child("customer").child(purchaserId).child("tradeList").child(tradeId).setValue(tradeId);
+        //TradeState PRECONTRACT로 변경
+        FirebaseDatabase.getInstance().getReference().child("trade").child(tradeId).child("tradeState").setValue("PRECONTRACT");
+        return;
+    }
+
+    //거래 파기된 경우
+    public static void tradeCancel(String tradeId, String sellerId, String purchaserId){
+        //판매자의 tradeLIst에서 삭제
+        FirebaseDatabase.getInstance().getReference().child("customer").child(sellerId).child("tradeList").child(tradeId).setValue(null);
+        //구매자의 tradeLIst에서 삭제
+        FirebaseDatabase.getInstance().getReference().child("customer").child(purchaserId).child("tradeList").child(tradeId).setValue(null);
+        //판매자의 sellLIst에 추가
+        FirebaseDatabase.getInstance().getReference().child("customer").child(sellerId).child("sellList").child(tradeId).setValue(tradeId);
+        //TradeState WAIT로 변경
+        FirebaseDatabase.getInstance().getReference().child("trade").child(tradeId).child("tradeState").setValue("WAIT");
         return;
     }
 

@@ -1,7 +1,9 @@
 package ssu.ssu.huncheckwhatssu;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -97,7 +99,7 @@ public class RecyclerViewTradeAdapter_Sell extends RecyclerView.Adapter<Recycler
     }
 
     //RecyclerView에 TouchListener 설정 함수 (Swipe로 메뉴 출력 가능하게)
-    public static void setSwipeable(final Context context, final Activity activity, final Fragment fragment, final RecyclerView recyclerView) {
+    public void setSwipeable(final Context context, final Activity activity, final Fragment fragment, final RecyclerView recyclerView) {
         RecyclerTouchListener onTouchListener = new RecyclerTouchListener(activity, recyclerView);
         onTouchListener
                 .setClickable(new RecyclerTouchListener.OnRowClickListener() {
@@ -122,12 +124,9 @@ public class RecyclerViewTradeAdapter_Sell extends RecyclerView.Adapter<Recycler
                 .setSwipeable(R.id.rowFG, R.id.rowBG, new RecyclerTouchListener.OnSwipeOptionsClickListener() {
 
                     @Override
-                    public void onSwipeOptionClicked(int viewID, int position) {
-                        Trade trade = ((RecyclerViewTradeAdapter_Sell)(recyclerView.getAdapter())).getTrades().get(position);
+                    public void onSwipeOptionClicked(int viewID, final int position) {
+                        final Trade trade = ((RecyclerViewTradeAdapter_Sell)(recyclerView.getAdapter())).getTrades().get(position);
                         if (viewID == R.id.item_button_edit) {
-                            Toast toast = Toast.makeText(context, "Edit! " + trade.getBook().getTitle(), Toast.LENGTH_SHORT);
-                            toast.show();
-
                             Intent intent=new Intent(context, EditSell.class);
                             intent.putExtra("activity", "SellFragment");
                             intent.putExtra("editTrade", trade);
@@ -136,9 +135,30 @@ public class RecyclerViewTradeAdapter_Sell extends RecyclerView.Adapter<Recycler
 
                             recyclerView.getAdapter().notifyItemChanged(position);
                         } else if (viewID == R.id.item_button_delete) {
-                            Toast toast = Toast.makeText(context, "Delete! " + trade.getBook().getTitle(), Toast.LENGTH_SHORT);
-                            toast.show();
-                            recyclerView.getAdapter().notifyDataSetChanged();
+                            AlertDialog.Builder alert = new AlertDialog.Builder(context);
+                            alert.setTitle("거래 삭제");
+                            alert.setMessage("정말로 거래를 삭제 하시겠습니까?");
+                            alert.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    FirebaseCommunicator.deleteTrade(trade);
+                                    ((RecyclerViewTradeAdapter_Sell) (recyclerView.getAdapter())).getTrades().remove(position);
+                                    recyclerView.getAdapter().notifyItemRemoved(position);
+                                    recyclerView.getAdapter().notifyDataSetChanged();
+                                    countView.setText(recyclerView.getAdapter().getItemCount() + " 건");
+                                    Toast toast = Toast.makeText(context, "거래삭제함", Toast.LENGTH_SHORT);
+                                    toast.show();
+                                }
+                            });
+                            alert.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface arg0, int arg1) {
+                                    FirebaseCommunicator.tradePrecontract(trade.getTradeId(), trade.getSellerId(), "김승주_M3wdnkONA0cFMzXSqwt2dLLcfNI2");
+                                    Toast toast = Toast.makeText(context, "취소함", Toast.LENGTH_SHORT);
+                                    toast.show();
+                                }
+                            });
+                            alert.show();
                         }
                     }
                 });

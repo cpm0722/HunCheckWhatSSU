@@ -72,6 +72,7 @@ public class SellFragment extends Fragment {
         sellRecyclerView.setAdapter(sellAdapter);
         sellAdapter.setSwipeable(this.getContext(), this.getActivity(),this, sellRecyclerView);
 
+        sellAdapter.notifyDataSetChanged();
         sellCount.setText(""+sellAdapter.getItemCount()+" 건");
 
         return root;
