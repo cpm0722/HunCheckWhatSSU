@@ -105,11 +105,14 @@ public class FirebaseHelper {
         databaseReference.setValue(key);
     }
 
-    public void updatePurchaser(String tradeKey, String purchaserUid){
+    public void updatePurchaser(String tradeKey, String purchaserUid,String sellerUid){
+
         trade.child(tradeKey).child("purchaserId").setValue(purchaserUid);
+        customer.child(sellerUid).child("buyList").child(tradeKey).setValue(tradeKey);
         customer.child(purchaserUid).child("buyList").child(tradeKey).setValue(tradeKey);
         purchase_request.child(tradeKey).removeValue();
     }
+
     public interface CallBackListener {
         void afterGetCustomer(Customer customer);
     }

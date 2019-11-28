@@ -83,7 +83,7 @@ public class OptionFragment extends Fragment implements View.OnClickListener {
             Book book = new Book("testISBN10","testISBN13","testTitle","testimg","testAuthor",15000,"testPublisher","testPubdate","testdescription",bookState);
             book.setSubject_id("2");
             book.setDepartment_id("38");
-            book.setCollege_id("5");
+            book.setCollege_id("8");
             Trade trade = new Trade(book, firebaseHelper.myUid);
             trade.setSellingPrice(5000);
             firebaseHelper.upLoadTrade(trade);
