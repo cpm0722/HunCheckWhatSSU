@@ -1,6 +1,8 @@
 package ssu.ssu.huncheckwhatssu.DB;
 
+import android.app.DownloadManager;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -26,6 +28,48 @@ public class DBHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         createDBTable(db);
 
+    }
+
+    public String getCollegeName(String collegeId) {
+        SQLiteDatabase db = getReadableDatabase();
+
+        Cursor cursor = db.rawQuery("select name from tb_college where id = ?", new String[]{collegeId});
+
+        if (!cursor.moveToNext()) return null;
+
+        String res = cursor.getString(0);
+
+        db.close();
+
+        return res;
+    }
+
+    public String getDepartmentName(String departmentId) {
+        SQLiteDatabase db = getReadableDatabase();
+
+        Cursor cursor = db.rawQuery("select name from tb_department where id = ?", new String[]{departmentId});
+
+        if (!cursor.moveToNext()) return null;
+
+        String res = cursor.getString(0);
+
+        db.close();
+
+        return res;
+    }
+
+    public String getSubjectName(String subjectId) {
+        SQLiteDatabase db = getReadableDatabase();
+
+        Cursor cursor = db.rawQuery("select name from tb_subject where id = ?", new String[]{subjectId});
+
+        if (!cursor.moveToNext()) return null;
+
+        String res = cursor.getString(0);
+
+        db.close();
+
+        return res;
     }
 
     private void createDBTable(SQLiteDatabase db) {
