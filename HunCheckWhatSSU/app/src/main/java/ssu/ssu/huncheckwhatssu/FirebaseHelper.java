@@ -40,7 +40,7 @@ public class FirebaseHelper {
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         myUid =firebaseUser.getDisplayName()+"_"+firebaseUser.getUid();
     }
-
+    //Customer객체를 서버에 올리는 함수
     public void upLoadCustomer(Customer customer){
         String id = customer.getId();
         DatabaseReference path = FirebaseDatabase.getInstance().getReference().child("customer").child(id);
@@ -48,7 +48,7 @@ public class FirebaseHelper {
         customer.toMap(update);
         path.updateChildren(update);
     }
-
+    //Id로 Customer 정보를 가져오는 함수 콜백 리스너로 넘긴다.
     public void getCustomerById(String Uid){
         DatabaseReference path = customer.child(Uid);
         path.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -64,11 +64,12 @@ public class FirebaseHelper {
             }
         });
     }
-
+    //구매요청을 보내는 함수
     public void sendPurchaseRequest(String tradeKey,String Uid){
         DatabaseReference Ref = purchase_request.child(tradeKey);
-        Ref.child(Uid).setValue(Uid);
+        Ref.push().setValue(Uid);
     }
+    //해당 trade에 대한 구매요청한 사람들의 uid를 받는 함수
     public void getPurchaseRequest(String tradeKey){
         DatabaseReference Ref = purchase_request.child(tradeKey);
         Ref.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -79,7 +80,6 @@ public class FirebaseHelper {
                     purchaserUids.add(uidSnapshot.getValue(String.class));
                 }
                 afterGetPurchaserUid(purchaserUids);
-
             }
 
             @Override
@@ -87,13 +87,14 @@ public class FirebaseHelper {
             }
         });
     }
-
+    //purchaserUid를 받고 purchaser정보를 서버에서 가져옴
     public void afterGetPurchaserUid(Vector<String> purchaserUids){
         int size = purchaserUids.size();
         for(int i=0;i<size;i++){
             getCustomerById(purchaserUids.get(i));
         }
     }
+    //trade를 업로드하는 함수
     public void upLoadTrade(Trade trade){
         HashMap<String,Object> update = new HashMap<>();
         trade.toMap(update);
@@ -105,14 +106,20 @@ public class FirebaseHelper {
         databaseReference.setValue(key);
     }
 
+    //선택한 purchaser을 서버에 업데이트한다.
     public void updatePurchaser(String tradeKey, String purchaserUid,String sellerUid){
 
         trade.child(tradeKey).child("purchaserId").setValue(purchaserUid);
-        customer.child(sellerUid).child("buyList").child(tradeKey).setValue(tradeKey);
-        customer.child(purchaserUid).child("buyList").child(tradeKey).setValue(tradeKey);
+        customer.child(sellerUid).child("sellList").child(tradeKey).removeValue();
+        customer.child(sellerUid).child("tradeList").child(tradeKey).setValue(tradeKey);
+        customer.child(purchaserUid).child("tradeList").child(tradeKey).setValue(tradeKey);
         purchase_request.child(tradeKey).removeValue();
     }
 
+    //
+    public void updateCreditrating(){
+
+    }
     public interface CallBackListener {
         void afterGetCustomer(Customer customer);
     }

@@ -102,6 +102,7 @@ public class Trade implements Parcelable {
         upLoadDate = in.readString();
         longitude = in.readDouble();
         latitude = in.readDouble();
+        tradeId = in.readString();
     }
 
     @Override
@@ -120,6 +121,7 @@ public class Trade implements Parcelable {
         dest.writeString(upLoadDate);
         dest.writeDouble(latitude);
         dest.writeDouble(longitude);
+        dest.writeString(tradeId);
     }
 
     public static final Creator<Trade> CREATOR = new Creator<Trade>() {

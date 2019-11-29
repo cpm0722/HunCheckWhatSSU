@@ -17,16 +17,17 @@ import ssu.ssu.huncheckwhatssu.utilClass.Customer;
 
 public class SelectPurchaserActivity extends AppCompatActivity implements View.OnClickListener {
 
-    public static String TAG = "JINECHAN";
+    public static String TAG = "HUNYC";
 
     String tradeKey;
     String sellerId;
     FirebaseHelper firebaseHelper;
-    Vector<Customer> purchasers;
     RecyclerView recyclerView;
     SelectPurchaserAdapter adapter;
     RecyclerView.LayoutManager layoutManager;
 
+    Vector<Customer> purchasers;
+    Vector<Boolean> isClicked;
     Button saveBtn;
     Button cancelBtn;
 
@@ -48,14 +49,15 @@ public class SelectPurchaserActivity extends AppCompatActivity implements View.O
         tradeKey = intent.getStringExtra("tradeKey");
         sellerId = intent.getStringExtra("sellerId");
         purchasers = new Vector<>();
+        isClicked = new Vector<>();
 
         firebaseHelper = new FirebaseHelper();
         firebaseHelper.addCallBackListener(new FirebaseHelper.CallBackListener() {
             @Override
             public void afterGetCustomer(Customer customer) {
                 purchasers.add(customer);
+                isClicked.add(false);
                 Log.d(TAG, customer.getName());
-                int size = purchasers.size() - 1;
                 adapter.notifyDataSetChanged();
             }
         });
@@ -65,13 +67,25 @@ public class SelectPurchaserActivity extends AppCompatActivity implements View.O
         recyclerView = findViewById(R.id.select_purchaser_recyclerview);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        adapter = new SelectPurchaserAdapter(this, purchasers);
+        adapter = new SelectPurchaserAdapter(this, purchasers, isClicked);
 
         //아이템 클릭 리스너 달기
         adapter.setOnItemClickListener(new SelectPurchaserAdapter.OnItemClickListener() {
             @Override
             public void onItemClicked(View v, int position) {
-                selectedPurchaser = purchasers.get(position);
+                if (isClicked.get(position) == true) {
+                    selectedPurchaser = null;
+                    int size = isClicked.size();
+                    for (int i = 0; i < size; i++)
+                        isClicked.set(i, false);
+                } else {
+                    int size = isClicked.size();
+                    for (int i = 0; i < size; i++)
+                        isClicked.set(i, false);
+                    isClicked.set(position, true);
+                    selectedPurchaser = purchasers.get(position);
+                }
+                adapter.notifyDataSetChanged();
             }
         });
         recyclerView.setAdapter(adapter);
@@ -84,7 +98,8 @@ public class SelectPurchaserActivity extends AppCompatActivity implements View.O
                 Intent intent = new Intent();
                 intent.putExtra("purchaserId", selectedPurchaser.getId());   //구매 확정자 id 넘겨줌
                 setResult(RESULT_OK, intent);
-                firebaseHelper.updatePurchaser(tradeKey,selectedPurchaser.getId(),sellerId); //서버 DB 작업
+                firebaseHelper.updatePurchaser(tradeKey, selectedPurchaser.getId(), sellerId); //서버 DB 작업
+                Toast.makeText(this, "선택 완료, 진행중인 거래를 확인하세요.", Toast.LENGTH_SHORT).show();
                 finish();
             } else {
                 Toast.makeText(this, "선택된 구매자가 없습니다.", Toast.LENGTH_SHORT).show();

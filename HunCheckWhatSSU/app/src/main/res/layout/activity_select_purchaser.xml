@@ -10,13 +10,17 @@
         android:layout_marginTop="5dp"
         android:gravity="center"
         android:text="구매 요청 정보"
-        android:textSize="15sp"></TextView>
+        android:textSize="20sp"></TextView>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginTop="5dp"
         android:layout_marginBottom="5dp"
+        android:background="#000"></TextView>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
         android:background="#000"></TextView>
 
     <androidx.recyclerview.widget.RecyclerView

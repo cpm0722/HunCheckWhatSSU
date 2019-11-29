@@ -13,6 +13,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.naver.maps.geometry.LatLng;
 import com.naver.maps.map.CameraPosition;
 import com.naver.maps.map.MapFragment;
@@ -22,6 +24,7 @@ import com.naver.maps.map.OnMapReadyCallback;
 import com.naver.maps.map.overlay.Marker;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 
 import java.text.SimpleDateFormat;
@@ -68,6 +71,8 @@ public class BookInfoActivity extends AppCompatActivity implements OnMapReadyCal
     TextView activity_book_info_tradeState;
     //MAP 추가
 
+    Button sendPurchaseRequestBtn;
+    Button back2TradeOverview;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -225,10 +230,26 @@ public class BookInfoActivity extends AppCompatActivity implements OnMapReadyCal
 
         }
 
-        Button back2TradeOverview=findViewById(R.id.back2TradeOverview);
+        back2TradeOverview=findViewById(R.id.back2TradeOverview);
         back2TradeOverview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                finish();
+            }
+        });
+
+        sendPurchaseRequestBtn = findViewById(R.id.send_purchase_request_btn);
+        sendPurchaseRequestBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FirebaseHelper firebaseHelper = new FirebaseHelper();
+                FirebaseUser me = FirebaseAuth.getInstance().getCurrentUser();
+                String uid = me.getDisplayName()+"_"+me.getUid();
+                if(trade.getTradeId()!=null) {
+                    firebaseHelper.sendPurchaseRequest(trade.getTradeId(), uid);
+                    Log.d("HUMCHECKYC","tradeId null 아님 ");
+                }
+                Toast.makeText(getApplicationContext(),"구매요청이 완료되었습니다.",Toast.LENGTH_SHORT).show();
                 finish();
             }
         });

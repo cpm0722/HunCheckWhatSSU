@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -34,6 +35,7 @@ public class OptionFragment extends Fragment implements View.OnClickListener {
     private Button setPersonalInfoBtn;
     private Button setNotificationBtn;
     private Button customerContactAddressBtn;
+    private Button logoutBtn;
 
     private AlertDialog setNotificationDialog;
     private AlertDialog showCustomerSupportContactDialog;
@@ -52,12 +54,12 @@ public class OptionFragment extends Fragment implements View.OnClickListener {
         setPersonalInfoBtn = (Button)root.findViewById(R.id.setting_Personal_Info_Btn);
         setNotificationBtn = (Button)root.findViewById(R.id.setting_notification_btn);
         customerContactAddressBtn= (Button)root.findViewById(R.id.customer_support_center_btn);
+        logoutBtn = root.findViewById(R.id.logout_btn);
         seeMyInfoBtn.setOnClickListener(this);
         setPersonalInfoBtn.setOnClickListener(this);
         setNotificationBtn.setOnClickListener(this);
         customerContactAddressBtn.setOnClickListener(this);
-
-
+        logoutBtn.setOnClickListener(this);
 
         return root;
     }
@@ -71,7 +73,9 @@ public class OptionFragment extends Fragment implements View.OnClickListener {
         else if(view == setNotificationBtn){
             //setNotification();
             Intent intent = new Intent(getActivity().getApplicationContext(),SelectPurchaserActivity.class);
-            intent.putExtra("tradeKey","-LuXBNYGkj54Y5x1WE5g");
+            intent.putExtra("tradeKey","-LuqAdWEbRvkBH6ixQhy");
+            intent.putExtra("sellerId","박은정_zYP0ZRe1IXZ9EYFoSHWxNcY81zA2");
+
             startActivity(intent);
         }
         else if(view == customerContactAddressBtn){
@@ -87,6 +91,14 @@ public class OptionFragment extends Fragment implements View.OnClickListener {
             Trade trade = new Trade(book, firebaseHelper.myUid);
             trade.setSellingPrice(5000);
             firebaseHelper.upLoadTrade(trade);
+        }
+        else if(view == logoutBtn){
+            Toast.makeText(getContext(), "Sign Out", Toast.LENGTH_SHORT).show();
+            FirebaseAuth.getInstance().signOut();
+
+            Intent intent = new Intent(getContext(), LoginActivity.class);
+            startActivity(intent);
+            return;
         }
     }
     private void setNotification(){
