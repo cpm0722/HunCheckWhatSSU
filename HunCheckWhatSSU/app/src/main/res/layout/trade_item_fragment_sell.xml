@@ -126,8 +126,7 @@
                     android:id="@+id/item_book_category"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:singleLine="true"
-                    android:text="IT대학>컴퓨터학부>전체" />
+                    android:singleLine="true" />
             </LinearLayout>
 
             <LinearLayout
@@ -142,6 +141,7 @@
 
                 <TextView
                     android:id="@+id/item_book_title"
+                    android:singleLine="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     />

@@ -1,6 +1,7 @@
 package ssu.ssu.huncheckwhatssu;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -27,7 +28,10 @@ public class TradeFragment extends Fragment {
     RecyclerViewTradeAdapter_Trade ongoingAdapter;
     RecyclerViewTradeAdapter_Trade doneAdapter;
     RecyclerView ongoingRecyclerView, doneRecyclerView;
-    FirebaseCommunicator ongoingFirebase, doneFirebase;
+    FirebaseCommunicator firebase;
+
+    TextView ongoingCountTrade;
+    TextView doneCountTrade;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -39,15 +43,19 @@ public class TradeFragment extends Fragment {
         Menu menu = navView.getMenu();
         menu.getItem(2).setChecked(true);
 
+
+        ongoingCountTrade=root.findViewById(R.id.ongoing_count);
+        doneCountTrade=root.findViewById(R.id.done_count);
+
         // 리사이클러뷰에 LinearLayoutManager 객체 지정.
-        ongoingFirebase = new FirebaseCommunicator(FirebaseCommunicator.WhichRecyclerView.ongoingRecyclerView);
-        String seller = ongoingFirebase.getUserPath();
+        firebase = new FirebaseCommunicator(FirebaseCommunicator.WhichRecyclerView.ongoingRecyclerView);
         ongoingRecyclerView = root.findViewById(R.id.trade_ongoing_list) ;
         ongoingRecyclerView.setLayoutManager(new LinearLayoutManager(getContext())) ;
-        ongoingFirebase.setRecyclerView(this.getContext(), this.getActivity(), ongoingRecyclerView, FirebaseCommunicator.WhichRecyclerView.ongoingRecyclerView);
+        firebase.setRecyclerView(this.getContext(), this.getActivity(), ongoingRecyclerView, FirebaseCommunicator.WhichRecyclerView.ongoingRecyclerView);
+        firebase.setRecyclerView(this.getContext(), this.getActivity(), ongoingRecyclerView, FirebaseCommunicator.WhichRecyclerView.ongoingRecyclerView);
 
         // 리사이클러뷰에 RecyclerViewAdapter1 객체 지정.
-        ongoingAdapter = new RecyclerViewTradeAdapter_Trade(this.getContext(), ongoingFirebase.getOngoingTradeListVector(), ongoingRecyclerView) ;
+        ongoingAdapter = new RecyclerViewTradeAdapter_Trade(this.getContext(), firebase.getOngoingTradeListVector(), ongoingRecyclerView, ongoingCountTrade) ;
         ongoingAdapter.setSwipeable(this.getContext(), this.getActivity(), ongoingRecyclerView);
         ongoingRecyclerView.setAdapter(ongoingAdapter);
 
@@ -69,25 +77,25 @@ public class TradeFragment extends Fragment {
         });
 /*나중에 삭제해야함 끝 */
         /*거래진행중인 아이템개수 보여주기 위해서*/
-        final TextView ongoingCountTrade=root.findViewById(R.id.ongoing_count);
         ongoingCountTrade.setText(""+ongoingAdapter.getItemCount()+" 건");
 
-
         // 리사이클러뷰에 LinearLayoutManager 객체 지정.
-        doneFirebase = new FirebaseCommunicator(FirebaseCommunicator.WhichRecyclerView.doneRecyclerView);
         doneRecyclerView = root.findViewById(R.id.trade_done_list) ;
         doneRecyclerView.setLayoutManager(new LinearLayoutManager(getContext())) ;
-        doneFirebase.setRecyclerView(this.getContext(), this.getActivity(), doneRecyclerView, FirebaseCommunicator.WhichRecyclerView.doneRecyclerView);
 
         // 리사이클러뷰에 RecyclerViewAdapter1 객체 지정.
-        doneAdapter = new RecyclerViewTradeAdapter_Trade(this.getContext(), doneFirebase.getDoneTradeListVector(), doneRecyclerView) ;
+        doneAdapter = new RecyclerViewTradeAdapter_Trade(this.getContext(), firebase.getDoneTradeListVector(), doneRecyclerView, doneCountTrade);
         doneAdapter.setSwipeable(this.getContext(), this.getActivity(), doneRecyclerView);
         doneRecyclerView.setAdapter(doneAdapter);
 
-
         /*거래진행중인 아이템개수 보여주기 위해서*/
-        final TextView doneCountTrade=root.findViewById(R.id.done_count);
         doneCountTrade.setText(""+doneAdapter.getItemCount()+" 건");
+
+        ongoingAdapter.notifyDataSetChanged();
+        doneAdapter.notifyDataSetChanged();
+
+        ongoingAdapter.setAnotherAdapter(FirebaseCommunicator.WhichRecyclerView.ongoingRecyclerView, doneAdapter);
+        doneAdapter.setAnotherAdapter(FirebaseCommunicator.WhichRecyclerView.doneRecyclerView, ongoingAdapter);
 
         /*리사이클러뷰에 구분선 넣기
         DividerItemDecoration dividerItemDecoration=new DividerItemDecoration(getContext(),new LinearLayoutManager(getContext()).getOrientation());

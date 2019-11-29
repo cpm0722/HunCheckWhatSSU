@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -17,6 +18,7 @@ import ssu.ssu.huncheckwhatssu.utilClass.BookState;
 import ssu.ssu.huncheckwhatssu.utilClass.Customer;
 import ssu.ssu.huncheckwhatssu.utilClass.Trade;
 
+import static android.widget.Toast.LENGTH_SHORT;
 import static ssu.ssu.huncheckwhatssu.utilClass.BookState.bookState.BEST;
 
 public class EditSell extends AppCompatActivity {
@@ -33,7 +35,7 @@ public class EditSell extends AppCompatActivity {
     TextView activity_book_edit_publisherText;
     TextView activity_book_edit_publicationDateText;
     TextView activity_book_edit_bookCostText;
-    TextView activity_book_edit_bookSellingpriceText;
+    EditText activity_book_edit_bookSellingpriceText;
 
     // BookState
     RadioGroup activity_book_edit_state01;
@@ -55,17 +57,13 @@ public class EditSell extends AppCompatActivity {
 
         /*recyclerview의 각 아이템 받기*/
         Intent intent = getIntent();
-        trade = intent.getParcelableExtra("book_info_sell_edit_detail");
+        trade = intent.getParcelableExtra("editTrade");
         book = trade.getBook();
         position = intent.getIntExtra("position", -1);
 
-        //return할 Intent 생성
+        //return할 Intent
         resultIntent = new Intent(this, MainActivity.class);
-        resultIntent.putExtra("activity", "EditSell");
-        resultIntent.putExtra("position", position);
-        setResult(RESULT_OK, resultIntent);
 
-        Button btn_back2Sell = findViewById(R.id.back2Sell);
         findviews();
         makeclickable();
         setdata(trade);
@@ -95,7 +93,7 @@ public class EditSell extends AppCompatActivity {
         activity_book_edit_publicationDateText = (TextView)findViewById(R.id.activity_book_edit_publicationDateText);
         activity_book_edit_bookCostText =(TextView)findViewById(R.id.activity_book_edit_bookCostText);
 
-        activity_book_edit_bookSellingpriceText=(TextView)findViewById(R.id.activity_book_edit_bookSellingpriceText);
+        activity_book_edit_bookSellingpriceText=(EditText)findViewById(R.id.activity_book_edit_bookSellingpriceText);
         // BookState
         activity_book_edit_state01 = (RadioGroup) findViewById(R.id.book_state_line);
         activity_book_edit_state02 = (RadioGroup)findViewById(R.id.book_state_write);
@@ -115,19 +113,43 @@ public class EditSell extends AppCompatActivity {
         btn_back2Sell.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /*생명주기에 맞는거같음*/
-                Toast toast=Toast.makeText(getApplicationContext(),"수정취소",Toast.LENGTH_SHORT);
-                toast.show();
+                resultIntent.putExtra("activity", "EditSell_CANCLED");
+                setResult(RESULT_OK, resultIntent);
                 finish();
             }
         });
         btn_modifyback2Sell.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                trade.setSellingPrice(Integer.parseInt((activity_book_edit_bookSellingpriceText.getText()).toString()));
-                resultIntent.putExtra("trade", trade);
-                /*수정된 데이터가 DB로 보내지고 수정된 데이터를 보여줘야함*/
-                finish();
+                if(activity_book_edit_bookSellingpriceText.getText().toString().length() <= 1) {
+                    Toast toast = Toast.makeText(getApplicationContext(), "판매가격을 입력하세요", LENGTH_SHORT);
+                    toast.show();
+                }
+               /* else if(college_sp.getSelectedItemPosition() <= 0) {
+                    Toast toast = Toast.makeText(getApplicationContext(), "대학을 선택하세요", LENGTH_SHORT);
+                    toast.show();
+                }
+                else if(department_sp.getSelectedItemPosition() <= 0) {
+                    Toast toast = Toast.makeText(getApplicationContext(), "전공을 선택하세요", LENGTH_SHORT);
+                    toast.show();
+                }
+                else if(subject_sp.getSelectedItemPosition() <= 0) {
+                    Toast toast = Toast.makeText(getApplicationContext(), "강의를 선택하세요", LENGTH_SHORT);
+                    toast.show();
+                }*/
+                else if((activity_book_edit_state01.getCheckedRadioButtonId() == -1) || (activity_book_edit_state02.getCheckedRadioButtonId() == -1 ) || (activity_book_edit_state03.getCheckedRadioButtonId() == -1) || (activity_book_edit_state04.getCheckedRadioButtonId() == -1) || (activity_book_edit_state05.getCheckedRadioButtonId() == -1) || (activity_book_edit_state06.getCheckedRadioButtonId() == -1)){
+                    Toast toast = Toast.makeText(getApplicationContext(), "책상태를 선택하세요", LENGTH_SHORT);
+                    toast.show();
+                }
+                else {
+                    trade.setSellingPrice(Integer.parseInt((activity_book_edit_bookSellingpriceText.getText()).toString()));
+                    //return할 Intent 생성
+                    resultIntent.putExtra("activity", "EditSell");
+                    resultIntent.putExtra("editTrade", trade);
+                    resultIntent.putExtra("position", position);
+                    setResult(RESULT_OK, resultIntent);
+                    finish();
+                }
             }
         });
 

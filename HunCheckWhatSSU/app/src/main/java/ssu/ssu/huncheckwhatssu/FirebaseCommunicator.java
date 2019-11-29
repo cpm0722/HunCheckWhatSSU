@@ -38,20 +38,19 @@ public class FirebaseCommunicator {
     //DB root/userPath 의 Reference
     private static DatabaseReference myRef = null;
     private static DatabaseReference tradeRef = null;
-    private static Vector<Trade> sellTradeListVector = null;
-    private static Vector<Trade> ongoingTradeListVector = null;
-    private static Vector<Trade> doneTradeListVector = null;
-    private static Vector<String> sellListVector = null;
-    private static Vector<String> buyListVector = null;
+    private Vector<Trade> sellTradeListVector = null;
+    private Vector<Trade> ongoingTradeListVector = null;
+    private Vector<Trade> doneTradeListVector = null;
+    private Vector<String> sellListVector = null;
+    private Vector<String> tradeFragmentTradeIdListVector = null;
     //RecyclerView 설정
     private RecyclerView recyclerView;
     private Context context;
     private Activity activity;
     private WhichRecyclerView whichRecyclerView;
 
-    ValueEventListener tradeEventListener;
-
-    public FirebaseCommunicator(){}
+    public FirebaseCommunicator() {
+    }
 
     //  FirebaseCommunicator 생성자, 초기화 실행
     public FirebaseCommunicator(final WhichRecyclerView whichRecyclerView) {
@@ -70,40 +69,6 @@ public class FirebaseCommunicator {
             tradeRef = FirebaseDatabase.getInstance().getReference().child("trade");
         //Length 변수 초기화
 
-        //tradeRef 탐색하면서 trade 객체의 정보 받아와 Vector<Trade>에 trade 객체 추가하는 Event Listener
-        tradeEventListener = new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Book book = dataSnapshot.child("book").getValue(Book.class);
-                Trade trade = dataSnapshot.getValue(Trade.class);
-                trade.setSeller(new Customer(trade.getSellerId()));
-                trade.setBook(book);
-                switch (whichRecyclerView) {
-                    case sellRecyclerView:
-                        sellTradeListVector.add(trade);
-                        break;
-                    case ongoingRecyclerView:
-                    case doneRecyclerView:
-                        if (trade.getTradeState() == Trade.TradeState.COMPLETE)
-                            doneTradeListVector.add(trade);
-                        else {
-                            ongoingTradeListVector.add(trade);
-                        }
-                        break;
-                    case searchRecyclerView:
-                        break;
-                }
-                if(recyclerView != null) {
-                    recyclerView.getAdapter().notifyDataSetChanged();
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        };
-
         //  Vector 초기화
         if (sellTradeListVector == null)
             sellTradeListVector = new Vector<Trade>();
@@ -115,64 +80,29 @@ public class FirebaseCommunicator {
         if (whichRecyclerView == WhichRecyclerView.sellRecyclerView) {
             //  sellListVector 초기화
             //  현재 User가 seller로 등록되어 있는 trade들의 key 값을 Vector로 저장
-            if (sellListVector == null) {
-                sellListVector = new Vector<String>();
-                //  myRef/sellList 에 등록할 Event Listener(sellList에 있는 trade의 key값들을 받아와 sellListVector에 저장)
-                ValueEventListener sellListListener = new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        //  myRef/sellList의 child들을 탐색
-                        for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                            String str = (String) postSnapshot.getValue();
-                            //  얻어온 trade key를 sellListVector에 추가
-                            sellListVector.addElement(str);
-                            //  root/trade/key값 경로에 tradeEventListener 추가
-                            tradeRef.child(str).addListenerForSingleValueEvent(tradeEventListener);
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                    }
-                };
-                myRef.child("sellList").addListenerForSingleValueEvent(sellListListener);
-            }
+            sellListVector = new Vector<String>();
+            //  myRef/sellList 에 등록할 Event Listener(sellList에 있는 trade의 key값들을 받아와 sellListVector에 저장)
+            myRef.child("sellList").addListenerForSingleValueEvent(new SellListListener());
         }
-        //buyListVector 초기화
+        //tradeFragmentTradeIdListVector 초기화
         else if (whichRecyclerView == WhichRecyclerView.ongoingRecyclerView || whichRecyclerView == WhichRecyclerView.doneRecyclerView) {
             //  현재 User가 purchaser로 등록되어 있는 trade들의 key 값을 Vector로 저장
-            if (buyListVector == null) {
-                buyListVector = new Vector<String>();
-                ongoingTradeListVector = new Vector<Trade>();
-                doneTradeListVector = new Vector<Trade>();
-                //  myRef/buyList 에 등록할 Event Listener(buyList에 있는 trade의 key값들을 받아와 buyListVector에 저장)
-                ValueEventListener buyListListener = new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        //  myRef/buyList의 child들을 탐색
-                        for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                            String str = (String) postSnapshot.getValue();
-                            //  얻어온 trade key를 buyListVector에 추가
-                            buyListVector.addElement(str);
-                            //  root/trade/key값 경로에 tradeEventListener 추가
-                            tradeRef.child(str).addListenerForSingleValueEvent(tradeEventListener);
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                    }
-                };
-                myRef.child("buyList").addListenerForSingleValueEvent(buyListListener);
-            }
+            Log.d("DEBUG!", "trade2");
+            tradeFragmentTradeIdListVector = new Vector<String>();
+            ongoingTradeListVector = new Vector<Trade>();
+            doneTradeListVector = new Vector<Trade>();
+            //  myRef/tradeList 에 등록할 Event Listener(tradeList에 있는 trade의 key값들을 받아와 ongoing/doneTradeListVector에 저장)
+            myRef.child("tradeList").addListenerForSingleValueEvent(new TradeListListener());
         }
     }
 
     protected FirebaseCommunicator(Parcel in) {
         user = in.readParcelable(FirebaseUser.class.getClassLoader());
         userPath = in.readString();
+    }
+
+    public FirebaseUser getUser() {
+        return user;
     }
 
     public String getUserPath() {
@@ -192,12 +122,12 @@ public class FirebaseCommunicator {
     }
 
     //  RecyclerView 세팅 함수 (어떤 recyclerView인지 넘겨받아 해당 Vector를 adapter에 등록)
-    public void setRecyclerView(final Context con, Activity act, RecyclerView recView,
+    public void setRecyclerView(final Context context, Activity activity, RecyclerView recyclerView,
                                 final WhichRecyclerView whichRecyclerView) {
         //  초기화
-        this.context = con;
-        this.activity = act;
-        this.recyclerView = recView;
+        this.context = context;
+        this.activity = activity;
+        this.recyclerView = recyclerView;
         this.recyclerView.setLayoutManager(new LinearLayoutManager(this.context));
         this.whichRecyclerView = whichRecyclerView;
     }
@@ -261,13 +191,13 @@ public class FirebaseCommunicator {
         sellListVector.add(key);
         sellTradeListVector.add(trade);
         //Update된 sellListVector를 FIrebase에 Upload
-        myRef.child("sellList").setValue(sellListVector);
-       // recyclerView.getAdapter().notifyDataSetChanged();
+        myRef.child("sellList").child(key).setValue(key);
+        //myRef.child("sellList").setValue(sellListVector);
         return;
     }
 
-    public void editTrade(Trade trade){
-        Log.d("DEBUG!", "edit!");
+    //수정된 trade객체를 받아 Firebasd에 등록 (trade 객체의 tradeId 사용)
+    public static void editTrade(Trade trade) {
         //trade의 book 객체 Map으로 변환
         Map<String, Object> bookMap = new HashMap<>();
         trade.getBook().toMap(bookMap);
@@ -276,14 +206,46 @@ public class FirebaseCommunicator {
         trade.toMap(tradeMap);
         //TradeId 획득
         String tradeId = trade.getTradeId();
-        Log.d("DEBUG!", tradeId);
         //book 객체의 정보 Frirebase에 Upload
-        tradeRef.child(tradeId).child("book").updateChildren(bookMap);
-        //tradeRef.child(tradeId).removeValue();
-        tradeRef.child(tradeId).updateChildren(tradeMap);
-        //tradeRef.child(tradeId).child("book").removeValue();
-        //trade 객체의 정보 Frirebase에 Upload
-        Log.d("DEBUG!", tradeMap.toString());
+        FirebaseDatabase.getInstance().getReference().child("trade").child(tradeId).child("book").updateChildren(bookMap);
+        FirebaseDatabase.getInstance().getReference().child("trade").child(tradeId).updateChildren(tradeMap);
+    }
+
+    //trade객체를 Firebase에서 삭제하는 함수 (SellFragment에서 사용)
+    public static void deleteTrade(Trade trade) {
+        FirebaseDatabase.getInstance().getReference().child("customer").child(trade.getSellerId()).child("sellList").child(trade.getTradeId()).removeValue();
+        tradeRef.child(trade.getTradeId()).removeValue();
+        return;
+    }
+
+    //거래 예약 잡힌 경우
+    public static void tradePrecontract(String tradeId, String sellerId, String purchaserId) {
+        //판매자의 sellLIst에서 삭제
+        FirebaseDatabase.getInstance().getReference().child("customer").child(sellerId).child("sellList").child(tradeId).setValue(null);
+        //판매자의 tradeLIst에 추가
+        FirebaseDatabase.getInstance().getReference().child("customer").child(sellerId).child("tradeList").child(tradeId).setValue(tradeId);
+        //구매자의 tradeLIst에 추가
+        FirebaseDatabase.getInstance().getReference().child("customer").child(purchaserId).child("tradeList").child(tradeId).setValue(tradeId);
+        //TradeState PRECONTRACT로 변경
+        FirebaseDatabase.getInstance().getReference().child("trade").child(tradeId).child("tradeState").setValue("PRECONTRACT");
+        //purchaserId 변경
+        FirebaseDatabase.getInstance().getReference().child("trade").child(tradeId).child("purchaserId").setValue(purchaserId);
+        return;
+    }
+
+    //거래 파기된 경우
+    public static void tradeCancel(String tradeId, String sellerId, String purchaserId) {
+        //판매자의 tradeLIst에서 삭제
+        FirebaseDatabase.getInstance().getReference().child("customer").child(sellerId).child("tradeList").child(tradeId).setValue(null);
+        //구매자의 tradeLIst에서 삭제
+        FirebaseDatabase.getInstance().getReference().child("customer").child(purchaserId).child("tradeList").child(tradeId).setValue(null);
+        //판매자의 sellLIst에 추가
+        FirebaseDatabase.getInstance().getReference().child("customer").child(sellerId).child("sellList").child(tradeId).setValue(tradeId);
+        //TradeState WAIT로 변경
+        FirebaseDatabase.getInstance().getReference().child("trade").child(tradeId).child("tradeState").setValue("WAIT");
+        //purchaserId null로 변경
+        FirebaseDatabase.getInstance().getReference().child("trade").child(tradeId).child("purchaserId").setValue(null);
+        return;
     }
 
     //CustomerId로 Customer 객체를 Return하는 함수
@@ -303,5 +265,79 @@ public class FirebaseCommunicator {
                 }
         );
         return customer[0];
+    }
+
+    //tradeRef 탐색하면서 trade 객체의 정보 받아와 Vector<Trade>에 trade 객체 추가하는 Event Listener
+    public class TradeListener implements ValueEventListener {
+
+        @Override
+        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            Book book = dataSnapshot.child("book").getValue(Book.class);
+            Trade trade = dataSnapshot.getValue(Trade.class);
+            trade.setSeller(new Customer(trade.getSellerId()));
+            trade.getSeller().setCustomerDataFromUID(null);
+            if(trade.getPurchaserId() != null){
+                trade.setPurchaser(new Customer(trade.getPurchaserId()));
+                trade.getPurchaser().setCustomerDataFromUID(null);
+            }
+            trade.setBook(book);
+            switch (whichRecyclerView) {
+                case sellRecyclerView:
+                    sellTradeListVector.add(trade);
+                    break;
+                case ongoingRecyclerView:
+                case doneRecyclerView:
+                    if (trade.getTradeState() == Trade.TradeState.COMPLETE)
+                        doneTradeListVector.add(trade);
+                    else {
+                        ongoingTradeListVector.add(trade);
+                    }
+                    break;
+            }
+            if (recyclerView != null) {
+                recyclerView.getAdapter().notifyDataSetChanged();
+            }
+        }
+
+        @Override
+        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+        }
+    }
+
+    public class SellListListener implements ValueEventListener {
+        @Override
+        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                String str = (String) postSnapshot.getValue();
+                //  얻어온 trade key를 sellListVector에 추가
+                sellListVector.addElement(str);
+                //  root/trade/key값 경로에 tradeEventListener 추가
+                tradeRef.child(str).addListenerForSingleValueEvent(new TradeListener());
+            }
+        }
+
+        @Override
+        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+        }
+    }
+
+    public class TradeListListener implements ValueEventListener {
+        @Override
+        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                String str = (String) postSnapshot.getValue();
+                //  얻어온 trade key를 tradeFragmentTradeIdListVector에 추가
+                tradeFragmentTradeIdListVector.addElement(str);
+                //  root/trade/key값 경로에 tradeEventListener 추가
+                tradeRef.child(str).addListenerForSingleValueEvent(new TradeListener());
+            }
+        }
+
+        @Override
+        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+        }
     }
 }

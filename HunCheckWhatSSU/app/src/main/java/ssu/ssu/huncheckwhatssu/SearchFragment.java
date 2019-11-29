@@ -184,7 +184,7 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemSelect
                         if (firebase.getRecyclerView() != null)
                             firebase.getRecyclerView().getAdapter().notifyDataSetChanged();
 
-                        Log.d("JS", "onDatwwaChange: " + trade.toString());
+                        Log.d("JS", "onDataChange: " + trade.toString());
                     }
                 }
             }

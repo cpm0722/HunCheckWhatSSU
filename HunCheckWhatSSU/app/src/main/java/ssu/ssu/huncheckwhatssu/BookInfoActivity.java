@@ -20,6 +20,7 @@ import com.naver.maps.map.NaverMap;
 import com.naver.maps.map.NaverMapOptions;
 import com.naver.maps.map.OnMapReadyCallback;
 import com.naver.maps.map.overlay.Marker;
+
 import android.view.View;
 import android.widget.Button;
 
@@ -75,16 +76,16 @@ public class BookInfoActivity extends AppCompatActivity implements OnMapReadyCal
         Intent intent = getIntent();
         String bookInfoType = intent.getStringExtra("BookInfoType");
 
-       if (bookInfoType == null) {
+        if (bookInfoType == null) {
             Log.d("JS", "onCreate: 식별할 BookInfoType이 없습니다.");
             finish();
-        } else if(bookInfoType.equals("BOOK_INFO_DEFAULT")) {
+        } else if (bookInfoType.equals("BOOK_INFO_DEFAULT")) {
             setContentView(R.layout.activity_book_info);
             trade = intent.getParcelableExtra("book_info_default_data");
             initObject(1);
             setData(1);
             Log.d("JS", "onCreate: " + trade.toString());
-        } else if(bookInfoType.equals("BOOK_INFO_TRADE_DETAIL")) {
+        } else if (bookInfoType.equals("BOOK_INFO_TRADE_DETAIL")) {
             setContentView(R.layout.activity_book_trade_detail);
             trade = intent.getParcelableExtra("book_info_trade_detail");
             Log.d("JS", "onCreate: " + trade.toString());
@@ -217,15 +218,18 @@ public class BookInfoActivity extends AppCompatActivity implements OnMapReadyCal
 
             // Purchaser
             Customer purchaser = trade.getPurchaser();
-            if(purchaser == null)
-                purchaser = new Customer();
+            if (purchaser == null) {
+                purchaser = new Customer(trade.getPurchaserId());
+                purchaser.setCustomerDataFromUID(null);
+                Log.d("DEBUG!", purchaser.toString());
+            }
             activity_book_info_purchaserText.setText(purchaser.getName());
             activity_book_info_purchaserContactNumberText.setText(purchaser.getPhoneNumber());
             activity_book_info_purchaserCreditRating.setText(purchaser.getCreditRating() + "");
 
         }
 
-        Button back2TradeOverview=findViewById(R.id.back2TradeOverview);
+        Button back2TradeOverview = findViewById(R.id.back2TradeOverview);
         back2TradeOverview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
