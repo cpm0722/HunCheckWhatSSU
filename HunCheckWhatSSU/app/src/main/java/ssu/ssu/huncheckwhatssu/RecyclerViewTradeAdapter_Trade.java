@@ -216,10 +216,6 @@ public class RecyclerViewTradeAdapter_Trade extends RecyclerView.Adapter<Recycle
                                 });
                                 alert.show();
                             }
-                            else{}
-
-
-
                             recyclerView.getAdapter().notifyItemRemoved(position);
                             recyclerView.getAdapter().notifyDataSetChanged();
 

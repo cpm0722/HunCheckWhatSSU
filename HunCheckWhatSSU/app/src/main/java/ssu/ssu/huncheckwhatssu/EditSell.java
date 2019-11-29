@@ -103,6 +103,7 @@ public class EditSell extends AppCompatActivity {
         activity_book_edit_state04 = (RadioGroup)findViewById(R.id.book_state_name);
         activity_book_edit_state05 = (RadioGroup)findViewById(R.id.book_state_color);
         activity_book_edit_state06 = (RadioGroup)findViewById(R.id.book_state_pagegone);
+
         btn_back2Sell = (Button)findViewById(R.id.back2Sell);
         btn_modifyback2Sell=(Button)findViewById(R.id.modifyback2Sell);
 
