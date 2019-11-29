@@ -116,6 +116,7 @@ public class FirebaseHelper {
     public interface CallBackListener {
         void afterGetCustomer(Customer customer);
     }
+
     public void addCallBackListener(CallBackListener testListener) {
         this.callBackListener = testListener;
     }

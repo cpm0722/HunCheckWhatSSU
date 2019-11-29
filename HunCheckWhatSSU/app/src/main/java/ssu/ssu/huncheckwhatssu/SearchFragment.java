@@ -134,14 +134,14 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemSelect
 
 //        TEST용 Firebase 추가 버튼
 
-        Button addBtn = root.findViewById(R.id.fragment_add_btn);
-        addBtn.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-                startActivityForResult(new Intent(getContext(), SearchPlaceActivity.class),MAP_REQUEST_CODE);
-            }
-        });
+//        Button addBtn = root.findViewById(R.id.fragment_add_btn);
+//        addBtn.setOnClickListener(new View.OnClickListener() {
+//
+//            @Override
+//            public void onClick(View view) {
+//                startActivityForResult(new Intent(getContext(), SearchPlaceActivity.class),MAP_REQUEST_CODE);
+//            }
+//        });
 
         setFirebaseEvent();
 
@@ -284,11 +284,16 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemSelect
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 Trade trade = dataSnapshot.getValue(Trade.class);
 
+                trade.setSeller(new Customer(trade.getSellerId()));
+
                 Log.d(TAG, "onChildAdded: ");
 
                 Log.d("js", "/onQueryTextSubmit: " + search_collegeId);
                 Log.d("js", "onQueryTextSubmit: " + search_departmentId);
                 Log.d("js", "onQueryTextSubmit:/ " + search_subjectId);
+
+                // 거래 대기중인 것만 나타남
+                if (trade.getTradeState() != Trade.TradeState.WAIT) return;
 
                 if (trade.getBook().getCollege_id().equals(search_collegeId) || search_collegeId.equals("0") || search_collegeId.equals("-1")) {
                     if (trade.getBook().getDepartment_id().equals(search_departmentId) || search_departmentId.equals("0")|| search_departmentId.equals("-1")) {
@@ -335,6 +340,7 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemSelect
 
     @Override
     public boolean onQueryTextChange(String newText) {
+        search_text = newText;
         return false;
     }
 
@@ -380,14 +386,14 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemSelect
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        Log.d(TAG, "onActivityResult: dwdwd " + requestCode + ", " + resultCode);
-        
-        if (requestCode == MAP_REQUEST_CODE) {
-            if (resultCode == RESULT_OK) {
-                Log.d(TAG, "onActivityResult: " + data.getStringExtra("SelectedAddress"));
-                Log.d(TAG, "onActivityResult: " + ((LatLng) data.getParcelableExtra("Location")).toString());
-            }
-        }
+//        Log.d(TAG, "onActivityResult: dwdwd " + requestCode + ", " + resultCode);
+//
+//        if (requestCode == MAP_REQUEST_CODE) {
+//            if (resultCode == RESULT_OK) {
+//                Log.d(TAG, "onActivityResult: " + data.getStringExtra("SelectedAddress"));
+//                Log.d(TAG, "onActivityResult: " + ((LatLng) data.getParcelableExtra("Location")).toString());
+//            }
+//        }
     }
 }
 
