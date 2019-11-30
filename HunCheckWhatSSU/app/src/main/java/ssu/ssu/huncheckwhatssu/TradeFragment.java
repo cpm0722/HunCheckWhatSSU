@@ -59,23 +59,7 @@ public class TradeFragment extends Fragment {
         ongoingAdapter.setSwipeable(this.getContext(), this.getActivity(), ongoingRecyclerView);
         ongoingRecyclerView.setAdapter(ongoingAdapter);
 
-        /*나중에 삭제해야함 끝.*/
-        Button btntoadd=(Button)root.findViewById(R.id.addMytrade);
-        btntoadd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FirebaseHelper firebaseHelper = new FirebaseHelper();
-                BookState bookState = new BookState(BookState.bookState.GOOD, BookState.bookState.GOOD, BookState.bookState.GOOD, BookState.bookState.GOOD, BookState.bookState.GOOD, BookState.bookState.GOOD);
-                Book book = new Book("ejISBN","ejISBN2","dmswjd","akak","ej",9900,"ej","22tPubdate","testdescription",bookState);
-                book.setSubject_id("1");
-                book.setDepartment_id("3");
-                book.setCollege_id("1");
-                Trade trade = new Trade(book, firebaseHelper.myUid);
-                trade.setSellingPrice(100);
-                firebaseHelper.upLoadTrade(trade);
-            }
-        });
-/*나중에 삭제해야함 끝 */
+
         /*거래진행중인 아이템개수 보여주기 위해서*/
         ongoingCountTrade.setText(""+ongoingAdapter.getItemCount()+" 건");
 

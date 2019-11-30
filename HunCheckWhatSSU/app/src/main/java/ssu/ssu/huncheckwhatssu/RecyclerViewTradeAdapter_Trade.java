@@ -138,13 +138,6 @@ public class RecyclerViewTradeAdapter_Trade extends RecyclerView.Adapter<Recycle
                     @Override
                     public void onRowClicked(int position) {
                         Trade trade = ((RecyclerViewTradeAdapter_Trade) (recyclerView.getAdapter())).getTrades().get(position);
-
-                        Toast toast = Toast.makeText(context, "RowClick! " + trade.getBook().getTitle(), Toast.LENGTH_SHORT);
-                        toast.show();
-                        // recyclerView.getAdapter().notifyItemChanged(position);
-
-                        /*여기에 클릭 하는 거 처리해야함*/
-
                         Intent intent = new Intent(context, BookInfoActivity.class);
                         intent.putExtra("BookInfoType", "BOOK_INFO_TRADE_DETAIL");
                         intent.putExtra("book_info_trade_detail", trade);

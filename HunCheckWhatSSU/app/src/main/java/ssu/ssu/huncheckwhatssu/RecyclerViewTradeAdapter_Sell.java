@@ -91,7 +91,7 @@ public class RecyclerViewTradeAdapter_Sell extends RecyclerView.Adapter<Recycler
             sellingPriceTextView.setText(String.valueOf(object.getSellingPrice()));
             bookAuthorTextView.setText(object.getBook().getAuthor());
             bookPublisherTextView.setText(object.getBook().getPublisher());
-            sellerCreditTextView.setText("위험");
+            sellerCreditTextView.setText(String.format("%.2f", object.getSeller().getCreditRating()));
             DBHelper dbHelper = new DBHelper(inflater.getContext());
             bookCategoryTextView.setText(dbHelper.getFullCategoryText(object.getBook()));
             countView.setText(getItemCount() + " 건");
@@ -191,35 +191,7 @@ public class RecyclerViewTradeAdapter_Sell extends RecyclerView.Adapter<Recycler
 
                             }
                             recyclerView.getAdapter().notifyDataSetChanged();
-/*
-                            AlertDialog.Builder alert = new AlertDialog.Builder(context);
-                            alert.setTitle("거래 삭제");
-                            alert.setMessage("정말로 거래를 삭제 하시겠습니까?");
-                            alert.setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    FirebaseCommunicator.deleteTrade(trade);
-                                    ((RecyclerViewTradeAdapter_Sell) (recyclerView.getAdapter())).getTrades().remove(position);
-                                    recyclerView.getAdapter().notifyItemRemoved(position);
-                                    recyclerView.getAdapter().notifyDataSetChanged();
-                                    countView.setText(recyclerView.getAdapter().getItemCount() + " 건");
-                                    Toast toast = Toast.makeText(context, "거래삭제함", Toast.LENGTH_SHORT);
-                                    toast.show();
-                                }
-                            });
-                            alert.setNegativeButton("취소", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface arg0, int arg1) {
-                                    FirebaseCommunicator.tradePrecontract(trade.getTradeId(), trade.getSellerId(), "김승주_M3wdnkONA0cFMzXSqwt2dLLcfNI2");
-                                    modelVector.remove(position);
-                                    notifyItemRemoved(position);
-                                    countView.setText(getItemCount() + " 건");
-                                    Toast toast = Toast.makeText(context, "취소함", Toast.LENGTH_SHORT);
-                                    toast.show();
-                                }
-                            });
-                            alert.show();
-                        */
+
                         }
                     }
                 });

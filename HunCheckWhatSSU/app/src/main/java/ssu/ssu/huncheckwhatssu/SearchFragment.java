@@ -196,8 +196,7 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemSelect
         });
 
     }
-/*SearchFragment에서 학부>학과인 거 번호를 읽어와서 해야함.*/
-/*승주_Uri Trade에서 넣으면, Uri naverbooksearch_activity_image Uri 를 참고해서 쓰면 됨 */
+
     private void setSpinnerData(int spin_switch, int college_id, int department_id) {
         DBHelper dbHelper = new DBHelper(getContext());
         Cursor cursor;
@@ -357,7 +356,7 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemSelect
                 setSpinnerData(2, 0, -1);
             } else {
                 setSpinnerData(2, collegeData.get(position).getKey(), -1);
-//                Log.d("JS", "onItemSelected: " + collegeData.get(position).getKey());
+              Log.d("JS", "onItemSelected: " + collegeData.get(position).getKey()+"  "+college_spin.getSelectedItemPosition());
 
             }
 
