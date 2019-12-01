@@ -34,30 +34,7 @@ public class SellFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_sell, container, false);
         this.context = root.getContext();
-
-//       테스트
-        Button btn = root.findViewById(R.id.book_info_test_btn);
-
-        btn.setOnClickListener(new View.OnClickListener(){
-         @Override
-         public void onClick(View v) {
-          Book book = new ssu.ssu.huncheckwhatssu.utilClass.Book("123", "123", "테스트", null, "작가입니디.",
-                  123, "길벗","20161012","asnkdasnksadklndas", null);
-
-          BookState bookState = new BookState(BookState.bookState.GOOD, BookState.bookState.BEST,BookState.bookState.BAD,BookState.bookState.WORST,BookState.bookState.GOOD,BookState.bookState.BEST);
-          book.setBookState(bookState);
-          String seller = firebaseCommunicator.getUserPath();
-          String purchaser = firebaseCommunicator.getUserPath();
-          Trade trade = new Trade(book, seller, purchaser, Trade.TradeState.WAIT, "여기가 어딜까", Calendar.getInstance());
-
-          Intent intent = new Intent(context, BookInfoActivity.class);
-
-          intent.putExtra("BookInfoType", "BOOK_INFO_TRADE_DETAIL");
-          intent.putExtra("book_info_trade_detail", trade);
-          startActivity(intent);
-         }
-        });
-
+        
         //BackButton Pressed 시 NavigationBottom Menu Selected 변경
         Fragment navHostFragment = this.getActivity().getSupportFragmentManager().getFragments().get(0);
         BottomNavigationView navView = navHostFragment.getActivity().findViewById(R.id.nav_view);
