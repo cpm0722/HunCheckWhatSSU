@@ -16,7 +16,7 @@ import ssu.ssu.huncheckwhatssu.FirebaseCommunicator;
 
 public class Trade implements Parcelable {
 
-    public enum TradeState{
+    public enum TradeState {
         WAIT, PRECONTRACT, COMPLETE;
     }
 
@@ -39,14 +39,14 @@ public class Trade implements Parcelable {
     double longitude;
 
 
-
-    public Trade(){}
+    public Trade() {
+    }
 
     public Trade(Book book, String sellerId) {
         this.book = book;
         this.sellerId = sellerId;
         this.purchaserId = null;
-        this.tradeState= TradeState.WAIT;
+        this.tradeState = TradeState.WAIT;
         this.tradePlace = null;
         this.tradeDate = null;
 
@@ -54,9 +54,21 @@ public class Trade implements Parcelable {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
         this.upLoadDate = simpleDateFormat.format(loadDate.getTimeInMillis());
 
+        this.tradePlace = null;
+        this.tradeDate = null;
+        this.sellingPrice = 0;
+
+        this.latitude = 0;
+        this.longitude = 0;
+
         this.seller = new Customer();
         seller.setId(sellerId);
         seller.setCustomerDataFromUID(null);
+    }
+
+    public Trade(Book book, String sellerId, int sellingPrice) {
+        this(book, sellerId);
+        this.sellingPrice = sellingPrice;
     }
 
     public Trade(Book book, String sellerId, String purchaserId, TradeState tradeState, String tradePlace, Calendar tradeDate) {
@@ -70,7 +82,7 @@ public class Trade implements Parcelable {
         seller.setCustomerDataFromUID(null);
 
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
-        if (tradeDate  == null) {
+        if (tradeDate == null) {
             this.tradeDate = null;
         } else {
             this.tradeDate = simpleDateFormat.format(new Date(tradeDate.getTimeInMillis()));
@@ -85,7 +97,7 @@ public class Trade implements Parcelable {
         this.seller = seller;
         this.purchaser = purchaser;
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
-        if (tradeDate  == null) {
+        if (tradeDate == null) {
             this.tradeDate = null;
         } else {
             this.tradeDate = simpleDateFormat.format(new Date(tradeDate.getTimeInMillis()));
@@ -93,18 +105,37 @@ public class Trade implements Parcelable {
     }
 
     protected Trade(Parcel in) {
+
+        tradeId = in.readString();
         book = in.readParcelable(Book.class.getClassLoader());
+        sellerId = in.readString();
+        purchaserId = in.readString();
         seller = in.readParcelable(Customer.class.getClassLoader());
         purchaser = in.readParcelable(Customer.class.getClassLoader());
         tradeState = TradeState.valueOf(in.readString());
+        upLoadDate = in.readString();
         tradePlace = in.readString();
         tradeDate = in.readString();
-        upLoadDate = in.readString();
-        longitude = in.readDouble();
+        sellingPrice = in.readInt();
         latitude = in.readDouble();
-        tradeId = in.readString();
+        longitude = in.readDouble();
     }
+    public void Copy(Trade src) {
 
+        this.tradeId = src.getTradeId();
+        this.book = src.getBook();
+        this.sellerId = src.getSellerId();
+        this.purchaserId = src.getPurchaserId();
+        this.seller = src.getSeller();
+        this.purchaser = src.getPurchaser();
+        this.tradeState = src.getTradeState();
+        this.upLoadDate = src.getUpLoadDate();
+        this.tradePlace = src.getTradePlace();
+        this.tradeDate = src.getTradeDate();
+        this.sellingPrice = src.getSellingPrice();
+        this.latitude = src.getLatitude();
+        this.longitude = src.getLongitude();
+    }
     @Override
     public int describeContents() {
         return 0;
@@ -112,16 +143,19 @@ public class Trade implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(tradeId);
         dest.writeParcelable(book, flags);
+        dest.writeString(sellerId);
+        dest.writeString(purchaserId);
         dest.writeParcelable(seller, flags);
         dest.writeParcelable(purchaser, flags);
         dest.writeString(tradeState.name());
+        dest.writeString(upLoadDate);
         dest.writeString(tradePlace);
         dest.writeString(tradeDate);
-        dest.writeString(upLoadDate);
+        dest.writeInt(sellingPrice);
         dest.writeDouble(latitude);
         dest.writeDouble(longitude);
-        dest.writeString(tradeId);
     }
 
     public static final Creator<Trade> CREATOR = new Creator<Trade>() {
@@ -289,7 +323,7 @@ public class Trade implements Parcelable {
     }
 
     public void toMap(Map<String, Object> result) {
-        result.put("book",book);
+        result.put("book", book);
         result.put("tradeId", this.tradeId);
         result.put("sellerId", this.sellerId);
         result.put("purchaserId", this.purchaserId);

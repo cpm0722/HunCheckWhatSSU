@@ -72,11 +72,7 @@ public class OptionFragment extends Fragment implements View.OnClickListener {
         }
         else if(view == setNotificationBtn){
             //setNotification();
-            Intent intent = new Intent(getActivity().getApplicationContext(),SelectPurchaserActivity.class);
-            intent.putExtra("tradeKey","-LuqAdWEbRvkBH6ixQhy");
-            intent.putExtra("sellerId","박은정_zYP0ZRe1IXZ9EYFoSHWxNcY81zA2");
 
-            startActivity(intent);
         }
         else if(view == customerContactAddressBtn){
             showCustomerSupportContactAddress();

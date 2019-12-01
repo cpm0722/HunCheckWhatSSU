@@ -68,6 +68,8 @@ public class Book implements Parcelable {
         pubDate = in.readString();
         description = in.readString();
         bookState = in.readParcelable(BookState.class.getClassLoader());
+        if(bookState == null)
+            bookState = new BookState();
         college_id = in.readString();
         department_id = in.readString();
         subject_id = in.readString();
@@ -115,7 +117,7 @@ public class Book implements Parcelable {
                 ", title='" + title + '\'' +
                 ", image='" + image + '\'' +
                 ", author='" + author + '\'' +
-                ", price=" + originalPrice +
+                ", originalPrice=" + originalPrice +
                 ", publisher='" + publisher + '\'' +
                 ", pubDate='" + pubDate + '\'' +
                 ", description='" + description + '\'' +
@@ -236,7 +238,7 @@ public class Book implements Parcelable {
         result.put("isbn13", this.isbn13);
         result.put("title", this.title);
         result.put("author", this.author);
-        result.put("price", this.originalPrice);
+        result.put("originalPrice", this.originalPrice);
         result.put("publisher", this.publisher);
         result.put("pubDate", this.pubDate);
         result.put("description", this.description);

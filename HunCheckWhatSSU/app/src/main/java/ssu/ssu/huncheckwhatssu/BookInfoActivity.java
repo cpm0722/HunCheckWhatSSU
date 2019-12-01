@@ -80,16 +80,16 @@ public class BookInfoActivity extends AppCompatActivity implements OnMapReadyCal
         Intent intent = getIntent();
         String bookInfoType = intent.getStringExtra("BookInfoType");
 
-       if (bookInfoType == null) {
+        if (bookInfoType == null) {
             Log.d("JS", "onCreate: 식별할 BookInfoType이 없습니다.");
             finish();
-        } else if(bookInfoType.equals("BOOK_INFO_DEFAULT")) {
+        } else if (bookInfoType.equals("BOOK_INFO_DEFAULT")) {
             setContentView(R.layout.activity_book_info);
             trade = intent.getParcelableExtra("book_info_default_data");
             initObject(1);
             setData(1);
             Log.d("JS", "onCreate: " + trade.toString());
-        } else if(bookInfoType.equals("BOOK_INFO_TRADE_DETAIL")) {
+        } else if (bookInfoType.equals("BOOK_INFO_TRADE_DETAIL")) {
             setContentView(R.layout.activity_book_trade_detail);
             trade = intent.getParcelableExtra("book_info_trade_detail");
             Log.d("JS", "onCreate: " + trade.toString());
@@ -216,14 +216,31 @@ public class BookInfoActivity extends AppCompatActivity implements OnMapReadyCal
         activity_book_info_tradeState.setText(trade.getTradeStateForShowView());
 
         if (bookInfoType == 1) {
+            sendPurchaseRequestBtn = findViewById(R.id.send_purchase_request_btn);
+            sendPurchaseRequestBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    FirebaseHelper firebaseHelper = new FirebaseHelper();
+                    FirebaseUser me = FirebaseAuth.getInstance().getCurrentUser();
+                    String uid = me.getDisplayName()+"_"+me.getUid();
+                    if(trade.getTradeId()!=null) {
+                        firebaseHelper.sendPurchaseRequest(trade.getTradeId(), uid);
+                        Log.d("HUMCHECKYC","tradeId null 아님 ");
+                    }
+                    Toast.makeText(getApplicationContext(),"구매요청이 완료되었습니다.",Toast.LENGTH_SHORT).show();
+                    finish();
+                }
+            });
         } else if (bookInfoType == 2) {
             // Trade Info
             activity_book_info_tradeDateText.setText(trade.getTradeDate());
-
             // Purchaser
             Customer purchaser = trade.getPurchaser();
-            if(purchaser == null)
-                purchaser = new Customer();
+            if (purchaser == null) {
+                purchaser = new Customer(trade.getPurchaserId());
+                purchaser.setCustomerDataFromUID(null);
+                Log.d("DEBUG!", purchaser.toString());
+            }
             activity_book_info_purchaserText.setText(purchaser.getName());
             activity_book_info_purchaserContactNumberText.setText(purchaser.getPhoneNumber());
             activity_book_info_purchaserCreditRating.setText(purchaser.getCreditRating() + "");
@@ -234,22 +251,6 @@ public class BookInfoActivity extends AppCompatActivity implements OnMapReadyCal
         back2TradeOverview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
-            }
-        });
-
-        sendPurchaseRequestBtn = findViewById(R.id.send_purchase_request_btn);
-        sendPurchaseRequestBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FirebaseHelper firebaseHelper = new FirebaseHelper();
-                FirebaseUser me = FirebaseAuth.getInstance().getCurrentUser();
-                String uid = me.getDisplayName()+"_"+me.getUid();
-                if(trade.getTradeId()!=null) {
-                    firebaseHelper.sendPurchaseRequest(trade.getTradeId(), uid);
-                    Log.d("HUMCHECKYC","tradeId null 아님 ");
-                }
-                Toast.makeText(getApplicationContext(),"구매요청이 완료되었습니다.",Toast.LENGTH_SHORT).show();
                 finish();
             }
         });

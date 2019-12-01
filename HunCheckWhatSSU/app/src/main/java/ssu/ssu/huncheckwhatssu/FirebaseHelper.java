@@ -97,10 +97,10 @@ public class FirebaseHelper {
     //trade를 업로드하는 함수
     public void upLoadTrade(Trade trade){
         HashMap<String,Object> update = new HashMap<>();
-        trade.toMap(update);
         DatabaseReference databaseReference = this.trade.push();
         String key = databaseReference.getKey();
         trade.setTradeId(key);
+        trade.toMap(update);
         databaseReference.updateChildren(update);
         databaseReference = this.customer.child(myUid).child("sellList").child(key);
         databaseReference.setValue(key);
@@ -110,6 +110,7 @@ public class FirebaseHelper {
     public void updatePurchaser(String tradeKey, String purchaserUid,String sellerUid){
 
         trade.child(tradeKey).child("purchaserId").setValue(purchaserUid);
+        trade.child(tradeKey).child("tradeState").setValue("PRECONTRACT");
         customer.child(sellerUid).child("sellList").child(tradeKey).removeValue();
         customer.child(sellerUid).child("tradeList").child(tradeKey).setValue(tradeKey);
         customer.child(purchaserUid).child("tradeList").child(tradeKey).setValue(tradeKey);

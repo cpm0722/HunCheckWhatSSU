@@ -21,7 +21,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="#000"></TextView>
+        android:background="#D3D3D3"></TextView>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/select_purchaser_recyclerview"

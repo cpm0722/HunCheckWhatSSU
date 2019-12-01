@@ -3,6 +3,7 @@ package ssu.ssu.huncheckwhatssu;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -183,7 +184,7 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemSelect
                         if (firebase.getRecyclerView() != null)
                             firebase.getRecyclerView().getAdapter().notifyDataSetChanged();
 
-                        Log.d("JS", "onDatwwaChange: " + trade.toString());
+                        Log.d("JS", "onDataChange: " + trade.toString());
                     }
                 }
             }
@@ -195,7 +196,8 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemSelect
         });
 
     }
-
+/*SearchFragment에서 학부>학과인 거 번호를 읽어와서 해야함.*/
+/*승주_Uri Trade에서 넣으면, Uri naverbooksearch_activity_image Uri 를 참고해서 쓰면 됨 */
     private void setSpinnerData(int spin_switch, int college_id, int department_id) {
         DBHelper dbHelper = new DBHelper(getContext());
         Cursor cursor;
