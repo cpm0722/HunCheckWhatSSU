@@ -57,7 +57,7 @@ public class SelectPurchaserActivity extends AppCompatActivity implements View.O
             public void afterGetCustomer(Customer customer) {
                 purchasers.add(customer);
                 isClicked.add(false);
-                Log.d(TAG, customer.getName());
+//                Log.d(TAG, customer.getName());
                 adapter.notifyDataSetChanged();
             }
         });
