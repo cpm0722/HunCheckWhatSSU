@@ -34,7 +34,7 @@ public class SellFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_sell, container, false);
         this.context = root.getContext();
-        
+
         //BackButton Pressed 시 NavigationBottom Menu Selected 변경
         Fragment navHostFragment = this.getActivity().getSupportFragmentManager().getFragments().get(0);
         BottomNavigationView navView = navHostFragment.getActivity().findViewById(R.id.nav_view);
@@ -50,6 +50,14 @@ public class SellFragment extends Fragment {
           startActivity(in);
           //sellList.add();
          }
+        });
+        Button test=root.findViewById(R.id.book_info_test_btn);
+        test.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                
+            }
         });
 
         // 리사이클러뷰에 LinearLayoutManager 객체 지정.
