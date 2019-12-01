@@ -8,9 +8,9 @@
         android:layout_width="228dp"
         android:layout_height="158dp"
         android:layout_above="@+id/ratingBar"
-        android:layout_marginLeft="80dp"
-        android:layout_marginBottom="111dp"
-        android:src="@drawable/bookimag"></ImageView>
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="91dp"
+        android:src="@drawable/icon_rate"></ImageView>
 
     <TextView
         android:layout_width="wrap_content"
@@ -51,7 +51,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="540dp" />
+        android:layout_marginTop="440dp" />
 
 
 </RelativeLayout>
