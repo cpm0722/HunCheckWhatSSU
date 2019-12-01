@@ -71,7 +71,7 @@ public class OptionFragment extends Fragment implements View.OnClickListener {
 
         }
         else if(view == setNotificationBtn){
-            //setNotification();
+            setNotification();
 
         }
         else if(view == customerContactAddressBtn){

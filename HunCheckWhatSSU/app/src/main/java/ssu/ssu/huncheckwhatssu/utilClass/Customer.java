@@ -181,13 +181,15 @@ public class Customer implements Parcelable {
         result.put("Name", this.name);
         result.put("PhoneNumber", this.phoneNumber);
         result.put("Address", this.address);
-        result.put("CreditRating", this.creditRating);
         result.put("NickName",this.nickName);
         result.put("Major",this.major);
         result.put("Grade",this.grade);
         result.put("sellList",sellList);
         result.put("buyList",buyList);
-        result.put("evaluationNumber",this.evaluationNumber);
+        if(evaluationNumber != 0 ) {
+            result.put("evaluationNumber", this.evaluationNumber);
+            result.put("CreditRating", this.creditRating);
+        }
         return;
     }
 

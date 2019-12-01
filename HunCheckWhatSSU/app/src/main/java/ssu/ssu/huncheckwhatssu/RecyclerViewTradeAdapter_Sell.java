@@ -93,7 +93,7 @@ public class RecyclerViewTradeAdapter_Sell extends RecyclerView.Adapter<Recycler
             sellingPriceTextView.setText(String.valueOf(object.getSellingPrice()));
             bookAuthorTextView.setText(object.getBook().getAuthor());
             bookPublisherTextView.setText(object.getBook().getPublisher());
-            sellerCreditTextView.setText("위험");
+            sellerCreditTextView.setText(object.getSeller().getCreditRating()+"");
             DBHelper dbHelper = new DBHelper(inflater.getContext());
             bookCategoryTextView.setText(dbHelper.getFullCategoryText(object.getBook()));
             countView.setText(getItemCount() + " 건");

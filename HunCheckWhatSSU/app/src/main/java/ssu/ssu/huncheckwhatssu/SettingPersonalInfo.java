@@ -19,9 +19,7 @@ import ssu.ssu.huncheckwhatssu.utilClass.Customer;
 public class SettingPersonalInfo extends AppCompatActivity implements View.OnClickListener{
 
     Customer myInfo;
-    FirebaseCommunicator firebaseCommunicator;
     FirebaseHelper firebaseHelper;
-    private Button setImageBtn;
     private Button cancelBtn;
     private Button saveBtn;
 
@@ -38,7 +36,6 @@ public class SettingPersonalInfo extends AppCompatActivity implements View.OnCli
 
         getId();
         firebaseHelper = new FirebaseHelper();
-
     }
 
     @Override
@@ -59,14 +56,14 @@ public class SettingPersonalInfo extends AppCompatActivity implements View.OnCli
     }
 
     private void getId(){
-        setImageBtn = (Button)findViewById(R.id.setting_personal_image_btn);
+
         cancelBtn = (Button)findViewById(R.id.setting_personal_info_cancel_btn);
         saveBtn = (Button)findViewById(R.id.setting_personal_info_save_btn);
-        setImageBtn.setOnClickListener(this);
         cancelBtn.setOnClickListener(this);
         saveBtn.setOnClickListener(this);
 
         editName = (EditText)findViewById(R.id.setting_personal_name_edit);
+        editName.setFocusableInTouchMode(false);
         editNickName = (EditText)findViewById(R.id.setting_personal_nickname_edit);
         editMajor = (EditText)findViewById(R.id.setting_personal_major);
         editGrade = (EditText)findViewById(R.id.setting_personal_grade_edit);
@@ -87,20 +84,23 @@ public class SettingPersonalInfo extends AppCompatActivity implements View.OnCli
         phoneNumber = myInfo.getPhoneNumber();
         address = myInfo.getAddress();
 
-        editName.setText(name);
-        editNickName.setText(nickName);
-        editMajor.setText(major);
-        editGrade.setText(Integer.toString(grade));
-        editContactAddress.setText(phoneNumber);
-        editAddress.setText(address);
+        if(name != null)
+            editName.setText(name);
+        if(nickName != null)
+            editNickName.setText(nickName);
+        if(major != null)
+            editMajor.setText(major);
+        if(grade != 0)
+            editGrade.setText(Integer.toString(grade));
+        if(phoneNumber != null)
+            editContactAddress.setText(phoneNumber);
+        if(address != null)
+            editAddress.setText(address);
     }
 
     @Override
     public void onClick(View view) {
-        if(view == setImageBtn){
-
-        }
-        else if(view == cancelBtn){
+        if(view == cancelBtn){
             finish();
         }
         else if(view == saveBtn){
@@ -113,6 +113,7 @@ public class SettingPersonalInfo extends AppCompatActivity implements View.OnCli
     private void savePersonalInfo() {
 
         //customer 객체에 입력받은 텍스트를 저장하는 작업
+
         myInfo.setName(editName.getText().toString());
         myInfo.setNickName(editNickName.getText().toString());
         myInfo.setMajor(editMajor.getText().toString());

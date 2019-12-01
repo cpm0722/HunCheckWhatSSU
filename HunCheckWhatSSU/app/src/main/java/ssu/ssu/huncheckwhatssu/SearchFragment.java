@@ -3,53 +3,40 @@ package ssu.ssu.huncheckwhatssu;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.SearchView;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.firebase.FirebaseAppLifecycleListener;
-import com.google.firebase.FirebaseOptions;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.naver.maps.geometry.LatLng;
 import com.nikhilpanju.recyclerviewenhanced.RecyclerTouchListener;
 
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
 import java.util.ArrayList;
-import java.util.Calendar;
 
 import ssu.ssu.huncheckwhatssu.DB.DBData;
 import ssu.ssu.huncheckwhatssu.DB.DBHelper;
-import ssu.ssu.huncheckwhatssu.utilClass.Book;
-import ssu.ssu.huncheckwhatssu.utilClass.BookState;
 import ssu.ssu.huncheckwhatssu.utilClass.Customer;
 import ssu.ssu.huncheckwhatssu.utilClass.Trade;
 
-import static android.app.Activity.RESULT_OK;
 import static androidx.constraintlayout.widget.Constraints.TAG;
 
 public class SearchFragment extends Fragment implements AdapterView.OnItemSelectedListener, SearchView.OnQueryTextListener {
@@ -112,22 +99,22 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemSelect
         // Recycler View Click Listener
         RecyclerTouchListener onTouchListener = new RecyclerTouchListener(this.getActivity(), recyclerView);
         onTouchListener.setClickable(new RecyclerTouchListener.OnRowClickListener() {
-                    @Override
-                    public void onRowClicked(int position) {
-                        Trade trade = firebase.getList().get(position);
+            @Override
+            public void onRowClicked(int position) {
+                Trade trade = firebase.getList().get(position);
 
-                        Intent intent = new Intent(getContext(), BookInfoActivity.class);
-                        intent.putExtra("BookInfoType", "BOOK_INFO_DEFAULT");
-                        intent.putExtra("book_info_default_data", trade);
+                Intent intent = new Intent(getContext(), BookInfoActivity.class);
+                intent.putExtra("BookInfoType", "BOOK_INFO_DEFAULT");
+                intent.putExtra("book_info_default_data", trade);
 
-                        getContext().startActivity(intent);
+                getContext().startActivity(intent);
 
-                    }
+            }
 
-                    @Override
-                    public void onIndependentViewClicked(int independentViewID, int position) {
-                    }
-                });
+            @Override
+            public void onIndependentViewClicked(int independentViewID, int position) {
+            }
+        });
 
 
         recyclerView.addOnItemTouchListener(onTouchListener);
@@ -152,7 +139,7 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemSelect
         departmentData = new ArrayList<>();
         subjectData = new ArrayList<>();
 
-        setSpinnerData(1,-1,-1);
+        setSpinnerData(1, -1, -1);
 
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter(getContext(), android.R.layout.simple_spinner_dropdown_item, getDataName(collegeData));
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -175,9 +162,12 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemSelect
                     for (DataSnapshot tradeSnap : dataSnapshot.getChildren()) {
                         Trade trade = tradeSnap.getValue(Trade.class);
 
-                        trade.setSeller(new Customer(trade.getSellerId()));
+                        if (trade.getTradeState() != Trade.TradeState.WAIT)
+                            continue;
 
                         firebase.getList().add(trade);
+                        trade.setSeller(new Customer(trade.getSellerId()));
+
 
                         trade.getSeller().setCustomerDataFromUID(firebase.getRecyclerView().getAdapter());
 
@@ -196,8 +186,9 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemSelect
         });
 
     }
-/*SearchFragment에서 학부>학과인 거 번호를 읽어와서 해야함.*/
-/*승주_Uri Trade에서 넣으면, Uri naverbooksearch_activity_image Uri 를 참고해서 쓰면 됨 */
+
+    /*SearchFragment에서 학부>학과인 거 번호를 읽어와서 해야함.*/
+    /*승주_Uri Trade에서 넣으면, Uri naverbooksearch_activity_image Uri 를 참고해서 쓰면 됨 */
     private void setSpinnerData(int spin_switch, int college_id, int department_id) {
         DBHelper dbHelper = new DBHelper(getContext());
         Cursor cursor;
@@ -224,12 +215,12 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemSelect
             if (college_id == 0)
                 cursor = db.rawQuery("select * from tb_department", null);
             else
-                cursor = db.rawQuery("select * from tb_department where college_id = ?", new String[]{(college_id)+""});
+                cursor = db.rawQuery("select * from tb_department where college_id = ?", new String[]{(college_id) + ""});
 
             departmentData.add(new DBData(-1, -1, "전체", null));
 
             while (cursor.moveToNext()) {
-                departmentData.add(new DBData(cursor.getInt(0), cursor.getInt(1) , cursor.getString(2), null));
+                departmentData.add(new DBData(cursor.getInt(0), cursor.getInt(1), cursor.getString(2), null));
             }
         }
 
@@ -239,7 +230,7 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemSelect
             if (department_id == 0)
                 cursor = db.rawQuery("select * from tb_subject", null);
             else
-                cursor = db.rawQuery("select * from tb_subject where department_id = ?", new String[]{(department_id)+""});
+                cursor = db.rawQuery("select * from tb_subject where department_id = ?", new String[]{(department_id) + ""});
 
             subjectData.add(new DBData(-1, -1, "전체", null));
 
@@ -257,7 +248,7 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemSelect
 
         for (int i = 0; i < dbData.size(); i++) {
             if (dbData.get(i).getAnother() != null)
-                arrayList.add("(" + dbData.get(i).getAnother()[0] + ")" +dbData.get(i).getName());
+                arrayList.add("(" + dbData.get(i).getAnother()[0] + ")" + dbData.get(i).getName());
             else arrayList.add(dbData.get(i).getName());
         }
 
@@ -275,7 +266,7 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemSelect
         search_collegeId = college_spin.getSelectedItemPosition() + "";
         search_departmentId = departmentData.get(department_spin.getSelectedItemPosition()).getKey() + "";
         search_subjectId = subjectData.get(subject_spin.getSelectedItemPosition()).getKey() + "";
-        search_text = (query==null?"":query);
+        search_text = (query == null ? "" : query);
         firebase.getList().clear();
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("trade");
@@ -298,8 +289,8 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemSelect
                 if (trade.getTradeState() != Trade.TradeState.WAIT) return;
 
                 if (trade.getBook().getCollege_id().equals(search_collegeId) || search_collegeId.equals("0") || search_collegeId.equals("-1")) {
-                    if (trade.getBook().getDepartment_id().equals(search_departmentId) || search_departmentId.equals("0")|| search_departmentId.equals("-1")) {
-                        if (trade.getBook().getSubject_id().equals(search_subjectId) || search_subjectId.equals("0")|| search_subjectId.equals("-1")) {
+                    if (trade.getBook().getDepartment_id().equals(search_departmentId) || search_departmentId.equals("0") || search_departmentId.equals("-1")) {
+                        if (trade.getBook().getSubject_id().equals(search_subjectId) || search_subjectId.equals("0") || search_subjectId.equals("-1")) {
                             Log.d(TAG, "onChildAdded: ");
                             if (search_text.isEmpty() || trade.getBook().getTitle().contains(search_text)) {
                                 Log.d(TAG, "onChildAdded: " + firebase);
@@ -333,8 +324,6 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemSelect
 
             }
         });
-
-
 
 
         return true;

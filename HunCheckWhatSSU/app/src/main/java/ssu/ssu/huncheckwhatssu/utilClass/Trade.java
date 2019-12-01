@@ -332,8 +332,10 @@ public class Trade implements Parcelable {
         result.put("tradeDate", this.tradeDate);
         result.put("upLoadDate", this.upLoadDate);
         result.put("sellingPrice",this.sellingPrice);
-        result.put("latitude",this.latitude);
-        result.put("longitude",this.longitude);
+        if(this.latitude != 0)
+            result.put("latitude",this.latitude);
+        if(this.longitude != 0 )
+            result.put("longitude",this.longitude);
 
     }
 }

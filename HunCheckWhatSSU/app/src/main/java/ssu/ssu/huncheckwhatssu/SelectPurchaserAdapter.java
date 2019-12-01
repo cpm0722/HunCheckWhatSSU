@@ -46,6 +46,9 @@ public class SelectPurchaserAdapter extends RecyclerView.Adapter<SelectPurchaser
         String address;
         if((address=this.purchasers.get(position).getAddress())!=null)
             holder.addressText.setText(address);
+        else{
+            holder.addressText.setText("없음");
+        }
         if(isClicked.get(position)==true){
             holder.background.setBackgroundColor(Color.parseColor("#FFFF00"));
         }
