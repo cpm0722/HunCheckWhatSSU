@@ -56,7 +56,8 @@ public class SellFragment extends Fragment {
 
             @Override
             public void onClick(View v) {
-                
+                Intent in=new Intent(getActivity(),Rating.class);
+                startActivity(in);
             }
         });
 
