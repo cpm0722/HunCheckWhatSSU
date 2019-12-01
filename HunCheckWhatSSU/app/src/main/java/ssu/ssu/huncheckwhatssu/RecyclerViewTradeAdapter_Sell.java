@@ -120,13 +120,18 @@ public class RecyclerViewTradeAdapter_Sell extends RecyclerView.Adapter<Recycler
                         toast.show();
                     }
                 })
-                .setSwipeOptionViews(R.id.item_button_edit, R.id.item_button_delete)
+                .setSwipeOptionViews(R.id.item_button_notification, R.id.item_button_edit, R.id.item_button_delete)
                 .setSwipeable(R.id.rowFG, R.id.rowBG, new RecyclerTouchListener.OnSwipeOptionsClickListener() {
 
                     @Override
                     public void onSwipeOptionClicked(int viewID, final int position) {
                         final Trade trade = ((RecyclerViewTradeAdapter_Sell)(recyclerView.getAdapter())).getTrades().get(position);
-                        if (viewID == R.id.item_button_edit) {
+                        if (viewID == R.id.item_button_notification) {
+                            Toast toast = Toast.makeText(activity, "구매요청!", Toast.LENGTH_SHORT);
+                            toast.show();
+                            recyclerView.getAdapter().notifyDataSetChanged();
+                        }
+                        else if (viewID == R.id.item_button_edit) {
                             Intent intent=new Intent(context, EditSell.class);
                             intent.putExtra("activity", "SellFragment");
                             intent.putExtra("editTrade", trade);
