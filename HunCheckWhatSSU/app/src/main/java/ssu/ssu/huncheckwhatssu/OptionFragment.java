@@ -73,7 +73,9 @@ public class OptionFragment extends Fragment implements View.OnClickListener {
 
         }
         else if(view == setNotificationBtn){
-            setNotification();
+            Intent in=new Intent(getActivity(),Rating.class);
+            startActivity(in);
+            //setNotification();
 
         }
         else if(view == customerContactAddressBtn){
