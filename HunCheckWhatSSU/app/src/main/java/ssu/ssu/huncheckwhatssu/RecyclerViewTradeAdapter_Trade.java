@@ -117,13 +117,13 @@ public class RecyclerViewTradeAdapter_Trade extends RecyclerView.Adapter<Recycle
             original_price.setText(String.valueOf(object.getBook().getOriginalPrice()));
             seller_name.setText(object.getSeller().getName());
 
-            book_category.setText(object.getBook().getCollege_id() + " " + object.getBook().getDepartment_id());
 
             book_author.setText(object.getBook().getAuthor());
             book_publisher.setText(object.getBook().getPublisher());
             selling_price.setText(String.valueOf(object.getSellingPrice()));
-            seller_credit.setText("신뢰");
-
+            seller_credit.setText(object.getSeller().getCreditRating()+"");
+            DBHelper dbHelper = new DBHelper(inflater.getContext());
+            book_category.setText(dbHelper.getFullCategoryText(object.getBook()));
             countView.setText(new Integer(getItemCount()) + " 건");
 
         }

@@ -30,26 +30,6 @@
         android:layout_marginTop="5dp"
         android:background="#000"></ImageView>
 
-    <ImageView
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="50dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/default_no_user_image"
-        android:background="#FF0"
-        ></ImageView>
-    <Button
-        android:id="@+id/setting_personal_image_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_gravity="center_horizontal"
-        android:text="프로필 사진 수정"
-        android:background="#0000"
-        android:gravity="center"
-        android:textSize="20sp"
-        ></Button>
 
 
     <LinearLayout

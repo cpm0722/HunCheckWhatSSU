@@ -99,7 +99,6 @@ public class RecyclerViewTradeAdapter_Search extends RecyclerView.Adapter<Recycl
             bookPublisherTextView.setText(String.valueOf(object.getBook().getPublisher()));
 
             DBHelper dbHelper = new DBHelper(inflater.getContext());
-            SQLiteDatabase db = dbHelper.getReadableDatabase();
             StringBuilder sb = new StringBuilder();
 
 

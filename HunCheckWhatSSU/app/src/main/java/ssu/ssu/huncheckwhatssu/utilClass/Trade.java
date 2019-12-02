@@ -120,7 +120,6 @@ public class Trade implements Parcelable {
         latitude = in.readDouble();
         longitude = in.readDouble();
     }
-
     public void Copy(Trade src) {
 
         this.tradeId = src.getTradeId();
@@ -137,7 +136,6 @@ public class Trade implements Parcelable {
         this.latitude = src.getLatitude();
         this.longitude = src.getLongitude();
     }
-
     @Override
     public int describeContents() {
         return 0;
@@ -220,13 +218,9 @@ public class Trade implements Parcelable {
         this.tradeDate = tradeDate;
     }
 
-    public String getTradeId() {
-        return tradeId;
-    }
+    public String getTradeId(){ return tradeId; }
 
-    public void setTradeId(String tradeId) {
-        this.tradeId = tradeId;
-    }
+    public void setTradeId(String tradeId){ this.tradeId = tradeId;}
 
     public Customer getSeller() {
         return seller;
@@ -279,7 +273,6 @@ public class Trade implements Parcelable {
     public void setLongitude(double longitude) {
         this.longitude = longitude;
     }
-
     public String getUpLoadDate() {
         return upLoadDate;
     }
@@ -295,12 +288,10 @@ public class Trade implements Parcelable {
             Calendar c = Calendar.getInstance();
             c.setTime(simpleDateFormat.parse(tradeDate));
             return c;
-        } catch (Exception e) {
-        }
+        } catch (Exception e) {}
         return null;
     }
-
-    public void convertTradeDate() {
+    public void convertTradeDate(){
 
     }
 
@@ -340,9 +331,12 @@ public class Trade implements Parcelable {
         result.put("tradePlace", this.tradePlace);
         result.put("tradeDate", this.tradeDate);
         result.put("upLoadDate", this.upLoadDate);
-        result.put("sellingPrice", this.sellingPrice);
-        result.put("latitude", this.latitude);
-        result.put("longitude", this.longitude);
+        result.put("sellingPrice",this.sellingPrice);
+        if(this.latitude != 0)
+            result.put("latitude",this.latitude);
+        if(this.longitude != 0 )
+            result.put("longitude",this.longitude);
 
     }
 }
+

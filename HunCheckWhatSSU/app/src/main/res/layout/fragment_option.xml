@@ -5,65 +5,19 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_marginTop="8dp"
-        android:layout_height="2dp"
-        android:layout_marginBottom="5dp"
-        android:background="#000"></ImageView>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:text="설정"
-        android:textStyle="bold"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:layout_marginTop="5dp"
-        android:background="#000"></ImageView>
-
-    <ImageView
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="50dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/default_no_user_image"
-        ></ImageView>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:text="User Nickname"
-        android:gravity="center"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        ></TextView>
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"></LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <ImageView
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="60dp"
             android:layout_weight="1"
             android:scaleType="fitCenter"
             android:textAlignment="center"
-            android:src="@drawable/ic_myinfo_button"
+            android:padding="8dp"
+            android:src="@drawable/user_img"
             ></ImageView>
 
         <Button
@@ -76,6 +30,10 @@
             android:background="#1FFF"
             android:textSize="20sp"></Button>
     </LinearLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#D3D3D3"></TextView>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -85,12 +43,13 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:src="@drawable/ic_setting_button_18dp"
+            android:padding="8dp"
+            android:src="@drawable/privacy_img"
             ></ImageView>
         <Button
             android:id="@+id/setting_Personal_Info_Btn"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="60dp"
             android:layout_weight="4"
             android:background="#1FFF"
             android:text="개인정보 설정"
@@ -99,6 +58,10 @@
             ></Button>
     </LinearLayout>
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#D3D3D3"></TextView>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -108,12 +71,13 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:src="@drawable/ic_notifications_black_24dp"
+            android:src="@drawable/notification_img"
+            android:padding="8dp"
             ></ImageView>
         <Button
             android:id="@+id/setting_notification_btn"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="60dp"
             android:layout_weight="4"
             android:text="알림 설정"
             android:background="#1FFF"
@@ -121,18 +85,21 @@
             android:textSize="20sp"
             ></Button>
     </LinearLayout>
-
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#D3D3D3"></TextView>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
         android:orientation="horizontal">
         <ImageView
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="60dp"
             android:layout_weight="1"
-            android:src="@drawable/ic_customer_center"
+            android:padding="8dp"
+            android:src="@drawable/call_img"
             ></ImageView>
         <Button
             android:id="@+id/customer_support_center_btn"
@@ -146,5 +113,35 @@
             ></Button>
     </LinearLayout>
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#D3D3D3"></TextView>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_weight="1"
+            android:padding="8dp"
+            android:src="@drawable/exit_img"
+            ></ImageView>
+        <Button
+            android:id="@+id/logout_btn"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="4"
+            android:background="#1FFF"
+            android:text="로그아웃"
+            android:gravity="left|center_vertical"
+            android:textSize="20sp"
+            ></Button>
+    </LinearLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#D3D3D3"></TextView>
 
 </android.widget.LinearLayout>

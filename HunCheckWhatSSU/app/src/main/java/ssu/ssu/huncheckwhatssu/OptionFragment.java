@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -34,6 +35,7 @@ public class OptionFragment extends Fragment implements View.OnClickListener {
     private Button setPersonalInfoBtn;
     private Button setNotificationBtn;
     private Button customerContactAddressBtn;
+    private Button logoutBtn;
 
     private AlertDialog setNotificationDialog;
     private AlertDialog showCustomerSupportContactDialog;
@@ -41,6 +43,8 @@ public class OptionFragment extends Fragment implements View.OnClickListener {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_option, container, false);
+
+        ((MainActivity)getActivity()).getSupportActionBar().setTitle("HunCheckWhatSSU-설정");
 
         //BackButton Pressed 시 NavigationBottom Menu Selected 변경
         Fragment navHostFragment = this.getActivity().getSupportFragmentManager().getFragments().get(0);
@@ -52,12 +56,12 @@ public class OptionFragment extends Fragment implements View.OnClickListener {
         setPersonalInfoBtn = (Button)root.findViewById(R.id.setting_Personal_Info_Btn);
         setNotificationBtn = (Button)root.findViewById(R.id.setting_notification_btn);
         customerContactAddressBtn= (Button)root.findViewById(R.id.customer_support_center_btn);
+        logoutBtn = root.findViewById(R.id.logout_btn);
         seeMyInfoBtn.setOnClickListener(this);
         setPersonalInfoBtn.setOnClickListener(this);
         setNotificationBtn.setOnClickListener(this);
         customerContactAddressBtn.setOnClickListener(this);
-
-
+        logoutBtn.setOnClickListener(this);
 
         return root;
     }
@@ -69,9 +73,10 @@ public class OptionFragment extends Fragment implements View.OnClickListener {
 
         }
         else if(view == setNotificationBtn){
+            Intent in=new Intent(getActivity(),Rating.class);
+            startActivity(in);
             //setNotification();
-            FirebaseHelper firebaseHelper = new FirebaseHelper();
-            firebaseHelper.sendPurchaseRequest("-LuXBNYGkj54Y5x1WE5g",firebaseHelper.myUid);
+
         }
         else if(view == customerContactAddressBtn){
             showCustomerSupportContactAddress();
@@ -82,10 +87,18 @@ public class OptionFragment extends Fragment implements View.OnClickListener {
             Book book = new Book("testISBN10","testISBN13","testTitle","testimg","testAuthor",15000,"testPublisher","testPubdate","testdescription",bookState);
             book.setSubject_id("2");
             book.setDepartment_id("38");
-            book.setCollege_id("5");
+            book.setCollege_id("8");
             Trade trade = new Trade(book, firebaseHelper.myUid);
             trade.setSellingPrice(5000);
             firebaseHelper.upLoadTrade(trade);
+        }
+        else if(view == logoutBtn){
+            Toast.makeText(getContext(), "Sign Out", Toast.LENGTH_SHORT).show();
+            FirebaseAuth.getInstance().signOut();
+
+            Intent intent = new Intent(getContext(), LoginActivity.class);
+            startActivity(intent);
+            return;
         }
     }
     private void setNotification(){

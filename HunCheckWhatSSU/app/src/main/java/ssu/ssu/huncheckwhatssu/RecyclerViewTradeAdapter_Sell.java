@@ -91,7 +91,7 @@ public class RecyclerViewTradeAdapter_Sell extends RecyclerView.Adapter<Recycler
             sellingPriceTextView.setText(String.valueOf(object.getSellingPrice()));
             bookAuthorTextView.setText(object.getBook().getAuthor());
             bookPublisherTextView.setText(object.getBook().getPublisher());
-            sellerCreditTextView.setText(String.format("%.2f", object.getSeller().getCreditRating()));
+            sellerCreditTextView.setText("위험");
             DBHelper dbHelper = new DBHelper(inflater.getContext());
             bookCategoryTextView.setText(dbHelper.getFullCategoryText(object.getBook()));
             countView.setText(getItemCount() + " 건");
@@ -111,6 +111,7 @@ public class RecyclerViewTradeAdapter_Sell extends RecyclerView.Adapter<Recycler
                         intent.putExtra("BookInfoType","BOOK_INFO_TRADE_DETAIL");
                         intent.putExtra("book_info_trade_detail", trade);
                         context.startActivity(intent);
+                        /*여기에 액티비티로 전달하는 기능이 구현되있어야함.*/
                     }
 
                     @Override
@@ -119,13 +120,22 @@ public class RecyclerViewTradeAdapter_Sell extends RecyclerView.Adapter<Recycler
                         toast.show();
                     }
                 })
-                .setSwipeOptionViews(R.id.item_button_edit, R.id.item_button_delete)
+                .setSwipeOptionViews(R.id.item_button_notification, R.id.item_button_edit, R.id.item_button_delete)
                 .setSwipeable(R.id.rowFG, R.id.rowBG, new RecyclerTouchListener.OnSwipeOptionsClickListener() {
 
                     @Override
                     public void onSwipeOptionClicked(int viewID, final int position) {
                         final Trade trade = ((RecyclerViewTradeAdapter_Sell)(recyclerView.getAdapter())).getTrades().get(position);
-                        if (viewID == R.id.item_button_edit) {
+                        if (viewID == R.id.item_button_notification) {
+                            Intent intent = new Intent(context.getApplicationContext(),SelectPurchaserActivity.class);
+                            intent.putExtra("tradeKey",trade.getTradeId());
+                            intent.putExtra("sellerId",trade.getSellerId());
+                            context.startActivity(intent);
+//                            Toast toast = Toast.makeText(activity, "구매요청!", Toast.LENGTH_SHORT);
+//                            toast.show();
+                            recyclerView.getAdapter().notifyDataSetChanged();
+                        }
+                        else if (viewID == R.id.item_button_edit) {
                             Intent intent=new Intent(context, EditSell.class);
                             intent.putExtra("activity", "SellFragment");
                             intent.putExtra("editTrade", trade);
@@ -134,64 +144,30 @@ public class RecyclerViewTradeAdapter_Sell extends RecyclerView.Adapter<Recycler
 
                             recyclerView.getAdapter().notifyItemChanged(position);
                         } else if (viewID == R.id.item_button_delete) {
-                            Toast toast = Toast.makeText(context, "Delete! " + trade.getBook().getTitle(), Toast.LENGTH_SHORT);
-                            toast.show();
-                            if(trade.getTradeState()== Trade.TradeState.WAIT){
-                                /*판매 등록 삭제*/
-                                AlertDialog.Builder alert = new AlertDialog.Builder(context);
-                                alert.setTitle("판매 등록 취소");
-                                alert.setPositiveButton("등록 취소", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        FirebaseCommunicator.deleteTrade(trade);
-                                        ((RecyclerViewTradeAdapter_Sell) (recyclerView.getAdapter())).getTrades().remove(position);
-                                        recyclerView.getAdapter().notifyItemRemoved(position);
-                                        recyclerView.getAdapter().notifyDataSetChanged();
-                                        countView.setText(recyclerView.getAdapter().getItemCount() + " 건");
-                                    }
-                                });
-                                alert.setNegativeButton("등록 유지", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface arg0, int arg1) {
+                            AlertDialog.Builder alert = new AlertDialog.Builder(context);
+                            alert.setTitle("판매 등록 취소");
+                            alert.setMessage("정말로 판매를 취소 하시겠습니까?");
+                            alert.setPositiveButton("등록 취소", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    FirebaseCommunicator.deleteTrade(trade);
+                                    ((RecyclerViewTradeAdapter_Sell) (recyclerView.getAdapter())).getTrades().remove(position);
+                                    recyclerView.getAdapter().notifyItemRemoved(position);
+                                    recyclerView.getAdapter().notifyDataSetChanged();
+                                    countView.setText(recyclerView.getAdapter().getItemCount() + " 건");
+                                    Toast toast = Toast.makeText(context, "거래삭제", Toast.LENGTH_SHORT);
+                                    toast.show();
+                                }
+                            });
+                            alert.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface arg0, int arg1) {
 
-                                    }
-                                });
-                                alert.show();
-                            }
-                            else if(trade.getTradeState()== Trade.TradeState.PRECONTRACT){
-                                /*만약, 상태가 거래진행중이면*/
-                                AlertDialog.Builder alert = new AlertDialog.Builder(context);
-                                alert.setTitle("거래 취소");
-                                alert.setMessage("정말로 거래 취소 하시겠습니까?\n 신용도에 영향을 줍니다.");
-                                alert.setPositiveButton("거래 진행", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        FirebaseCommunicator.deleteTrade(trade);
-                                        ((RecyclerViewTradeAdapter_Sell) (recyclerView.getAdapter())).getTrades().remove(position);
-                                        recyclerView.getAdapter().notifyItemRemoved(position);
-                                        recyclerView.getAdapter().notifyDataSetChanged();
-                                        countView.setText(recyclerView.getAdapter().getItemCount() + " 건");
-
-                                    }
-                                });
-                                alert.setNegativeButton("거래 취소", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface arg0, int arg1) {
-                                        FirebaseCommunicator.tradePrecontract(trade.getTradeId(), trade.getSellerId(), "김승주_M3wdnkONA0cFMzXSqwt2dLLcfNI2");
-                                        modelVector.remove(position);
-                                        notifyItemRemoved(position);
-                                        countView.setText(getItemCount() + " 건");
-
-                                    }
-                                });
-                                alert.show();
-                            }
-                            else {
-                                /*만약 상태가 거래완료이면*/
-
-                            }
-                            recyclerView.getAdapter().notifyDataSetChanged();
-
+                                    Toast toast = Toast.makeText(context, "취소", Toast.LENGTH_SHORT);
+                                    toast.show();
+                                }
+                            });
+                            alert.show();
                         }
                     }
                 });

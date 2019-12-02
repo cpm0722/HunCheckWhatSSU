@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import ssu.ssu.huncheckwhatssu.utilClass.Book;
 import ssu.ssu.huncheckwhatssu.utilClass.BookState;
@@ -41,6 +42,8 @@ public class SellFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_sell, container, false);
         this.context = root.getContext();
 
+        ((MainActivity)getActivity()).getSupportActionBar().setTitle("HunCheckWhatSSU-책 판매");
+
         //BackButton Pressed 시 NavigationBottom Menu Selected 변경
         Fragment navHostFragment = this.getActivity().getSupportFragmentManager().getFragments().get(0);
         BottomNavigationView navView = navHostFragment.getActivity().findViewById(R.id.nav_view);
@@ -49,7 +52,7 @@ public class SellFragment extends Fragment {
 
         sellCount = root.findViewById(R.id.sell_count);
 
-        Button add = (Button) root.findViewById(R.id.AddSellBook);
+        FloatingActionButton add = root.findViewById(R.id.AddSellBook);
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -77,6 +80,7 @@ public class SellFragment extends Fragment {
 
         return root;
     }
+
 
     //Edit 눌러서 EditSell Activity에서 복귀
     @Override
