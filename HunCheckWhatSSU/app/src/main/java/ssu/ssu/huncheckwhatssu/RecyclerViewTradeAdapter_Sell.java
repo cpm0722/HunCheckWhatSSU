@@ -130,7 +130,8 @@ public class RecyclerViewTradeAdapter_Sell extends RecyclerView.Adapter<Recycler
                             Intent intent = new Intent(context.getApplicationContext(),SelectPurchaserActivity.class);
                             intent.putExtra("tradeKey",trade.getTradeId());
                             intent.putExtra("sellerId",trade.getSellerId());
-                            context.startActivity(intent);
+                            intent.putExtra("position", position);
+                            fragment.startActivityForResult(intent, 1);
 //                            Toast toast = Toast.makeText(activity, "구매요청!", Toast.LENGTH_SHORT);
 //                            toast.show();
                             recyclerView.getAdapter().notifyDataSetChanged();

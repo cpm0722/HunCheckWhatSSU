@@ -1,5 +1,6 @@
 package ssu.ssu.huncheckwhatssu;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -31,12 +32,20 @@ public class SelectPurchaserActivity extends AppCompatActivity implements View.O
     Button saveBtn;
     Button cancelBtn;
 
+    Activity activity;
+
+    Intent resultIntent;
+
     Customer selectedPurchaser;
+
+    int position;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_purchaser);
+
+        activity = this;
 
         //버튼 초기화
         saveBtn = findViewById(R.id.select_purchaser_btn);
@@ -46,6 +55,7 @@ public class SelectPurchaserActivity extends AppCompatActivity implements View.O
 
         //게시물 키 받기
         Intent intent = getIntent();
+        position = intent.getIntExtra("position", -1);
         tradeKey = intent.getStringExtra("tradeKey");
         sellerId = intent.getStringExtra("sellerId");
         purchasers = new Vector<>();
@@ -68,6 +78,8 @@ public class SelectPurchaserActivity extends AppCompatActivity implements View.O
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         adapter = new SelectPurchaserAdapter(this, purchasers, isClicked);
+
+        resultIntent = new Intent(this, MainActivity.class);
 
         //아이템 클릭 리스너 달기
         adapter.setOnItemClickListener(new SelectPurchaserAdapter.OnItemClickListener() {
@@ -100,6 +112,9 @@ public class SelectPurchaserActivity extends AppCompatActivity implements View.O
 //                setResult(RESULT_OK, intent);
                 firebaseHelper.updatePurchaser(tradeKey, selectedPurchaser.getId(), sellerId); //서버 DB 작업
                 Toast.makeText(this, "선택 완료, 진행중인 거래를 확인하세요.", Toast.LENGTH_SHORT).show();
+                resultIntent.putExtra("activity", "SelectPurchaser");
+                resultIntent.putExtra("position", position);
+                setResult(RESULT_OK, resultIntent);
                 finish();
             } else {
                 Toast.makeText(this, "선택된 구매자가 없습니다.", Toast.LENGTH_SHORT).show();
