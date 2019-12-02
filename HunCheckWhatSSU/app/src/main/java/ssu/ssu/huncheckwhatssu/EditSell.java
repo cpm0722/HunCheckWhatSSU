@@ -121,7 +121,7 @@ public class EditSell extends AppCompatActivity implements AdapterView.OnItemSel
     private void checkdefaultspinner() {
        Log.d("helpme",""+trade.getBook().getDepartment_id()+" "+trade.getBook().getCollege_id()+" "+trade.getBook().getSubject_id());
 
-        edit_department_sp.setSelection(Integer.parseInt(trade.getBook().getDepartment_id()));
+       // edit_department_sp.setSelection(Integer.parseInt(trade.getBook().getDepartment_id()));
        // edit_college_sp.setSelection(trade.getBook().getCollege_id());
        // edit_subject_sp.setSelection(trade.getBook().getSubject_id());
     }
@@ -278,11 +278,17 @@ public class EditSell extends AppCompatActivity implements AdapterView.OnItemSel
                     toast.show();
                 }
                 else {
+
+
                     trade.setSellingPrice(Integer.parseInt((activity_book_edit_bookSellingpriceText.getText()).toString()));
-                    trade.getBook().setCollege_id(""+edit_college_sp.getSelectedItemId());
-                    trade.getBook().setDepartment_id(""+edit_department_sp.getSelectedItemId());
-                    trade.getBook().setSubject_id(""+edit_subject_sp.getSelectedItemId());
+
+                    trade.getBook().setCollege_id(""+editcollegeData.get(edit_college_sp.getSelectedItemPosition()).getKey());
+                    trade.getBook().setDepartment_id(""+editdepartmentData.get(edit_department_sp.getSelectedItemPosition()).getKey());
+                    trade.getBook().setSubject_id(""+editsubjectData.get(edit_subject_sp.getSelectedItemPosition()).getKey());
                     //return할 Intent 생성
+
+                    Log.d("book", "onClick: " + trade.toString());
+
                     resultIntent.putExtra("activity", "EditSell");
                     resultIntent.putExtra("editTrade", trade);
                     resultIntent.putExtra("position", position);
