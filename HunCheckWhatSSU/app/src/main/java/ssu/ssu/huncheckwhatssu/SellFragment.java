@@ -108,6 +108,11 @@ public class SellFragment extends Fragment {
                     //RecyclerView에 변경 적용
                     sellRecyclerView.getAdapter().notifyDataSetChanged();
                 }
+                else if(act.equals("SelectPurchaser")){
+                    int position = intent.getIntExtra("position", -1);
+                    sellAdapter.getTrades().remove(position);
+                    sellRecyclerView.getAdapter().notifyItemRemoved(position);
+                }
             }
         }
     }
