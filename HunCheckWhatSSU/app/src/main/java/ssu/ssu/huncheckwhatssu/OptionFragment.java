@@ -73,24 +73,16 @@ public class OptionFragment extends Fragment implements View.OnClickListener {
 
         }
         else if(view == setNotificationBtn){
-            Intent in=new Intent(getActivity(),Rating.class);
-            startActivity(in);
-            //setNotification();
+
+            setNotification();
 
         }
         else if(view == customerContactAddressBtn){
             showCustomerSupportContactAddress();
         }
         else if(view == seeMyInfoBtn){
-            FirebaseHelper firebaseHelper = new FirebaseHelper();
-            BookState bookState = new BookState(BookState.bookState.BAD, BookState.bookState.WORST, BookState.bookState.BEST, BookState.bookState.GOOD, BookState.bookState.BAD, BookState.bookState.GOOD);
-            Book book = new Book("testISBN10","testISBN13","testTitle","testimg","testAuthor",15000,"testPublisher","testPubdate","testdescription",bookState);
-            book.setSubject_id("2");
-            book.setDepartment_id("38");
-            book.setCollege_id("8");
-            Trade trade = new Trade(book, firebaseHelper.myUid);
-            trade.setSellingPrice(5000);
-            firebaseHelper.upLoadTrade(trade);
+            Intent in=new Intent(getActivity(),Rating.class);
+            startActivity(in);
         }
         else if(view == logoutBtn){
             Toast.makeText(getContext(), "Sign Out", Toast.LENGTH_SHORT).show();

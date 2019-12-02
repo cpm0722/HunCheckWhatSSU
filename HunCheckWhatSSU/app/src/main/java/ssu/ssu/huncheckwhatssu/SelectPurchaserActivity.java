@@ -93,21 +93,21 @@ public class SelectPurchaserActivity extends AppCompatActivity implements View.O
 
     @Override
     public void onClick(View view) {
-        if (view == saveBtn) {
-            if (selectedPurchaser != null) {
+            if (view == saveBtn) {
+                if (selectedPurchaser != null) {
 //                Intent intent = new Intent();
 //                intent.putExtra("purchaserId", selectedPurchaser.getId());   //구매 확정자 id 넘겨줌
 //                setResult(RESULT_OK, intent);
-                firebaseHelper.updatePurchaser(tradeKey, selectedPurchaser.getId(), sellerId); //서버 DB 작업
-                Toast.makeText(this, "선택 완료, 진행중인 거래를 확인하세요.", Toast.LENGTH_SHORT).show();
-                finish();
-            } else {
-                Toast.makeText(this, "선택된 구매자가 없습니다.", Toast.LENGTH_SHORT).show();
-            }
-        } else if (view == cancelBtn) {
+                    firebaseHelper.updatePurchaser(tradeKey, selectedPurchaser.getId(), sellerId); //서버 DB 작업
+                    Toast.makeText(this, "선택 완료, 진행중인 거래를 확인하세요.", Toast.LENGTH_SHORT).show();
+                    finish();
+                } else {
+                    Toast.makeText(this, "선택된 구매자가 없습니다.", Toast.LENGTH_SHORT).show();
+                }
+            } else if (view == cancelBtn) {
 //            setResult(RESULT_CANCELED);
-            Toast.makeText(this, "취소하셨습니다.", Toast.LENGTH_SHORT).show();
-            finish();
-        }
+                Toast.makeText(this, "취소하셨습니다.", Toast.LENGTH_SHORT).show();
+                finish();
+            }
     }
 }
