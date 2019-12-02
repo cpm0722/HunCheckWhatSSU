@@ -45,6 +45,7 @@ public class TradeFragment extends Fragment {
         Menu menu = navView.getMenu();
         menu.getItem(2).setChecked(true);
 
+
         ongoingCountTrade=root.findViewById(R.id.ongoing_count);
         doneCountTrade=root.findViewById(R.id.done_count);
 
@@ -53,11 +54,13 @@ public class TradeFragment extends Fragment {
         ongoingRecyclerView = root.findViewById(R.id.trade_ongoing_list) ;
         ongoingRecyclerView.setLayoutManager(new LinearLayoutManager(getContext())) ;
         firebase.setRecyclerView(this.getContext(), this.getActivity(), ongoingRecyclerView, FirebaseCommunicator.WhichRecyclerView.ongoingRecyclerView);
+        firebase.setRecyclerView(this.getContext(), this.getActivity(), ongoingRecyclerView, FirebaseCommunicator.WhichRecyclerView.ongoingRecyclerView);
 
         // 리사이클러뷰에 RecyclerViewAdapter1 객체 지정.
         ongoingAdapter = new RecyclerViewTradeAdapter_Trade(this.getContext(), firebase.getOngoingTradeListVector(), ongoingRecyclerView, ongoingCountTrade) ;
         ongoingAdapter.setSwipeable(this.getContext(), this.getActivity(), ongoingRecyclerView);
         ongoingRecyclerView.setAdapter(ongoingAdapter);
+
 
         /*거래진행중인 아이템개수 보여주기 위해서*/
         ongoingCountTrade.setText(""+ongoingAdapter.getItemCount()+" 건");

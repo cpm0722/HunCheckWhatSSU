@@ -224,7 +224,7 @@
                 android:textSize="20dp"></TextView>
 
             <Spinner
-                android:id="@+id/spinner1"
+                android:id="@+id/activity_edit_college_sp"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="2.5"
@@ -248,7 +248,7 @@
                 android:textSize="20dp"></TextView>
 
             <Spinner
-                android:id="@+id/spinner2"
+                android:id="@+id/activity_edit_department_sp"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="2.5"
@@ -256,6 +256,32 @@
                 android:paddingLeft="20dp" />
 
         </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:baselineAligned="true"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="과목"
+                android:textSize="20dp"></TextView>
+
+            <Spinner
+                android:id="@+id/activity_edit_subject_sp"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2.5"
+                android:gravity="left|center_vertical"
+                android:paddingLeft="20dp" />
+
+        </LinearLayout>
+
 
         <LinearLayout
             android:layout_width="match_parent"

@@ -125,9 +125,7 @@ public class RecyclerViewTradeAdapter_Trade extends RecyclerView.Adapter<Recycle
             DBHelper dbHelper = new DBHelper(inflater.getContext());
             book_category.setText(dbHelper.getFullCategoryText(object.getBook()));
             countView.setText(new Integer(getItemCount()) + " 건");
-            //seller_credit.setText((int)object.getSeller().getCreditRating());
 
-            //   book_image.setImageDrawable(ResourcesCompat.getDrawable(context.getResources(),R.drawable.bookimag,null))
         }
     }
 
@@ -140,13 +138,6 @@ public class RecyclerViewTradeAdapter_Trade extends RecyclerView.Adapter<Recycle
                     @Override
                     public void onRowClicked(int position) {
                         Trade trade = ((RecyclerViewTradeAdapter_Trade) (recyclerView.getAdapter())).getTrades().get(position);
-
-                        Toast toast = Toast.makeText(context, "RowClick! " + trade.getBook().getTitle(), Toast.LENGTH_SHORT);
-                        toast.show();
-                        // recyclerView.getAdapter().notifyItemChanged(position);
-
-                        /*여기에 클릭 하는 거 처리해야함*/
-
                         Intent intent = new Intent(context, BookInfoActivity.class);
                         intent.putExtra("BookInfoType", "BOOK_INFO_TRADE_DETAIL");
                         intent.putExtra("book_info_trade_detail", trade);
@@ -168,49 +159,10 @@ public class RecyclerViewTradeAdapter_Trade extends RecyclerView.Adapter<Recycle
                         if (viewID == R.id.item_button_delete) {
                             Toast toast = Toast.makeText(context, "Delete! " + trade.getBook().getTitle(), Toast.LENGTH_SHORT);
                             toast.show();
-                            if (trade.getTradeState() == Trade.TradeState.WAIT) {
-                                /*판매 등록 삭제*/
-                                AlertDialog.Builder alert = new AlertDialog.Builder(context);
-                                alert.setTitle("판매 종료");
-                                alert.setPositiveButton("종료", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        /*삭제되는 코드 넣기*///  recyclerView.remove(position);
-                                        Toast toast = Toast.makeText(context, "판매종료", Toast.LENGTH_SHORT);
-                                        toast.show();
-                                    }
-                                });
-                                alert.setNegativeButton("유지", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface arg0, int arg1) {
-                                        Toast toast = Toast.makeText(context, "유지", Toast.LENGTH_SHORT);
-                                        toast.show();
-                                    }
-                                });
-                                alert.show();
-                            } else if (trade.getTradeState() == Trade.TradeState.COMPLETE) {
-                                /*만약 상태가 거래완료이면
-                                AlertDialog.Builder alert = new AlertDialog.Builder(context);
-                                alert.setTitle("거래 내역 삭제");
-                                alert.setMessage("삭제시, 거래 내역을 볼 수 없습니다.");
-                                alert.setPositiveButton("삭제", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                         recyclerView.remove(position);
-                                        Toast toast=Toast.makeText(context,"내역삭제함",Toast.LENGTH_SHORT);
-                                        toast.show();
-                                    }
-                                });
-                                alert.setNegativeButton("취소", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface arg0, int arg1) {
-                                        Toast toast=Toast.makeText(context,"취소함",Toast.LENGTH_SHORT);
-                                        toast.show();
-                                    }
-                                });
-                                alert.show();
-                                */
-                            } else if (trade.getTradeState() == Trade.TradeState.PRECONTRACT) {
+                          if (trade.getTradeState() == Trade.TradeState.COMPLETE) {
+                                /*만약 상태가 거래완료이면*/
+
+                          }else if (trade.getTradeState() == Trade.TradeState.PRECONTRACT) {
                                 /*만약, 상태가 거래진행중이면*/
                                 AlertDialog.Builder alert = new AlertDialog.Builder(context);
                                 alert.setTitle("거래 취소");
@@ -220,7 +172,6 @@ public class RecyclerViewTradeAdapter_Trade extends RecyclerView.Adapter<Recycle
                                     public void onClick(DialogInterface dialog, int which) {
                                         FirebaseCommunicator.tradeCancel(trade.getTradeId(), trade.getSellerId(), trade.getPurchaserId());
                                         ((RecyclerViewTradeAdapter_Trade) (recyclerView.getAdapter())).getTrades().remove(position);
-                                        /*삭제되는 코드 넣기*///  recyclerView.remove(position);
                                         recyclerView.getAdapter().notifyItemRemoved(position);
                                         recyclerView.getAdapter().notifyDataSetChanged();
                                         countView.setText(recyclerView.getAdapter().getItemCount() + " 건");
@@ -249,7 +200,11 @@ public class RecyclerViewTradeAdapter_Trade extends RecyclerView.Adapter<Recycle
                                     }
                                 });
                                 alert.show();
-                            }
+                          }
+                          else{}
+                            recyclerView.getAdapter().notifyItemRemoved(position);
+                            recyclerView.getAdapter().notifyDataSetChanged();
+
 
                         }
                     }

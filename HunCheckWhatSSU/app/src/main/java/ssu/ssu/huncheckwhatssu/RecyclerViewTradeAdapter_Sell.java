@@ -29,14 +29,12 @@ public class RecyclerViewTradeAdapter_Sell extends RecyclerView.Adapter<Recycler
     Vector<Trade> modelVector;
     RecyclerView recyclerView;
     TextView countView;
-    Context context;
 
     public RecyclerViewTradeAdapter_Sell(Context context,  Vector<Trade> vector, RecyclerView recyclerView, TextView countView) {
         this.inflater = LayoutInflater.from(context);
         this.modelVector = vector;
         this.recyclerView = recyclerView;
         this.countView = countView;
-        this.context = context;
     }
 
     @Override
@@ -93,7 +91,7 @@ public class RecyclerViewTradeAdapter_Sell extends RecyclerView.Adapter<Recycler
             sellingPriceTextView.setText(String.valueOf(object.getSellingPrice()));
             bookAuthorTextView.setText(object.getBook().getAuthor());
             bookPublisherTextView.setText(object.getBook().getPublisher());
-            sellerCreditTextView.setText(object.getSeller().getCreditRating()+"");
+            sellerCreditTextView.setText("위험");
             DBHelper dbHelper = new DBHelper(inflater.getContext());
             bookCategoryTextView.setText(dbHelper.getFullCategoryText(object.getBook()));
             countView.setText(getItemCount() + " 건");
@@ -147,9 +145,9 @@ public class RecyclerViewTradeAdapter_Sell extends RecyclerView.Adapter<Recycler
                             recyclerView.getAdapter().notifyItemChanged(position);
                         } else if (viewID == R.id.item_button_delete) {
                             AlertDialog.Builder alert = new AlertDialog.Builder(context);
-                            alert.setTitle("거래 삭제");
-                            alert.setMessage("정말로 거래를 삭제 하시겠습니까?");
-                            alert.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                            alert.setTitle("판매 등록 취소");
+                            alert.setMessage("정말로 판매를 취소 하시겠습니까?");
+                            alert.setPositiveButton("등록 취소", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     FirebaseCommunicator.deleteTrade(trade);
@@ -157,18 +155,15 @@ public class RecyclerViewTradeAdapter_Sell extends RecyclerView.Adapter<Recycler
                                     recyclerView.getAdapter().notifyItemRemoved(position);
                                     recyclerView.getAdapter().notifyDataSetChanged();
                                     countView.setText(recyclerView.getAdapter().getItemCount() + " 건");
-                                    Toast toast = Toast.makeText(context, "거래삭제함", Toast.LENGTH_SHORT);
+                                    Toast toast = Toast.makeText(context, "거래삭제", Toast.LENGTH_SHORT);
                                     toast.show();
                                 }
                             });
                             alert.setNegativeButton("취소", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface arg0, int arg1) {
-                                    FirebaseCommunicator.tradePrecontract(trade.getTradeId(), trade.getSellerId(), "김승주_M3wdnkONA0cFMzXSqwt2dLLcfNI2");
-                                    modelVector.remove(position);
-                                    notifyItemRemoved(position);
-                                    countView.setText(getItemCount() + " 건");
-                                    Toast toast = Toast.makeText(context, "취소함", Toast.LENGTH_SHORT);
+
+                                    Toast toast = Toast.makeText(context, "취소", Toast.LENGTH_SHORT);
                                     toast.show();
                                 }
                             });
