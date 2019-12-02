@@ -37,6 +37,8 @@ public class TradeFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         final View root = inflater.inflate(R.layout.fragment_trade, container, false);
 
+        ((MainActivity)getActivity()).getSupportActionBar().setTitle("HunCheckWhatSSU-거래중");
+
         //BackButton Pressed 시 NavigationBottom Menu Selected 변경
         final Fragment navHostFragment = this.getActivity().getSupportFragmentManager().getFragments().get(0);
         BottomNavigationView navView = navHostFragment.getActivity().findViewById(R.id.nav_view);

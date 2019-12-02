@@ -5,7 +5,7 @@
 
     <item
         android:id="@+id/navigation_search"
-        android:icon="@android:drawable/ic_menu_search"
+        android:icon="@drawable/search_img"
         android:title="@string/title_search" />
 
     <item
@@ -20,7 +20,7 @@
 
     <item
         android:id="@+id/navigation_option"
-        android:icon="@drawable/setting_image"
+        android:icon="@drawable/options_img"
         android:title="@string/title_option"/>
 
 </menu>

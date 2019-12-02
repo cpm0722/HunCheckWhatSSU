@@ -56,7 +56,10 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemSelect
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+
         View root = inflater.inflate(R.layout.fragment_search, container, false);
+
+        ((MainActivity)getActivity()).getSupportActionBar().setTitle("HunCheckWhatSSU-책 검색");
 
         college_spin = root.findViewById(R.id.fragment_search_college_spin);
         department_spin = root.findViewById(R.id.fragment_search_department_spin);
@@ -67,6 +70,7 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemSelect
         department_spin.setOnItemSelectedListener(this);
         subject_spin.setOnItemSelectedListener(this);
         searchView.setOnQueryTextListener(this);
+
 
 
         //BackButton Pressed 시 NavigationBottom Menu Selected 변경

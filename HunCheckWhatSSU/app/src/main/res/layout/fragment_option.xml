@@ -5,36 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_marginTop="10dp"
-        android:layout_height="1dp"
-        android:layout_marginBottom="5dp"
-        android:background="#000"></TextView>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:text="설정"
-        android:textStyle="bold"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="5dp"
-        android:background="#000"></TextView>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_marginTop="10dp"
-        android:layout_height="1dp"
-        android:background="#D3D3D3"></TextView>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -45,7 +16,8 @@
             android:layout_weight="1"
             android:scaleType="fitCenter"
             android:textAlignment="center"
-            android:src="@drawable/ic_myinfo_button"
+            android:padding="8dp"
+            android:src="@drawable/user_img"
             ></ImageView>
 
         <Button
@@ -71,7 +43,8 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:src="@drawable/ic_setting_button_18dp"
+            android:padding="8dp"
+            android:src="@drawable/privacy_img"
             ></ImageView>
         <Button
             android:id="@+id/setting_Personal_Info_Btn"
@@ -98,7 +71,8 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:src="@drawable/ic_notifications_black_24dp"
+            android:src="@drawable/notification_img"
+            android:padding="8dp"
             ></ImageView>
         <Button
             android:id="@+id/setting_notification_btn"
@@ -124,7 +98,8 @@
             android:layout_width="0dp"
             android:layout_height="60dp"
             android:layout_weight="1"
-            android:src="@drawable/ic_customer_center"
+            android:padding="8dp"
+            android:src="@drawable/call_img"
             ></ImageView>
         <Button
             android:id="@+id/customer_support_center_btn"
@@ -150,7 +125,8 @@
             android:layout_width="0dp"
             android:layout_height="60dp"
             android:layout_weight="1"
-            android:src="@drawable/exit"
+            android:padding="8dp"
+            android:src="@drawable/exit_img"
             ></ImageView>
         <Button
             android:id="@+id/logout_btn"
