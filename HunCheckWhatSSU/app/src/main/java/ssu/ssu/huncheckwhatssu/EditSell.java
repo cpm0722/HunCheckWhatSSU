@@ -93,8 +93,8 @@ public class EditSell extends AppCompatActivity implements AdapterView.OnItemSel
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, getDataName(editcollegeData));
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         edit_college_sp.setAdapter(arrayAdapter);
-
-
+        edit_college_sp.setSelection(Integer.parseInt(trade.getBook().getCollege_id()));
+        checkdefaultspinner();
         setdata(trade);
 
     }
@@ -108,22 +108,15 @@ public class EditSell extends AppCompatActivity implements AdapterView.OnItemSel
         activity_book_edit_publicationDateText .setText(trade.getBook().getPubDate());
         activity_book_edit_bookCostText .setText(""+trade.getBook().getOriginalPrice());
         checkdefaultradio();
-        checkdefaultspinner();
         /*새로운 데이터 보여주기*/
         activity_book_edit_bookSellingpriceText.setText(""+trade.getSellingPrice());
-        // BookState
-        // activity_book_edit_state01.getCheckedRadioButtonId();라디오 그룹에서 선택된 라디오 버튼의 아이디를 반환
-        //id.setChecked(true);:아이디.setChecked
-        /*radioGroup.check(라디오버튼.getId());*/
-        /*int getCheckedRadioButtonId()특정 라디오 버튼을 선택한 채로 초기화*/
+
     }
 
     private void checkdefaultspinner() {
-       Log.d("helpme",""+trade.getBook().getDepartment_id()+" "+trade.getBook().getCollege_id()+" "+trade.getBook().getSubject_id());
 
-       // edit_department_sp.setSelection(Integer.parseInt(trade.getBook().getDepartment_id()));
-       // edit_college_sp.setSelection(trade.getBook().getCollege_id());
-       // edit_subject_sp.setSelection(trade.getBook().getSubject_id());
+      //edit_college_sp.setSelection(Integer.parseInt(trade.getBook().getCollege_id()));
+      // edit_subject_sp.setSelection(Integer.parseInt(trade.getBook().getSubject_id()));
     }
 
     private void checkdefaultradio() {

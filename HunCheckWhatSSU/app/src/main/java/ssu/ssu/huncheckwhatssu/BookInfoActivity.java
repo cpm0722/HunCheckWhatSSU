@@ -76,6 +76,7 @@ public class BookInfoActivity extends AppCompatActivity implements OnMapReadyCal
     LinearLayout purchaserLayout;
 
     Button sendPurchaseRequestBtn;
+    Button tradeCompleteBtn;
     Button back2TradeOverview;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -191,7 +192,7 @@ public class BookInfoActivity extends AppCompatActivity implements OnMapReadyCal
 
     public void setData(int bookInfoType) {
         // Book
-        Log.d("JS", "setData2: " + trade.toString());
+   Log.d("JS", "setData2: " + trade.toString());
 
         Book book = trade.getBook();
         if (book != null) {
@@ -275,5 +276,18 @@ public class BookInfoActivity extends AppCompatActivity implements OnMapReadyCal
                 finish();
             }
         });
+        tradeCompleteBtn=findViewById(R.id.tradeComplete);
+        if(trade.getTradeState()== Trade.TradeState.COMPLETE){tradeCompleteBtn.setVisibility(View.GONE);}
+        else{
+        tradeCompleteBtn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public  void onClick(View v){
+                Toast.makeText(getApplicationContext(),"거래 완료",Toast.LENGTH_SHORT).show();
+
+
+            }
+
+        });
+        }
     }
 }
