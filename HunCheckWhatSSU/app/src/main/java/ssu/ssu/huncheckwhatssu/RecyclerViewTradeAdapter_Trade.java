@@ -54,7 +54,18 @@ public class RecyclerViewTradeAdapter_Trade extends RecyclerView.Adapter<Recycle
 
     @Override
     public TradeViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = inflater.inflate(R.layout.trade_item_fragment_trade, parent, false);
+        View view;
+        ;
+        if(modelList.get(0).getTradeState()== Trade.TradeState.COMPLETE) {
+            view = inflater.inflate(R.layout.trade_item_fragment_trade, parent, false);
+            view.findViewById(R.id.item_button_addDateNplace).setVisibility(View.GONE);
+
+        }
+       else{// if(modelList.get(0).getTradeState()== Trade.TradeState.PRECONTRACT){
+            view = inflater.inflate(R.layout.trade_item_fragment_trade, parent, false);
+        }
+
+
         return new TradeViewHolder(view);
     }
 
@@ -151,6 +162,7 @@ public class RecyclerViewTradeAdapter_Trade extends RecyclerView.Adapter<Recycle
                     }
                 })
                 .setSwipeOptionViews(R.id.item_button_delete)
+                .setSwipeOptionViews(R.id.item_button_addDateNplace)
                 .setSwipeable(R.id.rowFG, R.id.rowBG, new RecyclerTouchListener.OnSwipeOptionsClickListener() {
 
                     @Override
@@ -207,6 +219,12 @@ public class RecyclerViewTradeAdapter_Trade extends RecyclerView.Adapter<Recycle
 
 
                         }
+                        else if(viewID == R.id.item_button_addDateNplace){
+
+                            Toast toast = Toast.makeText(context, "Date/Place! " , Toast.LENGTH_SHORT);
+                            toast.show();
+                        }
+
                     }
                 });
         recyclerView.addOnItemTouchListener(onTouchListener);
