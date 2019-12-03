@@ -72,6 +72,7 @@ public class BookInfoActivity extends AppCompatActivity implements OnMapReadyCal
     //MAP 추가
 
     Button sendPurchaseRequestBtn;
+    Button tradeCompleteBtn;
     Button back2TradeOverview;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -254,5 +255,18 @@ public class BookInfoActivity extends AppCompatActivity implements OnMapReadyCal
                 finish();
             }
         });
+        tradeCompleteBtn=findViewById(R.id.tradeComplete);
+        if(trade.getTradeState()== Trade.TradeState.COMPLETE){tradeCompleteBtn.setVisibility(View.GONE);}
+        else{
+        tradeCompleteBtn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public  void onClick(View v){
+                Toast.makeText(getApplicationContext(),"거래 완료",Toast.LENGTH_SHORT).show();
+
+
+            }
+
+        });
+        }
     }
 }

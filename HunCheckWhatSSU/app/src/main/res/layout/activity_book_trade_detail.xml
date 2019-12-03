@@ -557,9 +557,10 @@
         android:layout_height="wrap_content">
 
         <Button
-            android:text="취소하기"
+            android:id="@+id/tradeComplete"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:text="거래완료" />
 
         <Button
             android:text="뒤로가기"
