@@ -5,8 +5,8 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,13 +16,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.nikhilpanju.recyclerviewenhanced.RecyclerTouchListener;
 
 import java.util.Vector;
 
-import ssu.ssu.huncheckwhatssu.DB.DBData;
 import ssu.ssu.huncheckwhatssu.DB.DBHelper;
 import ssu.ssu.huncheckwhatssu.utilClass.Customer;
 import ssu.ssu.huncheckwhatssu.utilClass.Trade;
@@ -38,17 +36,25 @@ public class RecyclerViewTradeAdapter_Trade extends RecyclerView.Adapter<Recycle
     DBHelper dbHelper;
     RecyclerViewTradeAdapter_Trade ongoing;
     RecyclerViewTradeAdapter_Trade done;
+    FirebaseCommunicator firebaseCommunicator;
+    boolean isOngoingAdapter;
 
 
     public Vector<Trade> getTrades() {
         return modelList;
     }
 
-    public RecyclerViewTradeAdapter_Trade(Context context, Vector<Trade> vector, RecyclerView recyclerView, TextView countView) {
+    public RecyclerViewTradeAdapter_Trade(Context context, Vector<Trade> vector, RecyclerView recyclerView, TextView countView, FirebaseCommunicator firebaseCommunicator, FirebaseCommunicator.WhichRecyclerView whichRecyclerView) {
         this.inflater = LayoutInflater.from(context);
+        if (whichRecyclerView == FirebaseCommunicator.WhichRecyclerView.ongoingRecyclerView) {
+            isOngoingAdapter = true;
+        } else if (whichRecyclerView == FirebaseCommunicator.WhichRecyclerView.doneRecyclerView) {
+            isOngoingAdapter = false;
+        }
         this.modelList = vector;
         this.recyclerView = recyclerView;
         this.countView = countView;
+        this.firebaseCommunicator = firebaseCommunicator;
         dbHelper = new DBHelper(context);
     }
 
@@ -68,7 +74,9 @@ public class RecyclerViewTradeAdapter_Trade extends RecyclerView.Adapter<Recycle
         return modelList.size();
     }
 
-    public TextView getCountView(){return countView;}
+    public TextView getCountView() {
+        return countView;
+    }
 
     public void setAnotherAdapter(FirebaseCommunicator.WhichRecyclerView whichRecyclerView, RecyclerViewTradeAdapter_Trade another){
         if(whichRecyclerView == FirebaseCommunicator.WhichRecyclerView.ongoingRecyclerView){
@@ -82,6 +90,7 @@ public class RecyclerViewTradeAdapter_Trade extends RecyclerView.Adapter<Recycle
         return;
     }
 
+
     public class TradeViewHolder extends RecyclerView.ViewHolder {
         ImageView book_image;
         TextView book_title;
@@ -92,6 +101,9 @@ public class RecyclerViewTradeAdapter_Trade extends RecyclerView.Adapter<Recycle
         TextView book_author;
         TextView book_publisher;
         TextView seller_credit;
+
+        ImageView deleteBtnImage;
+        TextView deleteBtnText;
 
         public TradeViewHolder(View itemView) {
             super(itemView);
@@ -104,6 +116,8 @@ public class RecyclerViewTradeAdapter_Trade extends RecyclerView.Adapter<Recycle
             book_author = itemView.findViewById(R.id.item_book_author);
             book_publisher = itemView.findViewById(R.id.item_book_publisher);
             seller_credit = itemView.findViewById(R.id.item_seller_credit);
+            deleteBtnImage = itemView.findViewById(R.id.item_trade_delete_image);
+            deleteBtnText = itemView.findViewById(R.id.item_trade_delete_text);
 
         }
 
@@ -121,11 +135,16 @@ public class RecyclerViewTradeAdapter_Trade extends RecyclerView.Adapter<Recycle
             book_author.setText(object.getBook().getAuthor());
             book_publisher.setText(object.getBook().getPublisher());
             selling_price.setText(String.valueOf(object.getSellingPrice()));
-            seller_credit.setText(object.getSeller().getCreditRating()+"");
+            seller_credit.setText(object.getSeller().getCreditRating() + "");
             DBHelper dbHelper = new DBHelper(inflater.getContext());
             book_category.setText(dbHelper.getFullCategoryText(object.getBook()));
             countView.setText(new Integer(getItemCount()) + " 건");
 
+            if(!isOngoingAdapter) {
+                deleteBtnImage.setImageBitmap(BitmapFactory.decodeResource(itemView.getResources(), R.drawable.icon_star));
+                deleteBtnImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                deleteBtnText.setText("Evaluate");
+            }
         }
     }
 
@@ -157,12 +176,7 @@ public class RecyclerViewTradeAdapter_Trade extends RecyclerView.Adapter<Recycle
                     public void onSwipeOptionClicked(int viewID, final int position) {
                         final Trade trade = ((RecyclerViewTradeAdapter_Trade) (recyclerView.getAdapter())).getTrades().get(position);
                         if (viewID == R.id.item_button_delete) {
-                            Toast toast = Toast.makeText(context, "Delete! " + trade.getBook().getTitle(), Toast.LENGTH_SHORT);
-                            toast.show();
-                          if (trade.getTradeState() == Trade.TradeState.COMPLETE) {
-                                /*만약 상태가 거래완료이면*/
-
-                          }else if (trade.getTradeState() == Trade.TradeState.PRECONTRACT) {
+                            if (trade.getTradeState() == Trade.TradeState.PRECONTRACT) {
                                 /*만약, 상태가 거래진행중이면*/
                                 AlertDialog.Builder alert = new AlertDialog.Builder(context);
                                 alert.setTitle("거래 취소");
@@ -170,7 +184,7 @@ public class RecyclerViewTradeAdapter_Trade extends RecyclerView.Adapter<Recycle
                                 alert.setPositiveButton("확인", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
-                                        FirebaseCommunicator.tradeCancel(trade.getTradeId(), trade.getSellerId(), trade.getPurchaserId());
+                                        firebaseCommunicator.tradeCancel(trade.getTradeId(), trade.getSellerId(), trade.getPurchaserId());
                                         ((RecyclerViewTradeAdapter_Trade) (recyclerView.getAdapter())).getTrades().remove(position);
                                         recyclerView.getAdapter().notifyItemRemoved(position);
                                         recyclerView.getAdapter().notifyDataSetChanged();
@@ -190,7 +204,7 @@ public class RecyclerViewTradeAdapter_Trade extends RecyclerView.Adapter<Recycle
                                         ongoing.notifyItemChanged(position);
                                         ongoing.getCountView().setText(ongoing.getItemCount() + " 건");
                                         //done에 추가
-                                        if(done != null){
+                                        if (done != null) {
                                             done.getTrades().add(trade);
                                             done.notifyDataSetChanged();
                                             done.getCountView().setText(done.getItemCount() + " 건");
@@ -200,8 +214,32 @@ public class RecyclerViewTradeAdapter_Trade extends RecyclerView.Adapter<Recycle
                                     }
                                 });
                                 alert.show();
-                          }
-                          else{}
+                            } else if(trade.getTradeState() == Trade.TradeState.COMPLETE){
+                                boolean isEvaluated = false;
+                                //내가 판매자일 때
+                                if(trade.getSellerId().equals(FirebaseCommunicator.getMyId())){
+                                   if(trade.getPurchaserRate() != -1){
+                                       isEvaluated = true;
+                                   }
+                                }
+                                //내가 구매자일 때
+                                else{
+                                    if(trade.getSellerRate() != -1){
+                                        isEvaluated = true;
+                                    }
+                                }
+                                //평가가 완료된 경우
+                                if(isEvaluated){
+                                    Toast toast = Toast.makeText(context, "이미 평가가 완료된 항목입니다.", Toast.LENGTH_SHORT);
+                                    toast.show();
+                                }
+                                //평가가 아직 안 된 경우
+                                else {
+                                    Intent intent = new Intent(context, Rating.class);
+                                    intent.putExtra("trade", trade);
+                                    context.startActivity(intent);
+                                }
+                            }
                             recyclerView.getAdapter().notifyItemRemoved(position);
                             recyclerView.getAdapter().notifyDataSetChanged();
 

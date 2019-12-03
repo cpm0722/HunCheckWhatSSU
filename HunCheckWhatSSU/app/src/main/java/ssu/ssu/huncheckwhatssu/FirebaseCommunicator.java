@@ -32,6 +32,7 @@ public class FirebaseCommunicator {
     }
 
     //Firebase 로그인 계정
+    private Customer me;
     private static FirebaseUser user = null;
     //계정의 이름_UID로 이루어진 string
     private static String userPath = null;
@@ -67,6 +68,17 @@ public class FirebaseCommunicator {
         //  root/trade의 Reference
         if (tradeRef == null)
             tradeRef = FirebaseDatabase.getInstance().getReference().child("trade");
+        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                me = new Customer(dataSnapshot);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
         //Length 변수 초기화
 
         //  Vector 초기화
@@ -119,6 +131,14 @@ public class FirebaseCommunicator {
 
     public Vector<Trade> getDoneTradeListVector() {
         return doneTradeListVector;
+    }
+
+    public static String getMyId(){
+        return FirebaseAuth.getInstance().getCurrentUser().getDisplayName() + "_" + FirebaseAuth.getInstance().getCurrentUser().getUid();
+    }
+
+    public Customer getMe() {
+        return me;
     }
 
     //  RecyclerView 세팅 함수 (어떤 recyclerView인지 넘겨받아 해당 Vector를 adapter에 등록)
@@ -192,7 +212,9 @@ public class FirebaseCommunicator {
         sellTradeListVector.add(trade);
         //Update된 sellListVector를 FIrebase에 Upload
         myRef.child("sellList").child(key).setValue(key);
-        //myRef.child("sellList").setValue(sellListVector);
+        //내 정보 업데이트
+        me.setTradeCount(me.getTradeCount() + 1);
+        myRef.child("tradeCount").setValue(me.getTradeCount());
         return;
     }
 
@@ -234,7 +256,11 @@ public class FirebaseCommunicator {
     }
 
     //거래 파기된 경우
-    public static void tradeCancel(String tradeId, String sellerId, String purchaserId) {
+    public void tradeCancel(String tradeId, String sellerId, String purchaserId) {
+        me.setCreditRating(me.getCreditRating() - 0.5);
+        FirebaseDatabase.getInstance().getReference().child("customer").child(getMyId()).child("CreditRating").setValue(me.getCreditRating());
+        me.setCancelCount(me.getCancelCount() + 1);
+        FirebaseDatabase.getInstance().getReference().child("customer").child(getMyId()).child("cancelCount").setValue(me.getCancelCount());
         //판매자의 tradeLIst에서 삭제
         FirebaseDatabase.getInstance().getReference().child("customer").child(sellerId).child("tradeList").child(tradeId).setValue(null);
         //구매자의 tradeLIst에서 삭제

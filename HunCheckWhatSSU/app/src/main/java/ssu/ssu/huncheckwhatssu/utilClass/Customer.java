@@ -32,7 +32,11 @@ public class Customer implements Parcelable {
     int grade;
 
     double creditRating;
-    int evaluationNumber;
+
+    int tradeCount;
+    int cancelCount;
+    int evaluationCount;
+
     ArrayList<String> sellList;
     ArrayList<String> buyList;
 
@@ -49,6 +53,9 @@ public class Customer implements Parcelable {
         this.phoneNumber = phoneNumber;
         this.address = address;
         this.creditRating = creditRating;
+        this.tradeCount = 0;
+        this.cancelCount = 0;
+        this.evaluationCount = 0;
     }
 
     protected Customer(Parcel in) {
@@ -59,6 +66,9 @@ public class Customer implements Parcelable {
         creditRating = in.readDouble();
         sellList = in.readArrayList(String.class.getClassLoader());
         buyList = in.readArrayList(String.class.getClassLoader());
+        tradeCount = in.readInt();
+        cancelCount = in.readInt();
+        evaluationCount = in.readInt();
     }
 
     public void setCustomerDataFromUID(final RecyclerView.Adapter adapter) {
@@ -122,6 +132,9 @@ public class Customer implements Parcelable {
         dest.writeDouble(creditRating);
         dest.writeStringList(sellList);
         dest.writeStringList(buyList);
+        dest.writeInt(tradeCount);
+        dest.writeInt(cancelCount);
+        dest.writeInt(evaluationCount);
     }
 
     public String getId() {
@@ -168,12 +181,28 @@ public class Customer implements Parcelable {
 
     public void setGrade(int grade) { this.grade = grade; }
 
-    public int getEvaluationNumber() {
-        return evaluationNumber;
+    public int getEvaluationCount() {
+        return evaluationCount;
     }
 
-    public void setEvaluationNumber(int evaluationNumber) {
-        this.evaluationNumber = evaluationNumber;
+    public void setEvaluationCount(int evaluationNumber) {
+        this.evaluationCount = evaluationNumber;
+    }
+
+    public int getTradeCount() {
+        return tradeCount;
+    }
+
+    public void setTradeCount(int tradeCount) {
+        this.tradeCount = tradeCount;
+    }
+
+    public int getCancelCount() {
+        return cancelCount;
+    }
+
+    public void setCancelCount(int cancelCount) {
+        this.cancelCount = cancelCount;
     }
 
     public void toMap(Map<String, Object> result) {
@@ -185,9 +214,12 @@ public class Customer implements Parcelable {
         result.put("Major",this.major);
         result.put("Grade",this.grade);
         result.put("sellList",sellList);
-        result.put("buyList",buyList);
-        if(evaluationNumber != 0 ) {
-            result.put("evaluationNumber", this.evaluationNumber);
+        result.put("tradeList",buyList);
+        result.put("tradeCount", tradeCount);
+        result.put("cancelCount", cancelCount);
+        result.put("evaluationCount", evaluationCount);
+        if(evaluationCount != 0 ) {
+            result.put("evaluationCount", this.evaluationCount);
             result.put("CreditRating", this.creditRating);
         }
         return;
@@ -205,8 +237,11 @@ public class Customer implements Parcelable {
                 ", major='" + major + '\'' +
                 ", grade=" + grade +
                 ", creditRating=" + creditRating +
+                ".tradeCount=" + tradeCount +
+                ".cancelCount=" + cancelCount +
+                ".evaluationCount=" + evaluationCount +
                 ", sellList=" + sellList +
-                ", buyList=" + buyList +
+                ", tradeList=" + buyList +
                 '}';
     }
 
@@ -236,16 +271,24 @@ public class Customer implements Parcelable {
         Integer tempint;
         if((tempint =dataSnapshot.child("Grade").getValue(Integer.class))!=null)
             this.grade = tempint;
-        if((tempint = dataSnapshot.child("evaluationNumber").getValue(Integer.class))!=null)
-            this.evaluationNumber = tempint;
+        if((tempint = dataSnapshot.child("tradeCount").getValue(Integer.class))!=null)
+            this.tradeCount = tempint;
         else
-            this.evaluationNumber = 0;
+            this.tradeCount = 0;
+        if((tempint = dataSnapshot.child("cancelCount").getValue(Integer.class))!=null)
+            this.cancelCount = tempint;
+        else
+            this.cancelCount = 0;
+        if((tempint = dataSnapshot.child("evaluationCount").getValue(Integer.class))!=null)
+            this.evaluationCount = tempint;
+        else
+            this.evaluationCount = 0;
 
         DataSnapshot tempSnapshot = dataSnapshot.child("sellList");
         for (DataSnapshot sellSnapshot : tempSnapshot.getChildren()) {
             sellList.add(sellSnapshot.getValue(String.class));
         }
-        tempSnapshot = dataSnapshot.child("buyList");
+        tempSnapshot = dataSnapshot.child("tradeList");
 
         for(DataSnapshot buySnapshot : tempSnapshot.getChildren()){
             buyList.add(buySnapshot.getValue(String.class));

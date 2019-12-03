@@ -278,6 +278,12 @@ public class AddBookActivity extends AppCompatActivity implements AdapterView.On
                 }
             }
         });
+        radioGroup1.check(R.id.book_state_BEST1);
+        radioGroup2.check(R.id.book_state_BEST2);
+        radioGroup3.check(R.id.book_state_BEST3);
+        radioGroup4.check(R.id.book_state_BEST4);
+        radioGroup5.check(R.id.book_state_BEST5);
+        radioGroup6.check(R.id.book_state_BEST6);
 
 
     }
@@ -408,6 +414,8 @@ public class AddBookActivity extends AppCompatActivity implements AdapterView.On
         else{
             trade = new Trade(book1, firebaseCommunicator.getUserPath());
         }
+        trade.setSellerRate(-1);
+        trade.setPurchaserRate(-1);
         return trade;
 
     }

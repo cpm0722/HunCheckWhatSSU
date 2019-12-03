@@ -105,13 +105,15 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemSelect
         onTouchListener.setClickable(new RecyclerTouchListener.OnRowClickListener() {
             @Override
             public void onRowClicked(int position) {
-                Trade trade = firebase.getList().get(position);
+                if(position < firebase.getList().size()) {
+                    Trade trade = firebase.getList().get(position);
 
-                Intent intent = new Intent(getContext(), BookInfoActivity.class);
-                intent.putExtra("BookInfoType", "BOOK_INFO_DEFAULT");
-                intent.putExtra("book_info_default_data", trade);
+                    Intent intent = new Intent(getContext(), BookInfoActivity.class);
+                    intent.putExtra("BookInfoType", "BOOK_INFO_DEFAULT");
+                    intent.putExtra("book_info_default_data", trade);
 
-                getContext().startActivity(intent);
+                    getContext().startActivity(intent);
+                }
 
             }
 

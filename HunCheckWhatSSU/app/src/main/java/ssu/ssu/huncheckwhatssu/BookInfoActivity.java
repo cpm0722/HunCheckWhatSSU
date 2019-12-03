@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -70,6 +71,9 @@ public class BookInfoActivity extends AppCompatActivity implements OnMapReadyCal
     TextView activity_book_info_tradeDateText;
     TextView activity_book_info_tradeState;
     //MAP 추가
+
+    LinearLayout sellerLayout;
+    LinearLayout purchaserLayout;
 
     Button sendPurchaseRequestBtn;
     Button back2TradeOverview;
@@ -154,6 +158,21 @@ public class BookInfoActivity extends AppCompatActivity implements OnMapReadyCal
         activity_book_info_placeAddressText = findViewById(R.id.activity_book_info_placeAddressText);
         activity_book_info_tradeState = findViewById(R.id.activity_Trade_Info_StateText);
 
+        View.OnClickListener customerLayoutTouchListener = new View.OnClickListener(){
+
+            @Override
+            public void onClick(View view) {
+                if(view == sellerLayout){
+                    String id = trade.getSellerId();
+                }
+                else if(view == purchaserLayout){
+                    String id = trade.getPurchaserId();
+                }
+            }
+        };
+
+        sellerLayout = findViewById(R.id.activity_book_info_sellerGroupLabel);
+
 
         if (bookInfoType == 1) {
 
@@ -165,6 +184,8 @@ public class BookInfoActivity extends AppCompatActivity implements OnMapReadyCal
             activity_book_info_purchaserText = findViewById(R.id.activity_book_info_purchaserText);
             activity_book_info_purchaserContactNumberText = findViewById(R.id.activity_book_info_purchaserContactNumberText);
             activity_book_info_purchaserCreditRating = findViewById(R.id.activity_book_info_purchaserCreditRating);
+
+            purchaserLayout = findViewById(R.id.activity_book_info_purchaserGroupLabel);
         }
     }
 

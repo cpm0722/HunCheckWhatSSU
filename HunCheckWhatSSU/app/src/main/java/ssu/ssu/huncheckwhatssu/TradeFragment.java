@@ -1,12 +1,10 @@
 package ssu.ssu.huncheckwhatssu;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -15,14 +13,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-
-import java.util.Vector;
-
-import ssu.ssu.huncheckwhatssu.utilClass.Book;
-import ssu.ssu.huncheckwhatssu.utilClass.BookState;
-import ssu.ssu.huncheckwhatssu.utilClass.Trade;
-
-import static ssu.ssu.huncheckwhatssu.utilClass.BookState.bookState.GOOD;
 
 public class TradeFragment extends Fragment {
     RecyclerViewTradeAdapter_Trade ongoingAdapter;
@@ -54,10 +44,9 @@ public class TradeFragment extends Fragment {
         ongoingRecyclerView = root.findViewById(R.id.trade_ongoing_list) ;
         ongoingRecyclerView.setLayoutManager(new LinearLayoutManager(getContext())) ;
         firebase.setRecyclerView(this.getContext(), this.getActivity(), ongoingRecyclerView, FirebaseCommunicator.WhichRecyclerView.ongoingRecyclerView);
-        firebase.setRecyclerView(this.getContext(), this.getActivity(), ongoingRecyclerView, FirebaseCommunicator.WhichRecyclerView.ongoingRecyclerView);
 
         // 리사이클러뷰에 RecyclerViewAdapter1 객체 지정.
-        ongoingAdapter = new RecyclerViewTradeAdapter_Trade(this.getContext(), firebase.getOngoingTradeListVector(), ongoingRecyclerView, ongoingCountTrade) ;
+        ongoingAdapter = new RecyclerViewTradeAdapter_Trade(this.getContext(), firebase.getOngoingTradeListVector(), ongoingRecyclerView, ongoingCountTrade, firebase, FirebaseCommunicator.WhichRecyclerView.ongoingRecyclerView) ;
         ongoingAdapter.setSwipeable(this.getContext(), this.getActivity(), ongoingRecyclerView);
         ongoingRecyclerView.setAdapter(ongoingAdapter);
 
@@ -70,7 +59,7 @@ public class TradeFragment extends Fragment {
         doneRecyclerView.setLayoutManager(new LinearLayoutManager(getContext())) ;
 
         // 리사이클러뷰에 RecyclerViewAdapter1 객체 지정.
-        doneAdapter = new RecyclerViewTradeAdapter_Trade(this.getContext(), firebase.getDoneTradeListVector(), doneRecyclerView, doneCountTrade);
+        doneAdapter = new RecyclerViewTradeAdapter_Trade(this.getContext(), firebase.getDoneTradeListVector(), doneRecyclerView, doneCountTrade, firebase, FirebaseCommunicator.WhichRecyclerView.doneRecyclerView);
         doneAdapter.setSwipeable(this.getContext(), this.getActivity(), doneRecyclerView);
         doneRecyclerView.setAdapter(doneAdapter);
 

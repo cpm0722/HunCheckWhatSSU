@@ -557,11 +557,6 @@
         android:layout_height="wrap_content">
 
         <Button
-            android:text="취소하기"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-
-        <Button
             android:text="뒤로가기"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
