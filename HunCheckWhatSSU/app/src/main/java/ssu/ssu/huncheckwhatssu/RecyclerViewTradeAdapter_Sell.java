@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -77,6 +78,8 @@ public class RecyclerViewTradeAdapter_Sell extends RecyclerView.Adapter<Recycler
             bookAuthorTextView = itemView.findViewById(R.id.item_book_author);
             bookPublisherTextView = itemView.findViewById(R.id.item_book_publisher);
             sellerCreditTextView = itemView.findViewById(R.id.item_seller_credit);
+            originalPriceTextView.setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG);
+
         }
 
         public void bindData(Trade object) {
@@ -91,7 +94,7 @@ public class RecyclerViewTradeAdapter_Sell extends RecyclerView.Adapter<Recycler
             sellingPriceTextView.setText(String.valueOf(object.getSellingPrice()));
             bookAuthorTextView.setText(object.getBook().getAuthor());
             bookPublisherTextView.setText(object.getBook().getPublisher());
-            sellerCreditTextView.setText("위험");
+            sellerCreditTextView.setText(""+object.getSeller().getCreditRating());
             DBHelper dbHelper = new DBHelper(inflater.getContext());
             bookCategoryTextView.setText(dbHelper.getFullCategoryText(object.getBook()));
             countView.setText(getItemCount() + " 건");

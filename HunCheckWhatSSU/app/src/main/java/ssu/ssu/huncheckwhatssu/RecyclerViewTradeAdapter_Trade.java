@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Paint;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -104,7 +105,7 @@ public class RecyclerViewTradeAdapter_Trade extends RecyclerView.Adapter<Recycle
             book_author = itemView.findViewById(R.id.item_book_author);
             book_publisher = itemView.findViewById(R.id.item_book_publisher);
             seller_credit = itemView.findViewById(R.id.item_seller_credit);
-
+            original_price.setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG);
         }
 
         public void bindData(Trade object) {
