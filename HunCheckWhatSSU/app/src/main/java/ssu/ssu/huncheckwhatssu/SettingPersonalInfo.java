@@ -33,6 +33,7 @@ public class SettingPersonalInfo extends AppCompatActivity implements View.OnCli
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting_personal);
+        getSupportActionBar().setTitle("HunCheckWhatSSU-개인정보 설정");
 
         getId();
         firebaseHelper = new FirebaseHelper();

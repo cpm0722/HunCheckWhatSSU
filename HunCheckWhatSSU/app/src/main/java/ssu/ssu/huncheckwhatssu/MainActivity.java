@@ -67,6 +67,9 @@ public class MainActivity extends AppCompatActivity {
         initial.put("Uid",path);
         initial.put("Name",user.getDisplayName());
         FirebaseDatabase.getInstance().getReference().child("customer").child(path).updateChildren(initial);
+        boolean startByNoti = getIntent().getBooleanExtra("Started By Notification",false);
+        if(!startByNoti)
+            startService(new Intent(this,NotificationService.class));
     }
 
     @Override
