@@ -170,7 +170,7 @@ public class BookInfoActivity extends AppCompatActivity implements OnMapReadyCal
 
     public void setData(int bookInfoType) {
         // Book
-        Log.d("JS", "setData2: " + trade.toString());
+   Log.d("JS", "setData2: " + trade.toString());
 
         Book book = trade.getBook();
         if (book != null) {

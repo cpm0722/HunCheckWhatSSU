@@ -57,7 +57,7 @@ public class TradeFragment extends Fragment {
         firebase.setRecyclerView(this.getContext(), this.getActivity(), ongoingRecyclerView, FirebaseCommunicator.WhichRecyclerView.ongoingRecyclerView);
 
         // 리사이클러뷰에 RecyclerViewAdapter1 객체 지정.
-        ongoingAdapter = new RecyclerViewTradeAdapter_Trade(this.getContext(), firebase.getOngoingTradeListVector(), ongoingRecyclerView, ongoingCountTrade) ;
+        ongoingAdapter = new RecyclerViewTradeAdapter_Trade(this.getContext(), firebase.getOngoingTradeListVector(), ongoingRecyclerView, ongoingCountTrade);
         ongoingAdapter.setSwipeable(this.getContext(), this.getActivity(), ongoingRecyclerView);
         ongoingRecyclerView.setAdapter(ongoingAdapter);
 

@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Paint;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,13 +31,13 @@ import ssu.ssu.huncheckwhatssu.utilClass.Trade;
 import static androidx.constraintlayout.widget.Constraints.TAG;
 import static java.lang.Integer.parseInt;
 
-public class RecyclerViewTradeAdapter_Trade extends RecyclerView.Adapter<RecyclerViewTradeAdapter_Trade.TradeViewHolder> {
+public class RecyclerViewTradeAdapter_Ongoing extends RecyclerView.Adapter<RecyclerViewTradeAdapter_Ongoing.TradeViewHolder> {
     LayoutInflater inflater;
     Vector<Trade> modelList;
     RecyclerView recyclerView;
     TextView countView;
     DBHelper dbHelper;
-    RecyclerViewTradeAdapter_Trade ongoing;
+    RecyclerViewTradeAdapter_Ongoing ongoing;
     RecyclerViewTradeAdapter_Trade done;
 
 
@@ -44,7 +45,7 @@ public class RecyclerViewTradeAdapter_Trade extends RecyclerView.Adapter<Recycle
         return modelList;
     }
 
-    public RecyclerViewTradeAdapter_Trade(Context context, Vector<Trade> vector, RecyclerView recyclerView, TextView countView) {
+    public RecyclerViewTradeAdapter_Ongoing(Context context, Vector<Trade> vector, RecyclerView recyclerView, TextView countView) {
         this.inflater = LayoutInflater.from(context);
         this.modelList = vector;
         this.recyclerView = recyclerView;
@@ -54,7 +55,7 @@ public class RecyclerViewTradeAdapter_Trade extends RecyclerView.Adapter<Recycle
 
     @Override
     public TradeViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = inflater.inflate(R.layout.trade_item_fragment_trade, parent, false);
+        View view = inflater.inflate(R.layout.trade_item_fragment_ongoing, parent, false);
         return new TradeViewHolder(view);
     }
 
@@ -70,15 +71,11 @@ public class RecyclerViewTradeAdapter_Trade extends RecyclerView.Adapter<Recycle
 
     public TextView getCountView(){return countView;}
 
-    public void setAnotherAdapter(FirebaseCommunicator.WhichRecyclerView whichRecyclerView, RecyclerViewTradeAdapter_Trade another){
+    public void setAnotherAdapter(FirebaseCommunicator.WhichRecyclerView whichRecyclerView, RecyclerView.Adapter another){
         if(whichRecyclerView == FirebaseCommunicator.WhichRecyclerView.ongoingRecyclerView){
             ongoing = this;
-            done = another;
         }
-        else {
-            ongoing = another;
-            done = this;
-        }
+
         return;
     }
 
@@ -104,7 +101,7 @@ public class RecyclerViewTradeAdapter_Trade extends RecyclerView.Adapter<Recycle
             book_author = itemView.findViewById(R.id.item_book_author);
             book_publisher = itemView.findViewById(R.id.item_book_publisher);
             seller_credit = itemView.findViewById(R.id.item_seller_credit);
-
+            original_price.setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG);
         }
 
         public void bindData(Trade object) {
