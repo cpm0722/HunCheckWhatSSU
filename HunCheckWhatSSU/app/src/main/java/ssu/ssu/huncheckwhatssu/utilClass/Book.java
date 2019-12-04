@@ -176,7 +176,6 @@ public class Book implements Parcelable {
         this.originalPrice = originalPrice;
     }
 
-
     public String getPublisher() {
         return publisher;
     }
@@ -243,6 +242,7 @@ public class Book implements Parcelable {
         result.put("pubDate", this.pubDate);
         result.put("description", this.description);
         result.put("bookState", this.bookState);
+        result.put("image", this.image);
     }
 
 }

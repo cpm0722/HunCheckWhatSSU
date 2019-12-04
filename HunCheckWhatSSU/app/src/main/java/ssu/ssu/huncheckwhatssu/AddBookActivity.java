@@ -12,12 +12,15 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.SearchView;
 import android.widget.Spinner;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
@@ -45,6 +48,8 @@ public class AddBookActivity extends AppCompatActivity implements AdapterView.On
     TextView originalPrice;
     TextView seller;
     EditText sellPrice;
+    ImageView imageView;
+
     int price1;//원가
     TextView publisher;
     RadioGroup radioGroup1, radioGroup2, radioGroup3, radioGroup4, radioGroup5, radioGroup6;
@@ -78,7 +83,6 @@ public class AddBookActivity extends AppCompatActivity implements AdapterView.On
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, getDataName(collegeData));
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         college_sp.setAdapter(arrayAdapter);
-
 
         Bundle bd = getIntent().getExtras();
         if (bd != null) {
@@ -138,22 +142,27 @@ public class AddBookActivity extends AppCompatActivity implements AdapterView.On
         firebaseCommunicator = new FirebaseCommunicator(FirebaseCommunicator.WhichRecyclerView.none);
 
         Intent intent = getIntent(); //그냥 trade리턴함수 만든는게..나으려나
+        book1 = intent.getParcelableExtra("searched_book_data");
+
         title = findViewById(R.id.s_title);
-        title.setText(intent.getStringExtra("booktitle"));
         Author = findViewById(R.id.author);
-        Author.setText(intent.getStringExtra("Author"));
         Isbn = findViewById(R.id.ISBN);
-        Isbn.setText(intent.getStringExtra("ISBN"));
         PubDate = findViewById(R.id.p_date);
-        PubDate.setText(intent.getStringExtra("p_date"));
         originalPrice = findViewById(R.id.realprice);
-        price1 = intent.getIntExtra("price", 0);
-        originalPrice.setText("" + price1);
         publisher = findViewById(R.id.s_publisher);
-        publisher.setText(intent.getStringExtra("publisher"));
         seller = findViewById(R.id.seller);
-        seller.setText(firebaseCommunicator.getUser().getDisplayName());
         sellPrice = findViewById(R.id.sellprice);
+        imageView = findViewById(R.id.activity_add_book_imageView);
+
+        title.setText(book1.getTitle());
+        Author.setText(book1.getAuthor());
+        Isbn.setText(book1.getIsbn10());
+        PubDate.setText(book1.getPubDate());
+        originalPrice.setText(book1.getOriginalPrice() + "");
+        publisher.setText(book1.getPublisher());
+        Glide.with(this).load(book1.getImage()).into(imageView);
+
+        seller.setText(firebaseCommunicator.getUser().getDisplayName());
         // ImageView image=findViewById(R.id.image);
         //  Bitmap bitmap= BitmapFactory.decodeResource(getResources(),R.id.)
         bookState = new BookState();
@@ -384,13 +393,6 @@ public class AddBookActivity extends AppCompatActivity implements AdapterView.On
 
 
     public Trade setData() { //Trade형 객체 데이터베이스 올리기 위해 객체화작업.
-        Book book1 = new Book();
-        book1.setTitle(title.getText().toString());
-        book1.setAuthor(Author.getText().toString());
-        book1.setIsbn10(Isbn.getText().toString());
-        book1.setOriginalPrice(price1);//원가
-        book1.setPublisher(publisher.getText().toString());
-        book1.setPubDate( PubDate.getText().toString());
         int college = collegeData.get(college_sp.getSelectedItemPosition()).getKey();
         int department = departmentData.get(department_sp.getSelectedItemPosition()).getKey();
         int subject = subjectData.get(subject_sp.getSelectedItemPosition()).getKey();

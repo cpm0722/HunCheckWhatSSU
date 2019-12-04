@@ -54,6 +54,8 @@ public class NaverBookSearch {
                                 item.getString("title").replaceAll("[<>a-zA-Z/]",""),
                                 item.getString("image"), item.getString("author").replaceAll("[<>a-zA-Z/]",""), item.getInt("price"),
                                 item.getString("publisher").replaceAll("[<>a-zA-Z/]",""), item.getString("pubdate"), item.getString("description"), null));
+
+                        Log.d("JS", "searchBook: " + item.getString("image"));
                     }
                 }
             } catch (Exception e) {

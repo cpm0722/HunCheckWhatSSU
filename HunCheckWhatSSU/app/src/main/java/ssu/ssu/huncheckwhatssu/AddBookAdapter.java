@@ -95,8 +95,6 @@ public class AddBookAdapter extends RecyclerView.Adapter<AddBookAdapter.MyViewHo
         Glide.with(this.context).load(book.getImage()).into(holder.image);
     }
 
-
-
     @Override
     public int getItemCount() {
         return this.bookList.size();

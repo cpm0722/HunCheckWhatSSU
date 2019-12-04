@@ -161,7 +161,6 @@ public class SearchPlaceActivity extends AppCompatActivity implements OnMapReady
         new Thread() {
             @Override
             public void run() {
-
                 NaverMapReverseGeocoding nmrg = new NaverMapReverseGeocoding();
 
                 selectedAddress = nmrg.reversePlace(latLng);

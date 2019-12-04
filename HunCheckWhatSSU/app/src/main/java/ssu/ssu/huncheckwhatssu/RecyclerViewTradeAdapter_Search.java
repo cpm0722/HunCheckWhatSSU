@@ -18,6 +18,7 @@ import android.widget.Toast;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.nikhilpanju.recyclerviewenhanced.RecyclerTouchListener;
@@ -92,7 +93,7 @@ public class RecyclerViewTradeAdapter_Search extends RecyclerView.Adapter<Recycl
 
             Log.d("JS", "bindData: " + object.toString());
 
-            imageView.setBackgroundResource(R.drawable.bookimag);
+//            imageView.setBackgroundResource(R.drawable.bookimag);
             bookTitleTextView.setText(object.getBook().getTitle());
             bookPriceTextView.setText(String.valueOf(object.getBook().getOriginalPrice()));
             bookSellingPriceTextView.setText(String.valueOf(object.getSellingPrice()));
@@ -118,6 +119,11 @@ public class RecyclerViewTradeAdapter_Search extends RecyclerView.Adapter<Recycl
             sellerCreditTextView.setText(String.format("%.2f", object.getSeller().getCreditRating()));
             sellerNameTextView.setText(object.getSeller().getName());
             tradeState.setText(object.getTradeStateForShowView());
+
+            if (object.getBook().getImage() != null)
+                Glide.with(inflater.getContext()).load(object.getBook().getImage()).into(imageView);
+            else
+                imageView.setImageDrawable(inflater.getContext().getResources().getDrawable(R.drawable.noimage));
         }
     }
 
