@@ -67,6 +67,11 @@ public class MainActivity extends AppCompatActivity {
         HashMap<String, Object> initial = new HashMap<>();
         initial.put("Uid",path);
         initial.put("Name",user.getDisplayName());
+        initial.put("NickName", user.getDisplayName());
+        initial.put("CreditRating", 3.0);
+        initial.put("tradeCount", 0);
+        initial.put("evaluationCount", 0);
+        initial.put("cancelCount", 0);
         FirebaseDatabase.getInstance().getReference().child("customer").child(path).updateChildren(initial);
     }
 
