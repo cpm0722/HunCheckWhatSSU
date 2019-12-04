@@ -71,6 +71,20 @@ public class Customer implements Parcelable {
         evaluationCount = in.readInt();
     }
 
+    public void Copy(Customer customer){
+        id = customer.getId();
+        name = customer.getName();
+        phoneNumber = customer.getPhoneNumber();
+        address = customer.getAddress();
+        nickName = customer.getNickName();
+        major = customer.getMajor();
+        grade = customer.getGrade();
+        creditRating = customer.getCreditRating();
+        tradeCount = customer.getTradeCount();
+        cancelCount = customer.getCancelCount();
+        evaluationCount = customer.getEvaluationCount();
+    }
+
     public void setCustomerDataFromUID(final RecyclerView.Adapter adapter) {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("customer/" + this.getId());
 
@@ -86,10 +100,7 @@ public class Customer implements Parcelable {
 
                     Log.d("JS", "onDataChange: " + customer.toString());
 
-                    setName(customer.getName());
-                    setAddress(customer.getAddress());
-                    setCreditRating(customer.getCreditRating());
-                    setPhoneNumber(customer.getPhoneNumber());
+                    Copy(customer);
 
                 } else {
                     // 정보 없을때 (정상적인 절차를 걸쳐서 사용하게 되면 생길 수 없는 경우)
@@ -271,8 +282,9 @@ public class Customer implements Parcelable {
         Integer tempint;
         if((tempint =dataSnapshot.child("Grade").getValue(Integer.class))!=null)
             this.grade = tempint;
-        if((tempint = dataSnapshot.child("tradeCount").getValue(Integer.class))!=null)
+        if((tempint = dataSnapshot.child("tradeCount").getValue(Integer.class))!=null) {
             this.tradeCount = tempint;
+        }
         else
             this.tradeCount = 0;
         if((tempint = dataSnapshot.child("cancelCount").getValue(Integer.class))!=null)

@@ -257,8 +257,6 @@ public class RecyclerViewTradeAdapter_Trade extends RecyclerView.Adapter<Recycle
     }
 
     public void MoveFromOngoingToDone(int position, Trade trade){
-        Log.d("DEBUG!", "MoveFromOngoingToDone:  + CALL");
-        Log.d("DEBUG!", "MoveFromOngoingToDone: " + trade.toString());
         ongoing.getTrades().remove(position);
         ongoing.notifyItemChanged(position);
         ongoing.getCountView().setText(ongoing.getItemCount() + " 건");

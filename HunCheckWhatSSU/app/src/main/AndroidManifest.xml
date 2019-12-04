@@ -11,16 +11,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Rating"></activity>
+        <activity android:name=".EvaluationActivity"></activity>
+        <activity android:name=".Rating" />
         <activity android:name=".SelectPurchaserActivity" /> <!-- 공용 네이버 map 클라이언트 key 필요 -->
         <meta-data
             android:name="com.naver.maps.map.CLIENT_ID"
             android:value="r14df325a1" />
 
-        <activity android:name=".NaverBookSearchActivity"></activity>
+        <activity android:name=".NaverBookSearchActivity" />
         <activity
             android:name=".SearchPlaceActivity"
-            android:theme="@style/AppThemeNoTitle"></activity>
+            android:theme="@style/AppThemeNoTitle" />
         <activity android:name=".BookInfoActivity" />
         <activity android:name=".AddBookActivity" />
         <activity android:name=".EditSell" />

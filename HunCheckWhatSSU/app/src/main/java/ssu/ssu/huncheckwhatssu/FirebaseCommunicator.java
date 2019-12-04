@@ -99,7 +99,6 @@ public class FirebaseCommunicator {
         //tradeFragmentTradeIdListVector 초기화
         else if (whichRecyclerView == WhichRecyclerView.ongoingRecyclerView || whichRecyclerView == WhichRecyclerView.doneRecyclerView) {
             //  현재 User가 purchaser로 등록되어 있는 trade들의 key 값을 Vector로 저장
-            Log.d("DEBUG!", "trade2");
             tradeFragmentTradeIdListVector = new Vector<String>();
             ongoingTradeListVector = new Vector<Trade>();
             doneTradeListVector = new Vector<Trade>();
@@ -299,7 +298,7 @@ public class FirebaseCommunicator {
         @Override
         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
             Book book = dataSnapshot.child("book").getValue(Book.class);
-            Trade trade = dataSnapshot.getValue(Trade.class);
+            final Trade trade = dataSnapshot.getValue(Trade.class);
             trade.setSeller(new Customer(trade.getSellerId()));
             trade.getSeller().setCustomerDataFromUID(null);
             if(trade.getPurchaserId() != null){

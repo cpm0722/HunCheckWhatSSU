@@ -17,7 +17,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+import ssu.ssu.huncheckwhatssu.utilClass.Customer;
 import ssu.ssu.huncheckwhatssu.utilClass.Trade;
 
 public class TradeFragment extends Fragment {
@@ -93,8 +98,36 @@ public class TradeFragment extends Fragment {
         if(resultCode == Activity.RESULT_OK) {
             int position = intent.getIntExtra("position", -1);
             if (position != -1) {
-                Trade trade = intent.getParcelableExtra("trade");
+                final Trade trade = intent.getParcelableExtra("trade");
                 ongoingAdapter.MoveFromOngoingToDone(position, trade);
+                FirebaseDatabase.getInstance().getReference().child("customer").child(trade.getSellerId()).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        Customer seller = new Customer(dataSnapshot);
+                        int sellerTradeCount = seller.getTradeCount();
+                        sellerTradeCount++;
+                        FirebaseDatabase.getInstance().getReference().child("customer").child(trade.getSellerId()).child("tradeCount").setValue(sellerTradeCount);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+                FirebaseDatabase.getInstance().getReference().child("customer").child(trade.getPurchaserId()).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        Customer purchaser = new Customer(dataSnapshot);
+                        int purchaserTradeCount = purchaser.getTradeCount();
+                        purchaserTradeCount++;
+                        FirebaseDatabase.getInstance().getReference().child("customer").child(trade.getPurchaserId()).child("tradeCount").setValue(purchaserTradeCount);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
             }
         }
     }

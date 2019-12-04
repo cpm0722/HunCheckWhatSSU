@@ -26,7 +26,6 @@ import ssu.ssu.huncheckwhatssu.utilClass.Customer;
 import ssu.ssu.huncheckwhatssu.utilClass.Trade;
 
 public class Rating extends AppCompatActivity {
-    private static String TAG = "DEBUG!";
     private Context context;
 
     private Trade trade;
