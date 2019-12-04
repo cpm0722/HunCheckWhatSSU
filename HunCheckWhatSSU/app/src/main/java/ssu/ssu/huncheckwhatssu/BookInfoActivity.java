@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 
 import android.content.Intent;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -45,6 +46,7 @@ public class BookInfoActivity extends AppCompatActivity implements OnMapReadyCal
     TextView activity_book_info_publisherText;
     TextView activity_book_info_publicationDateText;
     TextView activity_book_info_bookCostText;
+    TextView activity_book_info_selling_price;
 //    TextView activity_book_info_
 
     // Seller
@@ -136,6 +138,9 @@ public class BookInfoActivity extends AppCompatActivity implements OnMapReadyCal
         activity_book_info_publisherText = findViewById(R.id.activity_book_info_publisherText);
         activity_book_info_publicationDateText = findViewById(R.id.activity_book_info_publicationDateText);
         activity_book_info_bookCostText = findViewById(R.id.activity_book_info_bookCostText);
+        activity_book_info_selling_price = findViewById(R.id.activity_book_info_selling_price);
+
+        activity_book_info_bookCostText.setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG);
 
         // Seller
         activity_book_info_sellerText = findViewById(R.id.activity_book_info_sellerText);
@@ -185,6 +190,7 @@ public class BookInfoActivity extends AppCompatActivity implements OnMapReadyCal
 
             activity_book_info_publicationDateText.setText(book.getPubDate());
             activity_book_info_bookCostText.setText(book.getOriginalPrice() + "");
+            activity_book_info_selling_price.setText(trade.getSellingPrice() + "");
         }
 
         // Seller
