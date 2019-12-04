@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.nikhilpanju.recyclerviewenhanced.RecyclerTouchListener;
@@ -161,7 +162,7 @@ public class RecyclerViewTradeAdapter_Trade extends RecyclerView.Adapter<Recycle
 
 
     //RecyclerView에 TouchListener 설정 함수 (Swipe로 메뉴 출력 가능하게)
-    public void setSwipeable(final Context context, Activity activity, final RecyclerView recyclerView) {
+    public void setSwipeable(final Context context, final Activity activity, final Fragment fragment, final RecyclerView recyclerView) {
         final RecyclerTouchListener onTouchListener = new RecyclerTouchListener(activity, recyclerView);
         onTouchListener
                 .setClickable(new RecyclerTouchListener.OnRowClickListener() {
@@ -171,7 +172,8 @@ public class RecyclerViewTradeAdapter_Trade extends RecyclerView.Adapter<Recycle
                         Intent intent = new Intent(context, BookInfoActivity.class);
                         intent.putExtra("BookInfoType", "BOOK_INFO_TRADE_DETAIL");
                         intent.putExtra("book_info_trade_detail", trade);
-                        context.startActivity(intent);
+                        intent.putExtra("position", position);
+                        fragment.startActivityForResult(intent, 1);
 
                     }
 
@@ -208,21 +210,6 @@ public class RecyclerViewTradeAdapter_Trade extends RecyclerView.Adapter<Recycle
                                 alert.setNegativeButton("취소", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface arg0, int arg1) {
-                                        //거래 완료로 TradeState 수정
-                                        trade.setTradeState(Trade.TradeState.COMPLETE);
-                                        FirebaseCommunicator.editTrade(trade);
-                                        //ongoing에서 제거
-                                        ongoing.getTrades().remove(position);
-                                        ongoing.notifyItemChanged(position);
-                                        ongoing.getCountView().setText(ongoing.getItemCount() + " 건");
-                                        //done에 추가
-                                        if (done != null) {
-                                            done.getTrades().add(trade);
-                                            done.notifyDataSetChanged();
-                                            done.getCountView().setText(done.getItemCount() + " 건");
-                                        }
-                                        Toast toast = Toast.makeText(context, "취소함", Toast.LENGTH_SHORT);
-                                        toast.show();
                                     }
                                 });
                                 alert.show();
@@ -267,6 +254,20 @@ public class RecyclerViewTradeAdapter_Trade extends RecyclerView.Adapter<Recycle
                 });
         recyclerView.addOnItemTouchListener(onTouchListener);
         return;
+    }
+
+    public void MoveFromOngoingToDone(int position, Trade trade){
+        Log.d("DEBUG!", "MoveFromOngoingToDone:  + CALL");
+        Log.d("DEBUG!", "MoveFromOngoingToDone: " + trade.toString());
+        ongoing.getTrades().remove(position);
+        ongoing.notifyItemChanged(position);
+        ongoing.getCountView().setText(ongoing.getItemCount() + " 건");
+        //done에 추가
+        if (done != null) {
+            done.getTrades().add(trade);
+            done.notifyDataSetChanged();
+            done.getCountView().setText(done.getItemCount() + " 건");
+        }
     }
 
 }

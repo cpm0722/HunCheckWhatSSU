@@ -1,6 +1,9 @@
 package ssu.ssu.huncheckwhatssu;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -8,11 +11,14 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import ssu.ssu.huncheckwhatssu.utilClass.Trade;
 
 public class TradeFragment extends Fragment {
     RecyclerViewTradeAdapter_Trade ongoingAdapter;
@@ -47,7 +53,7 @@ public class TradeFragment extends Fragment {
 
         // 리사이클러뷰에 RecyclerViewAdapter1 객체 지정.
         ongoingAdapter = new RecyclerViewTradeAdapter_Trade(this.getContext(), firebase.getOngoingTradeListVector(), ongoingRecyclerView, ongoingCountTrade, firebase, FirebaseCommunicator.WhichRecyclerView.ongoingRecyclerView) ;
-        ongoingAdapter.setSwipeable(this.getContext(), this.getActivity(), ongoingRecyclerView);
+        ongoingAdapter.setSwipeable(this.getContext(), this.getActivity(), this, ongoingRecyclerView);
         ongoingRecyclerView.setAdapter(ongoingAdapter);
 
 
@@ -60,7 +66,7 @@ public class TradeFragment extends Fragment {
 
         // 리사이클러뷰에 RecyclerViewAdapter1 객체 지정.
         doneAdapter = new RecyclerViewTradeAdapter_Trade(this.getContext(), firebase.getDoneTradeListVector(), doneRecyclerView, doneCountTrade, firebase, FirebaseCommunicator.WhichRecyclerView.doneRecyclerView);
-        doneAdapter.setSwipeable(this.getContext(), this.getActivity(), doneRecyclerView);
+        doneAdapter.setSwipeable(this.getContext(), this.getActivity(), this, doneRecyclerView);
         doneRecyclerView.setAdapter(doneAdapter);
 
         /*거래진행중인 아이템개수 보여주기 위해서*/
@@ -81,6 +87,15 @@ public class TradeFragment extends Fragment {
         return root;
     }
 
-
-
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent intent) {
+        super.onActivityResult(requestCode, resultCode, intent);
+        if(resultCode == Activity.RESULT_OK) {
+            int position = intent.getIntExtra("position", -1);
+            if (position != -1) {
+                Trade trade = intent.getParcelableExtra("trade");
+                ongoingAdapter.MoveFromOngoingToDone(position, trade);
+            }
+        }
+    }
 }

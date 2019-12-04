@@ -78,12 +78,17 @@ public class BookInfoActivity extends AppCompatActivity implements OnMapReadyCal
     Button sendPurchaseRequestBtn;
     Button tradeCompleteBtn;
     Button back2TradeOverview;
+
+    Intent resultIntent;
+    int position;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         Intent intent = getIntent();
         String bookInfoType = intent.getStringExtra("BookInfoType");
+        position = intent.getIntExtra("position", -1);
+        resultIntent = new Intent(this, MainActivity.class);
 
         if (bookInfoType == null) {
             Log.d("JS", "onCreate: 식별할 BookInfoType이 없습니다.");
@@ -261,7 +266,6 @@ public class BookInfoActivity extends AppCompatActivity implements OnMapReadyCal
             if (purchaser == null) {
                 purchaser = new Customer(trade.getPurchaserId());
                 purchaser.setCustomerDataFromUID(null);
-                Log.d("DEBUG!", purchaser.toString());
             }
             activity_book_info_purchaserText.setText(purchaser.getName());
             activity_book_info_purchaserContactNumberText.setText(purchaser.getPhoneNumber());
@@ -282,8 +286,13 @@ public class BookInfoActivity extends AppCompatActivity implements OnMapReadyCal
         tradeCompleteBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public  void onClick(View v){
+                trade.setTradeState(Trade.TradeState.COMPLETE);
+                FirebaseCommunicator.editTrade(trade);
                 Toast.makeText(getApplicationContext(),"거래 완료",Toast.LENGTH_SHORT).show();
-
+                resultIntent.putExtra("position", position);
+                resultIntent.putExtra("trade", trade);
+                setResult(RESULT_OK, resultIntent);
+                finish();
 
             }
 

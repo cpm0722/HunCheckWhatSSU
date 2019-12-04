@@ -60,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
                 }
         );
     }
+
     protected void initailSetting(){
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String path = user.getDisplayName()+"_"+user.getUid();
