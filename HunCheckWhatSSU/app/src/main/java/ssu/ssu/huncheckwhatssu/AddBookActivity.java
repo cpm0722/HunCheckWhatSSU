@@ -1,5 +1,6 @@
 package ssu.ssu.huncheckwhatssu;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.database.Cursor;
@@ -24,6 +25,7 @@ import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
+import com.naver.maps.geometry.LatLng;
 
 import java.util.ArrayList;
 
@@ -49,6 +51,7 @@ public class AddBookActivity extends AppCompatActivity implements AdapterView.On
     TextView seller;
     EditText sellPrice;
     ImageView imageView;
+    TextView loadAddr;
 
     int price1;//원가
     TextView publisher;
@@ -60,6 +63,8 @@ public class AddBookActivity extends AppCompatActivity implements AdapterView.On
     ArrayList<DBData> collegeData;
     ArrayList<DBData> departmentData;
     ArrayList<DBData> subjectData;
+    String loadAddrStr;
+    LatLng latLng;
 
     FirebaseCommunicator firebaseCommunicator;
 
@@ -288,9 +293,32 @@ public class AddBookActivity extends AppCompatActivity implements AdapterView.On
             }
         });
 
+        loadAddr = findViewById(R.id.loadAddr);
+        loadAddr.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivityForResult(new Intent(getApplicationContext(), SearchPlaceActivity.class), SearchPlaceActivity.SEARCH_PLACE_ACITIVITY_REQUEST_CODE);
+            }
+        });
 
     }
 
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        switch (requestCode) {
+            case SearchPlaceActivity.SEARCH_PLACE_ACITIVITY_REQUEST_CODE:
+                if (resultCode == RESULT_OK) {
+                    loadAddrStr = data.getStringExtra("SelectedAddress");
+                    latLng = data.getParcelableExtra("Location");
+
+                    this.loadAddr.setText(loadAddrStr);
+                }
+                break;
+        }
+    }
 
     private ArrayList<String> getDataName(ArrayList<DBData> dbData) {
         ArrayList<String> arrayList = new ArrayList();
@@ -410,6 +438,10 @@ public class AddBookActivity extends AppCompatActivity implements AdapterView.On
         else{
             trade = new Trade(book1, firebaseCommunicator.getUserPath());
         }
+
+        trade.setTradePlace(loadAddr.getText().toString());
+        trade.setLatitude(latLng.latitude);
+        trade.setLongitude(latLng.longitude);
         return trade;
 
     }

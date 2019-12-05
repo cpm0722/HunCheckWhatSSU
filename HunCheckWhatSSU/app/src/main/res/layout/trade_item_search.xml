@@ -70,6 +70,7 @@
                     android:id="@+id/item_book_author"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:singleLine="true"
                     android:text="김길동"
                     />
                 <TextView
@@ -80,6 +81,7 @@
                     android:id="@+id/item_book_publisher"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:singleLine="true"
                     android:text="나는출판사"
                     />
             </LinearLayout>

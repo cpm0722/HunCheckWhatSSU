@@ -71,7 +71,11 @@ public class BookInfoActivity extends AppCompatActivity implements OnMapReadyCal
     TextView activity_book_info_placeAddressText;
     TextView activity_book_info_tradeDateText;
     TextView activity_book_info_tradeState;
-    //MAP 추가
+
+    // Naver MAP
+    MapFragment mapFragment;
+    FragmentManager fm;
+    LatLng latLng;
 
     Button sendPurchaseRequestBtn;
     Button back2TradeOverview;
@@ -104,13 +108,20 @@ public class BookInfoActivity extends AppCompatActivity implements OnMapReadyCal
         }
 
         // naver map
-        FragmentManager fm = getSupportFragmentManager();
-        MapFragment mapFragment = (MapFragment) fm.findFragmentById(R.id.activity_book_info_map);
+        fm = getSupportFragmentManager();
+        mapFragment = (MapFragment) fm.findFragmentById(R.id.activity_book_info_map);
 
         if (mapFragment == null) {
             mapFragment = MapFragment.newInstance();
             fm.beginTransaction().add(R.id.activity_book_info_map, mapFragment).commit();
         }
+
+        if (trade.getLatitude() == 0 || trade.getLongitude() == 0)
+            // 숭실대 호수
+            latLng = new LatLng(37.49630160214827, 126.9574464751917);
+        else
+            latLng = new LatLng(trade.getLatitude(), trade.getLongitude());
+
         mapFragment.getMapAsync(this);
     }
 
@@ -118,8 +129,6 @@ public class BookInfoActivity extends AppCompatActivity implements OnMapReadyCal
     @Override
     public void onMapReady(@NonNull NaverMap naverMap) {
         // 숭실대학교
-        LatLng latLng = new LatLng(37.49630160214827, 126.9574464751917);
-
         Marker marker = new Marker();
 //        naverMap.setMaxZoom(13);
 //        naverMap.setMinZoom(13);
@@ -218,7 +227,6 @@ public class BookInfoActivity extends AppCompatActivity implements OnMapReadyCal
 
         // Trade Info
         activity_book_info_placeAddressText.setText(trade.getTradePlace());
-
         activity_book_info_tradeState.setText(trade.getTradeStateForShowView());
 
         if (bookInfoType == 1) {
