@@ -60,7 +60,6 @@ public class SearchFirebaseCommunicator {
         this.recyclerView = recyclerView;
 
         setRecyclerView();
-
     }
 
     //RecyclerView 및 Context, Activity 받아옴 (Activity 및 Fragment 전환 시마다 호출)
@@ -70,57 +69,8 @@ public class SearchFirebaseCommunicator {
         recyclerView.setAdapter(adapter);
     }
 
-    public String timeToString() {
-        Calendar c = Calendar.getInstance();
-        String str;
-        int year = c.get(Calendar.YEAR);
-        int month = c.get(Calendar.MONTH) + 1;
-        int day = c.get(Calendar.DAY_OF_MONTH);
-        int hour = c.get(Calendar.HOUR_OF_DAY);
-        int minute = c.get(Calendar.MINUTE);
-        int second = c.get(Calendar.SECOND);
-        str = String.valueOf(year);
-        if (month < 10)
-            str = str + "-0" + String.valueOf(month);
-        else
-            str = str + "-" + String.valueOf(month);
-
-        if (day < 10)
-            str = str + "-0" + String.valueOf(day);
-        else
-            str = str + "-" + String.valueOf(day);
-
-        if (hour < 10)
-            str = str + "-0" + String.valueOf(hour);
-        else
-            str = str + "-" + String.valueOf(hour);
-
-        if (minute < 10)
-            str = str + ":0" + String.valueOf(minute);
-        else
-            str = str + ":" + String.valueOf(minute);
-
-        if (second < 10)
-            str = str + ":0" + String.valueOf(second);
-        else
-            str = str + ":" + String.valueOf(second);
-
-        return str;
-    }
-
     public List<Trade> getList() {
         return list;
-    }
-
-    public void setList(List<Trade> list) {
-        this.list = list;
-    }
-
-    public void uploadTrade(Trade trade) {
-        String key = myRef.push().getKey();
-        Map<String, Object> childUpdates = new HashMap<>();
-        trade.toMap(childUpdates);
-        myRef.child(key).updateChildren(childUpdates);
     }
 
     public RecyclerView getRecyclerView() {

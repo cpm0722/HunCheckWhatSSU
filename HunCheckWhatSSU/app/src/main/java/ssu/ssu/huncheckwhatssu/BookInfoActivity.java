@@ -8,9 +8,9 @@ import androidx.fragment.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -22,7 +22,6 @@ import com.naver.maps.geometry.LatLng;
 import com.naver.maps.map.CameraPosition;
 import com.naver.maps.map.MapFragment;
 import com.naver.maps.map.NaverMap;
-import com.naver.maps.map.NaverMapOptions;
 import com.naver.maps.map.OnMapReadyCallback;
 import com.naver.maps.map.overlay.Marker;
 
@@ -30,9 +29,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import ssu.ssu.huncheckwhatssu.utilClass.Book;
 import ssu.ssu.huncheckwhatssu.utilClass.BookState;
@@ -44,6 +40,8 @@ public class BookInfoActivity extends AppCompatActivity implements OnMapReadyCal
 
     Trade trade;
 
+    boolean isSellFragment;
+
     // Book
     TextView activity_book_info_title;
     ImageView activity_book_info_coverImg;
@@ -51,6 +49,8 @@ public class BookInfoActivity extends AppCompatActivity implements OnMapReadyCal
     TextView activity_book_info_publisherText;
     TextView activity_book_info_publicationDateText;
     TextView activity_book_info_bookCostText;
+    TextView activity_book_info_selling_price;
+//    TextView activity_book_info_
 
     // Seller
     TextView activity_book_info_sellerText;
@@ -82,7 +82,11 @@ public class BookInfoActivity extends AppCompatActivity implements OnMapReadyCal
     TextView activity_book_info_placeAddressText;
     TextView activity_book_info_tradeDateText;
     TextView activity_book_info_tradeState;
-    //MAP 추가
+
+    // Naver MAP
+    MapFragment mapFragment;
+    FragmentManager fm;
+    LatLng latLng;
 
     LinearLayout sellerLayout;
     LinearLayout purchaserLayout;
@@ -101,6 +105,9 @@ public class BookInfoActivity extends AppCompatActivity implements OnMapReadyCal
 
         Intent intent = getIntent();
         String bookInfoType = intent.getStringExtra("BookInfoType");
+        if (intent.getStringExtra("fragment").equals("sell")) {
+            isSellFragment = true;
+        } else isSellFragment = false;
         position = intent.getIntExtra("position", -1);
         resultIntent = new Intent(this, MainActivity.class);
 
@@ -126,13 +133,20 @@ public class BookInfoActivity extends AppCompatActivity implements OnMapReadyCal
         }
 
         // naver map
-        FragmentManager fm = getSupportFragmentManager();
-        MapFragment mapFragment = (MapFragment) fm.findFragmentById(R.id.activity_book_info_map);
+        fm = getSupportFragmentManager();
+        mapFragment = (MapFragment) fm.findFragmentById(R.id.activity_book_info_map);
 
         if (mapFragment == null) {
             mapFragment = MapFragment.newInstance();
             fm.beginTransaction().add(R.id.activity_book_info_map, mapFragment).commit();
         }
+
+        if (trade.getLatitude() == 0 || trade.getLongitude() == 0)
+            // 숭실대 호수
+            latLng = new LatLng(37.49630160214827, 126.9574464751917);
+        else
+            latLng = new LatLng(trade.getLatitude(), trade.getLongitude());
+
         mapFragment.getMapAsync(this);
     }
 
@@ -140,8 +154,6 @@ public class BookInfoActivity extends AppCompatActivity implements OnMapReadyCal
     @Override
     public void onMapReady(@NonNull NaverMap naverMap) {
         // 숭실대학교
-        LatLng latLng = new LatLng(37.49630160214827, 126.9574464751917);
-
         Marker marker = new Marker();
 //        naverMap.setMaxZoom(13);
 //        naverMap.setMinZoom(13);
@@ -160,6 +172,9 @@ public class BookInfoActivity extends AppCompatActivity implements OnMapReadyCal
         activity_book_info_publisherText = findViewById(R.id.activity_book_info_publisherText);
         activity_book_info_publicationDateText = findViewById(R.id.activity_book_info_publicationDateText);
         activity_book_info_bookCostText = findViewById(R.id.activity_book_info_bookCostText);
+        activity_book_info_selling_price = findViewById(R.id.activity_book_info_selling_price);
+
+        activity_book_info_bookCostText.setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG);
 
         // Seller
         activity_book_info_sellerText = findViewById(R.id.activity_book_info_sellerText);
@@ -243,19 +258,19 @@ public class BookInfoActivity extends AppCompatActivity implements OnMapReadyCal
 
             activity_book_info_publicationDateText.setText(book.getPubDate());
             activity_book_info_bookCostText.setText(book.getOriginalPrice() + "");
+            activity_book_info_selling_price.setText(trade.getSellingPrice() + "");
         }
 
         //Click Listener
-        View.OnClickListener layoutClickListener = new View.OnClickListener(){
+        View.OnClickListener layoutClickListener = new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
-                if(view == activity_book_info_sellerContent || view == activity_book_info_sellerGroupLabel){
+                if (view == activity_book_info_sellerContent || view == activity_book_info_sellerGroupLabel) {
                     Intent intent = new Intent(context, EvaluationActivity.class);
                     intent.putExtra("id", trade.getSellerId());
                     startActivity(intent);
-                }
-                else if(view == activity_book_info_purchaserContent || view == activity_book_info_purchaserGroupLabel){
+                } else if (view == activity_book_info_purchaserContent || view == activity_book_info_purchaserGroupLabel) {
                     Intent intent = new Intent(context, EvaluationActivity.class);
                     intent.putExtra("id", trade.getPurchaserId());
                     startActivity(intent);
@@ -292,7 +307,6 @@ public class BookInfoActivity extends AppCompatActivity implements OnMapReadyCal
 
         // Trade Info
         activity_book_info_placeAddressText.setText(trade.getTradePlace());
-
         activity_book_info_tradeState.setText(trade.getTradeStateForShowView());
 
         if (bookInfoType == 1) {
@@ -314,19 +328,25 @@ public class BookInfoActivity extends AppCompatActivity implements OnMapReadyCal
         } else if (bookInfoType == 2) {
             // Trade Info
             activity_book_info_tradeDateText.setText(trade.getTradeDate());
-            // Purchaser
-            Customer purchaser = trade.getPurchaser();
-            if (purchaser == null) {
-                purchaser = new Customer(trade.getPurchaserId());
-                purchaser.setCustomerDataFromUID(null);
+            if (!isSellFragment) {
+                // Purchaser
+                Customer purchaser = trade.getPurchaser();
+                if (purchaser == null) {
+                    purchaser = new Customer(trade.getPurchaserId());
+                    purchaser.setCustomerDataFromUID(null);
+                }
+                activity_book_info_purchaserText.setText(purchaser.getName());
+                activity_book_info_purchaserContactNumberText.setText(purchaser.getPhoneNumber());
+                activity_book_info_purchaserCreditRating.setText(String.format("%.2f", purchaser.getCreditRating()) + "");
+                activity_book_info_purchaserCount.setText(purchaser.getCancelCount() + "/" + purchaser.getTradeCount() + "건");
+                setCreditRatingImage(activity_book_info_purchaserCreditRatingImage, purchaser.getCreditRating());
+                activity_book_info_purchaserGroupLabel.setOnClickListener(layoutClickListener);
+                activity_book_info_purchaserContent.setOnClickListener(layoutClickListener);
             }
-            activity_book_info_purchaserText.setText(purchaser.getName());
-            activity_book_info_purchaserContactNumberText.setText(purchaser.getPhoneNumber());
-            activity_book_info_purchaserCreditRating.setText(String.format("%.2f", purchaser.getCreditRating()) + "");
-            activity_book_info_purchaserCount.setText(purchaser.getCancelCount() + "/" + purchaser.getTradeCount() + "건");
-            setCreditRatingImage(activity_book_info_purchaserCreditRatingImage, purchaser.getCreditRating());
-            activity_book_info_purchaserGroupLabel.setOnClickListener(layoutClickListener);
-            activity_book_info_purchaserContent.setOnClickListener(layoutClickListener);
+            else {
+                activity_book_info_purchaserGroupLabel.setVisibility(View.GONE);
+                activity_book_info_purchaserContent.setVisibility(View.GONE);
+            }
 
         }
 
@@ -339,6 +359,8 @@ public class BookInfoActivity extends AppCompatActivity implements OnMapReadyCal
         });
         if (bookInfoType == 2) {
             tradeCompleteBtn = findViewById(R.id.tradeComplete);
+            if (isSellFragment)
+                tradeCompleteBtn.setVisibility(View.GONE);
             if (trade.getTradeState() == Trade.TradeState.COMPLETE) {
                 tradeCompleteBtn.setVisibility(View.GONE);
             } else {

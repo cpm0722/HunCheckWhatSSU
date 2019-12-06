@@ -17,6 +17,7 @@ import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.nikhilpanju.recyclerviewenhanced.RecyclerTouchListener;
 
 import java.util.Vector;
@@ -87,7 +88,9 @@ public class RecyclerViewTradeAdapter_Sell extends RecyclerView.Adapter<Recycler
                 object.setSeller(new Customer(object.getSellerId()));
                 object.getSeller().setCustomerDataFromUID(recyclerView.getAdapter());
             }
-            imageView.setBackgroundResource(R.drawable.bookimag);
+            if (object.getBook().getImage() == null) {
+                imageView.setImageDrawable(itemView.getResources().getDrawable(R.drawable.noimage));
+            } else Glide.with(itemView).load(object.getBook().getImage()).into(imageView);
             bookTitleTextView.setText(object.getBook().getTitle());
             sellerNameTextView.setText(object.getSeller().getName());
             originalPriceTextView.setText(String.valueOf(object.getBook().getOriginalPrice()));
@@ -112,6 +115,7 @@ public class RecyclerViewTradeAdapter_Sell extends RecyclerView.Adapter<Recycler
                         recyclerView.getAdapter().notifyItemChanged(position);
                         Intent intent=new Intent(context,BookInfoActivity.class);
                         intent.putExtra("BookInfoType","BOOK_INFO_TRADE_DETAIL");
+                        intent.putExtra("fragment", "sell");
                         intent.putExtra("book_info_trade_detail", trade);
                         context.startActivity(intent);
                         /*여기에 액티비티로 전달하는 기능이 구현되있어야함.*/

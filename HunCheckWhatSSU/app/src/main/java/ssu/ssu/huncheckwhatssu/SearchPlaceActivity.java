@@ -53,6 +53,8 @@ public class SearchPlaceActivity extends AppCompatActivity implements OnMapReady
     MapFragment mapFragment;
     Marker marker;
 
+    public final static int SEARCH_PLACE_ACITIVITY_REQUEST_CODE = 8872;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -161,7 +163,6 @@ public class SearchPlaceActivity extends AppCompatActivity implements OnMapReady
         new Thread() {
             @Override
             public void run() {
-
                 NaverMapReverseGeocoding nmrg = new NaverMapReverseGeocoding();
 
                 selectedAddress = nmrg.reversePlace(latLng);

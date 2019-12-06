@@ -15,6 +15,7 @@
 
         <ImageView
             android:id="@+id/item_image"
+            android:layout_gravity="center"
             android:layout_width="80dp"
             android:layout_height="94dp" />
 
@@ -49,6 +50,7 @@
 
                 <TextView
                     android:id="@+id/item_book_title"
+                    android:singleLine="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     />
@@ -68,6 +70,7 @@
                     android:id="@+id/item_book_author"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:singleLine="true"
                     android:text="김길동"
                     />
                 <TextView
@@ -78,6 +81,7 @@
                     android:id="@+id/item_book_publisher"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:singleLine="true"
                     android:text="나는출판사"
                     />
             </LinearLayout>

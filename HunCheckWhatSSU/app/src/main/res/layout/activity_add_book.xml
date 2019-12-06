@@ -10,18 +10,15 @@
        android:layout_width="match_parent"
        android:layout_height="match_parent"
        android:orientation="vertical">
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="30dp" />
+
     <ImageView
-        android:id="@+id/image"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:id="@+id/activity_add_book_imageView"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="50dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/bookimag"
-        android:background="#FF0">
+        android:layout_marginTop="10dp"
+        android:adjustViewBounds="false"
+        >
     </ImageView>
     <Space
         android:layout_width="match_parent"
@@ -283,6 +280,28 @@
            </Spinner>
        </LinearLayout>
        <LinearLayout
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:layout_marginTop="10dp"
+       android:orientation="horizontal"
+       android:baselineAligned="true">
+       <TextView
+           android:layout_width="0dp"
+           android:layout_height="match_parent"
+           android:layout_weight="1"
+           android:text="전공"
+           android:textSize="20dp"
+           android:gravity="center"></TextView>
+       <Spinner
+           android:id="@+id/subject_sp"
+           android:layout_width="0dp"
+           android:layout_height="match_parent"
+           android:layout_weight="2.5"
+           android:gravity="left|center_vertical"
+           android:paddingLeft="20dp">
+       </Spinner>
+   </LinearLayout>
+       <LinearLayout
            android:layout_width="match_parent"
            android:layout_height="wrap_content"
            android:layout_marginTop="10dp"
@@ -292,17 +311,18 @@
                android:layout_width="0dp"
                android:layout_height="match_parent"
                android:layout_weight="1"
-               android:text="전공"
+               android:text="장소"
                android:textSize="20dp"
                android:gravity="center"></TextView>
-           <Spinner
-               android:id="@+id/subject_sp"
+           <TextView
+               android:id="@+id/loadAddr"
                android:layout_width="0dp"
                android:layout_height="match_parent"
                android:layout_weight="2.5"
                android:gravity="left|center_vertical"
+               android:hint="장소를 입력해주세요"
                android:paddingLeft="20dp">
-           </Spinner>
+           </TextView>
        </LinearLayout>
        <Space
            android:layout_width="match_parent"

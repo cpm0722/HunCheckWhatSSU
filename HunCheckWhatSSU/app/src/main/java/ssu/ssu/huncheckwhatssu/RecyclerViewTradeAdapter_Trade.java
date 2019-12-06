@@ -18,6 +18,7 @@ import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.nikhilpanju.recyclerviewenhanced.RecyclerTouchListener;
 
 import java.util.Vector;
@@ -138,7 +139,9 @@ public class RecyclerViewTradeAdapter_Trade extends RecyclerView.Adapter<Recycle
                 object.setSeller(new Customer(object.getSellerId()));
                 object.getSeller().setCustomerDataFromUID(recyclerView.getAdapter());
             }
-            book_image.setBackgroundResource(R.drawable.bookimag);
+            if (object.getBook().getImage() == null) {
+                book_image.setImageDrawable(itemView.getResources().getDrawable(R.drawable.noimage));
+            } else Glide.with(itemView).load(object.getBook().getImage()).into(book_image);
             book_title.setText(object.getBook().getTitle());
             original_price.setText(String.valueOf(object.getBook().getOriginalPrice()));
             seller_name.setText(object.getSeller().getName());
@@ -171,6 +174,7 @@ public class RecyclerViewTradeAdapter_Trade extends RecyclerView.Adapter<Recycle
                         Trade trade = ((RecyclerViewTradeAdapter_Trade) (recyclerView.getAdapter())).getTrades().get(position);
                         Intent intent = new Intent(context, BookInfoActivity.class);
                         intent.putExtra("BookInfoType", "BOOK_INFO_TRADE_DETAIL");
+                        intent.putExtra("fragment", "trade");
                         intent.putExtra("book_info_trade_detail", trade);
                         intent.putExtra("position", position);
                         fragment.startActivityForResult(intent, 1);

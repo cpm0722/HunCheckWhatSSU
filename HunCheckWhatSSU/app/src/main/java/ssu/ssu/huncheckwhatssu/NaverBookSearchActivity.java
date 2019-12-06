@@ -134,13 +134,7 @@ public class NaverBookSearchActivity extends AppCompatActivity {
                                 Intent intent = new Intent(getApplicationContext(), AddBookActivity.class);
                                 // Bitmap senditmap= BitmapFactory.decodeResource(getResources(),R.id.add_book_item_image)
                                 //senditmap.compress(Bitmap.CompressFormat.JPEG,100);
-                                intent.putExtra("booktitle", book.getTitle());
-                                intent.putExtra("Author", book.getAuthor());
-                                intent.putExtra("ISBN", book.getIsbn10());
-                                intent.putExtra("p_date", book.getPubDate());
-                                intent.putExtra("price", book.getOriginalPrice());
-                                intent.putExtra("image", book.getImage());
-                                intent.putExtra("publisher", book.getPublisher());
+                                intent.putExtra("searched_book_data",book);
                                 startActivityForResult(intent, 0);
                                 // 책정보 전달할 액티비티 만들면 됨 //파셀로 전송할수 있게 해야할듯.
                                 Log.d("JS", "onItemClick: " + book.toString());

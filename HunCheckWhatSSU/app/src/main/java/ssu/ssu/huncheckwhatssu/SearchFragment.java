@@ -71,8 +71,6 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemSelect
         subject_spin.setOnItemSelectedListener(this);
         searchView.setOnQueryTextListener(this);
 
-
-
         //BackButton Pressed 시 NavigationBottom Menu Selected 변경
         Fragment navHostFragment = this.getActivity().getSupportFragmentManager().getFragments().get(0);
         BottomNavigationView navView = navHostFragment.getActivity().findViewById(R.id.nav_view);
@@ -114,6 +112,7 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemSelect
 
                     getContext().startActivity(intent);
                 }
+
 
             }
 
@@ -285,7 +284,7 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemSelect
 
                 trade.setSeller(new Customer(trade.getSellerId()));
 
-                Log.d(TAG, "onChildAdded: ");
+                Log.d(TAG, "onChildAdded: wdz" + trade);
 
                 Log.d("js", "/onQueryTextSubmit: " + search_collegeId);
                 Log.d("js", "onQueryTextSubmit: " + search_departmentId);
