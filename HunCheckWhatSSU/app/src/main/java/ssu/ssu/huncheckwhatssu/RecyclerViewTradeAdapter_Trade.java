@@ -182,8 +182,7 @@ public class RecyclerViewTradeAdapter_Trade extends RecyclerView.Adapter<Recycle
                         Log.d(TAG, "Indepent");
                     }
                 })
-                .setSwipeOptionViews(R.id.item_button_delete)
-                .setSwipeOptionViews(R.id.item_button_addDateNplace)
+                .setSwipeOptionViews(R.id.item_button_delete, R.id.item_button_addDateNplace)
                 .setSwipeable(R.id.rowFG, R.id.rowBG, new RecyclerTouchListener.OnSwipeOptionsClickListener() {
 
                     @Override
