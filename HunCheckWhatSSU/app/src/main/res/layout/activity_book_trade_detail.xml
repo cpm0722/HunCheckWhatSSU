@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -19,554 +19,653 @@
                 android:id="@+id/activity_book_info_bookInfoGroup"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="16dp"
-                >
+                android:padding="16dp">
 
                 <TextView
                     android:id="@+id/activity_book_info_title"
-                    android:text="정보처리기사 필기(2013)(시나공 기출문제)"
-                    android:textSize="20dp"
-                    android:textStyle="bold"
-                    android:singleLine="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:ellipsize="marquee"
                     android:marqueeRepeatLimit="1"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:singleLine="true"
+                    android:text="정보처리기사 필기(2013)(시나공 기출문제)"
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
 
                 <View
+                    android:layout_width="wrap_content"
+                    android:layout_height="1dp"
                     android:layout_below="@id/activity_book_info_title"
                     android:layout_marginTop="3dp"
-                    android:background="#CCC"
-                    android:layout_width="wrap_content"
-                    android:layout_height="1dp"/>
+                    android:background="#CCC" />
 
                 <ImageView
                     android:id="@+id/activity_book_info_coverImg"
-                    android:src="@drawable/noimage"
-                    android:adjustViewBounds="false"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginBottom="14dp"
-                    android:layout_marginRight="16dp"
                     android:layout_width="70dp"
                     android:layout_height="wrap_content"
-                    android:scaleType="fitXY"
-                    android:background="#FF0"
                     android:layout_below="@id/activity_book_info_title"
                     android:layout_alignTop="@id/activity_book_info_labelGroup"
-                    android:layout_alignBottom="@id/activity_book_info_labelGroup"/>
+                    android:layout_alignBottom="@id/activity_book_info_labelGroup"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginBottom="14dp"
+                    android:adjustViewBounds="false"
+                    android:background="#FF0"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/noimage" />
 
                 <LinearLayout
                     android:id="@+id/activity_book_info_labelGroup"
-                    android:layout_below="@id/activity_book_info_title"
-                    android:layout_toRightOf="@id/activity_book_info_coverImg"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingRight="10dp"
-                    android:orientation="vertical">
+                    android:layout_below="@id/activity_book_info_title"
+                    android:layout_toRightOf="@id/activity_book_info_coverImg"
+                    android:orientation="vertical"
+                    android:paddingRight="10dp">
+
                     <TextView
                         android:id="@+id/activity_book_info_authorLabel"
-                        android:text="저자"
-                        android:textSize="12dp"
-                        android:layout_marginTop="16dp"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:text="저자"
+                        android:textSize="12dp" />
 
                     <TextView
                         android:id="@+id/activity_book_info_publisherLabel"
-                        android:text="출판사"
-                        android:textSize="12dp"
-                        android:layout_marginTop="5dp"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="출판사"
+                        android:textSize="12dp" />
 
                     <TextView
                         android:id="@+id/activity_book_info_publicationDateLabel"
-                        android:text="출판일"
-                        android:textSize="12dp"
-                        android:layout_marginTop="5dp"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="출판일"
+                        android:textSize="12dp" />
 
                     <TextView
                         android:id="@+id/activity_book_info_bookCostLabel"
-                        android:text="금액"
-                        android:textSize="12dp"
-                        android:layout_marginTop="5dp"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="금액"
+                        android:textSize="12dp" />
 
                     <TextView
                         android:id="@+id/activity_Trade_Info_StateLabel"
-                        android:text="거래상태"
-                        android:textSize="12dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
                         android:layout_marginBottom="16dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:text="거래상태"
+                        android:textSize="12dp" />
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_toRightOf="@id/activity_book_info_labelGroup"
-                    android:layout_alignTop="@id/activity_book_info_labelGroup"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingRight="20dp"
-                    android:orientation="vertical">
+                    android:layout_alignTop="@id/activity_book_info_labelGroup"
+                    android:layout_toRightOf="@id/activity_book_info_labelGroup"
+                    android:orientation="vertical"
+                    android:paddingRight="20dp">
+
                     <TextView
                         android:id="@+id/activity_book_info_authorText"
-                        android:text="길번R.D"
-                        android:textSize="12dp"
-                        android:layout_marginTop="16dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_below="@id/activity_book_info_title"
                         android:layout_alignLeft="@id/activity_book_info_title"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:layout_marginTop="16dp"
+                        android:text="길번R.D"
+                        android:textSize="12dp" />
 
                     <TextView
                         android:id="@+id/activity_book_info_publisherText"
-                        android:text="길번"
-                        android:textSize="12dp"
-                        android:layout_marginTop="5dp"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="길번"
+                        android:textSize="12dp" />
 
                     <TextView
                         android:id="@+id/activity_book_info_publicationDateText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
                         android:text="2012년 11월 28일"
-                        android:textSize="12dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:textSize="12dp" />
 
-                    <TextView
-                        android:id="@+id/activity_book_info_bookCostText"
-                        android:text="15,000"
-                        android:textSize="12dp"
+
+                    <LinearLayout
+                        android:orientation="horizontal"
                         android:layout_marginTop="5dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/activity_book_info_bookCostText"
+                            android:text="15,000"
+                            android:textSize="12dp"
+                            android:gravity="center"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"/>
+
+                        <TextView
+                            android:text="->"
+                            android:gravity="center"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"/>
+
+                        <TextView
+                            android:id="@+id/activity_book_info_selling_price"
+                            android:textStyle="bold"
+                            android:textColor="#F55"
+                            android:gravity="center"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="10000"
+                            />
+
+                    </LinearLayout>
 
                     <TextView
                         android:id="@+id/activity_Trade_Info_StateText"
-                        android:text="대기중"
-                        android:textSize="12dp"
-                        android:textColor="#F00"
-                        android:textStyle="bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
                         android:layout_marginBottom="16dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:text="대기중"
+                        android:textColor="#F00"
+                        android:textSize="12dp"
+                        android:textStyle="bold" />
                 </LinearLayout>
 
                 <View
                     android:id="@+id/activity_book_info_labelGroup_underLine"
+                    android:layout_width="wrap_content"
+                    android:layout_height="1dp"
                     android:layout_below="@id/activity_book_info_labelGroup"
                     android:layout_alignLeft="@id/activity_book_info_title"
-                    android:background="#CCC"
-                    android:layout_width="wrap_content"
-                    android:layout_height="1dp"/>
+                    android:background="#CCC" />
 
                 <LinearLayout
                     android:id="@+id/activity_book_info_manGroup"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_below="@id/activity_book_info_labelGroup_underLine"
                     android:layout_alignLeft="@id/activity_book_info_title"
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:orientation="horizontal">
+
                     <LinearLayout
                         android:id="@+id/activity_book_info_sellerGroupLabel"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingRight="10dp"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:paddingRight="10dp">
 
-                        <TextView
-                            android:text="판매자"
-                            android:textStyle="bold"
-                            android:layout_marginTop="16dp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"/>
-
-                        <TextView
-                            android:id="@+id/activity_book_info_sellerLabel"
-                            android:text="이름"
-                            android:textSize="12dp"
-                            android:layout_marginTop="5dp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"/>
-
-                        <TextView
-                            android:id="@+id/activity_book_info_sellerContactNumberLabel"
-                            android:text="연락처"
-                            android:textSize="12dp"
-                            android:layout_marginTop="5dp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"/>
-
-                        <TextView
-                            android:text="신용도"
-                            android:textSize="12dp"
-                            android:layout_marginTop="5dp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"/>
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content"
-                        android:paddingRight="20dp"
-                        android:orientation="vertical">
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="16dp"/>
+                            android:layout_marginTop="16dp"
+                            android:text="판매자"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/activity_book_info_sellerLabel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:text="이름"
+                            android:textSize="12dp" />
+
+                        <TextView
+                            android:id="@+id/activity_book_info_sellerContactNumberLabel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:text="연락처"
+                            android:textSize="12dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:text="신용도"
+                            android:textSize="12dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:text="파기/거래횟수"
+                            android:textSize="12dp" />
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:id="@+id/activity_book_info_sellerContent"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:paddingRight="20dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp" />
+
                         <TextView
                             android:id="@+id/activity_book_info_sellerText"
-                            android:text="홍길동"
-                            android:textSize="12dp"
-                            android:layout_marginTop="5dp"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"/>
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:text="홍길동"
+                            android:textSize="12dp" />
 
                         <TextView
                             android:id="@+id/activity_book_info_sellerContactNumberText"
-                            android:text="010-0000-0000"
-                            android:textSize="12dp"
-                            android:layout_marginTop="5dp"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"/>
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:text="010-0000-0000"
+                            android:textSize="12dp" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+                            <TextView
+                                android:id="@+id/activity_book_info_sellerCreditRating"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:text="******"
+                                android:textSize="12dp" />
+                            <Space
+                                android:layout_width="15dp"
+                                android:layout_height="12dp"/>
+                            <ImageView
+                                android:id="@+id/activity_book_info_sellerCreditRatingImage"
+                                android:layout_marginTop="5dp"
+                                android:layout_width="12dp"
+                                android:layout_height="12dp"
+                                android:scaleType="centerInside"/>
+                        </LinearLayout>
 
                         <TextView
-                            android:id="@+id/activity_book_info_sellerCreditRating"
-                            android:text="******"
-                            android:textSize="12dp"
-                            android:layout_marginTop="5dp"
+                            android:id="@+id/activity_book_info_sellerCount"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"/>
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:text="0건/0건"
+                            android:textSize="12dp" />
+
                     </LinearLayout>
 
                     <TextView
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
                         android:layout_marginTop="16dp"
                         android:layout_marginRight="6dp"
-                        android:background="#CCC"
-                        android:layout_width="1dp"
-                        android:layout_height="match_parent"/>
+                        android:background="#CCC" />
 
                     <LinearLayout
                         android:id="@+id/activity_book_info_purchaserGroupLabel"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingRight="10dp"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:paddingRight="10dp">
 
-                        <TextView
-                            android:text="구매자"
-                            android:textStyle="bold"
-                            android:layout_marginTop="16dp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"/>
-
-                        <TextView
-                            android:id="@+id/activity_book_info_purchaserLabel"
-                            android:text="이름"
-                            android:textSize="12dp"
-                            android:layout_marginTop="5dp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"/>
-
-                        <TextView
-                            android:id="@+id/activity_book_info_purchaserContactNumberLabel"
-                            android:text="연락처"
-                            android:textSize="12dp"
-                            android:layout_marginTop="5dp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"/>
-
-                        <TextView
-                            android:text="신용도"
-                            android:textSize="12dp"
-                            android:layout_marginTop="5dp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"/>
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content"
-                        android:paddingRight="20dp"
-                        android:orientation="vertical">
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="16dp"/>
+                            android:layout_marginTop="16dp"
+                            android:text="구매자"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/activity_book_info_purchaserLabel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:text="이름"
+                            android:textSize="12dp" />
+
+                        <TextView
+                            android:id="@+id/activity_book_info_purchaserContactNumberLabel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:text="연락처"
+                            android:textSize="12dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:text="신용도"
+                            android:textSize="12dp" />
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:text="파기/거래횟수"
+                            android:textSize="12dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/activity_book_info_purchaserContent"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:paddingRight="20dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp" />
+
                         <TextView
                             android:id="@+id/activity_book_info_purchaserText"
-                            android:text="홍길동"
-                            android:textSize="12dp"
-                            android:layout_marginTop="5dp"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"/>
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:text="홍길동"
+                            android:textSize="12dp" />
 
                         <TextView
                             android:id="@+id/activity_book_info_purchaserContactNumberText"
-                            android:text="010-0000-0000"
-                            android:textSize="12dp"
-                            android:layout_marginTop="5dp"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"/>
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:text="010-0000-0000"
+                            android:textSize="12dp" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+                            <TextView
+                                android:id="@+id/activity_book_info_purchaserCreditRating"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:text="******"
+                                android:textSize="12dp" />
+                            <Space
+                                android:layout_width="15dp"
+                                android:layout_height="12dp"/>
+                            <ImageView
+                                android:id="@+id/activity_book_info_purchaserCreditRatingImage"
+                                android:layout_marginTop="5dp"
+                                android:layout_width="12dp"
+                                android:layout_height="12dp"
+                                android:scaleType="centerInside"/>
+                        </LinearLayout>
 
                         <TextView
-                            android:id="@+id/activity_book_info_purchaserCreditRating"
-                            android:text="******"
-                            android:textSize="12dp"
-                            android:layout_marginTop="5dp"
+                            android:id="@+id/activity_book_info_purchaserCount"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"/>
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:text="0건/0건"
+                            android:textSize="12dp" />
+
                     </LinearLayout>
                 </LinearLayout>
 
                 <View
                     android:id="@+id/activity_book_info_sellerLabelGroup_underLine"
+                    android:layout_width="wrap_content"
+                    android:layout_height="1dp"
                     android:layout_below="@id/activity_book_info_manGroup"
                     android:layout_marginTop="16dp"
-                    android:background="#CCC"
-                    android:layout_width="wrap_content"
-                    android:layout_height="1dp"/>
+                    android:background="#CCC" />
 
                 <LinearLayout
                     android:id="@+id/activity_book_info_stateLabelGroup"
-                    android:layout_below="@id/activity_book_info_sellerLabelGroup_underLine"
-                    android:layout_alignLeft="@id/activity_book_info_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingRight="10dp"
-                    android:orientation="vertical">
-                    <TextView
-                        android:text="책 상태"
-                        android:textStyle="bold"
-                        android:layout_marginTop="16dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-                    <TextView
-                        android:id="@+id/activity_book_info_state01Label"
-                        android:text="밑줄 흔적"
-                        android:textSize="12dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-
-                    <TextView
-                        android:id="@+id/activity_book_info_state02Label"
-                        android:text="필기 흔적"
-                        android:textSize="12dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-
-                    <TextView
-                        android:id="@+id/activity_book_info_state03Label"
-                        android:text="겉표지"
-                        android:textSize="12dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-
-                    <TextView
-                        android:id="@+id/activity_book_info_state04Label"
-                        android:text="이름 기입"
-                        android:textSize="12dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-
-                    <TextView
-                        android:id="@+id/activity_book_info_state05Label"
-                        android:text="페이지 변색"
-                        android:textSize="12dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-
-                    <TextView
-                        android:id="@+id/activity_book_info_state06Label"
-                        android:text="페이지 훼손"
-                        android:textSize="12dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_toRightOf="@id/activity_book_info_stateLabelGroup"
-                    android:layout_alignTop="@id/activity_book_info_stateLabelGroup"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingRight="20dp"
-                    android:orientation="vertical">
+                    android:layout_below="@id/activity_book_info_sellerLabelGroup_underLine"
+                    android:layout_alignLeft="@id/activity_book_info_title"
+                    android:orientation="vertical"
+                    android:paddingRight="10dp">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"/>
+                        android:layout_marginTop="16dp"
+                        android:text="책 상태"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/activity_book_info_state01Label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="밑줄 흔적"
+                        android:textSize="12dp" />
+
+                    <TextView
+                        android:id="@+id/activity_book_info_state02Label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="필기 흔적"
+                        android:textSize="12dp" />
+
+                    <TextView
+                        android:id="@+id/activity_book_info_state03Label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="겉표지"
+                        android:textSize="12dp" />
+
+                    <TextView
+                        android:id="@+id/activity_book_info_state04Label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="이름 기입"
+                        android:textSize="12dp" />
+
+                    <TextView
+                        android:id="@+id/activity_book_info_state05Label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="페이지 변색"
+                        android:textSize="12dp" />
+
+                    <TextView
+                        android:id="@+id/activity_book_info_state06Label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="페이지 훼손"
+                        android:textSize="12dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@id/activity_book_info_stateLabelGroup"
+                    android:layout_toRightOf="@id/activity_book_info_stateLabelGroup"
+                    android:orientation="vertical"
+                    android:paddingRight="20dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp" />
 
                     <TextView
                         android:id="@+id/activity_book_info_state01Text"
-                        android:text="없음"
-                        android:textSize="12dp"
-                        android:layout_marginTop="5dp"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="없음"
+                        android:textSize="12dp" />
 
                     <TextView
                         android:id="@+id/activity_book_info_state02Text"
-                        android:text="없음"
-                        android:textSize="12dp"
-                        android:layout_marginTop="5dp"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="없음"
+                        android:textSize="12dp" />
 
                     <TextView
                         android:id="@+id/activity_book_info_state03Text"
-                        android:text="없음"
-                        android:textSize="12dp"
-                        android:layout_marginTop="5dp"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="없음"
+                        android:textSize="12dp" />
 
                     <TextView
                         android:id="@+id/activity_book_info_state04Text"
-                        android:text="없음"
-                        android:textSize="12dp"
-                        android:layout_marginTop="5dp"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="없음"
+                        android:textSize="12dp" />
 
                     <TextView
                         android:id="@+id/activity_book_info_state05Text"
-                        android:text="없음"
-                        android:textSize="12dp"
-                        android:layout_marginTop="5dp"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="없음"
+                        android:textSize="12dp" />
 
                     <TextView
                         android:id="@+id/activity_book_info_state06Text"
-                        android:text="없음"
-                        android:textSize="12dp"
-                        android:layout_marginTop="5dp"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="없음"
+                        android:textSize="12dp" />
                 </LinearLayout>
 
                 <View
                     android:id="@+id/activity_book_info_state_underline"
+                    android:layout_width="wrap_content"
+                    android:layout_height="1dp"
                     android:layout_below="@id/activity_book_info_stateLabelGroup"
                     android:layout_marginTop="16dp"
-                    android:background="#CCC"
-                    android:layout_width="wrap_content"
-                    android:layout_height="1dp"/>
+                    android:background="#CCC" />
 
                 <LinearLayout
                     android:id="@+id/activity_book_info_placeLabelGroup"
-                    android:layout_below="@id/activity_book_info_state_underline"
-                    android:layout_alignLeft="@id/activity_book_info_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingRight="10dp"
-                    android:orientation="vertical">
+                    android:layout_below="@id/activity_book_info_state_underline"
+                    android:layout_alignLeft="@id/activity_book_info_title"
+                    android:orientation="vertical"
+                    android:paddingRight="10dp">
 
-                    <TextView
-                        android:text="거래 장소"
-                        android:textStyle="bold"
-                        android:layout_marginTop="16dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-
-                    <TextView
-                        android:id="@+id/activity_book_info_placeAddressLabel"
-                        android:text="주소"
-                        android:textSize="12dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-
-                    <TextView
-                        android:text="거래일"
-                        android:textSize="12dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_toRightOf="@id/activity_book_info_placeLabelGroup"
-                    android:layout_alignTop="@id/activity_book_info_placeLabelGroup"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingRight="20dp"
-                    android:orientation="vertical">
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"/>
+                        android:layout_marginTop="16dp"
+                        android:text="거래 장소"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/activity_book_info_placeAddressLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="주소"
+                        android:textSize="12dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="거래일"
+                        android:textSize="12dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@id/activity_book_info_placeLabelGroup"
+                    android:layout_toRightOf="@id/activity_book_info_placeLabelGroup"
+                    android:orientation="vertical"
+                    android:paddingRight="20dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp" />
 
                     <TextView
                         android:id="@+id/activity_book_info_placeAddressText"
-                        android:text="서울특별시 관악구 ..."
-                        android:textSize="12dp"
-                        android:layout_marginTop="5dp"
                         android:layout_below="@id/activity_book_info_title"
                         android:layout_alignLeft="@id/activity_book_info_title"
-                        android:layout_width="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="서울특별시 관악구 ..."
+                        android:textSize="12dp"
+                        android:layout_width="match_parent"
+                        android:singleLine="true"
                         android:layout_height="wrap_content"/>
 
                     <TextView
                         android:id="@+id/activity_book_info_tradeDateText"
-                        android:text="2019-11-23 오후 11:10"
-                        android:textSize="12dp"
-                        android:layout_marginTop="5dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_below="@id/activity_book_info_title"
                         android:layout_alignLeft="@id/activity_book_info_title"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:layout_marginTop="5dp"
+                        android:text="2019-11-23 오후 11:10"
+                        android:textSize="12dp" />
                 </LinearLayout>
 
                 <ssu.ssu.huncheckwhatssu.utilClass.Custom_MapView
                     android:id="@+id/activity_book_info_map"
                     android:name="com.naver.maps.map.MapFragment"
-                    android:layout_below="@id/activity_book_info_placeLabelGroup"
-                    android:layout_marginTop="16dp"
                     android:layout_width="match_parent"
-                    android:layout_height="300dp"/>
+                    android:layout_height="300dp"
+                    android:layout_below="@id/activity_book_info_placeLabelGroup"
+                    android:layout_marginTop="16dp" />
             </RelativeLayout>
         </LinearLayout>
     </ScrollView>
 
     <TextView
-        android:background="#CCC"
         android:layout_width="match_parent"
-        android:layout_height="1dp"/>
+        android:layout_height="1dp"
+        android:background="#CCC" />
 
     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:background="#EEE"
         android:gravity="center"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:orientation="horizontal">
 
         <Button
-            android:text="취소하기"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-
-        <Button
-            android:text="뒤로가기"
+            android:id="@+id/tradeComplete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="거래완료" />
+
+        <Button
             android:id="@+id/back2TradeOverview"
-            />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="뒤로가기" />
     </LinearLayout>
 
 </LinearLayout>

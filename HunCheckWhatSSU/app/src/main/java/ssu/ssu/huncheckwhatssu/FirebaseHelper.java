@@ -86,7 +86,7 @@ public class FirebaseHelper {
     //구매요청을 보내는 함수
     public void sendPurchaseRequest(String tradeKey, String Uid) {
         DatabaseReference Ref = purchase_request.child(tradeKey);
-        Ref.push().setValue(Uid);
+        Ref.child(Uid).setValue(Uid);
     }
 
     //해당 trade에 대한 구매요청한 사람들의 uid를 받는 함수

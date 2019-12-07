@@ -11,11 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <service
-            android:name=".NotificationService"
-            android:enabled="true"
-            android:exported="true"></service>
-
+        <activity android:name=".EvaluationActivity"></activity>
         <activity android:name=".Rating" />
         <activity android:name=".SelectPurchaserActivity" /> <!-- 공용 네이버 map 클라이언트 key 필요 -->
         <meta-data
@@ -43,6 +39,11 @@
             </intent-filter>
         </activity>
         <activity android:name=".SettingPersonalInfo" />
+
+        <service
+            android:name=".NotificationService"
+            android:enabled="true"
+            android:exported="true"></service>
     </application>
 
 </manifest>

@@ -38,6 +38,11 @@ public class Trade implements Parcelable {
     double latitude;
     double longitude;
 
+    double sellerRate;
+    double purchaserRate;
+    String sellerComment;
+    String purchaserComment;
+
 
     public Trade() {
     }
@@ -61,6 +66,11 @@ public class Trade implements Parcelable {
         this.latitude = 0;
         this.longitude = 0;
 
+        this.sellerRate = -1;
+        this.purchaserRate = -1;
+        this.sellerComment = null;
+        this.purchaserComment = null;
+
         this.seller = new Customer();
         seller.setId(sellerId);
         seller.setCustomerDataFromUID(null);
@@ -77,6 +87,10 @@ public class Trade implements Parcelable {
         this.purchaserId = purchaserId;
         this.tradeState = tradeState;
         this.tradePlace = tradePlace;
+        this.sellerRate = -1;
+        this.purchaserRate = -1;
+        this.sellerComment = null;
+        this.purchaserComment = null;
         this.seller = new Customer();
         seller.setId(sellerId);
         seller.setCustomerDataFromUID(null);
@@ -96,6 +110,10 @@ public class Trade implements Parcelable {
         this.tradePlace = tradePlace;
         this.seller = seller;
         this.purchaser = purchaser;
+        this.sellerRate = -1;
+        this.purchaserRate = -1;
+        this.sellerComment = null;
+        this.purchaserComment = null;
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
         if (tradeDate == null) {
             this.tradeDate = null;
@@ -119,6 +137,10 @@ public class Trade implements Parcelable {
         sellingPrice = in.readInt();
         latitude = in.readDouble();
         longitude = in.readDouble();
+        sellerRate = in.readDouble();
+        purchaserRate = in.readDouble();
+        sellerComment = in.readString();
+        purchaserComment = in.readString();
     }
     public void Copy(Trade src) {
 
@@ -135,6 +157,10 @@ public class Trade implements Parcelable {
         this.sellingPrice = src.getSellingPrice();
         this.latitude = src.getLatitude();
         this.longitude = src.getLongitude();
+        this.sellerRate = src.getSellerRate();
+        this.purchaserRate = src.getPurchaserRate();
+        this.sellerComment = src.getSellerComment();
+        this.purchaserComment = src.getPurchaserComment();
     }
     @Override
     public int describeContents() {
@@ -156,6 +182,10 @@ public class Trade implements Parcelable {
         dest.writeInt(sellingPrice);
         dest.writeDouble(latitude);
         dest.writeDouble(longitude);
+        dest.writeDouble(sellerRate);
+        dest.writeDouble(purchaserRate);
+        dest.writeString(sellerComment);
+        dest.writeString(purchaserComment);
     }
 
     public static final Creator<Trade> CREATOR = new Creator<Trade>() {
@@ -281,6 +311,37 @@ public class Trade implements Parcelable {
         this.upLoadDate = upLoadDate;
     }
 
+    public double getSellerRate() {
+        return sellerRate;
+    }
+
+    public void setSellerRate(double sellerRate) {
+        this.sellerRate = sellerRate;
+    }
+
+    public double getPurchaserRate() {
+        return purchaserRate;
+    }
+
+    public void setPurchaserRate(double purchaserRate) {
+        this.purchaserRate = purchaserRate;
+    }
+
+    public String getSellerComment() {
+        return sellerComment;
+    }
+
+    public void setSellerComment(String sellerComment) {
+        this.sellerComment = sellerComment;
+    }
+
+    public String getPurchaserComment() {
+        return purchaserComment;
+    }
+
+    public void setPurchaserComment(String purchaserComment) {
+        this.purchaserComment = purchaserComment;
+    }
 
     public Calendar getTradeDate_typeOfCalendar() {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
@@ -336,6 +397,10 @@ public class Trade implements Parcelable {
             result.put("latitude",this.latitude);
         if(this.longitude != 0 )
             result.put("longitude",this.longitude);
+        result.put("sellerRate", this.sellerRate);
+        result.put("purchaserRate", this.purchaserRate);
+        result.put("sellerComment", this.sellerComment);
+        result.put("purchaserComment", this.purchaserComment);
 
     }
 }

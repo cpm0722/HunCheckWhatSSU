@@ -71,8 +71,6 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemSelect
         subject_spin.setOnItemSelectedListener(this);
         searchView.setOnQueryTextListener(this);
 
-
-
         //BackButton Pressed 시 NavigationBottom Menu Selected 변경
         Fragment navHostFragment = this.getActivity().getSupportFragmentManager().getFragments().get(0);
         BottomNavigationView navView = navHostFragment.getActivity().findViewById(R.id.nav_view);
@@ -105,13 +103,17 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemSelect
         onTouchListener.setClickable(new RecyclerTouchListener.OnRowClickListener() {
             @Override
             public void onRowClicked(int position) {
-                Trade trade = firebase.getList().get(position);
+                if(position < firebase.getList().size()) {
+                    Trade trade = firebase.getList().get(position);
 
-                Intent intent = new Intent(getContext(), BookInfoActivity.class);
-                intent.putExtra("BookInfoType", "BOOK_INFO_DEFAULT");
-                intent.putExtra("book_info_default_data", trade);
+                    Intent intent = new Intent(getContext(), BookInfoActivity.class);
+                    intent.putExtra("BookInfoType", "BOOK_INFO_DEFAULT");
+                    intent.putExtra("book_info_default_data", trade);
+                    intent.putExtra("fragment","search");
 
-                getContext().startActivity(intent);
+                    getContext().startActivity(intent);
+                }
+
 
             }
 
@@ -247,16 +249,16 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemSelect
         db.close();
     }
 
-    private ArrayList<String> getDataName(ArrayList<DBData> dbData) {
-        ArrayList<String> arrayList = new ArrayList();
+        private ArrayList<String> getDataName(ArrayList<DBData> dbData) {
+            ArrayList<String> arrayList = new ArrayList();
 
-        for (int i = 0; i < dbData.size(); i++) {
-            if (dbData.get(i).getAnother() != null)
-                arrayList.add("(" + dbData.get(i).getAnother()[0] + ")" + dbData.get(i).getName());
-            else arrayList.add(dbData.get(i).getName());
-        }
+            for (int i = 0; i < dbData.size(); i++) {
+                if (dbData.get(i).getAnother() != null)
+                    arrayList.add("(" + dbData.get(i).getAnother()[0] + ")" + dbData.get(i).getName());
+                else arrayList.add(dbData.get(i).getName());
+            }
 
-        return arrayList;
+            return arrayList;
     }
 
     String search_collegeId;
@@ -283,7 +285,7 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemSelect
 
                 trade.setSeller(new Customer(trade.getSellerId()));
 
-                Log.d(TAG, "onChildAdded: ");
+                Log.d(TAG, "onChildAdded: wdz" + trade);
 
                 Log.d("js", "/onQueryTextSubmit: " + search_collegeId);
                 Log.d("js", "onQueryTextSubmit: " + search_departmentId);

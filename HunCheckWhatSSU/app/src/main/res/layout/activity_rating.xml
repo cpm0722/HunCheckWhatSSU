@@ -39,11 +39,22 @@
         android:id="@+id/rateMessage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="200dp"
+        android:layout_above="@id/comment_edit_text"
         android:text="평가점수:"
         android:textSize="20dp"></TextView>
+
+    <EditText
+        android:id="@+id/comment_edit_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="150dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:singleLine="true"
+        android:hint="한줄평을 남기세요"
+        />
 
     <Button
         android:id="@+id/fin"
