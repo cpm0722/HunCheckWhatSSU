@@ -70,6 +70,11 @@ public class SelectPurchaserActivity extends AppCompatActivity implements View.O
 //                Log.d(TAG, customer.getName());
                 adapter.notifyDataSetChanged();
             }
+
+            @Override
+            public void afterGetPurchaseRequestCount(int count) {
+
+            }
         });
         //게시물에 요청한 사람 정보 가져옴
         firebaseHelper.getPurchaseRequest(tradeKey);

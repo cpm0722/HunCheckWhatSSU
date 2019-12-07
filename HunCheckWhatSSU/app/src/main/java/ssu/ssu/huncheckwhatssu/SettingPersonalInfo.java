@@ -53,6 +53,11 @@ public class SettingPersonalInfo extends AppCompatActivity implements View.OnCli
                 initializaing();
             }
 
+            @Override
+            public void afterGetPurchaseRequestCount(int count) {
+
+            }
+
 
         });
         firebaseHelper.getCustomerById(user.getDisplayName() + "_" + user.getUid());

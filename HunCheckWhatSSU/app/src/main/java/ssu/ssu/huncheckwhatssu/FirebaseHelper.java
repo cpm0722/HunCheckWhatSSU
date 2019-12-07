@@ -107,6 +107,24 @@ public class FirebaseHelper {
             }
         });
     }
+
+    public void getPurchaseRequestCount(String tradeKey) {
+        DatabaseReference Ref = purchase_request.child(tradeKey);
+        Ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Vector<String> purchaserUids = new Vector<>();
+                for (DataSnapshot uidSnapshot : dataSnapshot.getChildren()) {
+                    purchaserUids.add(uidSnapshot.getValue(String.class));
+                }
+                callBackListener.afterGetPurchaseRequestCount(purchaserUids.size());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
+    }
     public void getTradeBookNameByTradeKey(String tradeKey){
         trade.child(tradeKey).child("book").child("title").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -171,6 +189,8 @@ public class FirebaseHelper {
 
     public interface CallBackListener {
         void afterGetCustomer(Customer customer);
+
+        void afterGetPurchaseRequestCount(int count);
     }
 
     public void addCallBackListener(CallBackListener testListener) {

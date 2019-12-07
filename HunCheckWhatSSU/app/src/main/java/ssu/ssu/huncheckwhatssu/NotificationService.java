@@ -75,6 +75,11 @@ public class NotificationService extends Service {
 //                thread = new Thread(new NotificationThread(handler));
 //                thread.start();
             }
+
+            @Override
+            public void afterGetPurchaseRequestCount(int count) {
+
+            }
         });
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         myUid = user.getDisplayName() + "_" + user.getUid();

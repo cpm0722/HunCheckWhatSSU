@@ -317,9 +317,12 @@ public class BookInfoActivity extends AppCompatActivity implements OnMapReadyCal
                     FirebaseHelper firebaseHelper = new FirebaseHelper();
                     FirebaseUser me = FirebaseAuth.getInstance().getCurrentUser();
                     String uid = me.getDisplayName() + "_" + me.getUid();
+                    if(uid.equals(trade.getSellerId())){
+                        Toast.makeText(getApplicationContext(), "자신한테 구매요청 할 수 없습니다.", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
                     if (trade.getTradeId() != null) {
                         firebaseHelper.sendPurchaseRequest(trade.getTradeId(), uid);
-                        Log.d("HUMCHECKYC", "tradeId null 아님 ");
                     }
                     Toast.makeText(getApplicationContext(), "구매요청이 완료되었습니다.", Toast.LENGTH_SHORT).show();
                     finish();
