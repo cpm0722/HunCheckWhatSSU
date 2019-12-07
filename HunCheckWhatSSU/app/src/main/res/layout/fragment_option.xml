@@ -30,6 +30,30 @@
             android:background="#1FFF"
             android:textSize="20sp"></Button>
     </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_weight="1"
+            android:scaleType="fitCenter"
+            android:textAlignment="center"
+            android:padding="8dp"
+            android:src="@drawable/icon_star"
+            ></ImageView>
+
+        <Button
+            android:id="@+id/see_my_evaluation"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="4"
+            android:gravity="left|center_vertical"
+            android:text="받은 평가"
+            android:background="#1FFF"
+            android:textSize="20sp"></Button>
+    </LinearLayout>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="1dp"

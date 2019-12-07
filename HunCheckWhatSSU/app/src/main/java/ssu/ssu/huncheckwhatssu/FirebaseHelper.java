@@ -175,7 +175,9 @@ public class FirebaseHelper {
           @Override
           public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
               String tradekey = dataSnapshot.getKey();
-              getTradeBookNameByTradeKey(tradekey);
+              if(dataSnapshot.hasChildren()){
+                  getTradeBookNameByTradeKey(tradekey);
+              }
           }
           @Override
           public void onCancelled(@NonNull DatabaseError databaseError) {
