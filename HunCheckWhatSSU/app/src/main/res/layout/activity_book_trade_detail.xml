@@ -37,7 +37,7 @@
                     android:layout_height="1dp"
                     android:layout_below="@id/activity_book_info_title"
                     android:layout_marginTop="3dp"
-                    android:background="#CCC" />
+                    android:background="@color/HunCheckWhatSSUPrimaryBorderColor" />
 
                 <ImageView
                     android:id="@+id/activity_book_info_coverImg"
@@ -190,7 +190,7 @@
                     android:layout_height="1dp"
                     android:layout_below="@id/activity_book_info_labelGroup"
                     android:layout_alignLeft="@id/activity_book_info_title"
-                    android:background="#CCC" />
+                    android:background="@color/HunCheckWhatSSUPrimaryBorderColor" />
 
                 <LinearLayout
                     android:id="@+id/activity_book_info_manGroup"
@@ -312,7 +312,7 @@
                         android:layout_height="match_parent"
                         android:layout_marginTop="16dp"
                         android:layout_marginRight="6dp"
-                        android:background="#CCC" />
+                        android:background="@color/HunCheckWhatSSUPrimaryColor" />
 
                     <LinearLayout
                         android:id="@+id/activity_book_info_purchaserGroupLabel"
@@ -428,7 +428,7 @@
                     android:layout_height="1dp"
                     android:layout_below="@id/activity_book_info_manGroup"
                     android:layout_marginTop="16dp"
-                    android:background="#CCC" />
+                    android:background="@color/HunCheckWhatSSUPrimaryBorderColor" />
 
                 <LinearLayout
                     android:id="@+id/activity_book_info_stateLabelGroup"
@@ -563,7 +563,7 @@
                     android:layout_height="1dp"
                     android:layout_below="@id/activity_book_info_stateLabelGroup"
                     android:layout_marginTop="16dp"
-                    android:background="#CCC" />
+                    android:background="@color/HunCheckWhatSSUPrimaryBorderColor" />
 
                 <LinearLayout
                     android:id="@+id/activity_book_info_placeLabelGroup"
@@ -646,12 +646,12 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="#CCC" />
+        android:background="@color/HunCheckWhatSSUPrimaryColor" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#EEE"
+        android:background="@color/HunCheckWhatSSUPrimaryAlphaColor"
         android:gravity="center"
         android:orientation="horizontal">
 
@@ -659,12 +659,14 @@
             android:id="@+id/tradeComplete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_margin="5dp"
             android:text="거래완료" />
 
         <Button
             android:id="@+id/back2TradeOverview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_margin="5dp"
             android:text="뒤로가기" />
     </LinearLayout>
 

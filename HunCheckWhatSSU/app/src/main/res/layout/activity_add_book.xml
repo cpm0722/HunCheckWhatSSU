@@ -615,6 +615,7 @@
             android:layout_width="100dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:layout_margin="5dp"
             android:text="등록하기"
             android:textSize="20dp"
             android:gravity="center"></Button>
@@ -623,6 +624,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:layout_margin="5dp"
             android:gravity="center"
             android:paddingLeft="20dp"
             android:text="취소하기"
