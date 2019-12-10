@@ -37,6 +37,7 @@ public class RecyclerViewTradeAdapter_Sell extends RecyclerView.Adapter<Recycler
         this.modelVector = vector;
         this.recyclerView = recyclerView;
         this.countView = countView;
+
     }
 
     @Override
@@ -67,6 +68,7 @@ public class RecyclerViewTradeAdapter_Sell extends RecyclerView.Adapter<Recycler
         TextView bookAuthorTextView;
         TextView bookPublisherTextView;
         TextView sellerCreditTextView;
+        TextView purchaseRequestCountView;
 
         public TradeViewHolder(View itemView) {
             super(itemView);
@@ -79,6 +81,7 @@ public class RecyclerViewTradeAdapter_Sell extends RecyclerView.Adapter<Recycler
             bookAuthorTextView = itemView.findViewById(R.id.item_book_author);
             bookPublisherTextView = itemView.findViewById(R.id.item_book_publisher);
             sellerCreditTextView = itemView.findViewById(R.id.item_seller_credit);
+            purchaseRequestCountView = itemView.findViewById(R.id.item_purchase_request_count);
             originalPriceTextView.setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG);
 
         }
@@ -101,6 +104,19 @@ public class RecyclerViewTradeAdapter_Sell extends RecyclerView.Adapter<Recycler
             DBHelper dbHelper = new DBHelper(inflater.getContext());
             bookCategoryTextView.setText(dbHelper.getFullCategoryText(object.getBook()));
             countView.setText(getItemCount() + " 건");
+            purchaseRequestCountView.setText("요청:0");
+            FirebaseHelper firebaseHelper = new FirebaseHelper();
+            firebaseHelper.addCallBackListener(new FirebaseHelper.CallBackListener() {
+                @Override
+                public void afterGetCustomer(Customer customer) {
+                }
+
+                @Override
+                public void afterGetPurchaseRequestCount(int count) {
+                    purchaseRequestCountView.setText("요청:"+Integer.toString(count));
+                }
+            });
+            firebaseHelper.getPurchaseRequestCount(object.getTradeId());
         }
     }
 

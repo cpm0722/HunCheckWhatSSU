@@ -33,8 +33,11 @@ public class SettingPersonalInfo extends AppCompatActivity implements View.OnCli
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting_personal);
+        getSupportActionBar().setTitle("HunCheckWhatSSU-개인정보 설정");
 
         getId();
+        if(!getIntent().getBooleanExtra("Edit",false))
+            seeMyInfoMode();
         firebaseHelper = new FirebaseHelper();
     }
 
@@ -48,6 +51,11 @@ public class SettingPersonalInfo extends AppCompatActivity implements View.OnCli
             public void afterGetCustomer(Customer customer) {
                 myInfo = customer;
                 initializaing();
+            }
+
+            @Override
+            public void afterGetPurchaseRequestCount(int count) {
+
             }
 
 
@@ -96,6 +104,19 @@ public class SettingPersonalInfo extends AppCompatActivity implements View.OnCli
             editContactAddress.setText(phoneNumber);
         if(address != null)
             editAddress.setText(address);
+    }
+    public void seeMyInfoMode(){
+        getSupportActionBar().setTitle("HunCheckWhatSSU-내 정보");
+
+        cancelBtn.setVisibility(View.GONE);
+        saveBtn.setVisibility(View.GONE);
+
+        editName.setFocusableInTouchMode(false);
+        editAddress.setFocusableInTouchMode(false);
+        editContactAddress.setFocusableInTouchMode(false);
+        editGrade.setFocusableInTouchMode(false);
+        editMajor.setFocusableInTouchMode(false);
+        editNickName.setFocusableInTouchMode(false);
     }
 
     @Override

@@ -5,45 +5,27 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_marginTop="8dp"
-        android:layout_height="2dp"
-        android:layout_marginBottom="5dp"
-        android:background="#000"></ImageView>
+
+
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:text="개인정보 수정"
-        android:textStyle="bold"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:layout_width="match_parent"
         android:layout_height="2dp"
-        android:layout_marginTop="5dp"
-        android:background="#000"></ImageView>
-
-
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="2dp"
+        android:background="#D3D3D3"></TextView>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
         android:orientation="horizontal"
         android:baselineAligned="true">
         <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:text="이름"
-            android:textSize="15sp"
+            android:textSize="20sp"
+            android:textStyle="bold"
             android:gravity="center"
             ></TextView>
 
@@ -51,28 +33,35 @@
             android:id="@+id/setting_personal_name_edit"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="2"
+            android:layout_weight="3"
             android:gravity="left|center_vertical"
             android:paddingLeft="20dp"
-            android:text="김 아무개"
+            android:hint="이름"
             android:singleLine="true"
             android:background="#0FFF"
             android:selectAllOnFocus="true"
-            android:textSize="15sp"></EditText>
+            android:textSize="20sp"></EditText>
     </LinearLayout>
 
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="2dp"
+        android:background="#D3D3D3"></TextView>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:orientation="horizontal"
         android:baselineAligned="true">
         <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:text="닉네임"
-            android:textSize="15sp"
+            android:textSize="20sp"
+            android:textStyle="bold"
             android:gravity="center"
             ></TextView>
 
@@ -80,29 +69,34 @@
             android:id="@+id/setting_personal_nickname_edit"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="2"
+            android:layout_weight="3"
             android:gravity="left|center_vertical"
             android:paddingLeft="20dp"
-            android:text="홍길동"
+            android:hint="닉네임"
             android:background="#0FFF"
             android:singleLine="true"
             android:selectAllOnFocus="true"
-            android:textSize="15sp"></EditText>
+            android:textSize="20sp"></EditText>
     </LinearLayout>
 
-
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="2dp"
+        android:background="#D3D3D3"></TextView>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:orientation="horizontal"
         android:baselineAligned="true">
         <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:text="학과"
-            android:textSize="15sp"
+            android:textSize="20sp"
+            android:textStyle="bold"
             android:gravity="center"
             ></TextView>
 
@@ -110,30 +104,35 @@
             android:id="@+id/setting_personal_major"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="2"
+            android:layout_weight="3"
             android:gravity="left|center_vertical"
             android:paddingLeft="20dp"
-            android:text="컴퓨터학부"
+            android:hint="학과"
             android:background="#0FFF"
             android:singleLine="true"
             android:selectAllOnFocus="true"
-            android:textSize="15sp"></EditText>
+            android:textSize="20sp"></EditText>
     </LinearLayout>
 
 
-
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="2dp"
+        android:background="#D3D3D3"></TextView>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:orientation="horizontal"
         android:baselineAligned="true">
         <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:text="학년"
-            android:textSize="15sp"
+            android:textSize="20sp"
+            android:textStyle="bold"
             android:gravity="center"
             ></TextView>
 
@@ -141,29 +140,34 @@
             android:id="@+id/setting_personal_grade_edit"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="2"
+            android:layout_weight="3"
             android:gravity="left|center_vertical"
             android:paddingLeft="20dp"
-            android:text="2"
+            android:hint="학년"
             android:background="#0FFF"
             android:singleLine="true"
             android:selectAllOnFocus="true"
-            android:textSize="15sp"></EditText>
+            android:textSize="20sp"></EditText>
     </LinearLayout>
 
-
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginBottom="2dp"
+        android:layout_marginTop="2dp"
+        android:background="#D3D3D3"></TextView>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:orientation="horizontal"
         android:baselineAligned="true">
         <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:text="연락처"
-            android:textSize="15sp"
+            android:textSize="20sp"
+            android:textStyle="bold"
             android:gravity="center"
             ></TextView>
 
@@ -171,28 +175,34 @@
             android:id="@+id/setting_personal_contactAddress_edit"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="2"
+            android:layout_weight="3"
             android:gravity="left|center_vertical"
             android:paddingLeft="20dp"
-            android:text="010-0000-0000"
+            android:hint="전화번호/이메일주소"
             android:background="#0FFF"
             android:singleLine="true"
             android:selectAllOnFocus="true"
-            android:textSize="15sp"></EditText>
+            android:textSize="20sp"></EditText>
     </LinearLayout>
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="2dp"
+        android:background="#D3D3D3"></TextView>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:orientation="horizontal"
         android:baselineAligned="true">
         <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="주소"
-            android:textSize="15sp"
+            android:layout_weight="2"
+            android:text="거래 희망지"
+            android:textSize="20sp"
+            android:textStyle="bold"
             android:gravity="center"
             ></TextView>
 
@@ -200,16 +210,22 @@
             android:id="@+id/setting_personal_address_edit"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="2"
+            android:layout_weight="3"
             android:gravity="left|center_vertical"
             android:paddingLeft="20dp"
-            android:text="서울시 동작구 상도동"
+            android:hint="거래희망지/현주소"
             android:background="#0FFF"
             android:singleLine="true"
             android:selectAllOnFocus="true"
-            android:textSize="15sp"></EditText>
+            android:textSize="20sp"></EditText>
     </LinearLayout>
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="2dp"
+        android:background="#D3D3D3"></TextView>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"

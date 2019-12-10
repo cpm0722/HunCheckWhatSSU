@@ -109,6 +109,7 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemSelect
                     Intent intent = new Intent(getContext(), BookInfoActivity.class);
                     intent.putExtra("BookInfoType", "BOOK_INFO_DEFAULT");
                     intent.putExtra("book_info_default_data", trade);
+                    intent.putExtra("fragment","search");
 
                     getContext().startActivity(intent);
                 }
@@ -248,16 +249,16 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemSelect
         db.close();
     }
 
-    private ArrayList<String> getDataName(ArrayList<DBData> dbData) {
-        ArrayList<String> arrayList = new ArrayList();
+        private ArrayList<String> getDataName(ArrayList<DBData> dbData) {
+            ArrayList<String> arrayList = new ArrayList();
 
-        for (int i = 0; i < dbData.size(); i++) {
-            if (dbData.get(i).getAnother() != null)
-                arrayList.add("(" + dbData.get(i).getAnother()[0] + ")" + dbData.get(i).getName());
-            else arrayList.add(dbData.get(i).getName());
-        }
+            for (int i = 0; i < dbData.size(); i++) {
+                if (dbData.get(i).getAnother() != null)
+                    arrayList.add("(" + dbData.get(i).getAnother()[0] + ")" + dbData.get(i).getName());
+                else arrayList.add(dbData.get(i).getName());
+            }
 
-        return arrayList;
+            return arrayList;
     }
 
     String search_collegeId;

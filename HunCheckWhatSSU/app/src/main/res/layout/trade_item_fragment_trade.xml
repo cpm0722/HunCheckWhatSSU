@@ -245,6 +245,6 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_alignParentBottom="true"
-        android:background="#67676767"
+        android:background="@color/HunCheckWhatSSUPrimaryBorderColor"
         android:elevation="5dp" />
 </RelativeLayout>

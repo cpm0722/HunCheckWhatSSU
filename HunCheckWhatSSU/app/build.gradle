@@ -37,6 +37,8 @@ dependencies {
     implementation 'androidx.navigation:navigation-runtime:2.1.0'
     implementation 'com.google.android.material:material:1.0.0'
 
+    implementation "androidx.core:core:1.0.2"
+
     // Naver map
     implementation 'com.naver.maps:map-sdk:3.6.0'
 

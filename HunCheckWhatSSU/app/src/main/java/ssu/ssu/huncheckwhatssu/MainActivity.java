@@ -3,6 +3,7 @@ package ssu.ssu.huncheckwhatssu;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -28,13 +29,20 @@ import ssu.ssu.huncheckwhatssu.utilClass.Customer;
 
 public class MainActivity extends AppCompatActivity {
     NavController navController;
+    SharedPreferences sharedPreferences;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         BottomNavigationView navView = findViewById(R.id.nav_view);
 
-        initailSetting();
+
+         sharedPreferences = getSharedPreferences("HunCheckWhatSSU",MODE_PRIVATE);
+         if(!sharedPreferences.getBoolean("initial",false))
+              initialSetting();
+        if(sharedPreferences.getBoolean("notification",true))
+            startNotificationListener();
+
         navController = Navigation.findNavController(findViewById(R.id.nav_host_fragment));
         navView.setOnNavigationItemSelectedListener(
                 new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -61,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
         );
     }
 
-    protected void initailSetting(){
+    protected void initialSetting(){
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String path = user.getDisplayName()+"_"+user.getUid();
         HashMap<String, Object> initial = new HashMap<>();
@@ -73,6 +81,14 @@ public class MainActivity extends AppCompatActivity {
         initial.put("evaluationCount", 0);
         initial.put("cancelCount", 0);
         FirebaseDatabase.getInstance().getReference().child("customer").child(path).updateChildren(initial);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean("initial",true);
+        editor.commit();
+    }
+    public void startNotificationListener(){
+        boolean startByNoti = getIntent().getBooleanExtra("Started By Notification",false);
+        if(!startByNoti)
+            startService(new Intent(this,NotificationService.class));
     }
 
     @Override
