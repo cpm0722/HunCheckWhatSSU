@@ -35,9 +35,9 @@ public class FirebaseCommunicator {
 
     //Firebase 로그인 계정
     private Customer me;
-    private static FirebaseUser user = null;
+    private FirebaseUser user = null;
     //계정의 이름_UID로 이루어진 string
-    private static String userPath = null;
+    private String userPath = null;
     //DB root/userPath 의 Reference
     private DatabaseReference myRef = null;
     private static DatabaseReference tradeRef = null;

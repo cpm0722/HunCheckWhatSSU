@@ -144,14 +144,6 @@
                 android:layout_height="wrap_content"
                 android:paddingLeft="10dp"></TextView>
         </LinearLayout>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="5dp"
-            android:background="#D3D3D3"></TextView>
-
-
     </LinearLayout>
 
     <View
