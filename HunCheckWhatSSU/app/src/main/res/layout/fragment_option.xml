@@ -28,6 +28,7 @@
             android:gravity="left|center_vertical"
             android:text="내 정보"
             android:background="#1FFF"
+            android:layout_marginRight="10dp"
             android:textSize="20sp"></Button>
     </LinearLayout>
     <LinearLayout
@@ -53,6 +54,8 @@
             android:gravity="left|center_vertical"
             android:text="받은 평가"
             android:background="#1FFF"
+            android:layout_marginRight="10dp"
+
             android:textSize="20sp"></Button>
     </LinearLayout>
     <TextView
@@ -78,6 +81,7 @@
             android:layout_weight="4"
             android:background="#1FFF"
             android:text="개인정보 설정"
+            android:layout_marginRight="10dp"
             android:gravity="left|center_vertical"
             android:textSize="20sp"
             ></Button>
@@ -106,6 +110,8 @@
             android:layout_weight="4"
             android:text="알림 설정"
             android:background="#1FFF"
+            android:layout_marginRight="10dp"
+
             android:gravity="left|center_vertical"
             android:textSize="20sp"
             ></Button>
@@ -133,6 +139,8 @@
             android:layout_weight="4"
             android:background="#1FFF"
             android:text="고객 센터"
+            android:layout_marginRight="10dp"
+
             android:gravity="left|center_vertical"
             android:textSize="20sp"
             ></Button>
@@ -160,6 +168,8 @@
             android:layout_weight="4"
             android:background="#1FFF"
             android:text="로그아웃"
+            android:layout_marginRight="10dp"
+
             android:gravity="left|center_vertical"
             android:textSize="20sp"
             ></Button>

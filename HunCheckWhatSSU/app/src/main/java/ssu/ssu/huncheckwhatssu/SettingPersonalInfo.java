@@ -3,16 +3,14 @@ package ssu.ssu.huncheckwhatssu;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-
-import java.util.Vector;
 
 import ssu.ssu.huncheckwhatssu.utilClass.Customer;
 
@@ -20,6 +18,9 @@ public class SettingPersonalInfo extends AppCompatActivity implements View.OnCli
 
     Customer myInfo;
     FirebaseHelper firebaseHelper;
+
+    private boolean EditMode;
+
     private Button cancelBtn;
     private Button saveBtn;
 
@@ -29,6 +30,8 @@ public class SettingPersonalInfo extends AppCompatActivity implements View.OnCli
     private EditText editGrade;
     private EditText editContactAddress;
     private EditText editAddress;
+
+    private TextView creditText;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,7 +39,8 @@ public class SettingPersonalInfo extends AppCompatActivity implements View.OnCli
         getSupportActionBar().setTitle("HunCheckWhatSSU-개인정보 설정");
 
         getId();
-        if(!getIntent().getBooleanExtra("Edit",false))
+        EditMode = getIntent().getBooleanExtra("Edit",false);
+        if(!EditMode)
             seeMyInfoMode();
         firebaseHelper = new FirebaseHelper();
     }
@@ -104,6 +108,8 @@ public class SettingPersonalInfo extends AppCompatActivity implements View.OnCli
             editContactAddress.setText(phoneNumber);
         if(address != null)
             editAddress.setText(address);
+        if(!EditMode)
+            creditText.setText(Double.toString(myInfo.getCreditRating()));
     }
     public void seeMyInfoMode(){
         getSupportActionBar().setTitle("HunCheckWhatSSU-내 정보");
@@ -117,6 +123,9 @@ public class SettingPersonalInfo extends AppCompatActivity implements View.OnCli
         editGrade.setFocusableInTouchMode(false);
         editMajor.setFocusableInTouchMode(false);
         editNickName.setFocusableInTouchMode(false);
+
+        findViewById(R.id.setting_personal_credit_layout).setVisibility(View.VISIBLE);
+        creditText = findViewById(R.id.setting_personal_credit_text);
     }
 
     @Override

@@ -174,6 +174,8 @@ public class RecyclerViewTradeAdapter_Sell extends RecyclerView.Adapter<Recycler
                             alert.setPositiveButton("등록 취소", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
+                                    FirebaseHelper firebaseHelper = new FirebaseHelper();
+                                    firebaseHelper.deletePurchaseRequest(trade.getTradeId());
                                     FirebaseCommunicator.deleteTrade(trade);
                                     ((RecyclerViewTradeAdapter_Sell) (recyclerView.getAdapter())).getTrades().remove(position);
                                     recyclerView.getAdapter().notifyItemRemoved(position);

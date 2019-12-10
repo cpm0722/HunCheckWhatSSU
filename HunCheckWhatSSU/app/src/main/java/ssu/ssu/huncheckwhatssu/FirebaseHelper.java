@@ -66,22 +66,7 @@ public class FirebaseHelper {
             }
         });
     }
-    public void getSellListById(String uid){
-        customer.child(uid).child("sellList").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Vector<String> vector = new Vector<>();
-                for(DataSnapshot uidSnapshot : dataSnapshot.getChildren())
-                    vector.add(uidSnapshot.getValue(String.class));
-                notificationListener.afterGetTradeUids(vector);
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-    }
 
     //구매요청을 보내는 함수
     public void sendPurchaseRequest(String tradeKey, String Uid) {
@@ -113,11 +98,11 @@ public class FirebaseHelper {
         Ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Vector<String> purchaserUids = new Vector<>();
-                for (DataSnapshot uidSnapshot : dataSnapshot.getChildren()) {
-                    purchaserUids.add(uidSnapshot.getValue(String.class));
-                }
-                callBackListener.afterGetPurchaseRequestCount(purchaserUids.size());
+//                Vector<String> purchaserUids = new Vector<>();
+//                for (DataSnapshot uidSnapshot : dataSnapshot.getChildren()) {
+//                    purchaserUids.add(uidSnapshot.getValue(String.class));
+//                }
+                callBackListener.afterGetPurchaseRequestCount((int)dataSnapshot.getChildrenCount());
             }
 
             @Override
@@ -125,20 +110,7 @@ public class FirebaseHelper {
             }
         });
     }
-    public void getTradeBookNameByTradeKey(String tradeKey){
-        trade.child(tradeKey).child("book").child("title").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (notificationListener != null)
-                    notificationListener.afterGetTradeBookName(dataSnapshot.getValue(String.class));
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-    }
     //purchaserUid를 받고 purchaser정보를 서버에서 가져옴
     public void afterGetPurchaserUid(Vector<String> purchaserUids) {
         int size = purchaserUids.size();
@@ -167,7 +139,42 @@ public class FirebaseHelper {
         customer.child(sellerUid).child("sellList").child(tradeKey).removeValue();
         customer.child(sellerUid).child("tradeList").child(tradeKey).setValue(tradeKey);
         customer.child(purchaserUid).child("tradeList").child(tradeKey).setValue(tradeKey);
+        deletePurchaseRequest(tradeKey);
+    }
+    public void deletePurchaseRequest(String tradeKey){
         purchase_request.child(tradeKey).removeValue();
+
+    }
+
+    public void getSellListById(String uid){
+        customer.child(uid).child("sellList").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Vector<String> vector = new Vector<>();
+                for(DataSnapshot uidSnapshot : dataSnapshot.getChildren())
+                    vector.add(uidSnapshot.getValue(String.class));
+                notificationListener.afterGetTradeUids(vector);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+    public void getTradeBookNameByTradeKey(String tradeKey){
+        trade.child(tradeKey).child("book").child("title").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (notificationListener != null)
+                    notificationListener.afterGetTradeBookName(dataSnapshot.getValue(String.class));
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
     public void setNotifyPurchaseRequest(Vector<String> sellListKeys) {
