@@ -89,7 +89,7 @@
                     android:ellipsize="end"
                     android:gravity="center"
                     android:maxLines="1"
-                    android:text="Place/Date"
+                    android:text="Date"
                     android:textColor="@android:color/white"
                     android:textSize="12sp" />
             </LinearLayout>

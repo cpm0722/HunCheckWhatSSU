@@ -19,6 +19,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+
 import java.util.ArrayList;
 
 import ssu.ssu.huncheckwhatssu.DB.DBData;
@@ -101,7 +103,9 @@ public class EditSell extends AppCompatActivity implements AdapterView.OnItemSel
 
     public void setdata(Trade trade) {
        /*기존 데이터 그대로 보여주기*/
-        activity_book_edit_coverImg .getDrawable();
+        if (trade.getBook().getImage() == null) {
+            activity_book_edit_coverImg.setImageDrawable(activity_book_edit_coverImg.getResources().getDrawable(R.drawable.noimage));
+        } else Glide.with(activity_book_edit_coverImg).load(trade.getBook().getImage()).into(activity_book_edit_coverImg);
         activity_book_edit_title.setText(trade.getBook().getTitle());
         activity_book_edit_authorText .setText(trade.getBook().getAuthor());
         activity_book_edit_publisherText .setText(trade.getBook().getPublisher());
