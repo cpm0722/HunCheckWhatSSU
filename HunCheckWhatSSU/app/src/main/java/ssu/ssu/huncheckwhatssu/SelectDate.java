@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CalendarView;
@@ -22,6 +23,7 @@ public class SelectDate extends AppCompatActivity{
     EditText editText;
     Trade trade;
     CalendarView calendarView;
+    String date2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,6 +31,9 @@ public class SelectDate extends AppCompatActivity{
         back=(Button)findViewById(R.id.notselectdate);
         selectdate=(Button)findViewById(R.id.selectdate);
         editText=(EditText)findViewById(R.id.editText);
+        /*date2_*/
+        date2=editText.getText().toString();
+
         calendarView=(CalendarView)findViewById(R.id.calendarView);
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
@@ -39,12 +44,17 @@ public class SelectDate extends AppCompatActivity{
         });
 
 
+
         Intent intent=getIntent();
         trade=intent.getParcelableExtra("ToputDate");
+
+
        back.setOnClickListener(new View.OnClickListener(){
            @Override
            public void onClick(View view) {
-                finish();
+                Toast toast=Toast.makeText(getApplicationContext(), "R"+date2, LENGTH_SHORT);
+                toast.show();
+               finish();
            }
        });
         selectdate.setOnClickListener(new View.OnClickListener(){

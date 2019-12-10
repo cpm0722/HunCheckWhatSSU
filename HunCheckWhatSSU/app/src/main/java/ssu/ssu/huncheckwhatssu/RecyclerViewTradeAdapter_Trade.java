@@ -2,6 +2,7 @@ package ssu.ssu.huncheckwhatssu;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -11,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,6 +23,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.nikhilpanju.recyclerviewenhanced.RecyclerTouchListener;
 
+import java.util.Calendar;
 import java.util.Vector;
 
 import ssu.ssu.huncheckwhatssu.DB.DBHelper;
@@ -40,7 +43,7 @@ public class RecyclerViewTradeAdapter_Trade extends RecyclerView.Adapter<Recycle
     RecyclerViewTradeAdapter_Trade done;
     FirebaseCommunicator firebaseCommunicator;
     boolean isOngoingAdapter;
-
+    int y=0, m=0, d=0;
 
     public Vector<Trade> getTrades() {
         return modelList;
@@ -251,9 +254,7 @@ public class RecyclerViewTradeAdapter_Trade extends RecyclerView.Adapter<Recycle
 
                             Toast toast = Toast.makeText(context, "Date! " , Toast.LENGTH_SHORT);
                             toast.show();
-                            Intent intent=new Intent(context,SelectDate.class);
-                            intent.putExtra("ToputDate",trade);
-                            context.startActivity(intent);
+                            showDate(context);
 
                         }
 
@@ -262,6 +263,20 @@ public class RecyclerViewTradeAdapter_Trade extends RecyclerView.Adapter<Recycle
         recyclerView.addOnItemTouchListener(onTouchListener);
         return;
     }
+    void showDate(Context context) {
+        DatePickerDialog datePickerDialog = new DatePickerDialog(context, new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                y = year;
+                m = month;
+                d = dayOfMonth;
+            }
+        }, Calendar.YEAR, Calendar.MONTH, Calendar.DAY_OF_MONTH);
+
+        datePickerDialog.setMessage("메시지");
+        datePickerDialog.show();
+    }
+
 
     public void MoveFromOngoingToDone(int position, Trade trade){
         ongoing.getTrades().remove(position);
