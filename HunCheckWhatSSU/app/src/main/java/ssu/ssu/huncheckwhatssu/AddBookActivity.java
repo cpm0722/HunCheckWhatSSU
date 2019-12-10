@@ -1,7 +1,10 @@
 package ssu.ssu.huncheckwhatssu;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -12,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.SearchView;
@@ -27,7 +31,10 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
 import com.naver.maps.geometry.LatLng;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 import ssu.ssu.huncheckwhatssu.DB.DBData;
 import ssu.ssu.huncheckwhatssu.utilClass.Book;
@@ -52,6 +59,7 @@ public class AddBookActivity extends AppCompatActivity implements AdapterView.On
     EditText sellPrice;
     ImageView imageView;
     TextView loadAddr;
+    TextView tradeDateTextView;
 
     int price1;//원가
     TextView publisher;
@@ -64,7 +72,10 @@ public class AddBookActivity extends AppCompatActivity implements AdapterView.On
     ArrayList<DBData> departmentData;
     ArrayList<DBData> subjectData;
     String loadAddrStr;
+    Calendar tradeDate;
     LatLng latLng;
+
+    Calendar today;
 
     FirebaseCommunicator firebaseCommunicator;
 
@@ -162,6 +173,32 @@ public class AddBookActivity extends AppCompatActivity implements AdapterView.On
         seller = findViewById(R.id.seller);
         sellPrice = findViewById(R.id.sellprice);
         imageView = findViewById(R.id.activity_add_book_imageView);
+        tradeDateTextView = findViewById(R.id.trade_date);
+        tradeDateTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (today == null)
+                    today = Calendar.getInstance();
+
+                DatePickerDialog datePickerDialog = new DatePickerDialog(v.getContext(), new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        tradeDate = Calendar.getInstance();
+
+                        tradeDate.set(year, month, dayOfMonth, 0,0,0);
+
+                        today = (Calendar) tradeDate.clone();
+
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+                        tradeDateTextView.setText(dateFormat.format(new Date(tradeDate.getTimeInMillis())));
+                    }
+                }, today.get(Calendar.YEAR), today.get(Calendar.MONTH), today.get(Calendar.DAY_OF_MONTH));
+
+                datePickerDialog.show();
+            }
+        });
 
         title.setText(book1.getTitle());
         Author.setText(book1.getAuthor());
@@ -450,7 +487,7 @@ public class AddBookActivity extends AppCompatActivity implements AdapterView.On
         }
         trade.setSellerRate(-1);
         trade.setPurchaserRate(-1);
-
+        trade.setTradeDate(tradeDateTextView.getText().toString());
         trade.setTradePlace(loadAddr.getText().toString());
         trade.setLatitude(latLng.latitude);
         trade.setLongitude(latLng.longitude);

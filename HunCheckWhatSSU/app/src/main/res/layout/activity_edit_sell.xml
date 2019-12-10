@@ -17,8 +17,8 @@
 
             <ImageView
                 android:id="@+id/activity_book_edit_coverImg"
-                android:layout_width="120dp"
-                android:layout_height="170dp"
+                android:layout_width="90dp"
+                android:layout_height="130dp"
                 android:layout_gravity="left"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
@@ -40,23 +40,25 @@
                     android:orientation="horizontal">
 
                     <TextView
+                        android:layout_marginTop="5dp"
                         android:layout_width="100dp"
                         android:layout_height="match_parent"
                         android:background="#D8FAFD"
                         android:gravity="center"
                         android:text="책이름"
-                        android:textSize="20dp"></TextView>
+                        android:textSize="15dp"></TextView>
 
                     <TextView
+                        android:layout_marginTop="5dp"
                         android:id="@+id/activity_book_edit_title"
-                        android:layout_width="175dp"
+                        android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="left|center_vertical"
                         android:paddingLeft="20dp"
                         android:selectAllOnFocus="true"
                         android:singleLine="true"
                         android:text="s_title"
-                        android:textSize="20sp"></TextView>
+                        android:textSize="15sp"></TextView>
                 </LinearLayout>
 
                 <LinearLayout
@@ -71,11 +73,11 @@
                         android:background="#DEEEFA"
                         android:gravity="center"
                         android:text="지은이"
-                        android:textSize="20dp"></TextView>
+                        android:textSize="15dp"></TextView>
 
                     <TextView
                         android:id="@+id/activity_book_edit_authorText"
-                        android:layout_width="175dp"
+                        android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="#0FFF"
                         android:gravity="left|center_vertical"
@@ -83,7 +85,7 @@
                         android:selectAllOnFocus="true"
                         android:singleLine="true"
                         android:text="author"
-                        android:textSize="20sp"></TextView>
+                        android:textSize="15sp"></TextView>
                 </LinearLayout>
 
                 <LinearLayout
@@ -98,11 +100,11 @@
                         android:background="#D8FAFD"
                         android:gravity="center"
                         android:text="출판사"
-                        android:textSize="20dp"></TextView>
+                        android:textSize="15dp"></TextView>
 
                     <TextView
                         android:id="@+id/activity_book_edit_publisherText"
-                        android:layout_width="175dp"
+                        android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="#0FFF"
                         android:gravity="left|center_vertical"
@@ -110,7 +112,7 @@
                         android:selectAllOnFocus="true"
                         android:singleLine="true"
                         android:text="s_publisher"
-                        android:textSize="20sp"></TextView>
+                        android:textSize="15sp"></TextView>
                 </LinearLayout>
 
                 <LinearLayout
@@ -125,11 +127,11 @@
                         android:background="#DEEEFA"
                         android:gravity="center"
                         android:text="출판일"
-                        android:textSize="20dp"></TextView>
+                        android:textSize="15dp"></TextView>
 
                     <TextView
                         android:id="@+id/activity_book_edit_publicationDateText"
-                        android:layout_width="175dp"
+                        android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="#0FFF"
                         android:gravity="left|center_vertical"
@@ -137,7 +139,7 @@
                         android:selectAllOnFocus="true"
                         android:singleLine="true"
                         android:text="p_date"
-                        android:textSize="20sp"></TextView>
+                        android:textSize="15sp"></TextView>
                 </LinearLayout>
 
                 <LinearLayout
@@ -152,11 +154,11 @@
                         android:background="#D8FAFD"
                         android:gravity="center"
                         android:text="ISBN"
-                        android:textSize="20dp"></TextView>
+                        android:textSize="15dp"></TextView>
 
                     <TextView
                         android:id="@+id/ISBN"
-                        android:layout_width="175dp"
+                        android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="2.5"
                         android:background="#0FFF"
@@ -165,7 +167,7 @@
                         android:selectAllOnFocus="true"
                         android:singleLine="true"
                         android:text="ISBN"
-                        android:textSize="20sp"></TextView>
+                        android:textSize="15sp"></TextView>
                 </LinearLayout>
 
                 <LinearLayout
@@ -180,11 +182,11 @@
                         android:background="#DEEEFA"
                         android:gravity="center"
                         android:text="정가"
-                        android:textSize="20dp"></TextView>
+                        android:textSize="15dp"></TextView>
 
                     <TextView
                         android:id="@+id/activity_book_edit_bookCostText"
-                        android:layout_width="175dp"
+                        android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="#0FFF"
                         android:gravity="left|center_vertical"
@@ -192,7 +194,7 @@
                         android:selectAllOnFocus="true"
                         android:singleLine="true"
                         android:text="realprice"
-                        android:textSize="20sp"></TextView>
+                        android:textSize="15sp"></TextView>
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
@@ -335,14 +337,15 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="30dp">
+                android:layout_height="match_parent">
 
                 <TextView
-                    android:layout_width="100dp"
+                    android:layout_width="70dp"
+                    android:gravity="center|center_vertical"
                     android:layout_height="match_parent"
                     android:background="#D8FAFD"
                     android:text="밑줄흔적"
-                    android:textSize="20dp"
+                    android:textSize="15dp"
                     android:textStyle="bold" />
 
                 <RadioGroup
@@ -381,14 +384,15 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="match_parent">
 
                 <TextView
-                    android:layout_width="100dp"
+                    android:layout_width="70dp"
                     android:layout_height="match_parent"
+                    android:gravity="center|center_vertical"
                     android:background="#DEEEFA"
                     android:text="필기흔적"
-                    android:textSize="20dp"
+                    android:textSize="15dp"
                     android:textStyle="bold" />
 
                 <RadioGroup
@@ -427,14 +431,15 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="match_parent">
 
                 <TextView
-                    android:layout_width="100dp"
+                    android:layout_width="70dp"
                     android:layout_height="match_parent"
                     android:background="#D8FAFD"
+                    android:gravity="center|center_vertical"
                     android:text="겉표지"
-                    android:textSize="20dp"
+                    android:textSize="15dp"
                     android:textStyle="bold" />
 
                 <RadioGroup
@@ -473,14 +478,15 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="match_parent">
 
                 <TextView
-                    android:layout_width="100dp"
+                    android:layout_width="70dp"
                     android:layout_height="match_parent"
                     android:background="#DEEEFA"
+                    android:gravity="center|center_vertical"
                     android:text="이름기입"
-                    android:textSize="20dp"
+                    android:textSize="15dp"
                     android:textStyle="bold" />
 
                 <RadioGroup
@@ -519,14 +525,15 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="match_parent">
 
                 <TextView
-                    android:layout_width="100dp"
+                    android:layout_width="70dp"
                     android:layout_height="match_parent"
                     android:background="#D8FAFD"
                     android:text="페이지변색"
-                    android:textSize="20dp"
+                    android:textSize="15dp"
+                    android:gravity="center|center_vertical"
                     android:textStyle="bold" />
 
                 <RadioGroup
@@ -565,14 +572,15 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="match_parent">
 
                 <TextView
-                    android:layout_width="100dp"
+                    android:layout_width="70dp"
                     android:layout_height="match_parent"
                     android:background="#DEEEFA"
                     android:text="페이지훼손"
-                    android:textSize="20dp"
+                    android:textSize="15dp"
+                    android:gravity="center|center_vertical"
                     android:textStyle="bold" />
 
                 <RadioGroup

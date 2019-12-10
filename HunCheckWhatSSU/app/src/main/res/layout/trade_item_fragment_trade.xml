@@ -89,7 +89,7 @@
                     android:ellipsize="end"
                     android:gravity="center"
                     android:maxLines="1"
-                    android:text="Place/Date"
+                    android:text="Date"
                     android:textColor="@android:color/white"
                     android:textSize="12sp" />
             </LinearLayout>
@@ -245,6 +245,6 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_alignParentBottom="true"
-        android:background="#67676767"
+        android:background="@color/HunCheckWhatSSUPrimaryBorderColor"
         android:elevation="5dp" />
 </RelativeLayout>

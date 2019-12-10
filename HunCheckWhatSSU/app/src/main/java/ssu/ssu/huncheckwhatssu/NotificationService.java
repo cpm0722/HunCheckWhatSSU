@@ -94,15 +94,17 @@ public class NotificationService extends Service {
             public void afterGetTradeUids(Vector<String> sellListUids) {
                 tradeUidList = sellListUids;
                 count = tradeUidList.size();
+
                 firebaseHelper.setNotifyPurchaseRequest(tradeUidList);
             }
 
             @Override
             public void afterGetTradeBookName(String bookName) {
-                if(bookName.length()>20){
-                    bookName = bookName.substring(0,20)+"...";
+                String printName = bookName;
+                if(bookName.length() > 20){
+                    printName = bookName.substring(0, 20) + "...";
                 }
-                builder.setContentText(bookName+"의 구매요청이 있습니다.");
+                builder.setContentText(printName+"의 구매요청이 있습니다.");
                 notification = builder.build();
                 notificationManager.notify(19970703, notification);
             }

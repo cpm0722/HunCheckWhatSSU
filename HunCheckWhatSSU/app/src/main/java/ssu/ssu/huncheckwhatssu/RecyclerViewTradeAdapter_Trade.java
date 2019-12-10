@@ -62,18 +62,7 @@ public class RecyclerViewTradeAdapter_Trade extends RecyclerView.Adapter<Recycle
 
     @Override
     public TradeViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view;
-        ;
-        if(modelList.get(0).getTradeState()== Trade.TradeState.COMPLETE) {
-            view = inflater.inflate(R.layout.trade_item_fragment_trade, parent, false);
-            view.findViewById(R.id.item_button_addDateNplace).setVisibility(View.GONE);
-
-        }
-       else{// if(modelList.get(0).getTradeState()== Trade.TradeState.PRECONTRACT){
-            view = inflater.inflate(R.layout.trade_item_fragment_trade, parent, false);
-        }
-
-
+        View view = inflater.inflate(R.layout.trade_item_fragment_trade, parent, false);
         return new TradeViewHolder(view);
     }
 
@@ -91,12 +80,11 @@ public class RecyclerViewTradeAdapter_Trade extends RecyclerView.Adapter<Recycle
         return countView;
     }
 
-    public void setAnotherAdapter(FirebaseCommunicator.WhichRecyclerView whichRecyclerView, RecyclerViewTradeAdapter_Trade another){
-        if(whichRecyclerView == FirebaseCommunicator.WhichRecyclerView.ongoingRecyclerView){
+    public void setAnotherAdapter(FirebaseCommunicator.WhichRecyclerView whichRecyclerView, RecyclerViewTradeAdapter_Trade another) {
+        if (whichRecyclerView == FirebaseCommunicator.WhichRecyclerView.ongoingRecyclerView) {
             ongoing = this;
             done = another;
-        }
-        else {
+        } else {
             ongoing = another;
             done = this;
         }
@@ -155,7 +143,7 @@ public class RecyclerViewTradeAdapter_Trade extends RecyclerView.Adapter<Recycle
             book_category.setText(dbHelper.getFullCategoryText(object.getBook()));
             countView.setText(new Integer(getItemCount()) + " 건");
 
-            if(!isOngoingAdapter) {
+            if (!isOngoingAdapter) {
                 deleteBtnImage.setImageBitmap(BitmapFactory.decodeResource(itemView.getResources(), R.drawable.icon_star));
                 deleteBtnImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
                 deleteBtnText.setText("Evaluate");
@@ -186,7 +174,7 @@ public class RecyclerViewTradeAdapter_Trade extends RecyclerView.Adapter<Recycle
                         Log.d(TAG, "Indepent");
                     }
                 })
-                .setSwipeOptionViews(R.id.item_button_delete, R.id.item_button_addDateNplace)
+                .setSwipeOptionViews(R.id.item_button_delete)
                 .setSwipeable(R.id.rowFG, R.id.rowBG, new RecyclerTouchListener.OnSwipeOptionsClickListener() {
 
                     @Override
@@ -216,22 +204,22 @@ public class RecyclerViewTradeAdapter_Trade extends RecyclerView.Adapter<Recycle
                                     }
                                 });
                                 alert.show();
-                            } else if(trade.getTradeState() == Trade.TradeState.COMPLETE){
+                            } else if (trade.getTradeState() == Trade.TradeState.COMPLETE) {
                                 boolean isEvaluated = false;
                                 //내가 판매자일 때
-                                if(trade.getSellerId().equals(FirebaseCommunicator.getMyId())){
-                                   if(trade.getPurchaserRate() != -1){
-                                       isEvaluated = true;
-                                   }
+                                if (trade.getSellerId().equals(FirebaseCommunicator.getMyId())) {
+                                    if (trade.getPurchaserRate() != -1) {
+                                        isEvaluated = true;
+                                    }
                                 }
                                 //내가 구매자일 때
-                                else{
-                                    if(trade.getSellerRate() != -1){
+                                else {
+                                    if (trade.getSellerRate() != -1) {
                                         isEvaluated = true;
                                     }
                                 }
                                 //평가가 완료된 경우
-                                if(isEvaluated){
+                                if (isEvaluated) {
                                     Toast toast = Toast.makeText(context, "이미 평가가 완료된 항목입니다.", Toast.LENGTH_SHORT);
                                     toast.show();
                                 }
@@ -247,11 +235,6 @@ public class RecyclerViewTradeAdapter_Trade extends RecyclerView.Adapter<Recycle
 
 
                         }
-                        else if(viewID == R.id.item_button_addDateNplace){
-
-                            Toast toast = Toast.makeText(context, "Date/Place! " , Toast.LENGTH_SHORT);
-                            toast.show();
-                        }
 
                     }
                 });
@@ -259,7 +242,7 @@ public class RecyclerViewTradeAdapter_Trade extends RecyclerView.Adapter<Recycle
         return;
     }
 
-    public void MoveFromOngoingToDone(int position, Trade trade){
+    public void MoveFromOngoingToDone(int position, Trade trade) {
         ongoing.getTrades().remove(position);
         ongoing.notifyItemChanged(position);
         ongoing.getCountView().setText(ongoing.getItemCount() + " 건");

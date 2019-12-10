@@ -36,7 +36,7 @@
                 <View
                     android:layout_below="@id/activity_book_info_title"
                     android:layout_marginTop="3dp"
-                    android:background="#CCC"
+                    android:background="@color/HunCheckWhatSSUPrimaryBorderColor"
                     android:layout_width="wrap_content"
                     android:layout_height="1dp"/>
 
@@ -186,7 +186,7 @@
                     android:id="@+id/activity_book_info_labelGroup_underLine"
                     android:layout_below="@id/activity_book_info_labelGroup"
                     android:layout_alignLeft="@id/activity_book_info_title"
-                    android:background="#CCC"
+                    android:background="@color/HunCheckWhatSSUPrimaryBorderColor"
                     android:layout_width="wrap_content"
                     android:layout_height="1dp"/>
 
@@ -233,7 +233,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
-                        android:text="파기/거래횟수"
+                        android:text="파기/거래"
                         android:textSize="12dp" />
                 </LinearLayout>
 
@@ -302,7 +302,7 @@
                     android:id="@+id/activity_book_info_sellerLabelGroup_underLine"
                     android:layout_below="@id/activity_book_info_sellerGroupLabel"
                     android:layout_marginTop="16dp"
-                    android:background="#CCC"
+                    android:background="@color/HunCheckWhatSSUPrimaryBorderColor"
                     android:layout_width="wrap_content"
                     android:layout_height="1dp"/>
 
@@ -435,7 +435,7 @@
                     android:id="@+id/activity_book_info_state_underline"
                     android:layout_below="@id/activity_book_info_stateLabelGroup"
                     android:layout_marginTop="16dp"
-                    android:background="#CCC"
+                    android:background="@color/HunCheckWhatSSUPrimaryBorderColor"
                     android:layout_width="wrap_content"
                     android:layout_height="1dp"/>
 
@@ -503,12 +503,12 @@
     </ScrollView>
 
     <TextView
-        android:background="#CCC"
+        android:background="@color/HunCheckWhatSSUPrimaryColor"
         android:layout_width="match_parent"
         android:layout_height="1dp"/>
 
     <LinearLayout
-        android:background="#EEE"
+        android:background="@color/HunCheckWhatSSUPrimaryAlphaColor"
         android:gravity="center"
         android:orientation="horizontal"
         android:layout_width="match_parent"
@@ -518,12 +518,14 @@
             android:id="@+id/send_purchase_request_btn"
             android:text="구매신청"
             android:layout_width="wrap_content"
+            android:layout_margin="5dp"
             android:layout_height="wrap_content"/>
 
         <Button
             android:id="@+id/back2TradeOverview"
             android:text="뒤로가기"
             android:layout_width="wrap_content"
+            android:layout_margin="5dp"
             android:layout_height="wrap_content"/>
     </LinearLayout>
 

@@ -41,6 +41,7 @@ import ssu.ssu.huncheckwhatssu.utilClass.Trade;
 public class OptionFragment extends Fragment implements View.OnClickListener {
 
     private Button seeMyInfoBtn;
+    private Button seeMyEvaluationBtn;
     private Button setPersonalInfoBtn;
     private Button setNotificationBtn;
     private Button customerContactAddressBtn;
@@ -65,11 +66,13 @@ public class OptionFragment extends Fragment implements View.OnClickListener {
         menu.getItem(3).setChecked(true);
 
         seeMyInfoBtn = root.findViewById(R.id.see_my_info);
+        seeMyEvaluationBtn = root.findViewById(R.id.see_my_evaluation);
         setPersonalInfoBtn = (Button)root.findViewById(R.id.setting_Personal_Info_Btn);
         setNotificationBtn = (Button)root.findViewById(R.id.setting_notification_btn);
         customerContactAddressBtn= (Button)root.findViewById(R.id.customer_support_center_btn);
         logoutBtn = root.findViewById(R.id.logout_btn);
         seeMyInfoBtn.setOnClickListener(this);
+        seeMyEvaluationBtn.setOnClickListener(this);
         setPersonalInfoBtn.setOnClickListener(this);
         setNotificationBtn.setOnClickListener(this);
         customerContactAddressBtn.setOnClickListener(this);
@@ -83,6 +86,11 @@ public class OptionFragment extends Fragment implements View.OnClickListener {
         if(view == setPersonalInfoBtn){
             Intent intent = new Intent(getActivity().getApplicationContext(),SettingPersonalInfo.class);
             intent.putExtra("Edit",true);
+            startActivity(intent);
+        }
+        else if(view == seeMyEvaluationBtn){
+            Intent intent = new Intent(getActivity().getApplicationContext(), EvaluationActivity.class);
+            intent.putExtra("id", FirebaseCommunicator.getMyId());
             startActivity(intent);
         }
         else if(view == setNotificationBtn) {
