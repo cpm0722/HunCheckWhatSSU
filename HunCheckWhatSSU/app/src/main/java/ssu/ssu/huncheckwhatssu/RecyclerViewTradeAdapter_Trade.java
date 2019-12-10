@@ -251,8 +251,9 @@ public class RecyclerViewTradeAdapter_Trade extends RecyclerView.Adapter<Recycle
 
                             Toast toast = Toast.makeText(context, "Date! " , Toast.LENGTH_SHORT);
                             toast.show();
-
-                            context.startActivity(new Intent(context,SelectDate.class));
+                            Intent intent=new Intent(context,SelectDate.class);
+                            intent.putExtra("ToputDate",trade);
+                            context.startActivity(intent);
 
                         }
 
