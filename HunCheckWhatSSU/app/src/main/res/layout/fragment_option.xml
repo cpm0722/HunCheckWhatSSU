@@ -42,7 +42,7 @@
             android:textAlignment="center"
             android:padding="8dp"
             android:src="@drawable/icon_list"
-            android:tint="@color/HunCheckWhatSSUPrimaryColor"
+            android:tint="@color/HunCheckWhatSSUPrimaryIconColor"
             ></ImageView>
 
         <Button

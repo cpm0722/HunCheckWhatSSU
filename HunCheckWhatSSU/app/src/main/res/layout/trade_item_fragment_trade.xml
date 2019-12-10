@@ -55,45 +55,6 @@
                     android:textSize="12sp" />
             </LinearLayout>
         </RelativeLayout>
-        <RelativeLayout
-            android:id="@+id/item_button_addDateNplace"
-            android:layout_width="@dimen/swipeWidth"
-            android:layout_height="match_parent"
-            android:background="@color/colorPrimaryDark"
-            android:clickable="true"
-            android:focusable="true"
-            android:orientation="vertical">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_centerInParent="true"
-                android:background="@color/HunCheckWhatSSUPrimaryColor"
-                android:gravity="center_vertical|left"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:src="@drawable/icon_edit"
-                    android:tint="@android:color/white" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginTop="4dp"
-                    android:layout_marginRight="8dp"
-                    android:ellipsize="end"
-                    android:gravity="center"
-                    android:maxLines="1"
-                    android:text="Date"
-                    android:textColor="@android:color/white"
-                    android:textSize="12sp" />
-            </LinearLayout>
-        </RelativeLayout>
     </LinearLayout>
 
     <LinearLayout

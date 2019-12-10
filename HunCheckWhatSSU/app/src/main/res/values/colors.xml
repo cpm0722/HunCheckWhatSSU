@@ -4,6 +4,7 @@
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
     <color name="HunCheckWhatSSUPrimaryColor">#66B4F6</color>
-    <color name="HunCheckWhatSSUPrimaryAlphaColor">#AA66B4F6</color>
-    <color name="HunCheckWhatSSUPrimaryBorderColor">#AA66B4F6</color>
+    <color name="HunCheckWhatSSUPrimaryIconColor">#66B4F6</color>
+    <color name="HunCheckWhatSSUPrimaryBackgroundColor">#66B4F6</color>
+    <color name="HunCheckWhatSSUPrimaryBorderColor">#CCC</color>
 </resources>

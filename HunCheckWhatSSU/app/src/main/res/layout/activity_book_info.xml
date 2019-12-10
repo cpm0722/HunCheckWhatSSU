@@ -503,12 +503,12 @@
     </ScrollView>
 
     <TextView
-        android:background="@color/HunCheckWhatSSUPrimaryColor"
+        android:background="@color/HunCheckWhatSSUPrimaryBackgroundColor"
         android:layout_width="match_parent"
         android:layout_height="1dp"/>
 
     <LinearLayout
-        android:background="@color/HunCheckWhatSSUPrimaryAlphaColor"
+        android:background="@color/HunCheckWhatSSUPrimaryBackgroundColor"
         android:gravity="center"
         android:orientation="horizontal"
         android:layout_width="match_parent"
@@ -518,14 +518,20 @@
             android:id="@+id/send_purchase_request_btn"
             android:text="구매신청"
             android:layout_width="wrap_content"
-            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginBottom="5dp"
+            android:textStyle="bold"
             android:layout_height="wrap_content"/>
 
         <Button
             android:id="@+id/back2TradeOverview"
             android:text="뒤로가기"
             android:layout_width="wrap_content"
+            android:layout_weight="1"
             android:layout_margin="5dp"
+            android:textStyle="bold"
             android:layout_height="wrap_content"/>
     </LinearLayout>
 

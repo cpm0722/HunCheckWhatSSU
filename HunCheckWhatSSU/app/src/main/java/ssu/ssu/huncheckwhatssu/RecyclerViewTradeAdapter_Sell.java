@@ -130,9 +130,9 @@ public class RecyclerViewTradeAdapter_Sell extends RecyclerView.Adapter<Recycler
                         Trade trade = ((RecyclerViewTradeAdapter_Sell)(recyclerView.getAdapter())).getTrades().get(position);
                         recyclerView.getAdapter().notifyItemChanged(position);
                         Intent intent=new Intent(context,BookInfoActivity.class);
-                        intent.putExtra("BookInfoType","BOOK_INFO_TRADE_DETAIL");
+                        intent.putExtra("BookInfoType","BOOK_INFO_DEFAULT");
                         intent.putExtra("fragment", "sell");
-                        intent.putExtra("book_info_trade_detail", trade);
+                        intent.putExtra("book_info_default_data", trade);
                         context.startActivity(intent);
                         /*여기에 액티비티로 전달하는 기능이 구현되있어야함.*/
                     }
