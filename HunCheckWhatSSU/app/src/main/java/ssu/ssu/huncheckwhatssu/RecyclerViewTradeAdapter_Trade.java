@@ -249,8 +249,11 @@ public class RecyclerViewTradeAdapter_Trade extends RecyclerView.Adapter<Recycle
                         }
                         else if(viewID == R.id.item_button_addDateNplace){
 
-                            Toast toast = Toast.makeText(context, "Date/Place! " , Toast.LENGTH_SHORT);
+                            Toast toast = Toast.makeText(context, "Date! " , Toast.LENGTH_SHORT);
                             toast.show();
+
+                            context.startActivity(new Intent(context,SelectDate.class));
+
                         }
 
                     }
