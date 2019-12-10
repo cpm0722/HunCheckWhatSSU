@@ -219,6 +219,34 @@
             android:selectAllOnFocus="true"
             android:textSize="20sp"></EditText>
     </LinearLayout>
+    <LinearLayout
+        android:id="@+id/setting_personal_credit_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:baselineAligned="true"
+        android:visibility="gone">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:text="내 신용도"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            ></TextView>
+
+        <TextView
+            android:id="@+id/setting_personal_credit_text"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:gravity="left|center_vertical"
+            android:paddingLeft="20dp"
+            android:background="#0FFF"
+            android:singleLine="true"
+            android:textSize="20sp"></TextView>
+    </LinearLayout>
 
     <TextView
         android:layout_width="match_parent"
