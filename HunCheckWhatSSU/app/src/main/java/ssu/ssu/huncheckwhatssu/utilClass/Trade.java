@@ -373,13 +373,24 @@ public class Trade implements Parcelable {
     @Override
     public String toString() {
         return "Trade{" +
-                "book=" + book +
-                ", sellerId=" + sellerId +
-                ", purchaserId=" + purchaserId +
+                "tradeId='" + tradeId + '\'' +
+                ", book=" + book +
+                ", sellerId='" + sellerId + '\'' +
+                ", purchaserId='" + purchaserId + '\'' +
+                ", seller=" + seller +
+                ", purchaser=" + purchaser +
                 ", tradeState=" + tradeState +
+                ", loadDate=" + loadDate +
+                ", upLoadDate='" + upLoadDate + '\'' +
                 ", tradePlace='" + tradePlace + '\'' +
-                ", tradeDate=" + tradeDate +
+                ", tradeDate='" + tradeDate + '\'' +
                 ", sellingPrice=" + sellingPrice +
+                ", latitude=" + latitude +
+                ", longitude=" + longitude +
+                ", sellerRate=" + sellerRate +
+                ", purchaserRate=" + purchaserRate +
+                ", sellerComment='" + sellerComment + '\'' +
+                ", purchaserComment='" + purchaserComment + '\'' +
                 '}';
     }
 
