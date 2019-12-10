@@ -95,10 +95,63 @@ public class EditSell extends AppCompatActivity implements AdapterView.OnItemSel
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, getDataName(editcollegeData));
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         edit_college_sp.setAdapter(arrayAdapter);
-        edit_college_sp.setSelection(Integer.parseInt(trade.getBook().getCollege_id()));
-        checkdefaultspinner();
+
+//        checkdefaultspinner();
         setdata(trade);
 
+        edit_college_sp.setSelection(Integer.parseInt(trade.getBook().getCollege_id()));
+
+        Log.d("jsd", "onCreate: " + trade.getBook().getDepartment_id());
+        Log.d("jsd", "onCreate: " + trade.getBook().getSubject_id());
+
+        Log.d("jsd", "onCreate: " + findIndexFromDepartment(trade.getBook().getDepartment_id()));
+        Log.d("jsd", "onCreate: " + findIndexFromDepartment(trade.getBook().getSubject_id()));
+//        edit_subject_sp.setSelection(Integer.parseInt(trade.getBook().getCollege_id()));
+        setSpinnerData(2,Integer.parseInt(trade.getBook().getCollege_id()),-1);
+        arrayAdapter = new ArrayAdapter(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, getDataName(editdepartmentData));
+        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        edit_department_sp.setAdapter(arrayAdapter);
+        Log.d("jsd", "onCreate: " + editdepartmentData.size());
+        Log.d("jsd", "onCreate: " + findIndexFromDepartment(trade.getBook().getDepartment_id()));
+        edit_department_sp.setSelection(findIndexFromDepartment(trade.getBook().getDepartment_id()));
+
+        setSpinnerData(3, Integer.parseInt(trade.getBook().getCollege_id()),Integer.parseInt(trade.getBook().getDepartment_id()));
+        arrayAdapter = new ArrayAdapter(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, getDataName(editsubjectData));
+        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        edit_subject_sp.setAdapter(arrayAdapter);
+//        Log.d("ej", "onItemSelected: z4 " + parent.getItemAtPosition(position));
+        Log.d("jsd", "onCreate: " + editsubjectData.size());
+        Log.d("jsd", "onCreate: " + findIndexFromSubject(trade.getBook().getSubject_id()));
+        edit_subject_sp.setSelection(findIndexFromSubject(trade.getBook().getSubject_id()));
+
+    }
+
+    public int findIndexFromDepartment(String key) {
+        for (int i = 0; i < editdepartmentData.size(); i++) {
+            DBData data = editdepartmentData.get(i);
+
+            Log.d("JSD", "findIndexFromDepartment: " + data.getKey());
+
+            if (data.getKey() == Integer.parseInt(key)) {
+                return i;
+            }
+        }
+
+        return 0;
+    }
+
+    public int findIndexFromSubject(String key) {
+        for (int i = 0; i < editsubjectData.size(); i++) {
+            DBData data = editsubjectData.get(i);
+
+            Log.d("JS", "onCreate: " + data.toString());
+
+            if (data.getKey() == Integer.parseInt(key)) {
+                return i;
+            }
+        }
+
+        return 0;
     }
 
     public void setdata(Trade trade) {
@@ -111,6 +164,7 @@ public class EditSell extends AppCompatActivity implements AdapterView.OnItemSel
         activity_book_edit_publisherText .setText(trade.getBook().getPublisher());
         activity_book_edit_publicationDateText .setText(trade.getBook().getPubDate());
         activity_book_edit_bookCostText .setText(""+trade.getBook().getOriginalPrice());
+
         checkdefaultradio();
         /*새로운 데이터 보여주기*/
         activity_book_edit_bookSellingpriceText.setText(""+trade.getSellingPrice());

@@ -148,6 +148,9 @@ public class BookInfoActivity extends AppCompatActivity implements OnMapReadyCal
             latLng = new LatLng(trade.getLatitude(), trade.getLongitude());
 
         mapFragment.getMapAsync(this);
+
+        if (isSellFragment)
+            sendPurchaseRequestBtn.setVisibility(View.GONE);
     }
 
     @UiThread

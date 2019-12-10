@@ -92,7 +92,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
             } catch (ApiException e) {
                 Log.d("book", "onActivityResult: 1");
-                Toast.makeText(LoginActivity.this, "예외처리!", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(LoginActivity.this, "예외처리!", Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -111,7 +111,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             startActivity(intent);
                             finish();
                             Log.d("book", "onActivityResult: 성공");
-                            Toast.makeText(LoginActivity.this, R.string.success_login, Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(LoginActivity.this, R.string.success_login, Toast.LENGTH_SHORT).show();
                         } else {
                             // 로그인 실패
                             Log.d("book", "onActivityResult: 2");

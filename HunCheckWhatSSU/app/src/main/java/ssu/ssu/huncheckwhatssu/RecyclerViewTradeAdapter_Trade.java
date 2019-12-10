@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -119,6 +120,7 @@ public class RecyclerViewTradeAdapter_Trade extends RecyclerView.Adapter<Recycle
             seller_credit = itemView.findViewById(R.id.item_seller_credit);
             deleteBtnImage = itemView.findViewById(R.id.item_trade_delete_image);
             deleteBtnText = itemView.findViewById(R.id.item_trade_delete_text);
+            original_price.setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG);
 
         }
 
