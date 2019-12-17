@@ -52,6 +52,9 @@ public class OptionFragment extends Fragment implements View.OnClickListener {
     private AlertDialog setNotificationDialog;
     private AlertDialog showCustomerSupportContactDialog;
 
+    private boolean beforeState;
+    private boolean afterState;
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_option, container, false);
@@ -118,7 +121,8 @@ public class OptionFragment extends Fragment implements View.OnClickListener {
         LayoutInflater inflater = (LayoutInflater)getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View notificationDialogView = inflater.inflate(R.layout.dialog_setting_notification,null);
         settingNotificationRequestSwitch = notificationDialogView.findViewById(R.id.setting_notification_request_switch);
-        if(sharedPreferences.getBoolean("notification",true)){
+        beforeState = sharedPreferences.getBoolean("notification",true);
+        if(beforeState){
             settingNotificationRequestSwitch.setChecked(true);
         }
         else
@@ -142,9 +146,20 @@ public class OptionFragment extends Fragment implements View.OnClickListener {
         @Override
         public void onClick(DialogInterface dialogInterface, int i) {
             if(dialogInterface == setNotificationDialog&&i==DialogInterface.BUTTON_POSITIVE){
+                afterState = settingNotificationRequestSwitch.isChecked();
                 SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putBoolean("notification",settingNotificationRequestSwitch.isChecked());
+                editor.putBoolean("notification",afterState);
                 editor.commit();
+                if(afterState==true){
+                    if(afterState!=beforeState){
+                        getContext().startService(new Intent(getContext(),NotificationService.class));
+                    }
+                }
+                else{
+                    if(afterState!=beforeState){
+                        getContext().stopService(new Intent(getContext(),NotificationService.class));
+                    }
+                }
             }
         }
     };

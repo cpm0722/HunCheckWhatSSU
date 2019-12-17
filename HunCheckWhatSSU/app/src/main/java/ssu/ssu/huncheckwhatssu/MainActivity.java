@@ -12,8 +12,11 @@ import android.widget.Button;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -40,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
          sharedPreferences = getSharedPreferences("HunCheckWhatSSU",MODE_PRIVATE);
          if(!sharedPreferences.getBoolean("initial",false))
               initialSetting();
-        if(sharedPreferences.getBoolean("notification",true))
+         if(sharedPreferences.getBoolean("notification",true))
             startNotificationListener();
 
         navController = Navigation.findNavController(findViewById(R.id.nav_host_fragment));
@@ -70,25 +73,41 @@ public class MainActivity extends AppCompatActivity {
     }
 
     protected void initialSetting(){
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        String path = user.getDisplayName()+"_"+user.getUid();
-        HashMap<String, Object> initial = new HashMap<>();
-        initial.put("Uid",path);
-        initial.put("Name",user.getDisplayName());
-        initial.put("NickName", user.getDisplayName());
-        initial.put("CreditRating", 3.0);
-        initial.put("tradeCount", 0);
-        initial.put("evaluationCount", 0);
-        initial.put("cancelCount", 0);
-        FirebaseDatabase.getInstance().getReference().child("customer").child(path).updateChildren(initial);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putBoolean("initial",true);
-        editor.commit();
+        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        final String path = user.getDisplayName()+"_"+user.getUid();
+        FirebaseDatabase.getInstance().getReference().child("customer").child(path).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(!dataSnapshot.hasChildren()){
+                    HashMap<String, Object> initial = new HashMap<>();
+                    initial.put("Uid",path);
+                    initial.put("Name",user.getDisplayName());
+                    initial.put("NickName", user.getDisplayName());
+                    initial.put("CreditRating", 3.0);
+                    initial.put("tradeCount", 0);
+                    initial.put("evaluationCount", 0);
+                    initial.put("cancelCount", 0);
+                    FirebaseDatabase.getInstance().getReference().child("customer").child(path).updateChildren(initial);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putBoolean("initial",true);
+                    editor.commit();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
     }
     public void startNotificationListener(){
         boolean startByNoti = getIntent().getBooleanExtra("Started By Notification",false);
-        if(!startByNoti)
-            startService(new Intent(this,NotificationService.class));
+        if(!startByNoti) {
+            Log.d("YYYCCC","왜들어옴?");
+            startService(new Intent(this, NotificationService.class));
+        }
     }
 
     @Override

@@ -31,6 +31,8 @@ public class FirebaseHelper {
     public CallBackListener callBackListener;
     public NotificationListener notificationListener;
 
+    private ValueEventListener notifyListener;
+
     public FirebaseHelper() {
         this.root = FirebaseDatabase.getInstance().getReference();
         this.purchase_request = root.child("purchase_request");
@@ -178,7 +180,7 @@ public class FirebaseHelper {
     }
 
     public void setNotifyPurchaseRequest(Vector<String> sellListKeys) {
-      ValueEventListener valueEventListener = new ValueEventListener() {
+      notifyListener = new ValueEventListener() {
           @Override
           public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
               String tradekey = dataSnapshot.getKey();
@@ -192,7 +194,12 @@ public class FirebaseHelper {
           }
       };
         for (String key : sellListKeys) {
-            purchase_request.child(key).addValueEventListener(valueEventListener);
+            purchase_request.child(key).addValueEventListener(notifyListener);
+        }
+    }
+    public void deleteNotifyListener(Vector<String> sellListKeys){
+        for(String trade : sellListKeys){
+            purchase_request.child(trade).removeEventListener(notifyListener);
         }
     }
 
